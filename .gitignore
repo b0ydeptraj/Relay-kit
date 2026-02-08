@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.coverage
+.coverage.*
+.pytest_cache/
+
+# Local virtual envs
+.venv/
+venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
