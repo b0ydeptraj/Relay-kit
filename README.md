@@ -96,6 +96,35 @@ Use `python python_kit.py --list-skills` to see both v3 bundles and legacy kits 
 - `python_kit_legacy.py` is preserved and should not be edited in place during v3 migration.
 - `agentic-loop` runtime output is now generated from the cleaned round2 registry template rather than the old leaked authoring prompt.
 
+## Upgrade Path: v2 -> v3
+
+Use this when moving an existing workflow from the old monolithic generator to the new round2 layout.
+
+1. Confirm the repo is on the v3 entrypoint:
+   - `python_kit.py` = v3
+   - `python_kit_legacy.py` = old generator
+2. Replace old v2 usage based on intent:
+   - old `--kit python|flutter|antigravity|claudekit|ui-ux|full`
+   - new `--legacy-kit python|flutter|antigravity|claudekit|ui-ux|full`
+3. Generate the new round2 runtime layer once:
+   - `python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates`
+   - `python python_kit.py . --bundle round2 --ai gemini --emit-contracts --emit-docs --emit-reference-templates`
+   - `python python_kit.py . --bundle round2 --ai codex --emit-contracts --emit-docs --emit-reference-templates`
+4. Migrate your day-to-day flow:
+   - use `--bundle round2` when you want orchestration skills + `.ai-kit` artifacts
+   - use `--legacy-kit ...` when you still need the old analysis/template kits
+5. Only deprecate old scripts or automation after your team has moved from `--kit` to `--legacy-kit` or fully to `--bundle`
+
+### Command Mapping
+
+| Old habit | New command |
+|----------|-------------|
+| `python python_kit.py . --kit python --ai claude` | `python python_kit.py . --legacy-kit python --ai claude` |
+| `python python_kit.py . --kit flutter --ai claude` | `python python_kit.py . --legacy-kit flutter --ai claude` |
+| `python python_kit.py . --kit full --ai all` | `python python_kit.py . --legacy-kit full --ai all` |
+| `python python_kit.py . --kit ...` for old skill packs | `python python_kit.py . --legacy-kit ...` |
+| no v2 equivalent | `python python_kit.py . --bundle round2 --ai <adapter> --emit-contracts --emit-docs --emit-reference-templates` |
+
 ## Example Outputs From `round2`
 
 Running:
