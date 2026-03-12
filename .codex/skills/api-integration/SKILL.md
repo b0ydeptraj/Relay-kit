@@ -21,6 +21,12 @@ Cover:
 - Explain how the code handles network failures, partial failures, and upstream rate limits.
 - Note what should be mocked versus tested against a real service.
 
+## Role
+- integration-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - HTTP or RPC client code
 - settings or secret config
@@ -37,3 +43,4 @@ Cover:
 - architect
 - developer
 - qa-governor
+- review-hub

@@ -2,11 +2,11 @@
 """Python Kit v3 - registry-driven BMAD-lite upgrade for ai-kit.
 
 How to adopt with minimal breakage:
-1. Rename your current script to `python_kit_legacy.py`.
-2. Copy this file and the `ai_kit_v3/` package into the repo root.
+1. Keep the old generator as `python_kit_legacy.py`.
+2. Use this file plus the `ai_kit_v3/` package as the active entrypoint.
 3. Keep using legacy kits for project-specific analysis/template generation.
-4. Use the new bundles to generate orchestrators, artifact contracts, reference templates,
-   and cleaned runtime skills.
+4. Use the new bundles to generate orchestrators, workflow hubs, artifact contracts,
+   reference templates, and cleaned runtime skills.
 """
 
 from __future__ import annotations
@@ -18,11 +18,13 @@ from pathlib import Path
 from ai_kit_v3.generator import BUNDLES, create_bmad_upgrade, create_legacy_skills, load_legacy_module
 
 
+
 def legacy_kits(repo_root: Path):
     module = load_legacy_module(repo_root)
     if module is None:
         return None, []
     return module, list(module.SKILL_SETS.keys())
+
 
 
 def list_everything(repo_root: Path) -> None:
@@ -41,16 +43,17 @@ def list_everything(repo_root: Path) -> None:
                 print(f"    - {skill}")
 
 
+
 def parse_args(repo_root: Path) -> argparse.Namespace:
     _, legacy = legacy_kits(repo_root)
     parser = argparse.ArgumentParser(
-        description="Python Kit v3 - BMAD-lite orchestrators + native support skills + legacy compatibility",
+        description="Python Kit v3 - BMAD-lite orchestrators + workflow hubs + native support skills + legacy compatibility",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python python_kit.py /path/to/project --bundle round2 --ai all --emit-contracts --emit-docs --emit-reference-templates
-  python python_kit.py /path/to/project --bundle legacy-native --ai claude
-  python python_kit.py /path/to/project --bundle cleanup --ai claude
+  python python_kit.py /path/to/project --bundle round3 --ai all --emit-contracts --emit-docs --emit-reference-templates
+  python python_kit.py /path/to/project --bundle round3-core --ai claude
+  python python_kit.py /path/to/project --bundle workflow-hubs --ai codex
   python python_kit.py /path/to/project --legacy-kit python --ai claude
   python python_kit.py --list-skills
         """,
@@ -58,14 +61,15 @@ Examples:
     parser.add_argument("project_path", nargs="?", default=".", help="Target project path")
     parser.add_argument("--ai", choices=["claude", "gemini", "codex", "all", "generic"], default="claude")
     parser.add_argument("--bundle", choices=sorted(BUNDLES.keys()), help="Generate new registry-native skills")
-    parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .ai-kit/contracts/")
-    parser.add_argument("--emit-docs", action="store_true", help="Write migration/runtime docs into .ai-kit/docs/")
+    parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .ai-kit/contracts/ and .ai-kit/state/")
+    parser.add_argument("--emit-docs", action="store_true", help="Write topology, migration, and runtime docs into .ai-kit/docs/")
     parser.add_argument("--emit-reference-templates", action="store_true", help="Write living reference templates into .ai-kit/references/")
     parser.add_argument("--legacy-kit", choices=legacy or None, help="Run an old skill set through python_kit_legacy.py")
     parser.add_argument("--skills", nargs="+", metavar="SKILL", help="Pass specific legacy skills through python_kit_legacy.py")
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("--list-skills", action="store_true")
     return parser.parse_args()
+
 
 
 def main() -> int:

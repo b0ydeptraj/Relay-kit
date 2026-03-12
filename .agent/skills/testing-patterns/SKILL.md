@@ -21,6 +21,12 @@ Cover:
 - Call out unstable tests, heavy integration paths, and areas with weak coverage.
 - Tie recommendations back to risk, not just test quantity.
 
+## Role
+- quality-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - test folders
 - test config
@@ -37,4 +43,6 @@ Cover:
 ## Likely next step
 - developer
 - qa-governor
-- code-review
+- debug-hub
+- test-hub
+- review-hub

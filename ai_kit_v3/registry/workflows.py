@@ -2,24 +2,25 @@ from __future__ import annotations
 
 from textwrap import dedent
 
+
 TRACKS = {
     "quick-flow": {
         "levels": ["L0", "L1"],
-        "use_for": "Bug fixes, refactors, or small features with tight scope and low coordination overhead.",
-        "artifacts": ["tech-spec", "qa-report"],
-        "flow": ["workflow-router", "developer", "qa-governor"],
+        "use_for": "Small, well-bounded work with tight scope and low coordination overhead.",
+        "artifacts": ["tech-spec", "investigation-notes", "qa-report"],
+        "flow": ["workflow-router", "cook", "debug-hub", "fix-hub", "test-hub", "qa-governor"],
     },
     "product-flow": {
         "levels": ["L2", "L3"],
         "use_for": "Features, products, or platform work that need requirements, architecture, and story slicing.",
         "artifacts": ["product-brief", "prd", "architecture", "epics", "story", "qa-report"],
-        "flow": ["workflow-router", "analyst", "pm", "architect", "scrum-master", "developer", "qa-governor"],
+        "flow": ["workflow-router", "cook", "plan-hub", "architect", "scrum-master", "developer", "qa-governor"],
     },
     "enterprise-flow": {
         "levels": ["L4"],
         "use_for": "High-risk, compliance-sensitive, multi-tenant, or multi-team changes.",
-        "artifacts": ["product-brief", "prd", "architecture", "epics", "story", "qa-report"],
-        "flow": ["workflow-router", "analyst", "pm", "architect", "scrum-master", "developer", "qa-governor"],
+        "artifacts": ["product-brief", "prd", "architecture", "epics", "story", "qa-report", "team-board"],
+        "flow": ["bootstrap", "team", "workflow-router", "cook", "plan-hub", "architect", "scrum-master", "developer", "qa-governor"],
     },
 }
 
@@ -36,18 +37,27 @@ def render_workflow_state() -> str:
     return dedent(
         """\
         # workflow-state
-        
+
         ## Current request
         TBD
-        
+
+        ## Active lane
+        - Lane id: primary
+        - Mode: serial or parallel TBD
+
+        ## Active orchestration
+        - Layer-1 orchestrator: TBD
+        - Layer-2 workflow hub: TBD
+        - Active specialist: TBD
+
         ## Complexity level
         - Level: TBD
         - Reasoning: TBD
-        
+
         ## Chosen track
         - Track: TBD
         - Why this track fits: TBD
-        
+
         ## Completed artifacts
         - [ ] product-brief
         - [ ] PRD
@@ -55,15 +65,57 @@ def render_workflow_state() -> str:
         - [ ] epics
         - [ ] story
         - [ ] tech-spec
+        - [ ] investigation-notes
         - [ ] qa-report
-        
+        - [ ] team-board
+
         ## Next skill
         TBD
-        
+
         ## Known blockers
         TBD
-        
+
+        ## Escalation triggers noticed
+        TBD
+
         ## Notes
+        TBD
+        """
+    )
+
+
+
+def render_team_board() -> str:
+    return dedent(
+        """\
+        # team-board
+
+        ## Shared objective
+        TBD
+
+        ## Active orchestrator
+        - team
+
+        ## Lanes
+        | Lane | Owner skill | Current artifact | Status | Notes |
+        |---|---|---|---|---|
+        | primary | TBD | TBD | queued | TBD |
+        | lane-2 | TBD | TBD | parked | TBD |
+        | lane-3 | TBD | TBD | parked | TBD |
+
+        ## Shared artifacts that must stay authoritative
+        - `.ai-kit/state/workflow-state.md`
+        - `.ai-kit/contracts/project-context.md`
+        - `.ai-kit/contracts/PRD.md`
+        - `.ai-kit/contracts/architecture.md`
+
+        ## Merge order
+        TBD
+
+        ## Conflict risks
+        TBD
+
+        ## Decision log
         TBD
         """
     )

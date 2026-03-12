@@ -2,7 +2,7 @@
 
 > Path: `.ai-kit/contracts/product-brief.md`
 > Purpose: Capture the problem, users, outcomes, assumptions, and constraints before detailed planning.
-> Used by: analyst, pm, workflow-router
+> Used by: analyst, pm, workflow-router, brainstorm-hub, plan-hub
 
 ## Problem statement
 What problem exists today, for whom, and why it matters now.

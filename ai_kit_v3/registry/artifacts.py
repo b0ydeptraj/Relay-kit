@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from textwrap import dedent
 from typing import Dict, List
 
 
@@ -27,12 +26,12 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Constraints and non-goals",
             "Open questions",
         ],
-        used_by=["analyst", "pm", "workflow-router"],
+        used_by=["analyst", "pm", "workflow-router", "brainstorm-hub", "plan-hub"],
     ),
     "prd": ArtifactContract(
         name="prd",
         path=".ai-kit/contracts/PRD.md",
-        purpose="Define scope, functional/non-functional requirements, acceptance criteria, release slices, and risks.",
+        purpose="Define scope, functional and non-functional requirements, acceptance criteria, release slices, and risks.",
         sections=[
             "Objective and scope",
             "Functional requirements",
@@ -42,7 +41,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Risks and mitigations",
             "Release slices",
         ],
-        used_by=["pm", "architect", "scrum-master", "qa-governor"],
+        used_by=["pm", "architect", "scrum-master", "qa-governor", "plan-hub"],
     ),
     "architecture": ArtifactContract(
         name="architecture",
@@ -57,7 +56,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Trade-offs and ADR notes",
             "Implementation readiness verdict",
         ],
-        used_by=["architect", "scrum-master", "qa-governor"],
+        used_by=["architect", "scrum-master", "qa-governor", "plan-hub", "review-hub"],
     ),
     "epics": ArtifactContract(
         name="epics",
@@ -70,7 +69,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Definition of done",
             "Suggested order",
         ],
-        used_by=["pm", "scrum-master"],
+        used_by=["pm", "scrum-master", "plan-hub"],
     ),
     "story": ArtifactContract(
         name="story",
@@ -84,7 +83,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Risks",
             "Done checklist",
         ],
-        used_by=["scrum-master", "developer", "qa-governor"],
+        used_by=["scrum-master", "developer", "qa-governor", "fix-hub", "test-hub"],
     ),
     "project-context": ArtifactContract(
         name="project-context",
@@ -98,7 +97,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Known sharp edges",
             "Files or modules to mirror",
         ],
-        used_by=["workflow-router", "analyst", "pm", "architect", "scrum-master", "qa-governor"],
+        used_by=["workflow-router", "bootstrap", "cook", "analyst", "pm", "architect", "scrum-master", "developer", "qa-governor", "scout-hub"],
     ),
     "qa-report": ArtifactContract(
         name="qa-report",
@@ -112,7 +111,7 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Evidence collected",
             "Go / no-go recommendation",
         ],
-        used_by=["qa-governor", "developer"],
+        used_by=["qa-governor", "developer", "test-hub", "review-hub"],
     ),
     "tech-spec": ArtifactContract(
         name="tech-spec",
@@ -125,22 +124,54 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
             "Implementation notes",
             "Verification steps",
         ],
-        used_by=["workflow-router", "developer", "qa-governor"],
+        used_by=["workflow-router", "cook", "developer", "fix-hub", "test-hub"],
+    ),
+    "investigation-notes": ArtifactContract(
+        name="investigation-notes",
+        path=".ai-kit/contracts/investigation-notes.md",
+        purpose="Capture reproduction steps, observed evidence, likely root cause, and ruled-out hypotheses before a fix is proposed.",
+        sections=[
+            "Observed symptom",
+            "Reproduction steps",
+            "Evidence collected",
+            "Likely root cause",
+            "Non-causes ruled out",
+            "Recommended next move",
+        ],
+        used_by=["scout-hub", "debug-hub", "fix-hub", "test-hub"],
     ),
     "workflow-state": ArtifactContract(
         name="workflow-state",
         path=".ai-kit/state/workflow-state.md",
-        purpose="Keep phase, chosen track, current artifact, next recommended skill, and blockers visible across sessions.",
+        purpose="Keep phase, chosen track, active orchestrator, active hub, current specialist, next recommended skill, and blockers visible across sessions.",
         sections=[
             "Current request",
+            "Active lane",
+            "Active orchestration",
             "Complexity level",
             "Chosen track",
             "Completed artifacts",
             "Next skill",
             "Known blockers",
+            "Escalation triggers noticed",
             "Notes",
         ],
-        used_by=["workflow-router", "team-orchestrators"],
+        used_by=["workflow-router", "team", "cook", "all hubs"],
+    ),
+    "team-board": ArtifactContract(
+        name="team-board",
+        path=".ai-kit/state/team-board.md",
+        purpose="Coordinate parallel lanes, artifact ownership, merge order, and shared blockers during multi-session or multi-agent work.",
+        sections=[
+            "Shared objective",
+            "Active orchestrator",
+            "Lanes",
+            "Shared artifacts that must stay authoritative",
+            "Merge order",
+            "Conflict risks",
+            "Decision log",
+        ],
+        used_by=["team", "cook", "workflow-router"],
     ),
 }
 
@@ -171,6 +202,14 @@ SECTION_HINTS = {
         "Operational concerns": "Security, performance, migration, logging, rollout, failure handling.",
         "Trade-offs and ADR notes": "What was chosen, what was rejected, and why.",
         "Implementation readiness verdict": "Ready / blocked, with the exact missing inputs if blocked.",
+    },
+    "investigation-notes": {
+        "Observed symptom": "What failed, when, and for whom.",
+        "Reproduction steps": "Fastest reliable way to reproduce the issue.",
+        "Evidence collected": "Logs, stack traces, screenshots, diffs, failing tests, or environment details.",
+        "Likely root cause": "Most plausible cause supported by evidence.",
+        "Non-causes ruled out": "Hypotheses already disproven so the next person does not repeat them.",
+        "Recommended next move": "Hand off to fix-hub, test-hub, or back to planning if scope drift is present.",
     },
 }
 

@@ -10,6 +10,7 @@ class SkillSpec:
     name: str
     description: str
     role: str
+    layer: str
     inputs: List[str]
     outputs: List[str]
     references: List[str]
@@ -61,26 +62,27 @@ LEGACY_ROLE_MAP = {
 }
 
 
-CORE_SKILLS: Dict[str, SkillSpec] = {
+ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
     "workflow-router": SkillSpec(
         name="workflow-router",
-        description="route a request through the right delivery track, choose the next skill, and keep workflow-state current. use when a request arrives, the user asks what to do next, or scope or complexity is unclear.",
-        role="orchestrator",
-        inputs=["user request", ".ai-kit/contracts/project-context.md (if present)", ".ai-kit/state/workflow-state.md (if present)"],
-        outputs=[".ai-kit/state/workflow-state.md", ".ai-kit/contracts/tech-spec.md or product-brief.md kickoff"],
+        description="route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current. use when a request arrives, the user asks what to do next, or scope or complexity is unclear.",
+        role="routing-kernel",
+        layer="layer-1-orchestrators",
+        inputs=["user request", ".ai-kit/contracts/project-context.md (if present)", ".ai-kit/state/workflow-state.md (if present)", ".ai-kit/state/team-board.md (if present)"],
+        outputs=[".ai-kit/state/workflow-state.md", ".ai-kit/contracts/tech-spec.md or product-brief.md kickoff", ".ai-kit/state/team-board.md when parallel lanes are needed"],
         references=[
-            "Use legacy support skills by role when specialized analysis is required.",
             "Prefer existing project-context over assumptions.",
             "Escalate from quick-flow to product-flow whenever hidden complexity appears.",
+            "Hand off to bootstrap when base artifacts are missing, to cook for a single request, and to team when multiple lanes must move in parallel.",
         ],
-        next_steps=["analyst", "pm", "architect", "scrum-master", "developer", "qa-governor"],
+        next_steps=["bootstrap", "cook", "team", "scout-hub", "plan-hub", "debug-hub"],
         body=dedent(
             """\
             # Mission
-            Decide how the request should move through the system and make the next step explicit.
+            Act as the routing kernel for the whole system: choose the track, choose the active lane, and make the next move explicit.
 
             ## Mandatory routing procedure
-            1. Read `.ai-kit/contracts/project-context.md` if it exists.
+            1. Read `.ai-kit/contracts/project-context.md` and `.ai-kit/state/workflow-state.md` if they exist.
             2. Score the request on five axes: ambiguity, breadth of change, architecture risk, operational risk, and coordination cost.
             3. Classify complexity:
                - `L0`: single bug or tiny refactor
@@ -92,38 +94,345 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
                - `L0-L1` -> quick-flow
                - `L2-L3` -> product-flow
                - `L4` -> enterprise-flow
-            5. Update `.ai-kit/state/workflow-state.md` with:
-               - chosen complexity level and why
-               - chosen track and why
-               - artifacts already available
-               - exact next skill to invoke
-               - blockers or open questions
-            6. If quick-flow is selected, ensure `.ai-kit/contracts/tech-spec.md` exists before implementation begins.
-            7. If product-flow or enterprise-flow is selected, start with `analyst` unless a recent `product-brief.md` already exists and is still valid.
+            5. Choose the layer-1 entrypoint:
+               - use `bootstrap` if state, context, or artifacts are missing
+               - use `cook` for one active request in one lane
+               - use `team` if more than one lane, owner, or branch of work must be coordinated
+            6. Choose the first layer-2 hub:
+               - `scout-hub` when the codebase area is unclear
+               - `plan-hub` when planning artifacts are missing or stale
+               - `debug-hub` when the request starts from a failure or regression
+            7. Update `.ai-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
 
             ## Escalation rules
-            Escalate to the next track immediately when any of the following appears:
-            - The change touches multiple bounded contexts.
-            - Acceptance criteria are unclear or disputed.
-            - Security, migration, or rollout risk appears.
-            - A small fix now changes contracts, schemas, APIs, or infrastructure.
+            Escalate immediately when:
+            - a small fix changes contracts, schemas, APIs, or infrastructure
+            - acceptance criteria are unclear or disputed
+            - multiple bounded contexts are touched
+            - rollout, migration, security, or compliance risk appears
 
             ## Output contract
             Never end with vague advice. Always name the next skill, the artifact it should create or update, and what evidence is still missing.
             """
         ).strip(),
     ),
+    "bootstrap": SkillSpec(
+        name="bootstrap",
+        description="initialize or refresh the shared bmAD-lite runtime before a new lane begins. use at repo start, after major structure changes, or whenever workflow-state or project-context is missing or stale.",
+        role="session-bootstrap",
+        layer="layer-1-orchestrators",
+        inputs=["repo root", ".ai-kit/ runtime folders if present", "current request"],
+        outputs=[".ai-kit/state/workflow-state.md", ".ai-kit/contracts/project-context.md", ".ai-kit/state/team-board.md when parallel work is expected"],
+        references=[
+            "Prefer lightweight initialization over speculative planning.",
+            "If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.",
+            "Do not invent project-context facts; mark unknowns and hand off to scout-hub.",
+        ],
+        next_steps=["workflow-router", "scout-hub", "cook", "team"],
+        body=dedent(
+            """\
+            # Mission
+            Prepare the runtime so later steps have an authoritative baseline instead of relying on chat memory.
+
+            ## Mandatory setup
+            1. Ensure `.ai-kit/state/workflow-state.md` exists and records the current request.
+            2. Ensure `.ai-kit/contracts/project-context.md` exists. If facts are missing, create a skeletal version with explicit unknowns.
+            3. If the request is likely to branch into more than one lane, create or refresh `.ai-kit/state/team-board.md`.
+            4. Record which artifacts already exist and which ones must be refreshed.
+            5. If the repo area is not well understood, route next to `scout-hub`.
+
+            ## Guardrails
+            - Bootstrap does not do deep planning.
+            - Bootstrap does not declare work ready; it only makes later work safer.
+            - When in doubt, prefer creating the minimal state needed to hand off cleanly.
+            """
+        ).strip(),
+    ),
+    "team": SkillSpec(
+        name="team",
+        description="coordinate multi-lane or multi-session work without letting agents step on each other. use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move.",
+        role="meta-orchestrator",
+        layer="layer-1-orchestrators",
+        inputs=[".ai-kit/state/workflow-state.md", ".ai-kit/state/team-board.md", "active artifacts and blockers"],
+        outputs=[".ai-kit/state/team-board.md", ".ai-kit/state/workflow-state.md"],
+        references=[
+            "Shared artifacts beat chat summaries; update the artifact before handing off.",
+            "Assign one owner skill per lane and name merge order explicitly.",
+            "Use cook inside a lane, not as a replacement for team.",
+        ],
+        next_steps=["cook", "plan-hub", "scout-hub", "debug-hub", "review-hub"],
+        body=dedent(
+            """\
+            # Mission
+            Coordinate parallel work while preserving one authoritative source of truth for each artifact.
+
+            ## Mandatory behavior
+            1. Maintain `.ai-kit/state/team-board.md` with lanes, owners, active artifacts, blockers, and merge order.
+            2. Split work only when lanes can avoid editing the same artifact section at the same time.
+            3. Use `cook` to drive each active lane, but keep final merge and priority decisions here.
+            4. If one lane uncovers architecture or scope drift, update workflow-state and notify all affected lanes.
+            5. Park lanes that are blocked instead of letting them thrash.
+
+            ## Do not do this
+            - Do not let two lanes silently diverge on the same acceptance criteria.
+            - Do not keep lane state only in memory.
+            - Do not parallelize before a quick scout when the codebase area is unfamiliar.
+            """
+        ).strip(),
+    ),
+    "cook": SkillSpec(
+        name="cook",
+        description="drive one active request from its current state to the next solid handoff using the right hub and specialist. use for the day-to-day execution loop once bootstrap and routing are done.",
+        role="lane-conductor",
+        layer="layer-1-orchestrators",
+        inputs=[".ai-kit/state/workflow-state.md", "current request or lane objective", "available artifacts"],
+        outputs=["updated workflow-state", "a named next hub or specialist", "refreshed artifacts produced by the chosen lane"],
+        references=[
+            "Cook does not replace hubs; it chooses and sequences them.",
+            "Keep each pass small: one hub, one artifact decision, one clear next handoff.",
+            "If completion is claimed, force test-hub or review-hub before accepting it.",
+        ],
+        next_steps=["brainstorm-hub", "scout-hub", "plan-hub", "debug-hub", "fix-hub", "test-hub", "review-hub"],
+        body=dedent(
+            """\
+            # Mission
+            Run the day-to-day loop for one request without letting it skip gates or get stuck in vague next steps.
+
+            ## Mandatory loop
+            1. Read workflow-state and identify the lane's current objective.
+            2. Choose exactly one hub that should move the work forward now.
+            3. Name the artifact that hub must create, update, or validate.
+            4. After the hub finishes, update workflow-state with what changed and which hub or specialist comes next.
+            5. Stop as soon as the next handoff is explicit.
+
+            ## Safety rules
+            - Never jump straight from vague intent to implementation.
+            - When evidence is weak, prefer scout-hub, debug-hub, or test-hub over optimistic implementation.
+            - When scope shifts, send the lane back through workflow-router.
+            """
+        ).strip(),
+    ),
+}
+
+
+WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
+    "brainstorm-hub": SkillSpec(
+        name="brainstorm-hub",
+        description="guide early ideation and rough problem framing before formal planning exists. use when the request is still an idea, an opportunity, or a loosely described improvement.",
+        role="ideation-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["user idea or opportunity", ".ai-kit/state/workflow-state.md", "any existing brief or context"],
+        outputs=[".ai-kit/contracts/product-brief.md or a decision not to proceed"],
+        references=[
+            "Use analyst for structured discovery and pm only once the shape is coherent enough to plan.",
+            "Prefer narrowing the problem over generating a giant feature wish list.",
+        ],
+        next_steps=["analyst", "pm", "plan-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Turn fuzzy idea energy into something the planning flow can actually use.
+
+            ## What this hub does
+            - Facilitate a short option scan.
+            - Expose assumptions, success signals, and obvious constraints.
+            - Decide whether to write or refresh `product-brief.md`.
+
+            ## Exit conditions
+            End with one of only three outcomes:
+            1. a brief is ready for planning,
+            2. the idea is too weak and should stop, or
+            3. one specific question must be answered before planning continues.
+            """
+        ).strip(),
+    ),
+    "scout-hub": SkillSpec(
+        name="scout-hub",
+        description="reconnoiter the codebase and refresh living references before planning, debugging, or review work continues. use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions.",
+        role="recon-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["repo tree and relevant files", ".ai-kit/contracts/project-context.md", ".ai-kit/state/workflow-state.md"],
+        outputs=[".ai-kit/contracts/project-context.md", ".ai-kit/references/*.md as needed", ".ai-kit/contracts/investigation-notes.md when the work starts from a failure"],
+        references=[
+            "Use project-architecture, dependency-management, api-integration, data-persistence, and testing-patterns as living references.",
+            "Prefer concrete file paths, commands, and entrypoints over summaries.",
+            "When the problem starts from a failure, capture findings in investigation-notes.",
+        ],
+        next_steps=["plan-hub", "debug-hub", "review-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Gather the minimum reliable context the next lane needs so nobody plans or fixes from a false mental model.
+
+            ## Mandatory behavior
+            1. Refresh `project-context.md` when architecture, tooling, or domain constraints are unclear.
+            2. Refresh only the reference files actually relevant to the active lane.
+            3. Add file paths, commands, or modules whenever possible.
+            4. If a failure is being investigated, start `investigation-notes.md` with reproduction steps and evidence.
+
+            ## Output contract
+            Name exactly what became clearer, what is still unknown, and which hub or specialist should use the refreshed context next.
+            """
+        ).strip(),
+    ),
+    "plan-hub": SkillSpec(
+        name="plan-hub",
+        description="run the planning chain from brief to prd to architecture to stories without losing context between roles. use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete.",
+        role="planning-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["workflow-state", "existing brief, prd, architecture, or epics if present", "project-context"],
+        outputs=["product-brief, PRD, architecture, epics, and stories or tech-spec depending track"],
+        references=[
+            "Call only the roles needed to close the current planning gap.",
+            "Use scout-hub first if the current codebase context is too weak to plan safely.",
+            "Route to review-hub if artifacts disagree with one another.",
+        ],
+        next_steps=["analyst", "pm", "architect", "scrum-master", "developer", "review-hub"],
+        body=dedent(
+            """\
+            # Mission
+            Sequence the planning roles so the lane produces buildable artifacts instead of disconnected documents.
+
+            ## Mandatory order
+            - use `analyst` if the brief is missing or stale
+            - use `pm` if requirements, acceptance criteria, or slice order are missing
+            - use `architect` if technical boundaries or readiness are unclear
+            - use `scrum-master` when work must be cut into stories or a quick spec
+
+            ## Planning gate
+            Stop and route to `review-hub` when product, architecture, and story artifacts disagree.
+            Route to `developer` only when the active story or tech-spec is ready for implementation.
+            """
+        ).strip(),
+    ),
+    "debug-hub": SkillSpec(
+        name="debug-hub",
+        description="triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem. use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior.",
+        role="debug-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["failing behavior", "logs, traces, or test output", "workflow-state", "relevant references"],
+        outputs=[".ai-kit/contracts/investigation-notes.md", ".ai-kit/contracts/tech-spec.md when a fix path is clear"],
+        references=[
+            "Use systematic-debugging, testing-patterns, and problem-solving before touching code.",
+            "Root cause beats guess-and-patch.",
+            "Escalate to plan-hub if the 'bug' is actually an unclear requirement or architectural mismatch.",
+        ],
+        next_steps=["fix-hub", "test-hub", "plan-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Turn a symptom into evidence and a decision, not into random edits.
+
+            ## Mandatory behavior
+            1. Reproduce the issue or explain why reproduction is not yet reliable.
+            2. Write `investigation-notes.md` with evidence, likely root cause, and non-causes ruled out.
+            3. Decide whether the next move is:
+               - `fix-hub` for a real fix,
+               - `test-hub` for missing or weak evidence,
+               - `plan-hub` when the issue is upstream ambiguity.
+            """
+        ).strip(),
+    ),
+    "fix-hub": SkillSpec(
+        name="fix-hub",
+        description="turn validated findings into a minimal, well-scoped implementation path and hand off to the developer loop. use after debug-hub or when a change request is already sharply bounded.",
+        role="fix-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["tech-spec or story", "investigation-notes when debugging", "architecture and project-context when relevant"],
+        outputs=["refined tech-spec or story", "implementation handoff to developer", "updated workflow-state"],
+        references=[
+            "Keep the fix surface as small as possible.",
+            "Use developer plus agentic-loop for execution, not as a replacement for scoping.",
+            "If the fix expands the contract or architecture, route back through workflow-router or plan-hub.",
+        ],
+        next_steps=["developer", "test-hub", "review-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Convert a known problem into a bounded implementation path that can be executed safely.
+
+            ## Mandatory behavior
+            1. Update the active story or tech-spec with the real files, boundaries, and verification steps.
+            2. Name what must not change while fixing the issue.
+            3. Hand off to `developer` for execution.
+            4. Route to `test-hub` immediately after implementation evidence exists.
+            """
+        ).strip(),
+    ),
+    "test-hub": SkillSpec(
+        name="test-hub",
+        description="coordinate verification, evidence collection, and residual-risk review before work is called done. use after implementation, after a risky refactor, or whenever confidence is lower than the change impact.",
+        role="verification-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["story or tech-spec", "implementation evidence", "testing-patterns reference", "workflow-state"],
+        outputs=[".ai-kit/contracts/qa-report.md", "updated workflow-state with pass, fail, or blocked verdict"],
+        references=[
+            "Use qa-governor for the actual readiness gate.",
+            "Prefer evidence tied to acceptance criteria and regression surface.",
+            "Route back to debug-hub when verification fails unexpectedly.",
+        ],
+        next_steps=["qa-governor", "review-hub", "debug-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Turn raw test execution into a real readiness decision.
+
+            ## Mandatory behavior
+            1. Decide the smallest useful evidence matrix for the change.
+            2. Collect results and compare them to acceptance criteria.
+            3. Write or refresh `qa-report.md`.
+            4. If evidence is weak or failing, route to `debug-hub` rather than guessing.
+            """
+        ).strip(),
+    ),
+    "review-hub": SkillSpec(
+        name="review-hub",
+        description="check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan. use before final completion claims or whenever artifacts disagree.",
+        role="review-hub",
+        layer="layer-2-workflow-hubs",
+        inputs=["active artifacts", "qa-report if present", "workflow-state"],
+        outputs=["updated workflow-state", "go/no-go review verdict", "specific bounce-back path when misalignment exists"],
+        references=[
+            "Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.",
+            "Do not hide disagreement between artifacts; name it and route accordingly.",
+        ],
+        next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "workflow-router"],
+        body=dedent(
+            """\
+            # Mission
+            Make completion a deliberate alignment check, not just a feeling that enough has happened.
+
+            ## Mandatory checks
+            - Do requirements, architecture, and implementation still describe the same change?
+            - Does quality evidence actually cover the promised behavior and regression surface?
+            - Is the active lane done, or is it merely unblocked enough to continue elsewhere?
+
+            ## Output contract
+            End with one explicit verdict:
+            - go forward,
+            - bounce to planning,
+            - bounce to debugging,
+            - bounce to implementation,
+            - or hold for missing evidence.
+            """
+        ).strip(),
+    ),
+}
+
+
+ROLE_SKILLS: Dict[str, SkillSpec] = {
     "analyst": SkillSpec(
         name="analyst",
         description="clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped. use when discovery is needed before writing a prd or choosing architecture.",
         role="analysis",
+        layer="layer-4-specialists-and-standalones",
         inputs=["user request", ".ai-kit/contracts/project-context.md", ".ai-kit/state/workflow-state.md"],
         outputs=[".ai-kit/contracts/product-brief.md"],
         references=[
             "Lean on research-expert, problem-solving, and sequential-thinking when the scope is fuzzy.",
             "Keep the brief short enough that downstream roles can actually use it.",
         ],
-        next_steps=["pm", "workflow-router"],
+        next_steps=["pm", "plan-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -141,11 +450,8 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             ## Guardrails
             - Prefer validated facts over storytelling.
             - Call out what is unknown instead of silently guessing.
-            - If the request is already well-scoped and `workflow-router` selected quick-flow, do not force a brief.
+            - If the request is already well-scoped and quick-flow fits, do not force a brief.
             - If a fresh brief already exists, update only the parts affected by the new request.
-
-            ## Handoff
-            End by stating whether the brief is ready for `pm`, or exactly what question still blocks planning.
             """
         ).strip(),
     ),
@@ -153,6 +459,7 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
         name="pm",
         description="translate a product brief or scoped request into a prd, release slices, and acceptance criteria. use when the work is past discovery and needs a buildable scope.",
         role="planning",
+        layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/product-brief.md or direct scoped request", ".ai-kit/contracts/project-context.md"],
         outputs=[".ai-kit/contracts/PRD.md", ".ai-kit/contracts/epics.md"],
         references=[
@@ -160,7 +467,7 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             "Separate must-have requirements from stretch goals and out-of-scope ideas.",
             "Use UX and research support skills when the user experience is part of the risk.",
         ],
-        next_steps=["architect", "scrum-master", "workflow-router"],
+        next_steps=["architect", "scrum-master", "plan-hub", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -185,9 +492,6 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             - named risks for hard or irreversible changes
             - explicit out-of-scope section
             - at least one suggested slice order
-
-            ## Handoff
-            Tell `architect` what constraints matter most and tell `scrum-master` which epic should be cut first.
             """
         ).strip(),
     ),
@@ -195,6 +499,7 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
         name="architect",
         description="convert requirements into an implementation-ready architecture that fits the existing codebase. use when a prd exists or when a change could alter module boundaries, data flow, security, or operations.",
         role="solutioning",
+        layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/PRD.md", ".ai-kit/contracts/project-context.md", "existing support skills and references"],
         outputs=[".ai-kit/contracts/architecture.md"],
         references=[
@@ -202,7 +507,7 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             "Pull in project-architecture, dependency-management, api-integration, data-persistence, security-patterns, performance-optimization, and logging-observability when relevant.",
             "Architecture must include a readiness verdict, not just diagrams or aspirations.",
         ],
-        next_steps=["scrum-master", "qa-governor", "workflow-router"],
+        next_steps=["scrum-master", "review-hub", "plan-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -223,9 +528,6 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             - Name interfaces, boundaries, and ownership explicitly.
             - State how observability, rollback, and failure handling will work for risky changes.
             - Flag any requirement that cannot be satisfied within the current architecture without upstream scope negotiation.
-
-            ## Readiness gate
-            Mark the design blocked when schemas, APIs, migrations, or cross-service contracts are still ambiguous.
             """
         ).strip(),
     ),
@@ -233,13 +535,14 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
         name="scrum-master",
         description="turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work. use when planning is done and work must be sliced into safe, verifiable increments.",
         role="delivery",
+        layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/PRD.md", ".ai-kit/contracts/architecture.md", ".ai-kit/contracts/epics.md", ".ai-kit/contracts/tech-spec.md"],
         outputs=[".ai-kit/contracts/stories/story-xxx.md", ".ai-kit/contracts/tech-spec.md when quick-flow is used"],
         references=[
             "Each story should be a thin vertical slice with explicit done criteria.",
             "Do not create stories that hide architectural decisions or missing acceptance criteria.",
         ],
-        next_steps=["developer", "qa-governor", "workflow-router"],
+        next_steps=["developer", "test-hub", "review-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -271,17 +574,48 @@ CORE_SKILLS: Dict[str, SkillSpec] = {
             """
         ).strip(),
     ),
+    "developer": SkillSpec(
+        name="developer",
+        description="implement a story or tech-spec using the cleaned execution loop and project-specific support references. use when planning is ready and code must be changed with controlled scope and evidence.",
+        role="implementation",
+        layer="layer-4-specialists-and-standalones",
+        inputs=["story or tech-spec", "project-context", "architecture when present", "relevant support references"],
+        outputs=["working code", "test evidence", "updated workflow-state or handoff note"],
+        references=[
+            "Use agentic-loop as the execution engine.",
+            "Pull in project-architecture, api-integration, data-persistence, and testing-patterns as needed.",
+            "Hand off to test-hub or qa-governor; do not self-certify completion without evidence.",
+        ],
+        next_steps=["agentic-loop", "test-hub", "qa-governor", "review-hub"],
+        body=dedent(
+            """\
+            # Mission
+            Turn an approved story or tech-spec into code and evidence without reopening solved planning questions.
+
+            ## Mandatory behavior
+            1. Read the active story or tech-spec completely before changing code.
+            2. Pull only the support references needed for the specific files or boundaries involved.
+            3. Execute through `agentic-loop` rather than piling unrelated changes into one pass.
+            4. Preserve the active acceptance criteria and note any hidden scope discovered during implementation.
+            5. Hand off to `test-hub` or `qa-governor` with the evidence actually collected.
+
+            ## Escalation
+            If implementation reveals missing architecture, unclear acceptance criteria, or a bigger-than-expected change surface, stop and route back through `review-hub` or `workflow-router`.
+            """
+        ).strip(),
+    ),
     "qa-governor": SkillSpec(
         name="qa-governor",
         description="check readiness and completion against acceptance criteria, risk, and regression scope; write a qa report before completion is claimed. use before saying work is done or when implementation confidence is low.",
         role="quality",
+        layer="layer-4-specialists-and-standalones",
         inputs=["PRD or tech-spec", "architecture or story", "evidence from tests and reviews"],
         outputs=[".ai-kit/contracts/qa-report.md"],
         references=[
             "Use testing-patterns, systematic-debugging, and code-review as support skills.",
             "Coverage must be explained against acceptance criteria and risk, not just number of tests.",
         ],
-        next_steps=["developer", "workflow-router"],
+        next_steps=["review-hub", "debug-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -312,6 +646,7 @@ CLEANUP_SKILLS: Dict[str, SkillSpec] = {
         name="agentic-loop",
         description="self-correcting development loop for implementation work. use when building or fixing code iteratively and require evidence before claiming completion.",
         role="developer-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["story or tech-spec", "project-context", "relevant support skills"],
         outputs=["working code plus test evidence"],
         references=[
@@ -319,7 +654,7 @@ CLEANUP_SKILLS: Dict[str, SkillSpec] = {
             "systematic-debugging",
             "code-review",
         ],
-        next_steps=["qa-governor"],
+        next_steps=["test-hub", "qa-governor"],
         body=dedent(
             """\
             # Mission
@@ -352,13 +687,14 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
         name="project-architecture",
         description="analyze the current codebase shape and maintain a living architecture reference. use before designing a change, reviewing architectural drift, or implementing code in an unfamiliar area.",
         role="architecture-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["repository tree", ".ai-kit/contracts/project-context.md", ".ai-kit/contracts/architecture.md when available"],
         outputs=[".ai-kit/references/project-architecture.md"],
         references=[
             "Document what the codebase actually does today, not what the team intended six months ago.",
             "Include concrete file paths, entrypoints, and dependency direction.",
         ],
-        next_steps=["architect", "developer", "code-review"],
+        next_steps=["architect", "developer", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -385,13 +721,14 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
         name="dependency-management",
         description="capture dependency policy, lockfile usage, environment setup, and safe add or upgrade rules. use before adding packages, updating libraries, or diagnosing environment drift.",
         role="build-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["package metadata files", "lockfiles", "toolchain config", "CI setup if present"],
         outputs=[".ai-kit/references/dependency-management.md"],
         references=[
             "Record both the official package manager and what contributors actually use day to day.",
             "Make transitive risk and pinning policy explicit.",
         ],
-        next_steps=["architect", "developer", "qa-governor"],
+        next_steps=["architect", "developer", "qa-governor", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -418,13 +755,14 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
         name="api-integration",
         description="document external service integration patterns, clients, auth, retries, and error handling. use when building or changing API clients, webhooks, endpoints, or network-facing code.",
         role="integration-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["HTTP or RPC client code", "settings or secret config", "test or mock code"],
         outputs=[".ai-kit/references/api-integration.md"],
         references=[
             "Prefer concrete service names, client classes, and endpoint groups over generic summaries.",
             "Make retries, timeouts, idempotency, and error translation explicit.",
         ],
-        next_steps=["architect", "developer", "qa-governor"],
+        next_steps=["architect", "developer", "qa-governor", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -451,13 +789,14 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
         name="data-persistence",
         description="document storage topology, models, migrations, caching, and consistency rules. use when touching schemas, repositories, transactions, caches, or data flows.",
         role="persistence-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["model files", "repository or DAO code", "migration files", "cache config if present"],
         outputs=[".ai-kit/references/data-persistence.md"],
         references=[
             "Cover both primary storage and auxiliary state like caches, queues, or object stores when relevant.",
             "Document rollback and migration risks, not only happy-path structure.",
         ],
-        next_steps=["architect", "developer", "qa-governor"],
+        next_steps=["architect", "developer", "qa-governor", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -484,13 +823,14 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
         name="testing-patterns",
         description="capture how the project tests code, mocks dependencies, and gathers evidence. use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough.",
         role="quality-support",
+        layer="layer-4-specialists-and-standalones",
         inputs=["test folders", "test config", "fixtures or factories", "CI or local test commands"],
         outputs=[".ai-kit/references/testing-patterns.md"],
         references=[
             "Explain how to produce evidence locally, not only what frameworks exist.",
             "Map tests to risk areas and brittle zones where regressions cluster.",
         ],
-        next_steps=["developer", "qa-governor", "code-review"],
+        next_steps=["developer", "qa-governor", "debug-hub", "test-hub", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -516,6 +856,27 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
 }
 
 
+ROUND2_CORE_ORDER = [
+    "workflow-router",
+    "analyst",
+    "pm",
+    "architect",
+    "scrum-master",
+    "qa-governor",
+]
+
+CORE_SKILLS: Dict[str, SkillSpec] = {
+    name: (ORCHESTRATOR_SKILLS | ROLE_SKILLS)[name] for name in ROUND2_CORE_ORDER
+}
+
+ALL_V3_SKILLS: Dict[str, SkillSpec] = {}
+ALL_V3_SKILLS.update(ORCHESTRATOR_SKILLS)
+ALL_V3_SKILLS.update(WORKFLOW_HUB_SKILLS)
+ALL_V3_SKILLS.update(ROLE_SKILLS)
+ALL_V3_SKILLS.update(CLEANUP_SKILLS)
+ALL_V3_SKILLS.update(NATIVE_SUPPORT_SKILLS)
+
+
 def render_skill(spec: SkillSpec) -> str:
     parts = [
         "---",
@@ -524,6 +885,12 @@ def render_skill(spec: SkillSpec) -> str:
         "---",
         "",
         spec.body.strip(),
+        "",
+        "## Role",
+        f"- {spec.role}",
+        "",
+        "## Layer",
+        f"- {spec.layer}",
         "",
         "## Inputs",
     ]

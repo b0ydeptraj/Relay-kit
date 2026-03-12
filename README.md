@@ -1,16 +1,20 @@
-# Python Kit v3
+# Python Kit v3.1
 
 `python-kit` now runs with a registry-driven v3 entrypoint while preserving the previous generator as `python_kit_legacy.py`.
 
-## What Changed
+## What changed in round 3
 
-- `python_kit.py` is now the v3 BMAD-lite entrypoint
-- `python_kit_legacy.py` preserves the old monolithic generator and old kit inventory
-- `ai_kit_v3/` contains the registry-driven round2 implementation
-- v3 writes orchestration skills, contracts, workflow state, docs, and living reference templates
-- legacy kits remain available through `--legacy-kit`
+- keeps the round 2 BMAD-lite base in place
+- adds a **4-layer topology** closer to the hub-and-spoke model:
+  - layer 1 orchestrators: `workflow-router`, `bootstrap`, `team`, `cook`
+  - layer 2 workflow hubs: `brainstorm-hub`, `scout-hub`, `plan-hub`, `debug-hub`, `fix-hub`, `test-hub`, `review-hub`
+  - layer 3 utility providers: existing stateless utilities from your legacy kits remain external support capabilities
+  - layer 4 specialists and standalones: `analyst`, `pm`, `architect`, `scrum-master`, `developer`, `qa-governor`, `agentic-loop`, and native support skills
+- upgrades workflow state so orchestrator, hub, lane, and specialist are all visible
+- adds `team-board.md` for multi-lane coordination and `investigation-notes.md` for debug-first work
+- preserves legacy kits through `python_kit_legacy.py`
 
-## Runtime Layout
+## Runtime layout
 
 After running v3 generation, the repo uses these runtime folders:
 
@@ -18,28 +22,32 @@ After running v3 generation, the repo uses these runtime folders:
 - `.agent/skills/` -> Gemini/Antigravity runtime skills
 - `.codex/skills/` -> Codex runtime skills
 - `.ai-kit/contracts/` -> shared workflow contracts
-- `.ai-kit/state/` -> workflow state and breadcrumbs
+- `.ai-kit/state/` -> workflow state and multi-lane coordination state
 - `.ai-kit/references/` -> living support references
-- `.ai-kit/docs/` -> migration/runtime helper docs
+- `.ai-kit/docs/` -> topology, migration, and runtime helper docs
 
-## Prerequisites
+## Quick start
 
-- Python 3.10+ (`python --version`)
-- Git
-- Optional CLIs if you still use legacy generation directly against tools:
-  - Claude: `claude`
-  - Gemini/Antigravity: `gemini`
-  - Codex: `.codex/skills` support in Codex
-
-## Quick Start
-
-### v3 bundles
+### list bundles and kits
 
 ```bash
 python python_kit.py --list-skills
-python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates
-python python_kit.py . --bundle round2 --ai gemini --emit-contracts --emit-docs --emit-reference-templates
-python python_kit.py . --bundle round2 --ai codex --emit-contracts --emit-docs --emit-reference-templates
+```
+
+### generate the full round 3 layer set
+
+```bash
+python python_kit.py . --bundle round3 --ai claude --emit-contracts --emit-docs --emit-reference-templates
+python python_kit.py . --bundle round3 --ai gemini --emit-contracts --emit-docs --emit-reference-templates
+python python_kit.py . --bundle round3 --ai codex --emit-contracts --emit-docs --emit-reference-templates
+```
+
+### generate only orchestrators or hubs
+
+```bash
+python python_kit.py . --bundle orchestrators --ai claude --emit-contracts --emit-docs
+python python_kit.py . --bundle workflow-hubs --ai claude --emit-contracts --emit-docs
+python python_kit.py . --bundle round3-core --ai claude --emit-contracts --emit-docs
 ```
 
 ### legacy kits
@@ -53,112 +61,46 @@ python python_kit.py . --legacy-kit ui-ux --ai codex
 python python_kit.py . --legacy-kit full --ai all
 ```
 
-## v3 Bundles
+## v3 bundles
 
 | Bundle | What it writes |
-|--------|----------------|
-| `bmad-core` | Core orchestration skills |
-| `bmad-lite` | Core orchestration + cleaned `agentic-loop` |
-| `cleanup` | Cleanup-only runtime skills |
-| `legacy-native` | Native support skills (`project-architecture`, `dependency-management`, `api-integration`, `data-persistence`, `testing-patterns`) |
-| `round2` | Core + cleanup + native support skills |
+|---|---|
+| `bmad-core` | round 2 compatibility core skills |
+| `bmad-lite` | round 2 core + cleaned `agentic-loop` |
+| `cleanup` | cleanup-only runtime skills |
+| `legacy-native` | native support skills (`project-architecture`, `dependency-management`, `api-integration`, `data-persistence`, `testing-patterns`) |
+| `round2` | round 2 compatibility bundle |
+| `orchestrators` | layer 1 orchestration skills |
+| `workflow-hubs` | layer 2 workflow hubs |
+| `role-core` | layer 4 role specialists including `developer` |
+| `round3-core` | orchestrators + hubs + role specialists |
+| `round3` | full round 3 set: orchestrators + hubs + roles + cleanup + native support |
 
 Use `--emit-contracts`, `--emit-docs`, and `--emit-reference-templates` to materialize `.ai-kit/` outputs alongside skill generation.
 
-## Legacy Kits
-
-The old kits are still listed and runnable through `--legacy-kit`:
-
-- `python`
-- `flutter`
-- `antigravity`
-- `claudekit`
-- `ui-ux`
-- `full`
-
-Use `python python_kit.py --list-skills` to see both v3 bundles and legacy kits together.
-
-## AI Adapters
+## AI adapters
 
 | `--ai` | Output folder | Notes |
-|--------|---------------|-------|
+|---|---|---|
 | `claude` | `.claude/skills/` | Claude runtime |
 | `gemini` | `.agent/skills/` | Gemini/Antigravity runtime |
 | `codex` | `.codex/skills/` | Codex runtime |
 | `all` | `.claude/skills/` + `.agent/skills/` | `all` does not include Codex |
-| `generic` | `.python-kit-prompts/` | Prompt output only |
+| `generic` | `.python-kit-prompts/` | prompt output only |
 
-## Migration Notes
+## 4-layer usage model
 
-- v2-style `--kit` is no longer the primary interface for the repo entrypoint.
-- Use `--bundle` for v3 generation.
-- Use `--legacy-kit` when you need the old generator behavior.
-- `python_kit_legacy.py` is preserved and should not be edited in place during v3 migration.
-- `agentic-loop` runtime output is now generated from the cleaned round2 registry template rather than the old leaked authoring prompt.
+1. `workflow-router` chooses track and entrypoint.
+2. `bootstrap`, `cook`, or `team` own orchestration.
+3. one workflow hub runs the current playbook (`plan-hub`, `debug-hub`, `test-hub`, etc.).
+4. specialists and support skills produce or refresh the real artifacts.
 
-## Upgrade Path: v2 -> v3
+This keeps orchestration separate from execution, while still using BMAD-style context handoff through shared artifacts.
 
-Use this when moving an existing workflow from the old monolithic generator to the new round2 layout.
+## Migration notes
 
-1. Confirm the repo is on the v3 entrypoint:
-   - `python_kit.py` = v3
-   - `python_kit_legacy.py` = old generator
-2. Replace old v2 usage based on intent:
-   - old `--kit python|flutter|antigravity|claudekit|ui-ux|full`
-   - new `--legacy-kit python|flutter|antigravity|claudekit|ui-ux|full`
-3. Generate the new round2 runtime layer once:
-   - `python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates`
-   - `python python_kit.py . --bundle round2 --ai gemini --emit-contracts --emit-docs --emit-reference-templates`
-   - `python python_kit.py . --bundle round2 --ai codex --emit-contracts --emit-docs --emit-reference-templates`
-4. Migrate your day-to-day flow:
-   - use `--bundle round2` when you want orchestration skills + `.ai-kit` artifacts
-   - use `--legacy-kit ...` when you still need the old analysis/template kits
-5. Only deprecate old scripts or automation after your team has moved from `--kit` to `--legacy-kit` or fully to `--bundle`
-
-### Command Mapping
-
-| Old habit | New command |
-|----------|-------------|
-| `python python_kit.py . --kit python --ai claude` | `python python_kit.py . --legacy-kit python --ai claude` |
-| `python python_kit.py . --kit flutter --ai claude` | `python python_kit.py . --legacy-kit flutter --ai claude` |
-| `python python_kit.py . --kit full --ai all` | `python python_kit.py . --legacy-kit full --ai all` |
-| `python python_kit.py . --kit ...` for old skill packs | `python python_kit.py . --legacy-kit ...` |
-| no v2 equivalent | `python python_kit.py . --bundle round2 --ai <adapter> --emit-contracts --emit-docs --emit-reference-templates` |
-
-## Example Outputs From `round2`
-
-Running:
-
-```bash
-python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates
-```
-
-creates outputs like:
-
-- `.claude/skills/workflow-router/SKILL.md`
-- `.claude/skills/architect/SKILL.md`
-- `.claude/skills/project-architecture/SKILL.md`
-- `.ai-kit/contracts/PRD.md`
-- `.ai-kit/contracts/architecture.md`
-- `.ai-kit/contracts/qa-report.md`
-- `.ai-kit/state/workflow-state.md`
-- `.ai-kit/references/project-architecture.md`
-- `.ai-kit/references/api-integration.md`
-- `.ai-kit/references/data-persistence.md`
-- `.ai-kit/references/testing-patterns.md`
-
-## Publish To GitHub
-
-Commit only the intended round2 scope when the repo already has unrelated local changes:
-
-```bash
-git add README.md python_kit.py python_kit_legacy.py ai_kit_v3 .ai-kit .claude/skills .agent/skills .codex/skills
-git commit -m "feat: merge BMAD-lite round2 upgrade pack"
-git push origin main
-```
-
-## Credits
-
-- [claudekit-skills](https://github.com/anthropics/claudekit-skills)
-- [antigravity-kit](https://github.com/vudovn/antigravity-kit)
-- [ui-ux-pro-max-skill](https://ui-ux-pro-max-skill.nextlevelbuilder.io/)
+- `python_kit.py` remains the active v3 entrypoint.
+- `python_kit_legacy.py` remains the preserved old generator.
+- `round2` behavior stays available.
+- `round3` adds the 4-layer topology on top of the round 2 base instead of replacing it.
+- `agentic-loop` remains the execution engine, but now sits behind a first-class `developer` specialist and the new hubs.

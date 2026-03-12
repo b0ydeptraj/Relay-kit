@@ -21,6 +21,12 @@ Cover:
 - Flag destructive migrations, data backfills, and dual-write or consistency hazards.
 - Include file paths for models, repositories, migrations, and seed logic when they exist.
 
+## Role
+- persistence-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - model files
 - repository or DAO code
@@ -38,3 +44,4 @@ Cover:
 - architect
 - developer
 - qa-governor
+- review-hub

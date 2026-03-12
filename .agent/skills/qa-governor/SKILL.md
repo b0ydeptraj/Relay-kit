@@ -21,6 +21,12 @@ Include:
 - Call out missing tests, weak evidence, or unverified assumptions.
 - Bounce work back when story, tech-spec, or architecture is still underspecified.
 
+## Role
+- quality
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - PRD or tech-spec
 - architecture or story
@@ -34,5 +40,6 @@ Include:
 - Coverage must be explained against acceptance criteria and risk, not just number of tests.
 
 ## Likely next step
-- developer
+- review-hub
+- debug-hub
 - workflow-router

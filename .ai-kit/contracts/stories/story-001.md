@@ -2,7 +2,7 @@
 
 > Path: `.ai-kit/contracts/stories/story-001.md`
 > Purpose: Provide implementation-ready, focused context for a single vertical slice.
-> Used by: scrum-master, developer, qa-governor
+> Used by: scrum-master, developer, qa-governor, fix-hub, test-hub
 
 ## Story statement
 Fill in only with evidence, decisions, or open questions relevant to this artifact.

@@ -2,7 +2,7 @@
 
 > Path: `.ai-kit/contracts/project-context.md`
 > Purpose: Document current codebase patterns, constraints, and rules that every later step must respect.
-> Used by: workflow-router, analyst, pm, architect, scrum-master, qa-governor
+> Used by: workflow-router, bootstrap, cook, analyst, pm, architect, scrum-master, developer, qa-governor, scout-hub
 
 ## Existing architecture
 Fill in only with evidence, decisions, or open questions relevant to this artifact.

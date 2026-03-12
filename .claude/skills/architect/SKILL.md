@@ -22,8 +22,11 @@ Include:
 - State how observability, rollback, and failure handling will work for risky changes.
 - Flag any requirement that cannot be satisfied within the current architecture without upstream scope negotiation.
 
-## Readiness gate
-Mark the design blocked when schemas, APIs, migrations, or cross-service contracts are still ambiguous.
+## Role
+- solutioning
+
+## Layer
+- layer-4-specialists-and-standalones
 
 ## Inputs
 - .ai-kit/contracts/PRD.md
@@ -40,5 +43,6 @@ Mark the design blocked when schemas, APIs, migrations, or cross-service contrac
 
 ## Likely next step
 - scrum-master
-- qa-governor
+- review-hub
+- plan-hub
 - workflow-router

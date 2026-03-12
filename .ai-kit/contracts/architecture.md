@@ -2,7 +2,7 @@
 
 > Path: `.ai-kit/contracts/architecture.md`
 > Purpose: Translate the PRD into concrete technical structure, data flow, interfaces, and implementation constraints.
-> Used by: architect, scrum-master, qa-governor
+> Used by: architect, scrum-master, qa-governor, plan-hub, review-hub
 
 ## Current-system constraints
 Patterns that already exist and should not be broken casually.

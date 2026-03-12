@@ -21,6 +21,12 @@ Cover:
 - Explain how contributors should add, upgrade, and verify dependencies without drifting from CI.
 - Flag packages that are security-sensitive, hard to upgrade, or tightly coupled to runtime behavior.
 
+## Role
+- build-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - package metadata files
 - lockfiles
@@ -38,3 +44,4 @@ Cover:
 - architect
 - developer
 - qa-governor
+- review-hub

@@ -18,11 +18,14 @@ Cover these sections:
 ## Guardrails
 - Prefer validated facts over storytelling.
 - Call out what is unknown instead of silently guessing.
-- If the request is already well-scoped and `workflow-router` selected quick-flow, do not force a brief.
+- If the request is already well-scoped and quick-flow fits, do not force a brief.
 - If a fresh brief already exists, update only the parts affected by the new request.
 
-## Handoff
-End by stating whether the brief is ready for `pm`, or exactly what question still blocks planning.
+## Role
+- analysis
+
+## Layer
+- layer-4-specialists-and-standalones
 
 ## Inputs
 - user request
@@ -38,4 +41,5 @@ End by stating whether the brief is ready for `pm`, or exactly what question sti
 
 ## Likely next step
 - pm
+- plan-hub
 - workflow-router

@@ -1,8 +1,8 @@
 # prd
 
 > Path: `.ai-kit/contracts/PRD.md`
-> Purpose: Define scope, functional/non-functional requirements, acceptance criteria, release slices, and risks.
-> Used by: pm, architect, scrum-master, qa-governor
+> Purpose: Define scope, functional and non-functional requirements, acceptance criteria, release slices, and risks.
+> Used by: pm, architect, scrum-master, qa-governor, plan-hub
 
 ## Objective and scope
 State the product objective and scope boundaries in plain language.

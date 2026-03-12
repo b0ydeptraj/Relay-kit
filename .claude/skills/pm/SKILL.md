@@ -26,8 +26,11 @@ The PRD is not ready if any of the following is missing:
 - explicit out-of-scope section
 - at least one suggested slice order
 
-## Handoff
-Tell `architect` what constraints matter most and tell `scrum-master` which epic should be cut first.
+## Role
+- planning
+
+## Layer
+- layer-4-specialists-and-standalones
 
 ## Inputs
 - .ai-kit/contracts/product-brief.md or direct scoped request
@@ -45,4 +48,5 @@ Tell `architect` what constraints matter most and tell `scrum-master` which epic
 ## Likely next step
 - architect
 - scrum-master
-- workflow-router
+- plan-hub
+- review-hub

@@ -23,6 +23,12 @@ Execute implementation work in a tight loop without resorting to random fixes.
 ## Failure protocol
 After three failed fix attempts, stop and question the story, architecture, or assumptions instead of thrashing.
 
+## Role
+- developer-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - story or tech-spec
 - project-context
@@ -37,4 +43,5 @@ After three failed fix attempts, stop and question the story, architecture, or a
 - code-review
 
 ## Likely next step
+- test-hub
 - qa-governor

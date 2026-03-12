@@ -21,6 +21,12 @@ Cover:
 - Flag any mismatch between the intended architecture and what the code actually does.
 - Add file paths whenever the reference names a pattern or module.
 
+## Role
+- architecture-support
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - repository tree
 - .ai-kit/contracts/project-context.md
@@ -36,4 +42,4 @@ Cover:
 ## Likely next step
 - architect
 - developer
-- code-review
+- review-hub

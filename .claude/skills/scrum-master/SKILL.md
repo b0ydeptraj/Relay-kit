@@ -30,6 +30,12 @@ Each story must include:
 - Explicit about what must be tested.
 - Explicit about which upstream documents it depends on.
 
+## Role
+- delivery
+
+## Layer
+- layer-4-specialists-and-standalones
+
 ## Inputs
 - .ai-kit/contracts/PRD.md
 - .ai-kit/contracts/architecture.md
@@ -46,5 +52,6 @@ Each story must include:
 
 ## Likely next step
 - developer
-- qa-governor
+- test-hub
+- review-hub
 - workflow-router
