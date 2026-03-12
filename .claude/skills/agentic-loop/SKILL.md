@@ -1,81 +1,40 @@
 ---
 name: agentic-loop
-description: Self-correcting development loop with enforced 4-phase debugging. Use when building features that require iteration until success. Never allows quick fixes - always finds root cause first.
+description: self-correcting development loop for implementation work. use when building or fixing code iteratively and require evidence before claiming completion.
 ---
 
-You are now in AGENTIC MODE. This is a self-correcting development loop.
+# Mission
+Execute implementation work in a tight loop without resorting to random fixes.
 
-Create `.claude/skills/agentic-loop/SKILL.md` with:
+## The loop
+1. Understand the story or tech-spec completely.
+2. Make the smallest viable code change toward the goal.
+3. Run the relevant checks or tests.
+4. Analyze the result.
+5. If it failed, debug root cause before changing anything else.
+6. If it passed, collect evidence and hand off to QA.
 
-## THE AGENTIC LOOP
+## Non-negotiable rules
+- No quick fixes without root-cause reasoning.
+- No stacking multiple unrelated changes in one test cycle.
+- Write or update a failing test whenever the change fixes a bug.
+- Do not say done without fresh evidence from commands actually run.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  1. UNDERSTAND requirement completely                       │
-│  2. WRITE code to fulfill requirement                       │
-│  3. RUN code/tests                                          │
-│  4. ANALYZE results:                                        │
-│     ├─ SUCCESS → Go to step 6                               │
-│     └─ ERROR → Go to step 5                                 │
-│  5. FIX using 4-Phase Framework (see below) → Go to step 3  │
-│  6. VERIFY with evidence → REPORT results                   │
-└─────────────────────────────────────────────────────────────┘
-```
+## Failure protocol
+After three failed fix attempts, stop and question the story, architecture, or assumptions instead of thrashing.
 
-## IRON LAW FOR FIXING
+## Inputs
+- story or tech-spec
+- project-context
+- relevant support skills
 
-**ABSOLUTELY FORBIDDEN:**
-- ❌ Quick/temporary fixes
-- ❌ "Just try this and see"
-- ❌ Multiple changes at once
-- ❌ Fix without understanding root cause
-- ❌ Skip writing test for the fix
+## Outputs
+- working code plus test evidence
 
-**MANDATORY 4-PHASE FIX PROCESS:**
+## Reference skills and rules
+- testing-patterns
+- systematic-debugging
+- code-review
 
-### Phase 1: Root Cause Investigation (DO THIS FIRST)
-- Read error message COMPLETELY
-- Trace data flow backward: Where does bad value come from?
-- Check recent changes: git diff, new dependencies
-- Add diagnostic logging if needed
-- DO NOT propose fix until you understand WHY it broke
-
-### Phase 2: Pattern Analysis
-- Find working code in same codebase doing similar thing
-- Compare: What's different between working and broken?
-- Read documentation/references COMPLETELY, don't skim
-
-### Phase 3: Hypothesis
-- Form SINGLE hypothesis: "Root cause is X because Y"
-- Test with SMALLEST possible change
-- One variable at a time
-- If wrong → Back to Phase 1 with new information
-
-### Phase 4: Fix Implementation
-- Write failing test FIRST
-- Make SINGLE targeted fix
-- Run tests
-- If 3+ fixes failed → STOP, architecture may be wrong
-
-## VERIFICATION BEFORE CLAIMING SUCCESS
-
-Before saying "done":
-1. RUN actual tests (not cached results)
-2. READ complete output
-3. SHOW evidence: "Tests pass: [output showing 0 failures]"
-4. No evidence = Not done
-
-## LOOP TERMINATION
-
-Continue looping until:
-- All tests pass with evidence
-- User's requirement is met (verified, not assumed)
-- Report includes: what was done, what was tested, evidence of success
-
-## ANTI-PATTERNS TO REJECT
-
-If you catch yourself thinking:
-- "Quick fix for now" → STOP, find root cause
-- "Should work" → STOP, verify first
-- "Add multiple changes" → STOP, one at a time
-- "Skip the test" → STOP, test is mandatory
+## Likely next step
+- qa-governor

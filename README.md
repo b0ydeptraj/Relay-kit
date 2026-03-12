@@ -1,102 +1,131 @@
-# Python Kit v2.1
+# Python Kit v3
 
-Generate AI agent skills from Python and Flutter project analysis, plus template skills from Antigravity, ClaudeKit, and UI/UX Pro Max.
+`python-kit` now runs with a registry-driven v3 entrypoint while preserving the previous generator as `python_kit_legacy.py`.
+
+## What Changed
+
+- `python_kit.py` is now the v3 BMAD-lite entrypoint
+- `python_kit_legacy.py` preserves the old monolithic generator and old kit inventory
+- `ai_kit_v3/` contains the registry-driven round2 implementation
+- v3 writes orchestration skills, contracts, workflow state, docs, and living reference templates
+- legacy kits remain available through `--legacy-kit`
+
+## Runtime Layout
+
+After running v3 generation, the repo uses these runtime folders:
+
+- `.claude/skills/` -> Claude runtime skills
+- `.agent/skills/` -> Gemini/Antigravity runtime skills
+- `.codex/skills/` -> Codex runtime skills
+- `.ai-kit/contracts/` -> shared workflow contracts
+- `.ai-kit/state/` -> workflow state and breadcrumbs
+- `.ai-kit/references/` -> living support references
+- `.ai-kit/docs/` -> migration/runtime helper docs
 
 ## Prerequisites
 
 - Python 3.10+ (`python --version`)
-- Git (for cloning/updating this repo)
-- The AI CLI you plan to target:
+- Git
+- Optional CLIs if you still use legacy generation directly against tools:
   - Claude: `claude`
-  - Antigravity/Gemini: `gemini`
-  - Codex: Codex app with `.codex/skills` support
+  - Gemini/Antigravity: `gemini`
+  - Codex: `.codex/skills` support in Codex
 
 ## Quick Start
 
-```bash
-python python_kit.py /path/to/project               # Python skill set (default)
-python python_kit.py /path/to/project --kit flutter # Flutter skill set
-python python_kit.py /path/to/project --kit antigravity
-python python_kit.py /path/to/project --kit claudekit
-python python_kit.py /path/to/project --kit ui-ux
-python python_kit.py /path/to/project --kit full
-python python_kit.py /path/to/project --ai gemini   # Gemini output
-python python_kit.py /path/to/project --ai codex    # Codex output
-python python_kit.py /path/to/project --ai all      # Both Claude + Gemini
-python python_kit.py /path/to/project --ai generic  # Prompts for any AI
-```
-
-## Run For Each Tool
-
-Use the same command shape and change only `--ai`.
+### v3 bundles
 
 ```bash
-python C:/Users/b0ydeptrai/OneDrive/Documents/python-kit/python_kit.py <project_path> --ai claude --kit full
-python C:/Users/b0ydeptrai/OneDrive/Documents/python-kit/python_kit.py <project_path> --ai gemini --kit full
-python C:/Users/b0ydeptrai/OneDrive/Documents/python-kit/python_kit.py <project_path> --ai codex --kit full
+python python_kit.py --list-skills
+python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates
+python python_kit.py . --bundle round2 --ai gemini --emit-contracts --emit-docs --emit-reference-templates
+python python_kit.py . --bundle round2 --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
-Outputs by tool:
+### legacy kits
 
-- `claude` -> `<project_path>/.claude/skills/`
-- `gemini` -> `<project_path>/.agent/skills/`
-- `codex` -> `<project_path>/.codex/skills/`
+```bash
+python python_kit.py . --legacy-kit python --ai claude
+python python_kit.py . --legacy-kit flutter --ai claude
+python python_kit.py . --legacy-kit antigravity --ai gemini
+python python_kit.py . --legacy-kit claudekit --ai claude
+python python_kit.py . --legacy-kit ui-ux --ai codex
+python python_kit.py . --legacy-kit full --ai all
+```
 
-Notes:
+## v3 Bundles
 
-- `--ai all` currently means `claude + gemini` only.
-- On Windows, `aux` is a reserved name, so Codex support assets are written to `.codex/support/`.
+| Bundle | What it writes |
+|--------|----------------|
+| `bmad-core` | Core orchestration skills |
+| `bmad-lite` | Core orchestration + cleaned `agentic-loop` |
+| `cleanup` | Cleanup-only runtime skills |
+| `legacy-native` | Native support skills (`project-architecture`, `dependency-management`, `api-integration`, `data-persistence`, `testing-patterns`) |
+| `round2` | Core + cleanup + native support skills |
 
-## AI Adapters & Output Folders
+Use `--emit-contracts`, `--emit-docs`, and `--emit-reference-templates` to materialize `.ai-kit/` outputs alongside skill generation.
 
-| `--ai` | Folder | Auto-read? |
-|--------|--------|------------|
-| `claude` | `.claude/skills/` | Yes (Claude Code) |
-| `gemini` | `.agent/skills/` | Yes (Gemini/Antigravity) |
-| `codex` | `.codex/skills/` | Yes (Codex skills) |
-| `all` | Both folders | Yes (Claude + Gemini) |
-| `generic` | `.python-kit-prompts/` | No (copy-paste) |
+## Legacy Kits
 
-## Skill Sets
+The old kits are still listed and runnable through `--legacy-kit`:
 
-| Set | What it includes |
-|-----|------------------|
-| `python` | 19 analysis skills for Python projects |
-| `flutter` | 8 analysis skills for Flutter projects |
-| `antigravity` | Template skills for frontend/backend/devops/testing/database |
-| `claudekit` | Template skills for tooling, docs, MCP, frontend/backends |
-| `ui-ux` | UI/UX Pro Max skill (scripts + data included) |
-| `full` | All skills combined |
+- `python`
+- `flutter`
+- `antigravity`
+- `claudekit`
+- `ui-ux`
+- `full`
 
-Use `--list-skills` to see the full list.
+Use `python python_kit.py --list-skills` to see both v3 bundles and legacy kits together.
 
-## Extra Assets
+## AI Adapters
 
-Extra assets by adapter:
+| `--ai` | Output folder | Notes |
+|--------|---------------|-------|
+| `claude` | `.claude/skills/` | Claude runtime |
+| `gemini` | `.agent/skills/` | Gemini/Antigravity runtime |
+| `codex` | `.codex/skills/` | Codex runtime |
+| `all` | `.claude/skills/` + `.agent/skills/` | `all` does not include Codex |
+| `generic` | `.python-kit-prompts/` | Prompt output only |
 
-- `gemini`/`all`: `.agent/` receives Antigravity `rules/`, `workflows/`, and `.shared/`
-- `claude`/`all`: `.claude/` receives ClaudeKit `agents/` and `commands/`
-- `codex`: `.codex/support/antigravity/` receives `rules/`, `workflows/`, `.shared/`; `.codex/support/claude/` receives `agents/`, `commands/` (paths rewritten for Codex)
+## Migration Notes
+
+- v2-style `--kit` is no longer the primary interface for the repo entrypoint.
+- Use `--bundle` for v3 generation.
+- Use `--legacy-kit` when you need the old generator behavior.
+- `python_kit_legacy.py` is preserved and should not be edited in place during v3 migration.
+- `agentic-loop` runtime output is now generated from the cleaned round2 registry template rather than the old leaked authoring prompt.
+
+## Example Outputs From `round2`
+
+Running:
+
+```bash
+python python_kit.py . --bundle round2 --ai claude --emit-contracts --emit-docs --emit-reference-templates
+```
+
+creates outputs like:
+
+- `.claude/skills/workflow-router/SKILL.md`
+- `.claude/skills/architect/SKILL.md`
+- `.claude/skills/project-architecture/SKILL.md`
+- `.ai-kit/contracts/PRD.md`
+- `.ai-kit/contracts/architecture.md`
+- `.ai-kit/contracts/qa-report.md`
+- `.ai-kit/state/workflow-state.md`
+- `.ai-kit/references/project-architecture.md`
+- `.ai-kit/references/api-integration.md`
+- `.ai-kit/references/data-persistence.md`
+- `.ai-kit/references/testing-patterns.md`
 
 ## Publish To GitHub
 
-From the `python-kit` folder:
+Commit only the intended round2 scope when the repo already has unrelated local changes:
 
 ```bash
-git init
-git add .
-git commit -m "feat: add codex adapter and multi-tool install docs"
-git branch -M main
-git remote add origin <YOUR_GITHUB_REPO_URL>
-git push -u origin main
-```
-
-For later upgrades:
-
-```bash
-git add -A
-git commit -m "feat: ..."
-git push
+git add README.md python_kit.py python_kit_legacy.py ai_kit_v3 .ai-kit .claude/skills .agent/skills .codex/skills
+git commit -m "feat: merge BMAD-lite round2 upgrade pack"
+git push origin main
 ```
 
 ## Credits
