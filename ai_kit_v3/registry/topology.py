@@ -18,6 +18,12 @@ UTILITY_PROVIDER_NAMES = [
     "media-processing",
 ]
 
+DISCIPLINE_UTILITY_NAMES = [
+    "root-cause-debugging",
+    "test-first-development",
+    "evidence-before-completion",
+]
+
 LAYER_MODEL: Dict[str, Dict[str, object]] = {
     "layer-1-orchestrators": {
         "purpose": "Coordinate the whole system, choose the active lane, and keep shared state current.",
@@ -317,6 +323,7 @@ def render_bundle_gating() -> str:
         | round2 | round2 base only | round2 docs only | support references |
         | round3 | round2 base + round3 extras | round2 + round3 docs | support references |
         | utility-providers | none by default | utility and topology docs | none |
+        | discipline-utilities | none by default | discipline docs only | none |
         | round4 | round2 base + round3 extras + round4 extras | round2 + round3 + round4 docs | support references |
 
         Use temporary output directories when you need to prove gating behavior without contamination from prior generated files.
@@ -339,3 +346,126 @@ def render_round4_changelog() -> str:
         - keeps round2 and round3 compatibility available while adding new round4 bundles
         """
     )
+
+
+def render_planning_discipline() -> str:
+    lines = [
+        "# planning-discipline",
+        "",
+        "This overlay imports strong planning discipline without creating a second planning stack.",
+        "",
+        "## Core rules",
+        "- Plan from authoritative artifacts first: brief -> PRD -> architecture -> stories or tech-spec.",
+        "- Split unrelated subsystems before implementation starts.",
+        "- Prefer thin, verifiable slices over broad implementation batches.",
+        "- Every story or tech-spec should name the first verification command or evidence expected.",
+        "",
+        "## Task slicing bar",
+        "- Small enough to complete in one focused implementation pass.",
+        "- Large enough to produce visible progress or meaningful evidence.",
+        "- Explicit about dependencies on upstream artifacts.",
+        "- Explicit about what will fail if the slice is implemented incorrectly.",
+        "",
+        "## Used by",
+        "- plan-hub",
+        "- scrum-master",
+        "- review-hub when planning artifacts disagree",
+        "",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_parallel_execution() -> str:
+    lines = [
+        "# parallel-execution",
+        "",
+        "Use this overlay when `team` or `developer` is considering multiple lanes or subagent-style execution.",
+        "",
+        "## Split only when all of these are true",
+        "- The work items are independent enough that one fix is unlikely to invalidate the others.",
+        "- Each lane can claim a narrow lock scope.",
+        "- Merge order is known before the split.",
+        "- Shared artifacts are updated before handoff, not after memory drifts.",
+        "",
+        "## Lane rules",
+        "- One owner skill per lane.",
+        "- Record lock scope in `team-board.md` and `lane-registry.md`.",
+        "- Record handoffs in `handoff-log.md` whenever ownership changes.",
+        "- Park blocked lanes instead of letting them guess in parallel.",
+        "",
+        "## Subagent mode",
+        "- Only use subagent-style execution when tasks are already sliced and independent.",
+        "- Use one subagent per bounded task, not one subagent for the whole feature.",
+        "- Return every result through the lane owner before calling the work complete.",
+        "",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_workspace_isolation() -> str:
+    lines = [
+        "# workspace-isolation",
+        "",
+        "Use workspace isolation when implementation needs a clean branch, risky experimentation, or parallel execution across lanes.",
+        "",
+        "## Default expectations",
+        "- Prefer isolated worktrees or equivalent isolated branches for multi-lane work.",
+        "- Verify the isolation directory is ignored before writing into it.",
+        "- Run project setup and baseline verification before implementation begins.",
+        "",
+        "## Safety checks",
+        "- Do not start feature work on the main branch by accident.",
+        "- Do not treat a dirty or failing baseline as a green light for new implementation.",
+        "- If baseline verification fails, record the failure before proceeding.",
+        "",
+        "## Used by",
+        "- team",
+        "- developer",
+        "- review-hub",
+        "",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_branch_completion() -> str:
+    lines = [
+        "# branch-completion",
+        "",
+        "Branch completion is an operational discipline, not a separate orchestration layer.",
+        "",
+        "## Required order",
+        "1. Run the verification command that proves the branch is ready.",
+        "2. Decide whether the outcome is local merge, PR, keep branch, or discard.",
+        "3. If the branch will be integrated, re-check tests on the integration target when needed.",
+        "4. Clean up the isolated workspace only after the chosen integration path is explicit.",
+        "",
+        "## Red flags",
+        "- No completion path without fresh verification evidence.",
+        "- No discard path without explicit confirmation.",
+        "- No hidden cleanup that destroys a recoverable worktree or branch.",
+        "",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_review_loop() -> str:
+    lines = [
+        "# review-loop",
+        "",
+        "This overlay hardens review handling without adding a second review hub.",
+        "",
+        "## Requesting review",
+        "- Ask for review after a meaningful slice, not only at the very end.",
+        "- Give the reviewer bounded context: artifact, diff, requirements, and expected behavior.",
+        "",
+        "## Receiving review",
+        "- Verify feedback against codebase reality before applying it.",
+        "- Handle one review item at a time when it changes code or scope.",
+        "- Push back with technical reasoning when feedback is incorrect or out of scope.",
+        "",
+        "## Completion gate",
+        "- Review feedback does not override verification evidence.",
+        "- If review exposes planning or debugging gaps, route back through the appropriate hub explicitly.",
+        "",
+    ]
+    return "\n".join(lines).rstrip() + "\n"

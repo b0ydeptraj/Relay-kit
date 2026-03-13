@@ -4,6 +4,7 @@ from .skills import (
     ALL_V3_SKILLS,
     CLEANUP_SKILLS,
     CORE_SKILLS,
+    DISCIPLINE_UTILITY_SKILLS,
     LEGACY_ROLE_MAP,
     NATIVE_SUPPORT_SKILLS,
     ORCHESTRATOR_SKILLS,
@@ -14,20 +15,26 @@ from .skills import (
 )
 from .support_refs import SUPPORT_REFERENCES, render_support_reference
 from .topology import (
+    DISCIPLINE_UTILITY_NAMES,
     HUB_MESH,
     HUB_SUPPORT_MAP,
     LAYER_MODEL,
     UTILITY_PROVIDER_NAMES,
+    render_branch_completion,
     render_bundle_gating,
     render_hub_mesh,
     render_layer_model,
     render_orchestrator_rules,
+    render_parallel_execution,
+    render_planning_discipline,
+    render_review_loop,
     render_parallelism_rules,
     render_round2_changelog,
     render_round3_changelog,
     render_round4_changelog,
     render_standalone_taxonomy,
     render_utility_provider_model,
+    render_workspace_isolation,
 )
 from .workflows import COMPLEXITY_LADDER, TRACKS, render_handoff_log, render_lane_registry, render_team_board, render_workflow_state
 
@@ -42,6 +49,11 @@ DOC_RENDERERS = {
     "parallelism-rules": render_parallelism_rules,
     "bundle-gating": render_bundle_gating,
     "round4-changelog": render_round4_changelog,
+    "planning-discipline": render_planning_discipline,
+    "parallel-execution": render_parallel_execution,
+    "workspace-isolation": render_workspace_isolation,
+    "branch-completion": render_branch_completion,
+    "review-loop": render_review_loop,
 }
 
 __all__ = [
@@ -56,6 +68,7 @@ __all__ = [
     "WORKFLOW_HUB_SKILLS",
     "ROLE_SKILLS",
     "UTILITY_PROVIDER_SKILLS",
+    "DISCIPLINE_UTILITY_SKILLS",
     "CLEANUP_SKILLS",
     "NATIVE_SUPPORT_SKILLS",
     "LEGACY_ROLE_MAP",
@@ -72,6 +85,7 @@ __all__ = [
     "HUB_MESH",
     "HUB_SUPPORT_MAP",
     "UTILITY_PROVIDER_NAMES",
+    "DISCIPLINE_UTILITY_NAMES",
     "DOC_RENDERERS",
     "render_layer_model",
     "render_hub_mesh",
@@ -83,4 +97,9 @@ __all__ = [
     "render_parallelism_rules",
     "render_bundle_gating",
     "render_round4_changelog",
+    "render_planning_discipline",
+    "render_parallel_execution",
+    "render_workspace_isolation",
+    "render_branch_completion",
+    "render_review_loop",
 ]

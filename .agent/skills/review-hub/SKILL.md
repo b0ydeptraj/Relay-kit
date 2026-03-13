@@ -19,6 +19,11 @@ End with one explicit verdict:
 - bounce to implementation,
 - or hold for missing evidence.
 
+## Review handling discipline
+- Verify external review feedback against the codebase before accepting it.
+- Prefer one review item at a time when feedback changes code or requirements.
+- If the lane is complete, route through branch-completion discipline before treating it as finished.
+
 ## Role
 - review-hub
 
@@ -38,6 +43,7 @@ End with one explicit verdict:
 ## Reference skills and rules
 - Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.
 - Do not hide disagreement between artifacts; name it and route accordingly.
+- Use `.ai-kit/docs/review-loop.md` and `.ai-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.
 
 ## Likely next step
 - plan-hub

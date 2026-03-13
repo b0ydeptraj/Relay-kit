@@ -159,6 +159,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Shared artifacts beat chat summaries; update the artifact before handing off.",
             "Assign one owner skill per lane and name merge order explicitly.",
             "Use cook inside a lane, not as a replacement for team.",
+            "Use `.ai-kit/docs/parallel-execution.md` to decide when work is independent enough to split safely.",
         ],
         next_steps=["cook", "plan-hub", "scout-hub", "debug-hub", "review-hub"],
         body=dedent(
@@ -168,10 +169,11 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
 
             ## Mandatory behavior
             1. Maintain `.ai-kit/state/team-board.md` with lanes, owners, active artifacts, blockers, and merge order.
-            2. Split work only when lanes can avoid editing the same artifact section at the same time.
+            2. Split work only when lanes are independent enough to avoid editing the same artifact section at the same time.
             3. Use `cook` to drive each active lane, but keep final merge and priority decisions here.
             4. If one lane uncovers architecture or scope drift, update workflow-state and notify all affected lanes.
             5. Park lanes that are blocked instead of letting them thrash.
+            6. Record lock scope and handoff status whenever a lane changes ownership or pauses.
 
             ## Do not do this
             - Do not let two lanes silently diverge on the same acceptance criteria.
@@ -286,6 +288,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Call only the roles needed to close the current planning gap.",
             "Use scout-hub first if the current codebase context is too weak to plan safely.",
             "Route to review-hub if artifacts disagree with one another.",
+            "Use `.ai-kit/docs/planning-discipline.md` to keep plans artifact-first, bite-sized, and verification-aware.",
         ],
         next_steps=["analyst", "pm", "architect", "scrum-master", "developer", "review-hub"],
         body=dedent(
@@ -302,6 +305,11 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             ## Planning gate
             Stop and route to `review-hub` when product, architecture, and story artifacts disagree.
             Route to `developer` only when the active story or tech-spec is ready for implementation.
+
+            ## Planning discipline
+            - Prefer small, verifiable slices over broad task bundles.
+            - Every story or quick spec should name what will prove it is done.
+            - If the work spans unrelated subsystems, split the plan before implementation starts.
             """
         ).strip(),
     ),
@@ -313,7 +321,8 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
         inputs=["failing behavior", "logs, traces, or test output", "workflow-state", "relevant references"],
         outputs=[".ai-kit/contracts/investigation-notes.md", ".ai-kit/contracts/tech-spec.md when a fix path is clear"],
         references=[
-            "Use systematic-debugging, testing-patterns, and problem-solving before touching code.",
+            "When discipline utilities are installed, use `root-cause-debugging` before touching code.",
+            "Use testing-patterns and problem-solving to turn evidence into a fix path.",
             "Root cause beats guess-and-patch.",
             "Escalate to plan-hub if the 'bug' is actually an unclear requirement or architectural mismatch.",
         ],
@@ -326,7 +335,8 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             ## Mandatory behavior
             1. Reproduce the issue or explain why reproduction is not yet reliable.
             2. Write `investigation-notes.md` with evidence, likely root cause, and non-causes ruled out.
-            3. Decide whether the next move is:
+            3. If available, run the `root-cause-debugging` discipline before proposing a fix.
+            4. Decide whether the next move is:
                - `fix-hub` for a real fix,
                - `test-hub` for missing or weak evidence,
                - `plan-hub` when the issue is upstream ambiguity.
@@ -370,6 +380,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Use qa-governor for the actual readiness gate.",
             "Prefer evidence tied to acceptance criteria and regression surface.",
             "Route back to debug-hub when verification fails unexpectedly.",
+            "When discipline utilities are installed, use `evidence-before-completion` before calling the lane ready.",
         ],
         next_steps=["qa-governor", "review-hub", "debug-hub", "workflow-router"],
         body=dedent(
@@ -380,8 +391,9 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             ## Mandatory behavior
             1. Decide the smallest useful evidence matrix for the change.
             2. Collect results and compare them to acceptance criteria.
-            3. Write or refresh `qa-report.md`.
-            4. If evidence is weak or failing, route to `debug-hub` rather than guessing.
+            3. Use `evidence-before-completion` if available to validate every completion claim against fresh command output.
+            4. Write or refresh `qa-report.md`.
+            5. If evidence is weak or failing, route to `debug-hub` rather than guessing.
             """
         ).strip(),
     ),
@@ -395,6 +407,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
         references=[
             "Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.",
             "Do not hide disagreement between artifacts; name it and route accordingly.",
+            "Use `.ai-kit/docs/review-loop.md` and `.ai-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.",
         ],
         next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "workflow-router"],
         body=dedent(
@@ -414,6 +427,11 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             - bounce to debugging,
             - bounce to implementation,
             - or hold for missing evidence.
+
+            ## Review handling discipline
+            - Verify external review feedback against the codebase before accepting it.
+            - Prefer one review item at a time when feedback changes code or requirements.
+            - If the lane is complete, route through branch-completion discipline before treating it as finished.
             """
         ).strip(),
     ),
@@ -541,6 +559,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
         references=[
             "Each story should be a thin vertical slice with explicit done criteria.",
             "Do not create stories that hide architectural decisions or missing acceptance criteria.",
+            "Use `.ai-kit/docs/planning-discipline.md` to keep tasks bite-sized, testable, and explicit about verification.",
         ],
         next_steps=["developer", "test-hub", "review-hub", "workflow-router"],
         body=dedent(
@@ -571,6 +590,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             - Large enough to deliver user-visible progress.
             - Explicit about what must be tested.
             - Explicit about which upstream documents it depends on.
+            - Explicit about the first verification command or evidence expected after implementation.
             """
         ).strip(),
     ),
@@ -585,6 +605,8 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Use agentic-loop as the execution engine.",
             "Pull in project-architecture, api-integration, data-persistence, and testing-patterns as needed.",
             "Hand off to test-hub or qa-governor; do not self-certify completion without evidence.",
+            "Use `test-first-development` when discipline utilities are installed and the change is suitable for test-first execution.",
+            "If tasks are truly independent and the platform supports collaboration, follow `.ai-kit/docs/parallel-execution.md` before using subagent-style execution.",
         ],
         next_steps=["agentic-loop", "test-hub", "qa-governor", "review-hub"],
         body=dedent(
@@ -595,12 +617,13 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             ## Mandatory behavior
             1. Read the active story or tech-spec completely before changing code.
             2. Pull only the support references needed for the specific files or boundaries involved.
-            3. Execute through `agentic-loop` rather than piling unrelated changes into one pass.
-            4. Preserve the active acceptance criteria and note any hidden scope discovered during implementation.
-            5. Hand off to `test-hub` or `qa-governor` with the evidence actually collected.
+            3. Prefer `test-first-development` when the change benefits from a clear red-green cycle.
+            4. Execute through `agentic-loop` rather than piling unrelated changes into one pass.
+            5. Preserve the active acceptance criteria and note any hidden scope discovered during implementation.
+            6. Hand off to `test-hub` or `qa-governor` with the evidence actually collected.
 
             ## Escalation
-            If implementation reveals missing architecture, unclear acceptance criteria, or a bigger-than-expected change surface, stop and route back through `review-hub` or `workflow-router`.
+            If implementation reveals missing architecture, unclear acceptance criteria, a bigger-than-expected change surface, or the need for parallel sub-work, stop and route back through `review-hub` or `workflow-router`.
             """
         ).strip(),
     ),
@@ -612,7 +635,9 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
         inputs=["PRD or tech-spec", "architecture or story", "evidence from tests and reviews"],
         outputs=[".ai-kit/contracts/qa-report.md"],
         references=[
-            "Use testing-patterns, systematic-debugging, and code-review as support skills.",
+            "Use testing-patterns as the evidence map for the project.",
+            "When discipline utilities are installed, use `evidence-before-completion` before making completion claims.",
+            "Use `.ai-kit/docs/review-loop.md` when review feedback must be validated before action.",
             "Coverage must be explained against acceptance criteria and risk, not just number of tests.",
         ],
         next_steps=["review-hub", "debug-hub", "workflow-router"],
@@ -635,6 +660,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             - Name the regression surface explicitly.
             - Call out missing tests, weak evidence, or unverified assumptions.
             - Bounce work back when story, tech-spec, or architecture is still underspecified.
+            - Treat completion claims as invalid until they are backed by fresh verification evidence.
             """
         ).strip(),
     ),
@@ -651,8 +677,8 @@ CLEANUP_SKILLS: Dict[str, SkillSpec] = {
         outputs=["working code plus test evidence"],
         references=[
             "testing-patterns",
-            "systematic-debugging",
-            "code-review",
+            "If discipline utilities are installed, use `root-cause-debugging` before repeated fix attempts.",
+            "If discipline utilities are installed, use `evidence-before-completion` before claiming success.",
         ],
         next_steps=["test-hub", "qa-governor"],
         body=dedent(
@@ -1001,6 +1027,40 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
 }
 
 
+DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
+    "root-cause-debugging": utility_provider_spec(
+        name="root-cause-debugging",
+        description="structured root-cause debugging utility. use when a hub needs a disciplined investigation before proposing fixes.",
+        outputs=["root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"],
+        references=["No fixes before investigation.", "Prefer evidence at component boundaries over guessed explanations."],
+        next_steps=["debug-hub", "fix-hub", "test-hub"],
+        mission="Force a root-cause-first debugging pass so the lane stops guessing and starts proving.",
+        tasks=["Read the failure carefully and restate the symptom.", "Trace the issue through the narrowest useful chain of evidence.", "Record likely cause, non-causes, and the smallest validating next move."],
+        rules=["Do not recommend fixes before the evidence is good enough to reject obvious alternatives.", "Prefer one hypothesis at a time.", "Escalate back to planning when the issue is really a requirements or architecture mismatch."],
+    ),
+    "test-first-development": utility_provider_spec(
+        name="test-first-development",
+        description="test-first execution utility. use when implementation should follow a red-green-refactor loop instead of ad-hoc coding.",
+        outputs=["test-first execution notes and evidence appended to story, tech-spec, or qa-report"],
+        references=["Write the failing test first when the behavior is testable.", "Keep the change minimal until the new test is green."],
+        next_steps=["developer", "test-hub", "qa-governor"],
+        mission="Drive implementation through the smallest useful red-green-refactor loop.",
+        tasks=["Name the behavior that should fail first.", "Capture the failing test or reproduction evidence.", "Implement only enough to turn the signal green before cleanup."],
+        rules=["If the behavior cannot be tested first, say why instead of pretending the loop happened.", "Keep one behavior per cycle.", "Do not widen scope during the green phase."],
+    ),
+    "evidence-before-completion": utility_provider_spec(
+        name="evidence-before-completion",
+        description="completion-evidence utility. use when a hub or specialist is about to say work is done, fixed, or ready.",
+        outputs=["fresh verification evidence and claim checks appended to qa-report, workflow-state, or the active artifact"],
+        references=["No completion claims without fresh verification output.", "Match every claim to the command or evidence that proves it."],
+        next_steps=["test-hub", "qa-governor", "review-hub"],
+        mission="Stop premature completion claims by forcing a claim-to-evidence check.",
+        tasks=["List the exact claims being made.", "Name the command, artifact, or output that proves each claim.", "Reject claims that are not backed by fresh evidence."],
+        rules=["Confidence is not evidence.", "Partial verification is not completion.", "If evidence is stale or missing, route back to testing or debugging instead of approving the lane."],
+    ),
+}
+
+
 ROUND2_CORE_ORDER = [
     "workflow-router",
     "analyst",
@@ -1019,6 +1079,7 @@ ALL_V3_SKILLS.update(ORCHESTRATOR_SKILLS)
 ALL_V3_SKILLS.update(WORKFLOW_HUB_SKILLS)
 ALL_V3_SKILLS.update(ROLE_SKILLS)
 ALL_V3_SKILLS.update(UTILITY_PROVIDER_SKILLS)
+ALL_V3_SKILLS.update(DISCIPLINE_UTILITY_SKILLS)
 ALL_V3_SKILLS.update(CLEANUP_SKILLS)
 ALL_V3_SKILLS.update(NATIVE_SUPPORT_SKILLS)
 

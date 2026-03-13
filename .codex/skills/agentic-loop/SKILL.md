@@ -39,8 +39,8 @@ After three failed fix attempts, stop and question the story, architecture, or a
 
 ## Reference skills and rules
 - testing-patterns
-- systematic-debugging
-- code-review
+- If discipline utilities are installed, use `root-cause-debugging` before repeated fix attempts.
+- If discipline utilities are installed, use `evidence-before-completion` before claiming success.
 
 ## Likely next step
 - test-hub

@@ -7,6 +7,7 @@
 - Current baseline: `round4` / `v3.2`
 - Compatibility bundles still supported: `round2`, `round3`
 - Hardened topology: orchestrators + workflow hubs + utility providers + specialists
+- Optional discipline overlay available through `discipline-utilities`
 
 ## What changed in round 4
 
@@ -49,10 +50,11 @@ python python_kit.py . --bundle round4 --ai gemini --emit-contracts --emit-docs 
 python python_kit.py . --bundle round4 --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
-### generate only utility providers or compatibility bundles
+### generate utility overlays or compatibility bundles
 
 ```bash
 python python_kit.py . --bundle utility-providers --ai claude --emit-docs
+python python_kit.py . --bundle discipline-utilities --ai claude --emit-docs
 python python_kit.py . --bundle round3 --ai codex --emit-contracts --emit-docs --emit-reference-templates
 python python_kit.py . --bundle round2 --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
@@ -83,10 +85,13 @@ python python_kit.py . --legacy-kit full --ai all
 | `round3-core` | orchestrators + hubs + role specialists |
 | `round3` | full round 3 set: orchestrators + hubs + roles + cleanup + native support |
 | `utility-providers` | layer 3 stateless utility providers |
+| `discipline-utilities` | optional root-cause / test-first / completion-evidence overlay plus operational discipline docs |
 | `round4-core` | orchestrators + hubs + roles + utility providers |
 | `round4` | full round 4 set: round4-core + cleanup + native support |
 
 Use `--emit-contracts`, `--emit-docs`, and `--emit-reference-templates` to materialize `.ai-kit/` outputs alongside skill generation.
+
+`discipline-utilities` is intentionally additive: it strengthens execution discipline without changing the behavior or scope of `round2`, `round3`, or `round4`.
 
 ## 4-layer usage model
 

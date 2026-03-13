@@ -20,6 +20,7 @@ Include:
 - Name the regression surface explicitly.
 - Call out missing tests, weak evidence, or unverified assumptions.
 - Bounce work back when story, tech-spec, or architecture is still underspecified.
+- Treat completion claims as invalid until they are backed by fresh verification evidence.
 
 ## Role
 - quality
@@ -36,7 +37,9 @@ Include:
 - .ai-kit/contracts/qa-report.md
 
 ## Reference skills and rules
-- Use testing-patterns, systematic-debugging, and code-review as support skills.
+- Use testing-patterns as the evidence map for the project.
+- When discipline utilities are installed, use `evidence-before-completion` before making completion claims.
+- Use `.ai-kit/docs/review-loop.md` when review feedback must be validated before action.
 - Coverage must be explained against acceptance criteria and risk, not just number of tests.
 
 ## Likely next step

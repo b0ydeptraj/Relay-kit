@@ -10,6 +10,7 @@ from .registry import (
     BUNDLE_DOC_NAMES,
     CLEANUP_SKILLS,
     CORE_SKILLS,
+    DISCIPLINE_UTILITY_SKILLS,
     DOC_RENDERERS,
     LEGACY_ROLE_MAP,
     NATIVE_SUPPORT_SKILLS,
@@ -42,6 +43,7 @@ BUNDLES: Dict[str, List[str]] = {
     "round3-core": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()),
     "round3": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()),
     "utility-providers": list(UTILITY_PROVIDER_SKILLS.keys()),
+    "discipline-utilities": list(DISCIPLINE_UTILITY_SKILLS.keys()),
     "round4-core": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()),
     "round4": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()),
 }

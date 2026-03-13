@@ -9,7 +9,8 @@ Turn a symptom into evidence and a decision, not into random edits.
 ## Mandatory behavior
 1. Reproduce the issue or explain why reproduction is not yet reliable.
 2. Write `investigation-notes.md` with evidence, likely root cause, and non-causes ruled out.
-3. Decide whether the next move is:
+3. If available, run the `root-cause-debugging` discipline before proposing a fix.
+4. Decide whether the next move is:
    - `fix-hub` for a real fix,
    - `test-hub` for missing or weak evidence,
    - `plan-hub` when the issue is upstream ambiguity.
@@ -31,7 +32,8 @@ Turn a symptom into evidence and a decision, not into random edits.
 - .ai-kit/contracts/tech-spec.md when a fix path is clear
 
 ## Reference skills and rules
-- Use systematic-debugging, testing-patterns, and problem-solving before touching code.
+- When discipline utilities are installed, use `root-cause-debugging` before touching code.
+- Use testing-patterns and problem-solving to turn evidence into a fix path.
 - Root cause beats guess-and-patch.
 - Escalate to plan-hub if the 'bug' is actually an unclear requirement or architectural mismatch.
 

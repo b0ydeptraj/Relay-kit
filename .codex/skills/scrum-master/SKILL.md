@@ -29,6 +29,7 @@ Each story must include:
 - Large enough to deliver user-visible progress.
 - Explicit about what must be tested.
 - Explicit about which upstream documents it depends on.
+- Explicit about the first verification command or evidence expected after implementation.
 
 ## Role
 - delivery
@@ -49,6 +50,7 @@ Each story must include:
 ## Reference skills and rules
 - Each story should be a thin vertical slice with explicit done criteria.
 - Do not create stories that hide architectural decisions or missing acceptance criteria.
+- Use `.ai-kit/docs/planning-discipline.md` to keep tasks bite-sized, testable, and explicit about verification.
 
 ## Likely next step
 - developer

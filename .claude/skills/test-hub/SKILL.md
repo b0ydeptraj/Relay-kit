@@ -9,8 +9,9 @@ Turn raw test execution into a real readiness decision.
 ## Mandatory behavior
 1. Decide the smallest useful evidence matrix for the change.
 2. Collect results and compare them to acceptance criteria.
-3. Write or refresh `qa-report.md`.
-4. If evidence is weak or failing, route to `debug-hub` rather than guessing.
+3. Use `evidence-before-completion` if available to validate every completion claim against fresh command output.
+4. Write or refresh `qa-report.md`.
+5. If evidence is weak or failing, route to `debug-hub` rather than guessing.
 
 ## Role
 - verification-hub
@@ -32,6 +33,7 @@ Turn raw test execution into a real readiness decision.
 - Use qa-governor for the actual readiness gate.
 - Prefer evidence tied to acceptance criteria and regression surface.
 - Route back to debug-hub when verification fails unexpectedly.
+- When discipline utilities are installed, use `evidence-before-completion` before calling the lane ready.
 
 ## Likely next step
 - qa-governor
