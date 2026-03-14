@@ -33,8 +33,8 @@ This gauntlet is designed to avoid three failure modes:
 
 ## Gauntlet shape
 
-- 8 repos
-- 24 tasks
+- 12 repos
+- 36 tasks
 - 4 rounds
 - 3 adapters smoke-checked for runtime parity
 - 1 final verdict per skill
@@ -49,7 +49,7 @@ At the end of the gauntlet, each skill must land in exactly one state:
 
 ## Repo matrix
 
-Use 8 repos so the result is not tied to one coding style or one maintenance culture.
+Use 12 repos so the result is not tied to one coding style, one framework family, or one maintenance culture.
 
 ### Track A: Python library / core utility
 
@@ -74,25 +74,37 @@ Use 8 repos so the result is not tied to one coding style or one maintenance cul
 6. `encode/httpx`
    - type: HTTP client
    - main pressure: public API behavior, regression discipline, evidence
+7. `pallets/flask`
+   - type: web framework / application backbone
+   - main pressure: routing, integration behavior, compatibility, docs-to-runtime drift
+8. `fastapi/fastapi`
+   - type: API framework / service-heavy codebase
+   - main pressure: type-driven behavior, API surface, verification discipline
 
 ### Track C: TypeScript / web / frontend-adjacent
 
-7. `sindresorhus/ky`
+9. `sindresorhus/ky`
    - type: browser-focused HTTP client
    - main pressure: test-first on JS/TS and review evidence
-8. `axios/axios`
+10. `axios/axios`
    - type: larger HTTP client / cross-environment package
    - main pressure: multi-path compatibility and review discipline
+11. `sindresorhus/p-limit`
+   - type: small async utility
+   - main pressure: edge-case correctness, low-level test discipline, low-noise baseline fit
+12. `date-fns/date-fns`
+   - type: broadly used utility package
+   - main pressure: API stability, regression evidence, noisy-change detection
 
 If a repo cannot be cloned or built reliably on the pilot machine, replace it with a repo of the same slot type. Do not replace a Python slot with a frontend slot or vice versa.
 
 ## Task matrix
 
-Total tasks: 24
+Total tasks: 36
 
-- 8 for `root-cause-debugging`
-- 8 for `test-first-development`
-- 8 for `evidence-before-completion`
+- 12 for `root-cause-debugging`
+- 12 for `test-first-development`
+- 12 for `evidence-before-completion`
 
 Each repo contributes exactly 3 tasks:
 
@@ -238,12 +250,13 @@ The detailed template lives in `docs/discipline-utilities-gauntlet-scorecard.md`
 A skill may be marked `fold-next-baseline` only if all of these are true:
 
 1. it passes layer-fit with no major objections
-2. it shows clear benefit in at least 6 of 8 tasks in its own task family
+2. it shows clear benefit in at least 9 of 12 tasks in its own task family
 3. it still shows value in the pressure round
 4. it does not create high noise for simple or medium tasks
 5. it does not require new contracts or state files
 6. it keeps bundle gating clean
 7. adapter behavior remains symmetric enough to ship
+8. its positive results are spread across at least 3 repo tracks, not concentrated in only one ecosystem
 
 If any of those fail, the skill does not get folded.
 
@@ -273,10 +286,10 @@ The gauntlet exists to confirm or overturn that prediction.
 Recommended order:
 
 1. run all calibration steps
-2. run all 8 debugging tasks
-3. run all 8 test-first tasks
-4. run all 8 completion-evidence tasks
-5. run pressure round re-checks on the most representative tasks
+2. run all 12 debugging tasks
+3. run all 12 test-first tasks
+4. run all 12 completion-evidence tasks
+5. run pressure round re-checks on the most representative tasks from each track
 6. complete the scorecards
 7. update `docs/discipline-utilities-baseline-proposal.md` only after the verdict is locked
 
