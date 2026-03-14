@@ -93,6 +93,8 @@ Use `--emit-contracts`, `--emit-docs`, and `--emit-reference-templates` to mater
 
 `discipline-utilities` is intentionally additive: it strengthens execution discipline without changing the behavior or scope of `round2`, `round3`, or `round4`.
 
+See also: `C:\Users\b0ydeptrai\OneDrive\Documents\python-kit\docs\discipline-utilities-baseline-proposal.md`
+
 ## 4-layer usage model
 
 1. `workflow-router` chooses track and entrypoint.
