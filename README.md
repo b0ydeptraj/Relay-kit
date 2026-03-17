@@ -1,175 +1,167 @@
-# Relay-kit v3.2
+[English](README.md) | [Tiếng Việt](README.vi.md)
 
-`Relay-kit` is a workflow system for coding agents.
+# Relay-kit
 
-It helps you do five things well:
-- clarify work before building
-- cut approved work into safe steps
-- implement with evidence instead of vibes
-- debug from root cause instead of guesswork
-- block weak completion claims
+Relay-kit is a workflow operating system for teams that build with coding agents.
 
-The internal system is deep. The public face should still be simple.
+It does not try to make the model magically smarter. It makes the work more disciplined.
 
-## Start here in 30 seconds
+With Relay-kit, an agent gets:
 
-If you only remember one thing, remember these names:
+- a clearer starting point
+- better reusable skills
+- a stricter way to plan, build, debug, and review
+- shared artifacts so work does not live only in chat memory
 
-| If you want to... | Use this public name | Behind the scenes |
+The result is simple: agents work with more structure, fewer random moves, and stronger proof before anything is called done.
+
+## Why use Relay-kit
+
+Most agent workflows break in the same places:
+
+- work starts before the problem is clear
+- implementation drifts away from the approved direction
+- bugs get patched without finding the root cause
+- "done" gets claimed before there is enough proof
+
+Relay-kit exists to stop that.
+
+It is for:
+
+- solo builders using coding agents seriously
+- product and engineering teams that want repeatable output
+- people using Claude, Codex, or Gemini-style agent workflows who need more than prompt packs
+
+Relay-kit gives them a clear operating flow for:
+
+- new work
+- bug fixing
+- review
+- completion
+
+It makes agents behave less like improvising interns and more like engineers working inside a defined system.
+
+## What you get
+
+- a small public skill surface that is easy to remember
+- reusable runtime skills for `.claude`, `.agent`, and `.codex`
+- shared workflow artifacts in `.ai-kit/`
+- an active baseline that is validated instead of loosely assembled
+- a way to make work more consistent without forcing everything through raw chat memory
+
+## Quick start
+
+List available skills and bundles:
+
+```bash
+python relay_kit.py --list-skills
+```
+
+Generate the active baseline:
+
+```bash
+python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
+```
+
+Validate the runtime contract:
+
+```bash
+python scripts/validate_runtime.py
+```
+
+## Start flow
+
+If you only remember a few names, remember these:
+
+| Goal | Public name | Behind the scenes |
 |---|---|---|
-| figure out where to start | `start-here` | `workflow-router` |
-| turn a rough idea into a clear direction | `brainstorm` | `brainstorm-hub` |
-| slice approved work into buildable steps | `write-steps` | `scrum-master` |
-| implement an approved slice | `build-it` | `developer` |
-| debug a bug or mismatch properly | `debug-systematically` | `debug-hub` + `root-cause-debugging` |
-| decide whether work is actually ready | `ready-check` | `review-hub` + `qa-governor` |
-| force one last proof pass | `prove-it` | `evidence-before-completion` |
+| find the right path | `start-here` | `workflow-router` |
+| shape a rough idea | `brainstorm` | `brainstorm-hub` |
+| turn approved work into buildable steps | `write-steps` | `scrum-master` |
+| implement the approved slice | `build-it` | `developer` |
+| debug without guessing | `debug-systematically` | `debug-hub` + `root-cause-debugging` |
+| decide if work is actually ready | `ready-check` | `review-hub` + `qa-governor` |
+| force a final proof pass | `prove-it` | `evidence-before-completion` |
 
-See also: [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
-
-## Default paths
-
-### New work
+Default path for new work:
 
 1. `start-here`
 2. `brainstorm`
 3. `write-steps`
 4. `build-it`
 5. `ready-check`
-6. `prove-it` when the completion claim still needs a stricter proof pass
 
-### Bug or regression
+Default path for bugs:
 
 1. `start-here`
 2. `debug-systematically`
-3. `build-it` once the fix path is real
+3. `build-it`
 4. `ready-check`
 
-### Final confidence check
+More detail:
+- [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
 
-1. `prove-it`
-2. `ready-check`
+## How it works
 
-## CLI quick start
+Relay-kit separates the work into a small number of reliable stages:
 
-### list bundles and kits
+1. route the request
+2. clarify or investigate
+3. slice the work into safe steps
+4. implement with evidence
+5. review before calling it done
 
-```bash
-python relay_kit.py --list-skills
-```
+Under the hood, the system uses runtime skills plus shared state, contracts, references, and docs in `.ai-kit/`.
 
-### generate the active baseline
+## Configuration
 
-```bash
-python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
-```
+Main entrypoints:
 
-### validate the runtime contract
+- `relay_kit.py`
+- `relay_kit_legacy.py`
 
-```bash
-python scripts/validate_runtime.py
-```
+Current active baseline:
 
-## Compatibility note
+- `baseline`
 
-- the product brand is now `Relay-kit`
-- preferred CLI entrypoints are now `relay_kit.py` and `relay_kit_legacy.py`
-- `python_kit.py` and `python_kit_legacy.py` remain compatibility aliases for one cycle
-- generic prompt output now prefers `.relay-kit-prompts/` and mirrors `.python-kit-prompts/` for one cycle
-- the public names above are convenience aliases in the repo-local skill surface for day-to-day use; the canonical runtime skills and bundles remain unchanged
+Generated output includes:
 
-## Status snapshot
+- `.codex/skills/`
+- `.claude/skills/`
+- `.agent/skills/`
+- `.ai-kit/contracts/`
+- `.ai-kit/state/`
+- `.ai-kit/references/`
+- `.ai-kit/docs/`
 
-- Current baseline: `baseline` / `v3.2`
-- Compatibility baseline still supported: `round4`
-- Compatibility alias retained for one cycle: `baseline-next`
-- Hardened topology: orchestrators + workflow hubs + utility providers + specialists
-- Optional discipline overlay available through `discipline-utilities`
+## Compatibility
 
-## Runtime layout
+Relay-kit is currently in a compatibility cycle after the technical rename.
 
-After running v3 generation, the repo uses these runtime folders:
+Preferred names:
 
-- `.claude/skills/` -> Claude runtime skills
-- `.agent/skills/` -> Gemini-compatible runtime skills and the active compatibility target for Antigravity-style usage
-- `.codex/skills/` -> Codex runtime skills
-- `.ai-kit/contracts/` -> shared workflow contracts
-- `.ai-kit/state/` -> workflow state, lane registry, handoff log, and multi-lane coordination state
-- `.ai-kit/references/` -> living support references
-- `.ai-kit/docs/` -> topology, migration, gating, and runtime helper docs
+- `relay_kit.py`
+- `relay_kit_legacy.py`
+- `.relay-kit-prompts/`
 
-## Legacy kits
+Compatibility aliases kept for one cycle:
 
-```bash
-python relay_kit.py . --legacy-kit python --ai claude
-python relay_kit.py . --legacy-kit flutter --ai claude
-python relay_kit.py . --legacy-kit antigravity --ai gemini
-python relay_kit.py . --legacy-kit claudekit --ai claude
-python relay_kit.py . --legacy-kit ui-ux --ai codex
-python relay_kit.py . --legacy-kit full --ai all
-```
+- `python_kit.py`
+- `python_kit_legacy.py`
+- `.python-kit-prompts/`
 
-Legacy kits are migration and compatibility flows. They can materialize ClaudeKit or Antigravity-shaped assets, but they do not redefine the active v3 runtime model.
+Removal gate:
+- [`docs/relay-kit-compatibility-cycle.md`](docs/relay-kit-compatibility-cycle.md)
 
-## One-cycle compatibility aliases
+## Deeper docs
 
-```bash
-python python_kit.py --list-skills
-python python_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
-python python_kit.py . --legacy-kit python --ai claude
-```
+- Start flow:
+  - [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
+- Folder structure:
+  - [`.ai-kit/docs/folder-structure.md`](.ai-kit/docs/folder-structure.md)
+- Bundle gating:
+  - [`.ai-kit/docs/bundle-gating.md`](.ai-kit/docs/bundle-gating.md)
 
-## v3 bundles
+## Legacy note
 
-| Bundle | What it writes |
-|---|---|
-| `bmad-core` | round 2 compatibility core skills |
-| `bmad-lite` | round 2 core + cleaned `agentic-loop` |
-| `cleanup` | cleanup-only runtime skills |
-| `legacy-native` | native support skills (`project-architecture`, `dependency-management`, `api-integration`, `data-persistence`, `testing-patterns`) |
-| `round2` | strict round 2 compatibility bundle |
-| `orchestrators` | layer 1 orchestration skills |
-| `workflow-hubs` | layer 2 workflow hubs |
-| `role-core` | layer 4 role specialists including `developer` |
-| `round3-core` | orchestrators + hubs + role specialists |
-| `round3` | full round 3 set: orchestrators + hubs + roles + cleanup + native support |
-| `utility-providers` | layer 3 stateless utility providers |
-| `discipline-utilities` | optional root-cause / test-first / completion-evidence overlay plus operational discipline docs |
-| `round4-core` | orchestrators + hubs + roles + utility providers |
-| `round4` | full round 4 set: round4-core + cleanup + native support |
-| `baseline` | official baseline: `round4` plus `root-cause-debugging` and `evidence-before-completion` |
-| `baseline-next` | compatibility alias for `baseline` during the promotion cycle |
-
-Use `--emit-contracts`, `--emit-docs`, and `--emit-reference-templates` to materialize `.ai-kit/` outputs alongside skill generation.
-
-`discipline-utilities` is intentionally additive: it strengthens execution discipline without changing the behavior or scope of `round2`, `round3`, or `round4`.
-
-`baseline` is now the official active baseline. It leaves `round4` untouched and adds only the two discipline utilities approved by the gauntlet.
-
-`baseline-next` is retained as a compatibility alias for one promotion cycle so earlier commands and notes do not break immediately.
-
-For v3 bundle generation, `--ai all` writes `.claude/skills`, `.agent/skills`, and `.codex/skills`. Legacy kits keep their legacy compatibility behavior, so use `--ai codex` explicitly when you need Codex output from the preserved generator.
-
-See also: [`docs/discipline-utilities-baseline-proposal.md`](docs/discipline-utilities-baseline-proposal.md)
-See also: [`docs/relay-kit-compatibility-cycle.md`](docs/relay-kit-compatibility-cycle.md)
-
-## 4-layer usage model
-
-1. `workflow-router` chooses track and entrypoint.
-2. `bootstrap`, `cook`, or `team` own orchestration.
-3. one workflow hub runs the current playbook (`plan-hub`, `debug-hub`, `test-hub`, etc.) and pulls utility providers as needed.
-4. specialists, standalones, and native support skills produce or refresh the real artifacts.
-
-This keeps orchestration separate from execution, while still using BMAD-style context handoff through shared artifacts.
-
-## Migration notes
-
-- `relay_kit.py` is the preferred Relay-kit v3 entrypoint.
-- `python_kit.py` remains a compatibility alias for one cycle.
-- `relay_kit_legacy.py` is the preferred preserved legacy generator.
-- `python_kit_legacy.py` remains a compatibility alias for one cycle.
-- `.relay-kit-prompts/` is the preferred generic output path; `.python-kit-prompts/` is mirrored for one cycle.
-- `round2` and `round3` behavior stay available.
-- `round4` adds utility providers, bundle gating, and stronger multi-lane state on top of the round 3 base instead of replacing it.
-- renaming the physical repo folder is deferred to a later manual migration after the compatibility cycle so current absolute Windows paths remain truthful.
-- use `docs/relay-kit-compatibility-cycle.md` as the removal gate before deleting old names or renaming the physical repo folder.
+Legacy kits still exist for migration and compatibility work. They are not the main Relay-kit runtime story.
