@@ -12,10 +12,10 @@ Use this checklist before:
 ## Auto-log and checkpoint workflow
 
 - Local event log:
-  - `C:\Users\b0ydeptrai\OneDrive\Documents\python-kit\.relay-kit-cycle\events.jsonl`
+  - `.relay-kit-cycle/events.jsonl`
 - This local event log is ignored by git and is meant for machine-written evidence.
 - Tracked summary/log file:
-  - `C:\Users\b0ydeptrai\OneDrive\Documents\python-kit\docs\relay-kit-compatibility-log.md`
+  - `docs/relay-kit-compatibility-log.md`
 - Checkpoint commands:
 
 ```bash
@@ -33,16 +33,14 @@ run-relay-kit-checkpoint.cmd
 
 ## What stays deferred in this cycle
 
-- Physical repo folder rename on disk:
-  - `C:\Users\b0ydeptrai\OneDrive\Documents\python-kit`
-- Absolute Windows paths in docs that still need to match the real folder
+- Physical repo folder rename on disk
+- Any repo-local path changes that should happen only after the compatibility cycle ends
 - `.python-kit-research` wording in legacy prompt text
 - Any removal of `python_kit.py`, `python_kit_legacy.py`, or `.python-kit-prompts`
 
 ## Automated checks that must keep passing
 
-Run these from:
-- `C:\Users\b0ydeptrai\OneDrive\Documents\python-kit`
+Run these from the repo root:
 
 ```bash
 python relay_kit.py --list-skills
@@ -100,7 +98,7 @@ Do not remove old names until every item below is true:
 - [ ] `python_kit.py` and `python_kit_legacy.py` were exercised at least once after the rename and still worked.
 - [ ] No downstream/manual process still requires `.python-kit-prompts` as the only location.
 - [ ] CI and `scripts/validate_runtime.py` stayed green for the full cycle.
-- [ ] The repo-folder rename plan is ready, because absolute path examples depend on it.
+- [ ] The repo-folder rename plan is ready before any on-disk rename starts.
 
 ## When the removal phase starts
 

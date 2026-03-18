@@ -1,4 +1,21 @@
-# Rollout Order
+# Rollout Order (Historical)
+
+This file is kept as a historical planning note from an earlier Relay-kit rollout
+phase.
+
+It does **not** describe the current public surface or the current compatibility
+plan.
+
+Use these files instead:
+
+- Current public start flow:
+  - `docs/relay-kit-start-flow.md`
+- Current compatibility gate:
+  - `docs/relay-kit-compatibility-cycle.md`
+- Current runtime structure:
+  - `.ai-kit/docs/folder-structure.md`
+
+Historical snapshot from that earlier phase:
 
 1. Add `skills.manifest.yaml`.
 2. Add the 8 new skills under `templates/skills/`.

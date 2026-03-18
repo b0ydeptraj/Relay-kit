@@ -123,6 +123,7 @@ Main entrypoints:
 Current active baseline:
 
 - `baseline`
+- compatibility alias: `baseline-next`
 
 Generated output includes:
 
@@ -133,6 +134,12 @@ Generated output includes:
 - `.ai-kit/state/`
 - `.ai-kit/references/`
 - `.ai-kit/docs/`
+
+Generate all active adapter runtimes together with `--ai all`:
+
+```bash
+python relay_kit.py . --bundle baseline --ai all
+```
 
 ## Compatibility
 
@@ -157,6 +164,10 @@ Removal gate:
 
 - Start flow:
   - [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
+- Skill authoring:
+  - [`docs/how-to-write-skills.md`](docs/how-to-write-skills.md)
+- Contributing:
+  - [`CONTRIBUTING.md`](CONTRIBUTING.md)
 - Folder structure:
   - [`.ai-kit/docs/folder-structure.md`](.ai-kit/docs/folder-structure.md)
 - Bundle gating:
