@@ -1,6 +1,6 @@
 ---
 name: plan-hub
-description: run the planning chain from brief to prd to architecture to stories without losing context between roles. use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete.
+description: Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles.
 ---
 
 # Mission

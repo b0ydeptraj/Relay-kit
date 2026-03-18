@@ -1,6 +1,6 @@
 ---
 name: context-engineering
-description: context-pack utility. use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides.
+description: Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility.
 ---
 
 # Mission

@@ -1,6 +1,6 @@
 ---
 name: debug-hub
-description: triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem. use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior.
+description: Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem.
 ---
 
 # Mission

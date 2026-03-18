@@ -1,6 +1,6 @@
 ---
 name: test-first-development
-description: test-first execution utility. use when implementation should follow a red-green-refactor loop instead of ad-hoc coding.
+description: Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility.
 ---
 
 # Mission

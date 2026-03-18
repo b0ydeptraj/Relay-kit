@@ -1,6 +1,6 @@
 ---
 name: scout-hub
-description: reconnoiter the codebase and refresh living references before planning, debugging, or review work continues. use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions.
+description: Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues.
 ---
 
 # Mission

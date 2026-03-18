@@ -1,6 +1,6 @@
 ---
 name: fix-hub
-description: turn validated findings into a minimal, well-scoped implementation path and hand off to the developer loop. use after debug-hub or when a change request is already sharply bounded.
+description: Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop.
 ---
 
 # Mission

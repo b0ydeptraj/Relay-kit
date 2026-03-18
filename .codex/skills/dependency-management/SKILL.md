@@ -1,6 +1,6 @@
 ---
 name: dependency-management
-description: capture dependency policy, lockfile usage, environment setup, and safe add or upgrade rules. use before adding packages, updating libraries, or diagnosing environment drift.
+description: Use when adding packages, updating libraries, or diagnosing environment drift. Capture dependency policy, lockfile usage, environment setup, and safe add-or-upgrade rules.
 ---
 
 # Mission

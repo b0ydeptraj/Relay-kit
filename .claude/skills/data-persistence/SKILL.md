@@ -1,6 +1,6 @@
 ---
 name: data-persistence
-description: document storage topology, models, migrations, caching, and consistency rules. use when touching schemas, repositories, transactions, caches, or data flows.
+description: Use when touching schemas, repositories, transactions, caches, or data flows. Document storage topology, models, migrations, caching, and consistency rules.
 ---
 
 # Mission

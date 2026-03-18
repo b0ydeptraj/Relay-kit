@@ -1,6 +1,6 @@
 ---
 name: architect
-description: convert requirements into an implementation-ready architecture that fits the existing codebase. use when a prd exists or when a change could alter module boundaries, data flow, security, or operations.
+description: Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase.
 ---
 
 # Mission

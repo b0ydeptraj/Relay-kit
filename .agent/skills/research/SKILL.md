@@ -1,6 +1,6 @@
 ---
 name: research
-description: stateless research utility for product, market, technical, or domain questions. use when a hub needs fresh evidence but should retain ownership of the lane.
+description: Use when a hub needs fresh evidence but should retain ownership of the lane. Stateless research utility for product, market, technical, or domain questions.
 ---
 
 # Mission

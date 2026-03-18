@@ -1,6 +1,6 @@
 ---
 name: test-hub
-description: coordinate verification, evidence collection, and residual-risk review before work is called done. use after implementation, after a risky refactor, or whenever confidence is lower than the change impact.
+description: Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done.
 ---
 
 # Mission

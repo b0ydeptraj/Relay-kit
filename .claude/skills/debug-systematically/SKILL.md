@@ -1,6 +1,6 @@
 ---
 name: debug-systematically
-description: easiest public Relay-kit entrypoint for bugs, regressions, flaky behavior, and mismatches between expected and actual behavior.
+description: Use when a bug, regression, flaky behavior, or mismatch needs disciplined debugging instead of guessing. Public Relay-kit entrypoint for the debug path.
 ---
 
 # Debug Systematically

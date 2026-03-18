@@ -1,6 +1,6 @@
 ---
 name: docs-seeker
-description: stateless docs retrieval utility. use when a hub needs exact docs fragments, file paths, or source references before deciding.
+description: Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility.
 ---
 
 # Mission

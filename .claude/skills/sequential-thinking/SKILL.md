@@ -1,6 +1,6 @@
 ---
 name: sequential-thinking
-description: stepwise reasoning utility for debugging, planning, or decomposition. use when a hub needs structured thought without changing ownership.
+description: Use when a hub needs structured thought without changing ownership. Stepwise reasoning utility for debugging, planning, or decomposition.
 ---
 
 # Mission

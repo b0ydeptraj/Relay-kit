@@ -1,6 +1,6 @@
 ---
 name: prove-it
-description: easiest public Relay-kit entrypoint for a last evidence pass before saying work is done, fixed, or ready.
+description: Use when a completion claim needs one last evidence pass before work is called done, fixed, or ready. Public Relay-kit entrypoint for final proof.
 ---
 
 # Prove It

@@ -1,6 +1,6 @@
 ---
 name: project-architecture
-description: analyze the current codebase shape and maintain a living architecture reference. use before designing a change, reviewing architectural drift, or implementing code in an unfamiliar area.
+description: Use when designing a change, reviewing architectural drift, or implementing code in an unfamiliar area. Analyze the current codebase shape and maintain a living architecture reference.
 ---
 
 # Mission

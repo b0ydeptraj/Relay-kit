@@ -1,6 +1,6 @@
 ---
 name: developer
-description: implement a story or tech-spec using the cleaned execution loop and project-specific support references. use when planning is ready and code must be changed with controlled scope and evidence.
+description: Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references.
 ---
 
 # Mission

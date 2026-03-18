@@ -1,6 +1,6 @@
 ---
 name: team
-description: coordinate multi-lane or multi-session work without letting agents step on each other. use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move.
+description: Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other.
 ---
 
 # Mission

@@ -1,6 +1,6 @@
 ---
 name: ui-ux-pro-max
-description: ux framing utility. use when product work has meaningful user-facing impact and a hub needs flow, copy, or interaction guidance.
+description: Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work.
 ---
 
 # Mission

@@ -1,6 +1,6 @@
 ---
 name: agentic-loop
-description: self-correcting development loop for implementation work. use when building or fixing code iteratively and require evidence before claiming completion.
+description: Use when building or fixing code iteratively and require evidence before claiming completion. Self-correcting development loop for implementation work.
 ---
 
 # Mission

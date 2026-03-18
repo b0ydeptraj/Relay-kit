@@ -1,6 +1,6 @@
 ---
 name: analyst
-description: clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped. use when discovery is needed before writing a prd or choosing architecture.
+description: Use when discovery is needed before writing a prd or choosing architecture. Clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped.
 ---
 
 # Mission

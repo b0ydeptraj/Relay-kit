@@ -1,6 +1,6 @@
 ---
 name: write-steps
-description: easiest public Relay-kit entrypoint for slicing approved work into small, buildable, verifiable implementation steps.
+description: Use when approved work needs to be sliced into small, buildable, verifiable implementation steps. Public Relay-kit entrypoint for implementation slicing.
 ---
 
 # Write Steps

@@ -1,6 +1,6 @@
 ---
 name: api-integration
-description: document external service integration patterns, clients, auth, retries, and error handling. use when building or changing API clients, webhooks, endpoints, or network-facing code.
+description: Use when building or changing API clients, webhooks, endpoints, or network-facing code. Document external service integration patterns, clients, auth, retries, and error handling.
 ---
 
 # Mission

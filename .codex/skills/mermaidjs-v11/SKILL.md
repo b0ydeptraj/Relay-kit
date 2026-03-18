@@ -1,6 +1,6 @@
 ---
 name: mermaidjs-v11
-description: diagramming utility. use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact.
+description: Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility.
 ---
 
 # Mission

@@ -1,6 +1,6 @@
 ---
 name: aesthetic
-description: Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review. Use when UI quality matters and the first-pass output risks looking obviously AI-generated.
+description: Use when UI quality matters and the first-pass output risks looking obviously AI-generated. Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review.
 ---
 
 # Aesthetic

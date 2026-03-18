@@ -1,6 +1,6 @@
 ---
 name: start-here
-description: easiest public Relay-kit entrypoint. use when a request arrives and you want Relay-kit to pick the right path, next skill, and next artifact without guessing.
+description: Use when a request arrives and you want Relay-kit to pick the right path, next skill, and next artifact without guessing. Easiest public Relay-kit entrypoint.
 ---
 
 # Start Here

@@ -1,6 +1,6 @@
 ---
 name: workflow-router
-description: route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current. use when a request arrives, the user asks what to do next, or scope or complexity is unclear.
+description: Use when a request arrives, the user asks what to do next, or scope or complexity is unclear. Route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current.
 ---
 
 # Mission

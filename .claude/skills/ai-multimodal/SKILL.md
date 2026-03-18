@@ -1,6 +1,6 @@
 ---
 name: ai-multimodal
-description: multimodal evidence utility. use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues.
+description: Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility.
 ---
 
 # Mission

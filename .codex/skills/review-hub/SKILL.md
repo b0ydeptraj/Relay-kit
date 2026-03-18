@@ -1,6 +1,6 @@
 ---
 name: review-hub
-description: check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan. use before final completion claims or whenever artifacts disagree.
+description: Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan.
 ---
 
 # Mission

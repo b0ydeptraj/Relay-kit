@@ -1,6 +1,6 @@
 ---
 name: ui-ux-pro-max
-description: UX and layout utility for user-facing work. Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality.
+description: Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work.
 ---
 
 # Mission

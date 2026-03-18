@@ -1,6 +1,6 @@
 ---
 name: testing-patterns
-description: capture how the project tests code, mocks dependencies, and gathers evidence. use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough.
+description: Use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough. Capture how the project tests code, mocks dependencies, and gathers evidence.
 ---
 
 # Mission

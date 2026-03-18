@@ -1,6 +1,6 @@
 ---
 name: build-it
-description: easiest public Relay-kit entrypoint for implementing an approved story or tech spec with controlled scope and evidence.
+description: Use when an approved story or tech spec is ready for implementation with controlled scope and evidence. Public Relay-kit entrypoint for building.
 ---
 
 # Build It

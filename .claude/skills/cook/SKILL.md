@@ -1,6 +1,6 @@
 ---
 name: cook
-description: drive one active request from its current state to the next solid handoff using the right hub and specialist. use for the day-to-day execution loop once bootstrap and routing are done.
+description: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist.
 ---
 
 # Mission

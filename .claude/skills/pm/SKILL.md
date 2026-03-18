@@ -1,6 +1,6 @@
 ---
 name: pm
-description: translate a product brief or scoped request into a prd, release slices, and acceptance criteria. use when the work is past discovery and needs a buildable scope.
+description: Use when the work is past discovery and needs a buildable scope. Translate a product brief or scoped request into a prd, release slices, and acceptance criteria.
 ---
 
 # Mission

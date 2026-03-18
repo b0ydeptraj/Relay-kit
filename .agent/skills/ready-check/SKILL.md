@@ -1,6 +1,6 @@
 ---
 name: ready-check
-description: easiest public Relay-kit entrypoint for deciding whether work is actually ready, shippable, or needs to bounce back.
+description: Use when code exists and you need a real go or no-go decision about readiness or shipability. Public Relay-kit entrypoint for review and QA gating.
 ---
 
 # Ready Check

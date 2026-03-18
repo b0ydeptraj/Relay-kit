@@ -1,6 +1,6 @@
 ---
 name: chrome-devtools
-description: browser evidence utility. use when the active hub needs console, network, DOM, or performance observations from a web flow.
+description: Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility.
 ---
 
 # Mission

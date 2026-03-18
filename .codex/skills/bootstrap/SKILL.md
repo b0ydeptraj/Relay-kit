@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: initialize or refresh the shared bmAD-lite runtime before a new lane begins. use at repo start, after major structure changes, or whenever workflow-state or project-context is missing or stale.
+description: Use when starting a repo lane, after major structure changes, or whenever workflow-state or project-context is missing or stale. Initialize or refresh the shared BMAD-lite runtime before a new lane begins.
 ---
 
 # Mission

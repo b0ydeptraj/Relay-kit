@@ -65,7 +65,7 @@ LEGACY_ROLE_MAP = {
 ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
     "workflow-router": SkillSpec(
         name="workflow-router",
-        description="route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current. use when a request arrives, the user asks what to do next, or scope or complexity is unclear.",
+        description="Use when a request arrives, the user asks what to do next, or scope or complexity is unclear. Route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current.",
         role="routing-kernel",
         layer="layer-1-orchestrators",
         inputs=["user request", ".ai-kit/contracts/project-context.md (if present)", ".ai-kit/state/workflow-state.md (if present)", ".ai-kit/state/team-board.md (if present)"],
@@ -118,7 +118,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
     ),
     "bootstrap": SkillSpec(
         name="bootstrap",
-        description="initialize or refresh the shared bmAD-lite runtime before a new lane begins. use at repo start, after major structure changes, or whenever workflow-state or project-context is missing or stale.",
+        description="Use when starting a repo lane, after major structure changes, or whenever workflow-state or project-context is missing or stale. Initialize or refresh the shared BMAD-lite runtime before a new lane begins.",
         role="session-bootstrap",
         layer="layer-1-orchestrators",
         inputs=["repo root", ".ai-kit/ runtime folders if present", "current request"],
@@ -150,7 +150,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
     ),
     "team": SkillSpec(
         name="team",
-        description="coordinate multi-lane or multi-session work without letting agents step on each other. use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move.",
+        description="Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other.",
         role="meta-orchestrator",
         layer="layer-1-orchestrators",
         inputs=[".ai-kit/state/workflow-state.md", ".ai-kit/state/team-board.md", "active artifacts and blockers"],
@@ -184,7 +184,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
     ),
     "cook": SkillSpec(
         name="cook",
-        description="drive one active request from its current state to the next solid handoff using the right hub and specialist. use for the day-to-day execution loop once bootstrap and routing are done.",
+        description="Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist.",
         role="lane-conductor",
         layer="layer-1-orchestrators",
         inputs=[".ai-kit/state/workflow-state.md", "current request or lane objective", "available artifacts"],
@@ -220,7 +220,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
 WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     "brainstorm-hub": SkillSpec(
         name="brainstorm-hub",
-        description="guide early ideation and rough problem framing before formal planning exists. use when the request is still an idea, an opportunity, or a loosely described improvement.",
+        description="Use when the request is still an idea, an opportunity, or a loosely described improvement. Guide early ideation and rough problem framing before formal planning exists.",
         role="ideation-hub",
         layer="layer-2-workflow-hubs",
         inputs=["user idea or opportunity", ".ai-kit/state/workflow-state.md", "any existing brief or context"],
@@ -250,7 +250,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "scout-hub": SkillSpec(
         name="scout-hub",
-        description="reconnoiter the codebase and refresh living references before planning, debugging, or review work continues. use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions.",
+        description="Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues.",
         role="recon-hub",
         layer="layer-2-workflow-hubs",
         inputs=["repo tree and relevant files", ".ai-kit/contracts/project-context.md", ".ai-kit/state/workflow-state.md"],
@@ -279,7 +279,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "plan-hub": SkillSpec(
         name="plan-hub",
-        description="run the planning chain from brief to prd to architecture to stories without losing context between roles. use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete.",
+        description="Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles.",
         role="planning-hub",
         layer="layer-2-workflow-hubs",
         inputs=["workflow-state", "existing brief, prd, architecture, or epics if present", "project-context"],
@@ -315,7 +315,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "debug-hub": SkillSpec(
         name="debug-hub",
-        description="triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem. use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior.",
+        description="Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem.",
         role="debug-hub",
         layer="layer-2-workflow-hubs",
         inputs=["failing behavior", "logs, traces, or test output", "workflow-state", "relevant references"],
@@ -345,7 +345,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "fix-hub": SkillSpec(
         name="fix-hub",
-        description="turn validated findings into a minimal, well-scoped implementation path and hand off to the developer loop. use after debug-hub or when a change request is already sharply bounded.",
+        description="Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop.",
         role="fix-hub",
         layer="layer-2-workflow-hubs",
         inputs=["tech-spec or story", "investigation-notes when debugging", "architecture and project-context when relevant"],
@@ -371,7 +371,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "test-hub": SkillSpec(
         name="test-hub",
-        description="coordinate verification, evidence collection, and residual-risk review before work is called done. use after implementation, after a risky refactor, or whenever confidence is lower than the change impact.",
+        description="Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done.",
         role="verification-hub",
         layer="layer-2-workflow-hubs",
         inputs=["story or tech-spec", "implementation evidence", "testing-patterns reference", "workflow-state"],
@@ -399,7 +399,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
     ),
     "review-hub": SkillSpec(
         name="review-hub",
-        description="check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan. use before final completion claims or whenever artifacts disagree.",
+        description="Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan.",
         role="review-hub",
         layer="layer-2-workflow-hubs",
         inputs=["active artifacts", "qa-report if present", "workflow-state"],
@@ -441,7 +441,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
 ROLE_SKILLS: Dict[str, SkillSpec] = {
     "analyst": SkillSpec(
         name="analyst",
-        description="clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped. use when discovery is needed before writing a prd or choosing architecture.",
+        description="Use when discovery is needed before writing a prd or choosing architecture. Clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped.",
         role="analysis",
         layer="layer-4-specialists-and-standalones",
         inputs=["user request", ".ai-kit/contracts/project-context.md", ".ai-kit/state/workflow-state.md"],
@@ -475,7 +475,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "pm": SkillSpec(
         name="pm",
-        description="translate a product brief or scoped request into a prd, release slices, and acceptance criteria. use when the work is past discovery and needs a buildable scope.",
+        description="Use when the work is past discovery and needs a buildable scope. Translate a product brief or scoped request into a prd, release slices, and acceptance criteria.",
         role="planning",
         layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/product-brief.md or direct scoped request", ".ai-kit/contracts/project-context.md"],
@@ -515,7 +515,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "architect": SkillSpec(
         name="architect",
-        description="convert requirements into an implementation-ready architecture that fits the existing codebase. use when a prd exists or when a change could alter module boundaries, data flow, security, or operations.",
+        description="Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase.",
         role="solutioning",
         layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/PRD.md", ".ai-kit/contracts/project-context.md", "existing support skills and references"],
@@ -551,7 +551,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "scrum-master": SkillSpec(
         name="scrum-master",
-        description="turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work. use when planning is done and work must be sliced into safe, verifiable increments.",
+        description="Use when planning is done and work must be sliced into safe, verifiable increments. Turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work.",
         role="delivery",
         layer="layer-4-specialists-and-standalones",
         inputs=[".ai-kit/contracts/PRD.md", ".ai-kit/contracts/architecture.md", ".ai-kit/contracts/epics.md", ".ai-kit/contracts/tech-spec.md"],
@@ -596,7 +596,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "developer": SkillSpec(
         name="developer",
-        description="implement a story or tech-spec using the cleaned execution loop and project-specific support references. use when planning is ready and code must be changed with controlled scope and evidence.",
+        description="Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references.",
         role="implementation",
         layer="layer-4-specialists-and-standalones",
         inputs=["story or tech-spec", "project-context", "architecture when present", "relevant support references"],
@@ -629,7 +629,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "qa-governor": SkillSpec(
         name="qa-governor",
-        description="check readiness and completion against acceptance criteria, risk, and regression scope; write a qa report before completion is claimed. use before saying work is done or when implementation confidence is low.",
+        description="Use when work is about to be called done or implementation confidence is low. Check readiness and completion against acceptance criteria, risk, and regression scope, then write a QA report.",
         role="quality",
         layer="layer-4-specialists-and-standalones",
         inputs=["PRD or tech-spec", "architecture or story", "evidence from tests and reviews"],
@@ -670,7 +670,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
 CLEANUP_SKILLS: Dict[str, SkillSpec] = {
     "agentic-loop": SkillSpec(
         name="agentic-loop",
-        description="self-correcting development loop for implementation work. use when building or fixing code iteratively and require evidence before claiming completion.",
+        description="Use when building or fixing code iteratively and require evidence before claiming completion. Self-correcting development loop for implementation work.",
         role="developer-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["story or tech-spec", "project-context", "relevant support skills"],
@@ -711,7 +711,7 @@ CLEANUP_SKILLS: Dict[str, SkillSpec] = {
 NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
     "project-architecture": SkillSpec(
         name="project-architecture",
-        description="analyze the current codebase shape and maintain a living architecture reference. use before designing a change, reviewing architectural drift, or implementing code in an unfamiliar area.",
+        description="Use when designing a change, reviewing architectural drift, or implementing code in an unfamiliar area. Analyze the current codebase shape and maintain a living architecture reference.",
         role="architecture-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["repository tree", ".ai-kit/contracts/project-context.md", ".ai-kit/contracts/architecture.md when available"],
@@ -745,7 +745,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
     ),
     "dependency-management": SkillSpec(
         name="dependency-management",
-        description="capture dependency policy, lockfile usage, environment setup, and safe add or upgrade rules. use before adding packages, updating libraries, or diagnosing environment drift.",
+        description="Use when adding packages, updating libraries, or diagnosing environment drift. Capture dependency policy, lockfile usage, environment setup, and safe add-or-upgrade rules.",
         role="build-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["package metadata files", "lockfiles", "toolchain config", "CI setup if present"],
@@ -779,7 +779,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
     ),
     "api-integration": SkillSpec(
         name="api-integration",
-        description="document external service integration patterns, clients, auth, retries, and error handling. use when building or changing API clients, webhooks, endpoints, or network-facing code.",
+        description="Use when building or changing API clients, webhooks, endpoints, or network-facing code. Document external service integration patterns, clients, auth, retries, and error handling.",
         role="integration-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["HTTP or RPC client code", "settings or secret config", "test or mock code"],
@@ -813,7 +813,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
     ),
     "data-persistence": SkillSpec(
         name="data-persistence",
-        description="document storage topology, models, migrations, caching, and consistency rules. use when touching schemas, repositories, transactions, caches, or data flows.",
+        description="Use when touching schemas, repositories, transactions, caches, or data flows. Document storage topology, models, migrations, caching, and consistency rules.",
         role="persistence-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["model files", "repository or DAO code", "migration files", "cache config if present"],
@@ -847,7 +847,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
     ),
     "testing-patterns": SkillSpec(
         name="testing-patterns",
-        description="capture how the project tests code, mocks dependencies, and gathers evidence. use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough.",
+        description="Use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough. Capture how the project tests code, mocks dependencies, and gathers evidence.",
         role="quality-support",
         layer="layer-4-specialists-and-standalones",
         inputs=["test folders", "test config", "fixtures or factories", "CI or local test commands"],
@@ -916,7 +916,7 @@ def utility_provider_spec(name: str, description: str, outputs: list[str], refer
 UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     "research": utility_provider_spec(
         name="research",
-        description="stateless research utility for product, market, technical, or domain questions. use when a hub needs fresh evidence but should retain ownership of the lane.",
+        description="Use when a hub needs fresh evidence but should retain ownership of the lane. Stateless research utility for product, market, technical, or domain questions.",
         outputs=[
             "evidence bullets appended to the active artifact",
             "assumption checks or citations for the current decision",
@@ -940,7 +940,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "docs-seeker": utility_provider_spec(
         name="docs-seeker",
-        description="stateless docs retrieval utility. use when a hub needs exact docs fragments, file paths, or source references before deciding.",
+        description="Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility.",
         outputs=[
             "doc pointers, file paths, or citations appended to the active artifact",
             "a short conflict note when documentation and implementation disagree",
@@ -963,7 +963,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "sequential-thinking": utility_provider_spec(
         name="sequential-thinking",
-        description="stepwise reasoning utility for debugging, planning, or decomposition. use when a hub needs structured thought without changing ownership.",
+        description="Use when a hub needs structured thought without changing ownership. Stepwise reasoning utility for debugging, planning, or decomposition.",
         outputs=["ordered reasoning steps added to investigation-notes or the active artifact"],
         references=["Break work into explicit steps and checkpoints.", "Reasoning should support a decision, not become the decision owner."],
         next_steps=["debug-hub", "plan-hub", "fix-hub"],
@@ -973,7 +973,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "problem-solving": utility_provider_spec(
         name="problem-solving",
-        description="option-generation and root-cause utility. use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence.",
+        description="Use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence. Option-generation and root-cause utility.",
         outputs=["options, hypotheses, and trade-offs appended to the active artifact"],
         references=["Root cause beats guess-and-patch.", "Surface trade-offs before implementation starts."],
         next_steps=["debug-hub", "plan-hub", "review-hub"],
@@ -983,7 +983,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "ai-multimodal": utility_provider_spec(
         name="ai-multimodal",
-        description="multimodal evidence utility. use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues.",
+        description="Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility.",
         outputs=["visual or media observations appended to the active artifact"],
         references=["Describe what is visible and why it matters.", "Feed observations back to the owning hub."],
         next_steps=["debug-hub", "test-hub", "review-hub"],
@@ -993,7 +993,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "chrome-devtools": utility_provider_spec(
         name="chrome-devtools",
-        description="browser evidence utility. use when the active hub needs console, network, DOM, or performance observations from a web flow.",
+        description="Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility.",
         outputs=["browser-side evidence appended to investigation-notes or qa-report"],
         references=["Collect evidence first, then suggest the next move.", "Capture the smallest reproducible browser path."],
         next_steps=["debug-hub", "test-hub", "review-hub"],
@@ -1003,7 +1003,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "repomix": utility_provider_spec(
         name="repomix",
-        description="repo-map utility. use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting.",
+        description="Use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting. Repo-map utility.",
         outputs=[
             "repo map notes appended to project-context or architecture",
             "a short read-first file list for the next skill",
@@ -1026,7 +1026,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "context-engineering": utility_provider_spec(
         name="context-engineering",
-        description="context-pack utility. use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides.",
+        description="Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility.",
         outputs=[
             "focused context pack notes added to workflow-state, story, or handoff-log",
             "an explicit include/exclude list for the receiving skill",
@@ -1049,7 +1049,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "mermaidjs-v11": utility_provider_spec(
         name="mermaidjs-v11",
-        description="diagramming utility. use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact.",
+        description="Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility.",
         outputs=["mermaid snippets inserted into architecture, project-context, or docs"],
         references=["Prefer diagrams that clarify ownership, flow, or sequencing.", "Diagrams should serve the artifact, not replace it."],
         next_steps=["plan-hub", "architect", "review-hub"],
@@ -1059,7 +1059,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "ui-ux-pro-max": utility_provider_spec(
         name="ui-ux-pro-max",
-        description="ux framing utility. use when product work has meaningful user-facing impact and a hub needs flow, copy, or interaction guidance.",
+        description="Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work.",
         outputs=["ux notes appended to product-brief, PRD, architecture, or qa-report"],
         references=["Useful for journeys, friction points, and interaction trade-offs.", "Return notes to the owning hub rather than taking over the project."],
         next_steps=["brainstorm-hub", "plan-hub", "review-hub"],
@@ -1069,7 +1069,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
     ),
     "media-processing": utility_provider_spec(
         name="media-processing",
-        description="media handling utility. use when screenshots, assets, or content files need transformation or evidence extraction for the current lane.",
+        description="Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility.",
         outputs=["media processing notes or asset instructions appended to the active artifact"],
         references=["Useful for evidence packaging and asset-heavy workflows.", "Should stay stateless and task-scoped."],
         next_steps=["test-hub", "review-hub", "ui-ux-pro-max"],
@@ -1083,7 +1083,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
 DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
     "root-cause-debugging": utility_provider_spec(
         name="root-cause-debugging",
-        description="structured root-cause debugging utility. use when a hub needs a disciplined investigation before proposing fixes.",
+        description="Use when a hub needs a disciplined investigation before proposing fixes. Structured root-cause debugging utility.",
         outputs=["root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"],
         references=["No fixes before investigation.", "Prefer evidence at component boundaries over guessed explanations."],
         next_steps=["debug-hub", "fix-hub", "test-hub"],
@@ -1093,7 +1093,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
     ),
     "test-first-development": utility_provider_spec(
         name="test-first-development",
-        description="test-first execution utility. use when implementation should follow a red-green-refactor loop instead of ad-hoc coding.",
+        description="Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility.",
         outputs=["test-first execution notes and evidence appended to story, tech-spec, or qa-report"],
         references=["Write the failing test first when the behavior is testable.", "Keep the change minimal until the new test is green."],
         next_steps=["developer", "test-hub", "qa-governor"],
@@ -1103,7 +1103,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
     ),
     "evidence-before-completion": utility_provider_spec(
         name="evidence-before-completion",
-        description="completion-evidence utility. use when a hub or specialist is about to say work is done, fixed, or ready.",
+        description="Use when a hub or specialist is about to say work is done, fixed, or ready. Completion-evidence utility.",
         outputs=["fresh verification evidence and claim checks appended to qa-report, workflow-state, or the active artifact"],
         references=["No completion claims without fresh verification output.", "Match every claim to the command or evidence that proves it."],
         next_steps=["test-hub", "qa-governor", "review-hub"],

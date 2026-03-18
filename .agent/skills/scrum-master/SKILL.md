@@ -1,6 +1,6 @@
 ---
 name: scrum-master
-description: turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work. use when planning is done and work must be sliced into safe, verifiable increments.
+description: Use when planning is done and work must be sliced into safe, verifiable increments. Turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work.
 ---
 
 # Mission

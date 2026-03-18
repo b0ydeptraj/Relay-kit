@@ -1,6 +1,6 @@
 ---
 name: root-cause-debugging
-description: structured root-cause debugging utility. use when a hub needs a disciplined investigation before proposing fixes.
+description: Use when a hub needs a disciplined investigation before proposing fixes. Structured root-cause debugging utility.
 ---
 
 # Mission

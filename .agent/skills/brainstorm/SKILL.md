@@ -1,6 +1,6 @@
 ---
 name: brainstorm
-description: easiest public Relay-kit entrypoint for turning a rough idea into a clear direction before implementation begins.
+description: Use when a rough idea needs to become a clear direction before implementation begins. Public Relay-kit entrypoint for brainstorming.
 ---
 
 # Brainstorm

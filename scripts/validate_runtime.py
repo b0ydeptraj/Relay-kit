@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import os
+import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -83,6 +84,32 @@ def assert_contains(path: Path, required_tokens: list[str]) -> None:
     missing = [token for token in required_tokens if token not in content]
     if missing:
         fail(f"{path} is missing expected tokens: {missing}")
+
+
+def assert_skill_descriptions_trigger_first() -> None:
+    skill_roots = [
+        REPO_ROOT / ".claude" / "skills",
+        REPO_ROOT / ".agent" / "skills",
+        REPO_ROOT / ".codex" / "skills",
+    ]
+    bad_descriptions: list[str] = []
+    for root in skill_roots:
+        for skill_file in root.rglob("SKILL.md"):
+            content = skill_file.read_text(encoding="utf-8")
+            match = re.search(r"^description:\s*(.+)$", content, re.MULTILINE)
+            if match is None:
+                bad_descriptions.append(f"{skill_file}: missing description")
+                continue
+            description = match.group(1).strip()
+            if not description.startswith("Use when "):
+                bad_descriptions.append(f"{skill_file}: {description}")
+    if bad_descriptions:
+        preview = "\n".join(bad_descriptions[:10])
+        fail(
+            "Skill descriptions must use trigger-first wording that starts with "
+            "`Use when ...`.\n"
+            f"Examples of drift:\n{preview}"
+        )
 
 
 def assert_file_map(name: str, actual: dict[str, str], expected: dict[str, str]) -> None:
@@ -270,6 +297,7 @@ def main() -> int:
     validate_adapter_targets()
     validate_list_output()
     validate_checked_in_runtime()
+    assert_skill_descriptions_trigger_first()
     validate_checked_in_docs()
     for bundle in ("round4", "discipline-utilities", "baseline", "baseline-next"):
         validate_generated_bundle(bundle)

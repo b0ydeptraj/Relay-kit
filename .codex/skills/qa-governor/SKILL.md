@@ -1,6 +1,6 @@
 ---
 name: qa-governor
-description: check readiness and completion against acceptance criteria, risk, and regression scope; write a qa report before completion is claimed. use before saying work is done or when implementation confidence is low.
+description: Use when work is about to be called done or implementation confidence is low. Check readiness and completion against acceptance criteria, risk, and regression scope, then write a QA report.
 ---
 
 # Mission

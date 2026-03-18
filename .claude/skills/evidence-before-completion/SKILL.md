@@ -1,6 +1,6 @@
 ---
 name: evidence-before-completion
-description: completion-evidence utility. use when a hub or specialist is about to say work is done, fixed, or ready.
+description: Use when a hub or specialist is about to say work is done, fixed, or ready. Completion-evidence utility.
 ---
 
 # Mission

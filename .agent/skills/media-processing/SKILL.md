@@ -1,6 +1,6 @@
 ---
 name: media-processing
-description: media handling utility. use when screenshots, assets, or content files need transformation or evidence extraction for the current lane.
+description: Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility.
 ---
 
 # Mission
