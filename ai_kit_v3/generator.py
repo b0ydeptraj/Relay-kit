@@ -173,7 +173,7 @@ Recommended runtime layout:
 
 - `.ai-kit/contracts/` -> stable artifact contracts shared across roles and hubs
 - `.ai-kit/state/` -> workflow-state, team-board, lane-registry, handoff-log, and other runtime breadcrumbs
-- `.ai-kit/references/` -> living support references for architecture, APIs, persistence, and testing
+- `.ai-kit/references/` -> living support references for architecture, APIs, persistence, testing, security, observability, and performance
 - `.ai-kit/docs/` -> topology docs, migration notes, gating rules, and orchestration rules
 - `.claude/skills/`, `.agent/skills/`, `.codex/skills/` -> adapter-specific runtime skill folders
 - `.relay-kit-prompts/` -> preferred generic prompt output path
@@ -199,6 +199,9 @@ def _render_native_support_map() -> str:
         "| api-integration | `.ai-kit/references/api-integration.md` | architect, developer, qa-governor |",
         "| data-persistence | `.ai-kit/references/data-persistence.md` | architect, developer, qa-governor |",
         "| testing-patterns | `.ai-kit/references/testing-patterns.md` | developer, qa-governor, debug-hub, test-hub |",
+        "",
+        "Additional cross-cutting references may also be maintained directly under `.ai-kit/references/`",
+        "for security, observability, and performance without changing the core support-skill set.",
         "",
         "Treat these as living reference skills. Refresh them when the codebase changes materially.",
     ]

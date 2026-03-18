@@ -84,6 +84,48 @@ SUPPORT_REFERENCES: Dict[str, SupportReference] = {
         ],
         used_by=["developer", "qa-governor", "code-review"],
     ),
+    "security-patterns": SupportReference(
+        name="security-patterns",
+        path=".ai-kit/references/security-patterns.md",
+        purpose="Capture repo-specific authentication boundaries, authorization checks, secret handling rules, input validation expectations, sensitive logging constraints, and the highest-risk security failure modes.",
+        sections=[
+            "Auth and trust boundaries",
+            "Secrets and configuration hygiene",
+            "Input validation and output encoding",
+            "Sensitive data handling and logging rules",
+            "Dependency and supply-chain watchpoints",
+            "Security review hotspots",
+        ],
+        used_by=["architect", "developer", "qa-governor", "review-hub"],
+    ),
+    "logging-observability": SupportReference(
+        name="logging-observability",
+        path=".ai-kit/references/logging-observability.md",
+        purpose="Document how this codebase emits logs, metrics, traces, health signals, alerts, and other runtime evidence so debugging and review work can rely on concrete signals instead of guesswork.",
+        sections=[
+            "Logs, metrics, traces, and health signals",
+            "Where to inspect runtime evidence",
+            "Structured logging and correlation rules",
+            "Alerting, dashboards, and noisy signals",
+            "Common blind spots during debugging",
+            "Observability follow-ups when behavior changes",
+        ],
+        used_by=["developer", "debug-hub", "review-hub", "qa-governor", "test-hub"],
+    ),
+    "performance-optimization": SupportReference(
+        name="performance-optimization",
+        path=".ai-kit/references/performance-optimization.md",
+        purpose="Record the codebase-specific performance budget, hot paths, profiling tools, query or rendering bottlenecks, and the rules for proving a performance claim with evidence.",
+        sections=[
+            "Performance-sensitive paths",
+            "Budgets, SLOs, and user-facing thresholds",
+            "Profiling and measurement commands",
+            "Known bottlenecks and regression traps",
+            "Caching, batching, and concurrency rules",
+            "Evidence required before claiming an optimization",
+        ],
+        used_by=["architect", "developer", "debug-hub", "review-hub", "qa-governor"],
+    ),
 }
 
 

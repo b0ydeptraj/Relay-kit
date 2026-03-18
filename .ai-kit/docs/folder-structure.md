@@ -4,7 +4,7 @@ Recommended runtime layout:
 
 - `.ai-kit/contracts/` -> stable artifact contracts shared across roles and hubs
 - `.ai-kit/state/` -> workflow-state, team-board, lane-registry, handoff-log, and other runtime breadcrumbs
-- `.ai-kit/references/` -> living support references for architecture, APIs, persistence, and testing
+- `.ai-kit/references/` -> living support references for architecture, APIs, persistence, testing, security, observability, and performance
 - `.ai-kit/docs/` -> topology docs, migration notes, gating rules, and orchestration rules
 - `.claude/skills/`, `.agent/skills/`, `.codex/skills/` -> adapter-specific runtime skill folders
 - `.relay-kit-prompts/` -> preferred generic prompt output path
