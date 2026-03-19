@@ -51,7 +51,7 @@ layers:
     - repo-map
     - handoff-context
     - mermaid-diagrams
-    - ui-ux-pro-max
+    - ux-structure
     - media-tooling
   optional_discipline_overlays:
     - root-cause-debugging

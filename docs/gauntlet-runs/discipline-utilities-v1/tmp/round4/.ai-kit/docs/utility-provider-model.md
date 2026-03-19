@@ -36,7 +36,7 @@ Prepare the minimum viable context pack for the next skill instead of flooding i
 ### mermaid-diagrams
 Express flows or architecture as diagrams inside the current artifact.
 
-### ui-ux-pro-max
+### ux-structure
 Contribute UX framing, flow notes, and interface trade-offs when product work has user-facing impact.
 
 ### media-tooling

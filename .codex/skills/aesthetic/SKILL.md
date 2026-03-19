@@ -98,7 +98,7 @@ Produce one or more of:
 - `multimodal-evidence` for screenshot analysis when available
 - `ui-styling` for implementation systems
 - `frontend-design` for shipping the page
-- `ui-ux-pro-max` for flow and UX structure
+- `ux-structure` for flow and UX structure
 
 ## Principles
 1. Reference-driven structure beats invented average structure.

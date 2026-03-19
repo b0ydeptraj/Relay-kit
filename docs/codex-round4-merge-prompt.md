@@ -30,7 +30,7 @@ After the merge, the repo should support:
 - layer 1 orchestrators: `workflow-router`, `bootstrap`, `team`, `cook`
 - layer 2 workflow hubs: `brainstorm-hub`, `scout-hub`, `plan-hub`, `debug-hub`, `fix-hub`, `test-hub`, `review-hub`
 - layer 3 utility providers as first-class registry skills:
-  - `research`, `doc-pointers`, `sequential-thinking`, `problem-solving`, `multimodal-evidence`, `browser-inspector`, `repo-map`, `handoff-context`, `mermaid-diagrams`, `ui-ux-pro-max`, `media-tooling`
+  - `research`, `doc-pointers`, `sequential-thinking`, `problem-solving`, `multimodal-evidence`, `browser-inspector`, `repo-map`, `handoff-context`, `mermaid-diagrams`, `ux-structure`, `media-tooling`
 - layer 4 specialists still intact, including `developer`
 - new state files: `.ai-kit/state/lane-registry.md`, `.ai-kit/state/handoff-log.md`
 - new docs: `.ai-kit/docs/utility-provider-model.md`, `.ai-kit/docs/standalone-taxonomy.md`, `.ai-kit/docs/parallelism-rules.md`, `.ai-kit/docs/bundle-gating.md`, `.ai-kit/docs/round4-changelog.md`
@@ -73,7 +73,7 @@ Verify these paths exist after generation:
 - `.claude/skills/research/SKILL.md`
 - `.claude/skills/doc-pointers/SKILL.md`
 - `.claude/skills/handoff-context/SKILL.md`
-- `.claude/skills/ui-ux-pro-max/SKILL.md`
+- `.claude/skills/ux-structure/SKILL.md`
 - `.agent/skills/team/SKILL.md`
 - `.agent/skills/browser-inspector/SKILL.md`
 - `.agent/skills/sequential-thinking/SKILL.md`

@@ -1,5 +1,5 @@
 ﻿---
-name: ui-ux-pro-max
+name: ux-structure
 description: Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work.
 ---
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-UI/UX Pro Max Search - BM25 search engine for UI/UX style guides
+UX Structure Search - BM25 search engine for layout and UX guides
 Usage: python search.py "<query>" [--domain <domain>] [--stack <stack>] [--max-results 3]
 
 Domains: style, prompt, color, chart, landing, product, ux, typography
@@ -12,7 +12,7 @@ import sys
 import io
 
 # Fix UnicodeEncodeError on Windows (cp1252 doesn't support Unicode symbols)
-# See: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/issues/22
+# Keep stdout UTF-8 on Windows to avoid broken console output
 if sys.platform == 'win32':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
@@ -27,10 +27,10 @@ def format_output(result):
 
     output = []
     if result.get("stack"):
-        output.append(f"## UI Pro Max Stack Guidelines")
+        output.append(f"## UX Structure Stack Guidelines")
         output.append(f"**Stack:** {result['stack']} | **Query:** {result['query']}")
     else:
-        output.append(f"## UI Pro Max Search Results")
+        output.append(f"## UX Structure Search Results")
         output.append(f"**Domain:** {result['domain']} | **Query:** {result['query']}")
     output.append(f"**Source:** {result['file']} | **Found:** {result['count']} results\n")
 
@@ -47,7 +47,7 @@ def format_output(result):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="UI Pro Max Search")
+    parser = argparse.ArgumentParser(description="UX Structure Search")
     parser.add_argument("query", help="Search query")
     parser.add_argument("--domain", "-d", choices=list(CSV_CONFIG.keys()), help="Search domain")
     parser.add_argument("--stack", "-s", choices=AVAILABLE_STACKS, help="Stack-specific search (html-tailwind, react, nextjs)")

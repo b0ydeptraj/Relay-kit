@@ -9,7 +9,7 @@ This file explains how legacy skills should be treated after the Relay-kit v3 up
 - utilities
 
 ## pm
-- ui-ux-pro-max
+- ux-structure
 - research-expert
 - code-review
 

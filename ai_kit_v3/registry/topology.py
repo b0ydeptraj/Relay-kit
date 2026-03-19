@@ -14,7 +14,7 @@ UTILITY_PROVIDER_NAMES = [
     "repo-map",
     "handoff-context",
     "mermaid-diagrams",
-    "ui-ux-pro-max",
+    "ux-structure",
     "media-tooling",
 ]
 
@@ -95,7 +95,7 @@ PARALLEL_LANE_RULES = [
 
 
 HUB_SUPPORT_MAP = {
-    "brainstorm-hub": ["analyst", "pm", "research", "ui-ux-pro-max"],
+    "brainstorm-hub": ["analyst", "pm", "research", "ux-structure"],
     "scout-hub": [
         "project-architecture",
         "dependency-management",
@@ -106,7 +106,7 @@ HUB_SUPPORT_MAP = {
         "repo-map",
         "handoff-context",
     ],
-    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "ui-ux-pro-max", "mermaid-diagrams"],
+    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "ux-structure", "mermaid-diagrams"],
     "debug-hub": ["developer", "testing-patterns", "problem-solving", "sequential-thinking", "browser-inspector", "multimodal-evidence"],
     "fix-hub": ["developer", "execution-loop", "project-architecture", "api-integration", "data-persistence", "handoff-context"],
     "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "media-tooling"],
@@ -124,7 +124,7 @@ UTILITY_PROVIDER_RULES = {
     "repo-map": "Produce fast repo maps and dependency summaries for unfamiliar areas.",
     "handoff-context": "Prepare the minimum viable context pack for the next skill instead of flooding it with irrelevant detail.",
     "mermaid-diagrams": "Express flows or architecture as diagrams inside the current artifact.",
-    "ui-ux-pro-max": "Contribute UX framing, flow notes, and interface trade-offs when product work has user-facing impact.",
+    "ux-structure": "Contribute UX framing, flow notes, and interface trade-offs when product work has user-facing impact.",
     "media-tooling": "Handle images, screenshots, and media transforms needed for evidence or UX delivery.",
 }
 

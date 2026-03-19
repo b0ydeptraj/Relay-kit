@@ -26,7 +26,7 @@ LEGACY_ROLE_MAP = {
         "utilities",
     ],
     "pm": [
-        "ui-ux-pro-max",
+        "ux-structure",
         "research-expert",
         "code-review",
     ],
@@ -1061,8 +1061,8 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         tasks=["Draw module boundaries or request flows.", "Show sequence or state transitions.", "Keep the diagram synchronized with the surrounding text."],
         rules=["Use only the detail level needed for the current decision.", "Avoid giant diagrams.", "Explain trade-offs in text when the diagram alone is insufficient."],
     ),
-    "ui-ux-pro-max": utility_provider_spec(
-        name="ui-ux-pro-max",
+    "ux-structure": utility_provider_spec(
+        name="ux-structure",
         description="Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work.",
         outputs=[
             "ux notes appended to product-brief, PRD, architecture, or qa-report",
@@ -1097,7 +1097,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         description="Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility.",
         outputs=["media processing notes or asset instructions appended to the active artifact"],
         references=["Useful for evidence packaging and asset-heavy workflows.", "Should stay stateless and task-scoped."],
-        next_steps=["test-hub", "review-hub", "ui-ux-pro-max"],
+        next_steps=["test-hub", "review-hub", "ux-structure"],
         mission="Handle media-specific steps that support the current lane without creating a parallel project.",
         tasks=["Prepare screenshots or assets for evidence.", "Describe required transforms or formats.", "Hand back what the next skill needs to continue."],
         rules=["Keep transformations reversible when possible.", "Name exact asset sources and outputs.", "Route any broader UX or product decisions back to the owning hub."],

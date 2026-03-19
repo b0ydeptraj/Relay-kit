@@ -1475,7 +1475,7 @@ TOOLING_SUITE_SKILLS = [
     "web-frameworks",
 ]
 
-DESIGN_SUITE_SKILLS = ["ui-ux-pro-max"]
+DESIGN_SUITE_SKILLS = ["ux-structure"]
 
 TEMPLATE_SKILLS = set(EXPERT_SUITE_SKILLS + TOOLING_SUITE_SKILLS + DESIGN_SUITE_SKILLS)
 
@@ -1587,7 +1587,7 @@ def _rewrite_paths_for_flavor(text: str, flavor: str) -> str:
             (".claude/agents/", ".codex/support/claude/agents/"),
             (".claude\\agents\\", ".codex\\support\\claude\\agents\\"),
             (".claude/.mcp.json", ".codex/mcp.json"),
-            (".shared/ui-ux-pro-max/scripts/search.py", ".codex/skills/ui-ux-pro-max/scripts/search.py"),
+            (".shared/ux-structure/scripts/search.py", ".codex/skills/ux-structure/scripts/search.py"),
             (".claude/", ".codex/"),
             (".claude\\", ".codex\\"),
             (".agent/", ".codex/"),
@@ -2062,7 +2062,7 @@ Skill sets:
   mobile-analysis    - Mobile analysis skills
   expert-suite       - Expert template skills
   tooling-suite      - Tooling, docs, and MCP template skills
-  design-suite       - UI/UX Pro Max
+  design-suite       - UX Structure
   full               - All skills
 
         """

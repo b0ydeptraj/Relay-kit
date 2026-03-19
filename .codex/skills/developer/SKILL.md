@@ -78,7 +78,7 @@ If implementation reveals missing architecture, unclear acceptance criteria, a b
 - Default to `test-first-development` whenever the change introduces or fixes behavior that can be exercised with a test or clear reproduction harness.
 - If test-first is not practical, say why before coding and name the alternative failing signal you will use.
 - If tasks are truly independent and the platform supports collaboration, follow `.ai-kit/docs/parallel-execution.md` before using subagent-style execution.
-- For serious UI work, use `ui-ux-pro-max` to sharpen hierarchy and `browser-inspector` to verify what the browser actually renders.
+- For serious UI work, use `ux-structure` to sharpen hierarchy and `browser-inspector` to verify what the browser actually renders.
 - For frontend changes, prefer a screenshot-backed or browser-backed handoff over a code-only completion claim.
 
 ## Likely next step

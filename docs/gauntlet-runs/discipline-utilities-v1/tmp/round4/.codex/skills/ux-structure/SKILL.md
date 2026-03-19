@@ -1,5 +1,5 @@
 ---
-name: ui-ux-pro-max
+name: ux-structure
 description: ux framing utility. use when product work has meaningful user-facing impact and a hub needs flow, copy, or interaction guidance.
 ---
 

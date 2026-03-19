@@ -48,7 +48,7 @@ Collect browser-native evidence that narrows a web issue fast.
 ## Reference skills and rules
 - Collect evidence first, then suggest the next move.
 - Capture the smallest reproducible browser path.
-- For UI critique, pair with `ui-ux-pro-max` or `review-hub` so the evidence turns into concrete corrections instead of vague taste comments.
+- For UI critique, pair with `ux-structure` or `review-hub` so the evidence turns into concrete corrections instead of vague taste comments.
 
 ## Likely next step
 - debug-hub

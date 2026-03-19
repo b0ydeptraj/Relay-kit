@@ -59,7 +59,7 @@ Can hand off to:
 - analyst
 - pm
 - research
-- ui-ux-pro-max
+- ux-structure
 
 ### scout-hub
 - project-architecture
@@ -77,7 +77,7 @@ Can hand off to:
 - architect
 - scrum-master
 - research
-- ui-ux-pro-max
+- ux-structure
 - mermaid-diagrams
 
 ### debug-hub

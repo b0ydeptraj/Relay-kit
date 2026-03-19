@@ -33,7 +33,7 @@ Stateless capabilities and analysis helpers. These should be called by hubs or o
 - repo-map
 - handoff-context
 - mermaid-diagrams
-- ui-ux-pro-max
+- ux-structure
 - media-tooling
 
 ## layer-4-specialists-and-standalones

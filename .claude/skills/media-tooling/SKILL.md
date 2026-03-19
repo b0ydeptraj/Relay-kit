@@ -40,4 +40,4 @@ Handle media-specific steps that support the current lane without creating a par
 ## Likely next step
 - test-hub
 - review-hub
-- ui-ux-pro-max
+- ux-structure

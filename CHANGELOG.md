@@ -99,7 +99,7 @@ All notable changes to `Relay-kit` are documented here.
 - Added first-class layer-3 utility providers to the registry and runtime generation:
   `research`, `doc-pointers`, `sequential-thinking`, `problem-solving`,
   `multimodal-evidence`, `browser-inspector`, `repo-map`, `handoff-context`,
-  `mermaid-diagrams`, `ui-ux-pro-max`, and `media-tooling`.
+  `mermaid-diagrams`, `ux-structure`, and `media-tooling`.
 - Added durable multi-lane state files:
   `.ai-kit/state/lane-registry.md` and `.ai-kit/state/handoff-log.md`.
 - Added round 4 runtime docs:
