@@ -1,121 +1,119 @@
 ---
 name: aesthetic
-description: Create aesthetically beautiful interfaces following proven design principles. Use when building UI/UX, analyzing designs from inspiration sites, generating design images with multimodal-evidence, implementing visual hierarchy and color theory, adding micro-interactions, or creating design documentation. Includes workflows for capturing and analyzing inspiration screenshots with browser-inspector and multimodal-evidence, iterative design image generation until aesthetic standards are met, and comprehensive design system guidance covering BEAUTIFUL (aesthetic principles), RIGHT (functionality/accessibility), SATISFYING (micro-interactions), and PEAK (storytelling) stages. Integrates with browser-inspector, multimodal-evidence, media-tooling, ui-styling, and web-frameworks skills.
+description: Use when UI quality matters and the first-pass output risks looking obviously AI-generated. Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review.
 ---
 
 # Aesthetic
 
-Create aesthetically beautiful interfaces by following proven design principles and systematic workflows.
+Use this skill to improve visual quality without drifting into generic AI UI.
 
-## When to Use This Skill
+## Core principle
+AI should not be allowed to invent the visual system from vague adjectives. Strong design needs:
+- real references
+- explicit structure choices
+- component sourcing when appropriate
+- at least one critique/revision loop after implementation
 
-Use when:
-- Building or designing user interfaces
-- Analyzing designs from inspiration websites (Dribbble, Mobbin, Behance)
-- Generating design images and evaluating aesthetic quality
-- Implementing visual hierarchy, typography, color theory
-- Adding micro-interactions and animations
-- Creating design documentation and style guides
-- Need guidance on accessibility and design systems
+## Use this skill when
+- building a landing page, dashboard, pricing page, or checkout flow
+- the current UI looks polished but generic
+- a page needs stronger visual hierarchy, typography, or composition
+- you want to work from screenshots, inspiration sites, or component libraries
+- you need a review pass focused on aesthetics rather than raw functionality
 
-## Core Framework: Four-Stage Approach
+## Anti-generic rules
+Reject and revise if the output shows these signs:
+- oversized safe hero with predictable supporting cards
+- over-rounded panels everywhere
+- decorative gradients doing the work of hierarchy
+- repeated feature cards with equal visual weight
+- safe default typography
+- charts, icons, and nav patterns chosen with no source
+- the overall feeling of "AI built this in one pass"
 
-### 1. BEAUTIFUL: Understanding Aesthetics
-Study existing designs, identify patterns, extract principles. AI lacks aesthetic sense—standards must come from analyzing high-quality examples and aligning with market tastes.
+## Taste controls
+Before changing the UI, set these three controls explicitly:
+- **Design variance**: how far the layout can move from a safe default
+- **Motion intensity**: how much animation and micro-interaction is appropriate
+- **Visual density**: how sparse or dense the information should feel
 
-**Reference**: [`references/design-principles.md`](references/design-principles.md) - Visual hierarchy, typography, color theory, white space principles.
+Use them to avoid every screen converging on the same generic SaaS composition.
 
-### 2. RIGHT: Ensuring Functionality
-Beautiful designs lacking usability are worthless. Study design systems, component architecture, accessibility requirements.
+## State and structure rules
+For a real product surface, require:
+- a loading state
+- an empty state
+- an error state
 
-**Reference**: [`references/design-principles.md`](references/design-principles.md) - Design systems, component libraries, WCAG accessibility standards.
+Also enforce these layout rules:
+- prefer deliberate grid structure over flexbox hacks when hierarchy matters
+- do not fall back to three equal cards unless the content truly needs equal weight
+- use motion only when it strengthens comprehension or delight, not as decoration
+- keep motion performance-safe with transform/opacity-first choices and reduced-motion support
 
-### 3. SATISFYING: Micro-Interactions
-Incorporate subtle animations with appropriate timing (150-300ms), easing curves (ease-out for entry, ease-in for exit), sequential delays.
+## Workflow 1: Capture and analyze references
+1. Gather strong references from screenshots, real products, or component libraries.
+2. Use browser tools to capture the relevant viewport, not random long pages.
+3. Extract:
+   - layout structure
+   - focal point
+   - typography behavior
+   - spacing rhythm
+   - color roles
+   - card density
+   - component patterns
+   - motion cues
+4. Document what should be preserved and what should change.
 
-**Reference**: [`references/micro-interactions.md`](references/micro-interactions.md) - Duration guidelines, easing curves, performance optimization.
+Use these references when needed:
+- `references/design-principles.md`
+- `references/design-resources.md`
+- `references/micro-interactions.md`
+- `references/storytelling-design.md`
 
-### 4. PEAK: Storytelling Through Design
-Elevate with narrative elements—parallax effects, particle systems, thematic consistency. Use restraint: "too much of anything isn't good."
+## Workflow 2: Menu UI before freehand generation
+Use proven sources for pieces that should not be improvised:
+- chart libraries for charts
+- icon systems for icons
+- trusted component galleries for nav, pricing, forms, tables, and cards
+- existing product screenshots for layout structure
 
-**Reference**: [`references/storytelling-design.md`](references/storytelling-design.md) - Narrative elements, scroll-based storytelling, interactive techniques.
+Treat these sources as raw material. Keep the useful structure and behavior, then adapt typography, density, spacing, contrast, and brand treatment.
 
-## Workflows
+## Workflow 3: Build, review, refine
+1. Build the first pass from the chosen direction.
+2. Review the result against this checklist:
+   - what is the first thing the eye lands on?
+   - does the proof sit close enough to the main claim?
+   - are too many blocks equally loud?
+   - does the spacing feel intentional?
+   - would another engineer immediately call this AI-generated?
+3. If yes, revise structure first, polish second.
+4. Only call the screen done after a screenshot-based review pass.
 
-### Workflow 1: Capture & Analyze Inspiration
+## Design outputs
+Produce one or more of:
+- design direction note
+- reference summary
+- hierarchy critique
+- layout correction checklist
+- screenshot review findings
 
-**Purpose**: Extract design guidelines from inspiration websites.
+If the project needs artifacts, use:
+- `assets/design-guideline-template.md`
+- `assets/design-story-template.md`
 
-**Steps**:
-1. Browse inspiration sites (Dribbble, Mobbin, Behance, Awwwards)
-2. Use **browser-inspector** skill to capture full-screen screenshots (not full page)
-3. Use **multimodal-evidence** skill to analyze screenshots and extract:
-   - Design style (Minimalism, Glassmorphism, Neo-brutalism, etc.)
-   - Layout structure & grid systems
-   - Typography system & hierarchy
-     **IMPORTANT:** Try to predict the font name (Google Fonts) and font size in the given screenshot, don't just use Inter or Poppins.
-   - Color palette with hex codes
-   - Visual hierarchy techniques
-   - Component patterns & styling
-   - Micro-interactions
-   - Accessibility considerations
-   - Overall aesthetic quality rating (1-10)
-4. Document findings in project design guidelines using templates
+## Related skills
+- `browser-inspector` for capture and browser inspection
+- `multimodal-evidence` for screenshot analysis when available
+- `media-tooling` for image refinement when needed
+- `ui-styling` for implementation systems
+- `frontend-design` for shipping the page
+- `ux-structure` for flow and UX structure
 
-### Workflow 2: Generate & Iterate Design Images
-
-**Purpose**: Create aesthetically pleasing design images through iteration.
-
-**Steps**:
-1. Define design prompt with: style, colors, typography, audience, animation specs
-2. Use **multimodal-evidence** skill to generate design images with Gemini API
-3. Use **multimodal-evidence** skill to analyze output images and evaluate aesthetic quality
-4. If score < 7/10 or fails professional standards:
-   - Identify specific weaknesses (color, typography, layout, spacing, hierarchy)
-   - Refine prompt with improvements
-   - Regenerate with **multimodal-evidence** or use **media-tooling** skill to modify outputs (resize, crop, filters, composition)
-5. Repeat until aesthetic standards met (score ≥ 7/10)
-6. Document final design decisions using templates
-
-## Design Documentation
-
-### Create Design Guidelines
-Use [`assets/design-guideline-template.md`](assets/design-guideline-template.md) to document:
-- Color patterns & psychology
-- Typography system & hierarchy
-- Layout principles & spacing
-- Component styling standards
-- Accessibility considerations
-- Design highlights & rationale
-
-Save in project `./docs/design-guideline.md`.
-
-### Create Design Story
-Use [`assets/design-story-template.md`](assets/design-story-template.md) to document:
-- Narrative elements & themes
-- Emotional journey
-- User journey & peak moments
-- Design decision rationale
-
-Save in project `./docs/design-story.md`.
-
-## Resources & Integration
-
-### Related Skills
-- **multimodal-evidence**: Analyze documents, screenshots & videos, generate design images, edit generated images, evaluate aesthetic quality using Gemini API
-- **browser-inspector**: Capture full-screen screenshots from inspiration websites, navigate between pages, interact with elements, read console logs & network requests
-- **media-tooling**: Refine generated images (FFmpeg for video, ImageMagick for images)
-- **ui-styling**: Implement designs with shadcn/ui components + Tailwind CSS utility-first styling
-- **web-frameworks**: Build with Next.js (App Router, Server Components, SSR/SSG)
-
-### Reference Documentation
-**References**: [`references/design-resources.md`](references/design-resources.md) - Inspiration platforms, design systems, AI tools, MCP integrations, development strategies.
-
-## Key Principles
-
-1. Aesthetic standards come from humans, not AI—study quality examples
-2. Iterate based on analysis—never settle for first output
-3. Balance beauty with functionality and accessibility
-4. Document decisions for consistency across development
-5. Use progressive disclosure in design—reveal complexity gradually
-6. Always evaluate aesthetic quality objectively (score ≥ 7/10)
+## Principles
+1. Reference-driven structure beats invented average structure.
+2. Libraries are ingredients, not the final dish.
+3. Beauty without hierarchy is decoration.
+4. The first pass is rarely the final pass.
+5. If the page still smells like AI, keep refining.
