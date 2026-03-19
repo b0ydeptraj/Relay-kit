@@ -1,59 +1,48 @@
-# Anime.js v4 Reference Guide for AI Assistants
+# Anime.js v4 Reference
 
-## 🚨 CRITICAL: ALWAYS USE ANIME.JS V4 SYNTAX 🚨
+Use this file when motion intensity is not `low` and the surface needs deliberate animation rather than ad-hoc CSS effects.
 
-**This project uses Anime.js v4.x.x - DO NOT use v3 syntax under any circumstances**
+## Version rule
 
-**If you're about to write `import anime from 'animejs'` - STOP!**
-**That's v3. This project uses v4. Use the correct import below.**
+This reference assumes Anime.js v4 syntax. Do not write v3-style imports or APIs.
 
-## 🚀 Quick Start - Essential Setup
-
-### 1. Correct v4 Import (REQUIRED)
+### Correct import
 ```javascript
-// ✅ CORRECT v4 imports
 import { animate, createTimeline, stagger, utils, svg, eases, engine } from 'animejs';
 
-// ❌ WRONG v3 import - NEVER USE THIS
+// Wrong for v4:
 // import anime from 'animejs';
 ```
 
-### 2. Configure Time Units to Seconds (SET ONCE IN APP ENTRY POINT)
-```javascript
-// ⚠️ IMPORTANT: Set this ONLY ONCE in your app's main entry point
-// For React: App.js/App.tsx or index.js/index.tsx
-// For Vue: main.js/main.ts
-// For vanilla JS: The main script file that loads first
+## Setup rule
 
+Set the time unit once in the app entry point, not inside individual components.
+
+```javascript
 import { engine } from 'animejs';
 
-// Set ONLY in the app's entry point, NOT in components
 engine.timeUnit = 's';
-
-// Now ALL durations use seconds everywhere: 1 = 1 second, 0.5 = 500ms
-// DO NOT set this in individual components - it's a global setting!
 ```
 
-### 3. Single-Line Format for Simple Animations (REQUIRED)
+After that, durations use seconds consistently.
+
+## Formatting rule
+
+Keep simple animations compact.
+
 ```javascript
-// ✅ GOOD - Clean, readable, one line for simple tweens
 animate('.element', { x: 250, duration: 1, ease: 'outQuad' });
-
-// ❌ BAD - Unnecessary multi-line for simple tweens
-animate('.element', {
-  x: 250,
-  duration: 1,
-  ease: 'outQuad'
-});
 ```
+
+Only expand to multi-line when the tween is genuinely complex.
 
 ## ✅ Quick Validation Checklist
 
 Before generating anime.js code, verify:
 - [ ] Using `import { animate, ... } from 'animejs'` NOT `import anime`
-- [ ] Set `engine.timeUnit = 's'` ONLY ONCE in app entry point (NOT in components)
+- [ ] Set `engine.timeUnit = 's'` only once in app entry point (NOT in components)
 - [ ] Using seconds for all durations (1 = 1 second)
-- [ ] Simple animations on ONE LINE
+- [ ] Simple animations on one line
 - [ ] Using `animate()` NOT `anime()`
 - [ ] Using `createTimeline()` NOT `anime.timeline()`
 - [ ] Using `ease:` NOT `easing:`
@@ -370,7 +359,7 @@ When asked to create animations with anime.js:
 
 1. **ONLY** set `engine.timeUnit = 's'` ONCE in the app's main entry point (App.js, main.js, index.js) - NEVER in components
 2. **ALWAYS** use seconds for all durations (1 = 1 second)
-3. **ALWAYS** format simple animations on ONE LINE
+3. **ALWAYS** format simple animations on one line
 4. **ALWAYS** start with v4 imports
 5. **NEVER** use `anime()` function
 6. **ALWAYS** use `animate()` for animations

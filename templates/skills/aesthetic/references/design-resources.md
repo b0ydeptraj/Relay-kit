@@ -1,75 +1,40 @@
-# Design Resources & Tools
+# Design Resources
 
-## Inspiration Platforms
+Use references to anchor direction. Do not treat inspiration as permission to copy surfaces blindly.
 
-### Design Galleries
-- **Dribbble**: High-quality UI/UX designs, trending styles
-- **Mobbin**: Mobile app design patterns, real-world examples
-- **Behance**: Creative portfolios, comprehensive projects
-- **Awwwards**: Award-winning web experiences
-- **21st.dev**: Component animations, micro-interactions
-- **CSS Design Awards**: Cutting-edge web designs
+## Good reference sources
+- Real product screenshots with strong hierarchy
+- Component galleries for nav, forms, tables, pricing, and data display
+- Design system docs when the product needs consistency more than novelty
+- Motion examples that show timing and restraint, not effect spam
 
-### Design Systems
-Search pattern: "Figma Design System + [style name]"
-- Material Design (Google)
-- Human Interface Guidelines (Apple)
-- Carbon Design System (IBM)
-- Ant Design
-- Shadcn UI
-- Atlassian Design System
+## What to extract from a reference
+- layout structure
+- focal point
+- supporting proof placement
+- typography behavior
+- spacing rhythm
+- card density
+- color roles
+- motion cues
 
-## AI Tools for Design
+Write down what should be preserved and what should be changed for the current product.
 
-### Generation
-- **Gemini**: Image generation via multimodal-evidence skill
-- **Claude**: Design variations, component code
+## Source patterns, not aesthetics alone
+- Use chart libraries for chart structure.
+- Use a single icon system consistently.
+- Use a strong product screenshot when freehand generation keeps drifting toward generic SaaS UI.
+- Use component galleries as ingredients, then adapt spacing, contrast, and type until the result feels native.
 
-### Prompt Structure
-Include in prompts:
-- Task description
-- Preferred design style
-- Color palette
-- Typography preferences
-- Target audience/user story
-- Animation specifications
+## Research workflow
+- Capture the relevant viewport, not a random full-page screenshot.
+- Compare at least 2 references before locking direction.
+- Prefer references that solve the same surface: dashboard vs checkout vs landing page.
+- Reject sources that look trendy but structurally weak.
 
-## MCP Integrations
-
-### Available MCPs
-- **Chrome MCP**: Research designs, analyze trends from Dribbble/Mobbin
-- **Figma MCP**: Code based on community designs
-- **Freepik MCP**: Access stock imagery
-- **ChatGPT-Image MCP**: Image resources
-- **gallery-dl**: Download reference images via bash
-
-### Usage
-Connect MCPs for enhanced capabilities when researching, analyzing, or implementing designs.
-
-## Development Approach
-
-### Git Worktrees Strategy
-Maintain separate branches for different design style variations during development.
-Allows parallel exploration of Minimalist, Modern, Glassmorphism interpretations.
-
-### Parallel Agents
-Use multiple agents to generate design style variations simultaneously, compare approaches.
-
-## Documentation Standards
-
-### Required Files
-Create in `./docs/` directory:
-- **design-guideline.md**: Color patterns, typography, layout principles, component styling, design highlights
-- **design-story.md**: Narrative elements, thematic decisions, user journey considerations
-
-### Content
-Document:
-- Rationale for design decisions
-- Style guide (colors, fonts, spacing)
-- Component patterns & usage
-- Responsive breakpoints
-- Accessibility considerations
-- Brand alignment
-
-### Maintenance
-Update during development. Use development rules to remind Claude Code to follow guidelines consistently.
+## Documentation rule
+Turn reference review into short notes:
+- what the source does well
+- what to borrow
+- what to avoid
+- how the product should differ

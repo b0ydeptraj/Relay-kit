@@ -264,7 +264,7 @@ Combine responsive with hover/focus:
 </button>
 
 <!-- Different hover colors per breakpoint -->
-<a class="hover:text-blue-600 lg:hover:text-purple-600">
+<a class="hover:text-blue-600 lg:hover:text-teal-600">
   Link
 </a>
 ```

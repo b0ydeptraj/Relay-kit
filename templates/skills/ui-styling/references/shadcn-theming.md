@@ -205,12 +205,12 @@ Change colors by modifying CSS variables in `globals.css`:
 
 ```css
 :root {
-  --primary: 262.1 83.3% 57.8%;  /* Purple */
+  --primary: 176 63% 40%;  /* Teal accent */
   --primary-foreground: 210 20% 98%;
 }
 
 .dark {
-  --primary: 263.4 70% 50.4%;  /* Darker purple */
+  --primary: 176 55% 45%;  /* Brighter teal accent */
   --primary-foreground: 210 20% 98%;
 }
 ```
@@ -226,21 +226,21 @@ Select base color, generate theme, copy CSS variables.
 Create theme variants with data attributes:
 
 ```css
-[data-theme="violet"] {
-  --primary: 262.1 83.3% 57.8%;
+[data-theme="teal"] {
+  --primary: 176 63% 40%;
   --primary-foreground: 210 20% 98%;
 }
 
-[data-theme="rose"] {
-  --primary: 346.8 77.2% 49.8%;
-  --primary-foreground: 355.7 100% 97.3%;
+[data-theme="stone"] {
+  --primary: 28 8% 32%;
+  --primary-foreground: 48 33% 97%;
 }
 ```
 
 Apply theme:
 ```tsx
-<div data-theme="violet">
-  <Button>Violet theme</Button>
+<div data-theme="teal">
+  <Button>Teal theme</Button>
 </div>
 ```
 
@@ -261,7 +261,7 @@ const buttonVariants = cva(
         destructive: "bg-destructive text-destructive-foreground",
         outline: "border border-input bg-background",
         // Add custom variant
-        gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white",
+        emphasis: "bg-gradient-to-r from-slate-900 to-teal-600 text-white",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -310,7 +310,7 @@ const Card = React.forwardRef<
 Pass additional classes to override:
 
 ```tsx
-<Card className="border-2 border-purple-500 shadow-2xl hover:scale-105 transition-transform">
+<Card className="border-2 border-teal-600 shadow-2xl hover:scale-105 transition-transform">
   Custom styled card
 </Card>
 ```

@@ -16,8 +16,8 @@ Modern approach to customize Tailwind using CSS:
   --color-brand-900: oklch(0.25 0.15 264);
 
   /* Custom fonts */
-  --font-display: "Satoshi", "Inter", sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Public Sans", system-ui, sans-serif;
 
   /* Custom spacing */
   --spacing-18: calc(var(--spacing) * 18);
@@ -28,7 +28,7 @@ Modern approach to customize Tailwind using CSS:
   --breakpoint-tablet: 48rem;
 
   /* Custom shadows */
-  --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+  --shadow-emphasis: 0 18px 48px rgba(15, 23, 42, 0.18);
 
   /* Custom radius */
   --radius-large: 1.5rem;
@@ -37,7 +37,7 @@ Modern approach to customize Tailwind using CSS:
 
 **Usage:**
 ```html
-<div class="bg-brand-500 font-display shadow-glow rounded-large">
+<div class="bg-brand-500 font-display shadow-emphasis rounded-large">
   Custom themed element
 </div>
 
@@ -89,7 +89,7 @@ Modern approach to customize Tailwind using CSS:
 
 ```css
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Public Sans", system-ui, sans-serif;
   --font-serif: "Merriweather", Georgia, serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;
   --font-display: "Playfair Display", serif;
@@ -382,7 +382,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Public Sans', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'serif'],
       },
       spacing: {

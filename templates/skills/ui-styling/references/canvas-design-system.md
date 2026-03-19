@@ -1,16 +1,16 @@
 # Canvas Design System
 
-Visual design philosophy, systematic composition, and sophisticated visual communication.
+Use this file when a surface needs a stronger visual language than default product UI. Treat canvas work as composition-first design, not as decoration dumped behind content.
 
 ## Design Philosophy Approach
 
-Canvas design operates through two-phase process:
+Canvas design works best as a two-phase process:
 
 ### Phase 1: Design Philosophy Creation
 
-Create visual philosophy - aesthetic movement expressed through form, space, color, composition. Not layouts or templates, but pure visual philosophy.
+Create a visual philosophy first: form, space, color, composition, and tension. Do not start from templates.
 
-**What is created:** Design manifesto emphasizing:
+**What is created:** a short design manifesto emphasizing:
 - Visual expression over text
 - Spatial communication
 - Artistic interpretation
@@ -25,10 +25,10 @@ Create visual philosophy - aesthetic movement expressed through form, space, col
 
 ### Phase 2: Visual Expression
 
-Express philosophy through canvas artifacts:
+Express the philosophy through artifacts:
 - 90% visual design
 - 10% essential text
-- Museum-quality execution
+- high-finish execution
 - Systematic patterns
 - Sophisticated composition
 
@@ -102,7 +102,7 @@ Use scientific visual language:
 - Vast negative space
 - Photography and illustration dominate
 - Typography whispered (small, restrained)
-- Japanese photobook aesthetic
+- restrained photobook-like pacing
 - Images breathe across pages
 - Text appears sparingly - short phrases only
 

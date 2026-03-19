@@ -1,53 +1,30 @@
-# Micro-Interactions: Satisfying Experience
+# Micro-Interactions
 
-## SATISFYING: Adding Micro-Interactions
+Use motion to strengthen comprehension and finish. Do not use motion to disguise weak structure.
 
-### Duration Guidelines
-- **General micro-interactions**: 150-300ms (avoid interrupting flow)
-- **Button presses**: Start within 16ms of click
-- **Standard animations**: 200-500ms
-- **UI motions**: 0.5-2s typically
-- **Rule**: A tenth of a second makes big difference; half second wrong feels jarring
+## Duration ranges
+- Hover and press feedback: 120-220ms
+- Small UI transitions: 150-300ms
+- Entry choreography: 200-500ms
+- Larger scene changes: use sparingly and only when they help orientation
 
-### Basic Effects
-- **Fade**: Smooth opacity transitions
-- **Slide**: Directional movement (left/right/up/down)
-- **Scale**: Size changes (grow/shrink)
-- **Rotate**: Angular transformations
-- Sequential timing with 0.1s delays between elements
+## Good motion choices
+- Prefer opacity and transform over layout-thrashing properties.
+- Use ease-out for entrance and ease-in for exit in most UI cases.
+- Stagger only when it helps users parse sequence or hierarchy.
+- Keep animations subtle on dense product surfaces.
 
-### Easing Curves
-Linear motion = robotic. Use easing for natural feel:
+## What to avoid
+- constant looping motion with no informational value
+- bounce or spring everywhere
+- dramatic movement on every hover state
+- long page-load sequences that delay interaction
+- motion that ignores reduced-motion preferences
 
-**Ease-out** (starts fast, slows down):
-- Best for: Elements entering screen
-- Makes animation feel responsive
-- Allows eye time to focus as element settles
-- Most common for UI micro-interactions
+## Review checklist
+- Does the motion explain state change or hierarchy?
+- Would the screen still work with motion disabled?
+- Is the timing consistent with the surface?
+- Does the animation keep 60fps on a normal device?
 
-**Ease-in** (starts slow, speeds up):
-- Best for: Elements leaving screen
-- Natural exit motion
-
-**Spring/bounce**:
-- Playful, energetic feel
-- Use sparingly for emphasis
-
-**Cubic-bezier**:
-- Fine-tuned control over motion curves
-- Custom easing for specific needs
-
-### Motion Characteristics
-- Follow real-world physics (objects speed up when starting, slow down when stopping)
-- Subtle curves for micro-interactions
-- Bolder curves for attention-grabbing transitions
-- Always have purpose—guide users or give feedback
-
-### Performance
-- Aim for smooth 60fps
-- Prefer hardware-accelerated properties (transforms, opacity)
-- Avoid fancy effects causing frame drops or battery drain
-- Provide motion-reduced alternatives for accessibility
-
-### Resources
-Study 21st.dev for component animations & subtle effects worth emulating.
+If the answer is no, simplify the motion before polishing it.

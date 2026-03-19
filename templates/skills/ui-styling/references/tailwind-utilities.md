@@ -276,13 +276,13 @@ Each color has 11 shades (50-950):
 ```html
 <div class="bg-black/75">75% opacity</div>
 <div class="text-blue-500/30">30% opacity</div>
-<div class="bg-purple-500/[0.87]">87% opacity</div>
+<div class="bg-slate-800/[0.87]">87% opacity</div>
 ```
 
 ### Gradients
 
 ```html
-<div class="bg-gradient-to-r from-blue-500 to-purple-600">
+<div class="bg-gradient-to-r from-slate-900 to-teal-600">
   Left to right gradient
 </div>
 <div class="bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500">

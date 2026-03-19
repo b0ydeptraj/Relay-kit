@@ -1,62 +1,41 @@
-# Design Principles: Beautiful & Right
+# Design Principles
 
-## BEAUTIFUL: Understanding Aesthetic Principles
+Use this file to ground aesthetic decisions in hierarchy and readability, not taste adjectives.
 
-### Study Process
-Analyze high-quality designs on Dribbble, Mobbin, Behance. Ask AI to identify:
-- Design styles (Memphis, Flat Design, Glassmorphism, Neo-brutalism, Minimalism)
-- Layout structures & applications
-- Typography systems (font pairing, hierarchy, scaling)
-- Color systems (palettes, contrasts, psychology)
+## Start with structure
+- Identify the focal point before choosing colors or effects.
+- Decide which block is dominant, which block proves the claim, and which block stays quiet.
+- Prefer a deliberate grid or asymmetry over equal-weight sections.
+- Keep mobile collapse behavior obvious before polishing desktop details.
 
-### Visual Hierarchy
-Guide users through interfaces effectively:
-- **Size**: Larger elements draw attention first
-- **Contrast**: High contrast (text/background) boosts readability
-- **Typography**: Use weight, size, style for hierarchy
-- **Placement**: F-pattern (web), Z-pattern (landing pages)
-- **Spacing**: White space improves clarity, reduces cognitive load
+## Visual hierarchy
+- Size sets priority first.
+- Contrast should clarify, not decorate.
+- Placement should support reading order; use F-pattern or Z-pattern intentionally.
+- Spacing should separate meaningfully different blocks, not just add air everywhere.
+- Repetition should build rhythm, not flatten hierarchy.
 
-### Typography Best Practices
-- Stick to 2-3 typefaces max
-- Clear font hierarchy with proper spacing, sizes, alignment
-- Appropriate font sizes for readability across devices
-- Short, scannable paragraphs
+## Typography
+- Limit most screens to 2 type families and a small set of weights.
+- Use a clear display/body relationship.
+- Avoid default-safe typography when the product needs a point of view.
+- Keep line length readable and paragraph density appropriate to the surface.
+- Treat type as structure, not just styling.
 
-### Color Theory Applications
-- **Blue**: Trust, security, calmness
-- **Red**: Urgency, passion, excitement
-- **Warm colors**: Drive urgency
-- **Cool colors**: Create trust
-- Use color intentionally to direct attention & evoke emotion
-- Ensure WCAG AA contrast ratios (4.5:1 text, 3:1 large text)
+## Color and contrast
+- Use color to direct attention, establish roles, and reinforce product tone.
+- Do not rely on color to fix weak layout.
+- Reserve accent colors for meaningful emphasis.
+- Keep text contrast at WCAG AA or better.
+- Avoid purple-gradient filler and decorative color noise.
 
-### White Space
-Not empty—essential for clarity. Proper spacing between sections, buttons, text improves readability & gives visual breathing room.
+## Spacing and composition
+- Group related content tightly enough that relationships feel intentional.
+- Create density changes on purpose; not every section needs the same rhythm.
+- Use negative space to frame important decisions, not to make weak layouts feel premium.
+- Let proof sit close to the main claim.
 
-## RIGHT: Ensuring Functionality
-
-### Design Systems Research
-Search "Figma Design System + [style]" to understand:
-- Component architecture (atomic design: atoms → molecules → organisms)
-- Layout principles (grid systems, responsive breakpoints)
-- UX patterns & interactions
-
-### Component Library Standards
-- Semantic HTML first (button > div with ARIA roles)
-- Built-in accessibility, focus handling, keyboard interaction
-- Each component tested for accessibility before adding
-- Documentation includes structure, focus order, keyboard expectations, screen reader announcements
-
-### Accessibility Requirements
-- WCAG 2.1 AA minimum (work toward 2.2)
-- Color contrast ratios meet/exceed minimums
-- Alt text for images
-- Color-blind-friendly palettes
-- Keyboard navigation support
-- Screen reader compatibility
-
-### Testing Protocol
-- Automated tools catch 30-50% of issues
-- Manual testing crucial for comprehensive coverage
-- Test with real users when possible
+## Functional fit
+- Aesthetic quality is invalid if the page becomes slower to scan or harder to use.
+- Require loading, empty, and error states for real product surfaces.
+- Review accessibility and keyboard/focus behavior before calling a screen polished.
