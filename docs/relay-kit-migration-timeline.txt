@@ -1,5 +1,5 @@
 ﻿Relay-kit migration timeline reference
-Generated: 2026-03-18
+Updated: 2026-03-22
 
 1. Giai đoạn hiện tại: soak cycle đang chạy
 
@@ -16,10 +16,13 @@ Chưa làm trong giai đoạn này:
 - đổi `.ai-kit` -> `.relay-kit`
 - bỏ `python_kit.py`
 - rename thư mục repo thật trên disk
+- mở public install surface mới như `relay-kit <path> --codex/--claude/--antigravity`
+- đổi public naming từ `--ai gemini` sang `--ai antigravity`
+- thêm capability mới như `memory-search`, `release-readiness`, `accessibility-review`, `skill-gauntlet`
 
 Tác dụng:
 - giữ số liệu compatibility cycle sạch
-- không trộn migration lớn vào lúc đang kiểm rename hiện tại
+- không trộn migration lớn hoặc public API mới vào lúc đang kiểm rename hiện tại
 
 Lưu ý:
 - nếu có fix đụng vào compatibility hiện tại, mốc 2026-03-31 có thể bị lùi vì phải tính lại chu kỳ
@@ -35,11 +38,19 @@ Nên làm ở phase này:
 - mở rộng `docs/how-to-write-skills.md` hoặc `CONTRIBUTING.md` nếu cần
 - làm skill behavior validation hoặc gauntlet regression nếu muốn khóa chất lượng skill chặt hơn
 - xử lý các việc branding nhỏ còn sót như GitHub description/topics hoặc `apps/python-kit-sales-web` nếu quyết định dọn tiếp
+- thiết kế public install surface cho người ngoài:
+  - mục tiêu là chạy được kiểu `relay-kit C:\path\to\my-app --codex`
+  - `--claude`
+  - `--antigravity`
+- đổi public naming theo hướng:
+  - bề mặt người dùng dùng `antigravity`
+  - không ép người dùng phải nhớ `gemini`
 
 Tác dụng:
 - khóa chất lượng trước khi rename lớn
 - biết chính xác rename `.ai-kit` sẽ đụng đâu
 - giảm nguy cơ rename xong mới lòi drift
+- chuẩn bị public install UX tốt hơn cho người ngoài dùng repo
 
 3. Chỉ sau khi phase `.ai-kit` có compatibility layer riêng và chạy thêm một chu kỳ nữa
 
@@ -59,16 +70,80 @@ Chỉ lúc đó mới làm:
 - bỏ `python_kit.py`
 - bỏ alias/path cũ
 - rename thư mục repo thật trên disk
+- cân nhắc promote public CLI mới thành surface chính thức nếu phase 2 và cycle riêng đều sạch
 
 Tác dụng:
 - hoàn tất rename kỹ thuật
 - dừng mang compatibility layer lâu hơn cần thiết
 - tránh vừa rename vừa đoán mò
 
-4. Những thứ nên để rất sau, không ưu tiên
+4. Những thứ nên để sau compatibility cycle, nhưng không cần chen vào soak hiện tại
+
+Capability backlog:
+
+4.1 `memory-search` hoặc `artifact-search`
+- Thiếu gì:
+  - một utility để tra cứu nhanh quyết định cũ, pattern debug cũ, handoff cũ trong `.ai-kit/state`
+- Vì sao đáng thêm:
+  - hiện Relay-kit có state file tốt, nhưng vẫn là file tĩnh
+  - chưa có cách query kiểu “trước đây đã xử lý lỗi dạng này thế nào?”
+- Tác dụng:
+  - giảm mất context qua nhiều session
+  - làm shared state hữu dụng hơn, không chỉ là chỗ ghi
+- Loại gap:
+  - capability gap thật
+
+4.2 `release-readiness` hoặc `deploy-smoke`
+- Thiếu gì:
+  - một discipline nhỏ cho:
+    - pre-deploy check
+    - post-deploy smoke check
+    - rollback signals
+- Vì sao đáng thêm:
+  - các hệ lớn ngoài kia có nhiều skill deployment/cloud/release
+  - Relay-kit hiện mạnh ở build/review, nhưng chưa có một path rõ cho “ship rồi kiểm”
+- Tác dụng:
+  - workflow khép kín hơn cho production work
+  - bớt kiểu “ready-check xong là coi như production ổn”
+- Loại gap:
+  - capability gap thật
+- Ghi chú:
+  - không cần làm thành 10 skill cloud riêng lẻ
+  - chỉ cần 1 discipline cross-cutting là đủ
+
+4.3 `accessibility-review` hoặc `a11y QA mode`
+- Thiếu gì:
+  - một review mode hoặc utility rõ cho accessibility
+- Vì sao đáng thêm:
+  - Relay-kit có accessibility content rải trong frontend skills, nhưng chưa thành một discipline review rõ
+  - trong các bộ skill public mạnh, a11y là phần thực chiến rất hay có
+- Tác dụng:
+  - nâng chất lượng frontend thật, không chỉ đẹp mà còn dùng được
+  - hợp với hướng đang siết UI
+- Loại gap:
+  - quality gap gần với capability gap
+- Ghi chú:
+  - không cần thêm hẳn 5 skill frontend mới
+  - chỉ cần làm accessibility thành một gate rõ trong review/test
+
+4.4 `skill-gauntlet` hoặc automated skill behavior validation
+- Thiếu gì:
+  - test tự động kiểu:
+    - prompt X có kích hoạt đúng skill không
+    - skill Y có còn giữ hành vi mong muốn không
+- Vì sao đáng thêm:
+  - Relay-kit hiện có `validate_runtime.py` rất tốt cho cấu trúc
+  - nhưng chưa mạnh ở phần behavior regression của chính skill
+- Tác dụng:
+  - giảm drift khi skill ngày càng nhiều
+  - phù hợp với triết lý engineering discipline của Relay-kit
+- Loại gap:
+  - quality/system gap
+
+5. Những thứ nên để rất sau, không ưu tiên
 
 Để sau khi rename lớn ổn định:
-- session/queryable memory
+- session/queryable memory bản nặng hơn
 - slash command shims
 - các feature mới không liên quan trực tiếp đến migration
 
@@ -76,13 +151,14 @@ Tác dụng của việc để sau:
 - không làm nhiễu migration
 - dễ biết bug nào do rename, bug nào do feature mới
 
-5. Tóm tắt cực ngắn
+6. Tóm tắt cực ngắn
 
 - đến 2026-03-31: chỉ soak cycle hiện tại
 - từ 2026-04-01: audit + plan `.ai-kit`
+- cùng phase đó mới tính public install surface như `relay-kit <path> --antigravity`
 - sau đó chạy thêm một cycle riêng cho `.ai-kit`
 - sớm nhất khoảng giữa 04/2026 mới tính chuyện bỏ alias cũ và rename lớn
 
-6. Câu nhắc ngắn để dùng lại trong chat sau này
+7. Câu nhắc ngắn để dùng lại trong chat sau này
 
-"Kiểm phase timeline Relay-kit: nếu còn trước 2026-03-31 thì chỉ soak cycle; nếu cycle sạch thì mở phase `.ai-kit` -> `.relay-kit`; chỉ sau cycle riêng của `.ai-kit` mới bỏ alias cũ và rename repo thật."
+"Kiểm phase timeline Relay-kit: nếu còn trước 2026-03-31 thì chỉ soak cycle; nếu cycle sạch thì mở phase `.ai-kit` -> `.relay-kit`; trong phase sau 2026-04-01 mới tính public CLI như `relay-kit <path> --antigravity`; chỉ sau cycle riêng của `.ai-kit` mới bỏ alias cũ và rename repo thật."
