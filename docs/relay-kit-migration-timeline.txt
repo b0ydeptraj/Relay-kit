@@ -1,5 +1,5 @@
 ﻿Relay-kit migration timeline reference
-Updated: 2026-03-22
+Updated: 2026-03-23
 
 1. Giai đoạn hiện tại: soak cycle đang chạy
 
@@ -18,7 +18,7 @@ Chưa làm trong giai đoạn này:
 - rename thư mục repo thật trên disk
 - mở public install surface mới như `relay-kit <path> --codex/--claude/--antigravity`
 - đổi public naming từ `--ai gemini` sang `--ai antigravity`
-- thêm capability mới như `memory-search`, `release-readiness`, `accessibility-review`, `skill-gauntlet`
+- thêm capability mới như `memory-search`, `release-readiness`, `accessibility-review`, `skill-gauntlet`, `context-continuity`
 
 Tác dụng:
 - giữ số liệu compatibility cycle sạch
@@ -140,6 +140,30 @@ Capability backlog:
 - Loại gap:
   - quality/system gap
 
+4.5 `context-continuity` hoặc `resume-context`
+- Thiếu gì:
+  - một skill chuyên chốt, nén, index, và rehydrate context khi chat quá dài, khi đổi thread, khi đổi AI, hoặc khi quay lại repo sau một khoảng nghỉ
+- Vì sao đáng thêm:
+  - `handoff-context` hiện mạnh ở handoff ngắn theo lane, nhưng chưa phải là hệ cross-chat hoặc cross-session preservation gần lossless
+  - summary chat bình thường làm mất quyết định, open loops, evidence, chronology, và các điều "không được quên"
+- Tác dụng:
+  - giúp chat mới hiểu nhanh repo lane cũ mà không cần replay cả đoạn chat
+  - giảm đứt mạch khi context window đầy hoặc khi phải chuyển sang cuộc trò chuyện khác
+  - giữ được facts, decisions, open loops, evidence, và next move theo format ổn định hơn summary thường
+- Loại gap:
+  - capability gap thật
+- Hướng làm:
+  - làm theo mô hình nhiều lớp thay vì một file summary duy nhất:
+    - current state
+    - decision register
+    - open loops
+    - evidence index
+    - session ledger
+  - về sau nên đi kèm script checkpoint, rehydrate, và search để giảm drift
+- Ghi chú:
+  - đây là một trong các capability đáng làm nhất sau 2026-04-01
+  - nên làm sau `memory-search` và trước các feature memory nặng hơn
+
 5. Những thứ nên để rất sau, không ưu tiên
 
 Để sau khi rename lớn ổn định:
@@ -156,9 +180,10 @@ Tác dụng của việc để sau:
 - đến 2026-03-31: chỉ soak cycle hiện tại
 - từ 2026-04-01: audit + plan `.ai-kit`
 - cùng phase đó mới tính public install surface như `relay-kit <path> --antigravity`
+- sau 2026-04-01, làm capability backlog theo thứ tự từ trên xuống nếu không có blocker mới
 - sau đó chạy thêm một cycle riêng cho `.ai-kit`
 - sớm nhất khoảng giữa 04/2026 mới tính chuyện bỏ alias cũ và rename lớn
 
 7. Câu nhắc ngắn để dùng lại trong chat sau này
 
-"Kiểm phase timeline Relay-kit: nếu còn trước 2026-03-31 thì chỉ soak cycle; nếu cycle sạch thì mở phase `.ai-kit` -> `.relay-kit`; trong phase sau 2026-04-01 mới tính public CLI như `relay-kit <path> --antigravity`; chỉ sau cycle riêng của `.ai-kit` mới bỏ alias cũ và rename repo thật."
+"Kiểm phase timeline Relay-kit: nếu còn trước 2026-03-31 thì chỉ soak cycle; nếu cycle sạch thì mở phase `.ai-kit` -> `.relay-kit`; trong phase sau 2026-04-01 mới tính public CLI như `relay-kit <path> --antigravity` và làm capability backlog từ trên xuống; chỉ sau cycle riêng của `.ai-kit` mới bỏ alias cũ và rename repo thật."
