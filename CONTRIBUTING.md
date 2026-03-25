@@ -27,9 +27,12 @@ If you add or edit a skill:
 
 - follow `docs/how-to-write-skills.md`
 - keep descriptions in `Use when...` trigger style
+- do not define the skill by persona language like "become an expert" or "act as a senior X"; define it by trigger, workflow, artifact I/O, stop condition, and next handoff
 - prefer improving an existing skill or adding an alias before creating a new
   canonical skill
 - keep the public surface small and easy to remember
+- keep `SKILL.md` lean and move depth into `references/` or `scripts/` instead of building monolithic skill files
+- do not let the same authoring path be the only reviewer; new or heavily rewritten skills must be checked by a different path such as `review-hub`, `oracle`, a gauntlet, or another review prompt path
 
 ### Docs
 
@@ -69,6 +72,9 @@ python python_kit.py --list-skills
 - [ ] Public docs and public naming stay consistent.
 - [ ] No stale local path leaked into public docs.
 - [ ] Bundle placement is intentional.
+- [ ] New or rewritten skills are defined by workflow, not persona.
+- [ ] Large skill content was split into references or scripts where appropriate.
+- [ ] Skill review used a different path than the path that created the skill.
 - [ ] Validation passed locally.
 
 ## What not to do

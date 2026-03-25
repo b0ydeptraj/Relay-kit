@@ -112,6 +112,34 @@ Examples:
 
 If the skill is stateless, say that clearly.
 
+## Define skills by workflow, not persona
+
+Do not define a Relay-kit skill as:
+
+- "become an expert in X"
+- "act as a senior Y"
+- "you are now a specialist Z"
+
+That wording invites roleplay and overconfident improvisation.
+
+Define the skill by:
+
+- trigger condition
+- workflow steps
+- artifact inputs and outputs
+- stop condition
+- next handoff
+
+Better pattern:
+
+- "Use when this kind of request arrives."
+- "Read these artifacts."
+- "Produce this output."
+- "Stop when this evidence exists."
+- "Hand off to this next skill."
+
+Relay-kit works better when skills behave like bounded operating procedures, not personas.
+
 ## Avoid giant umbrella skills
 
 Do not create broad skills that try to do everything at once.
@@ -123,6 +151,24 @@ Warning signs:
 - the output changes wildly depending on the model mood
 
 Prefer bounded behavior with a clean next handoff.
+
+## Keep SKILL.md lean; move depth into references and scripts
+
+Do not solve skill quality by making `SKILL.md` huge.
+
+Default rule:
+
+- keep `SKILL.md` focused on trigger, workflow, output, stop condition, and handoff
+- move deep procedures, examples, schemas, or domain detail into `references/`
+- move deterministic or repetitive behavior into `scripts/`
+
+Why this matters:
+
+- long skills are harder to trigger correctly
+- long skills are easier for the model to skim poorly
+- smaller cores plus progressive disclosure fit Relay-kit better
+
+If a skill is drifting toward 500 lines, it is usually hiding a structure problem.
 
 ## Pressure-test the skill before you keep it
 
@@ -140,6 +186,28 @@ For workflow-heavy skills, also check:
 - does it update the right artifact
 - does it route to the right next skill
 - does it avoid doing work owned by another layer
+
+## Do not let a skill certify itself
+
+The path that creates a skill should not be the only path that approves it.
+
+Default rule:
+
+- a new or heavily rewritten skill must be reviewed by a different path than the one that created it
+
+Examples:
+
+- another reviewer skill
+- `review-hub`
+- `oracle`
+- a gauntlet run
+- a separate prompt path focused on failure cases
+
+Why this matters:
+
+- self-review misses blind spots
+- the same path that created the skill tends to justify its own structure
+- Relay-kit quality improves when authoring and review are separated
 
 ## Bundle and baseline discipline
 
