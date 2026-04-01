@@ -50,6 +50,7 @@ layers:
     - browser-inspector
     - repo-map
     - memory-search
+    - release-readiness
     - handoff-context
     - mermaid-diagrams
     - ux-structure

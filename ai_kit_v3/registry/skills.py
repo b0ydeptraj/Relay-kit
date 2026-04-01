@@ -1057,6 +1057,32 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "If no evidence is found, say so explicitly and route to fresh investigation instead of guessing.",
         ],
     ),
+    "release-readiness": utility_provider_spec(
+        name="release-readiness",
+        description="Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails.",
+        outputs=[
+            "release-readiness checklist notes appended to qa-report or workflow-state",
+            "explicit go, hold, or rollback recommendation tied to machine-checkable signals",
+        ],
+        references=[
+            "Use `python scripts/release_readiness.py <project> --phase pre|post` for deterministic checklists and signal evaluation.",
+            "Treat `ready-check` as review readiness, not automatic production readiness.",
+        ],
+        next_steps=["test-hub", "review-hub", "qa-governor", "workflow-router"],
+        mission="Convert release confidence into concrete pre and post deploy evidence instead of relying on optimistic completion claims.",
+        tasks=[
+            "Run a pre-deploy gate for build, tests, migration risk, and rollback plan status.",
+            "Run a post-deploy smoke gate for health, error budget, and critical path behavior.",
+            "Record which checks are observed, inferred, or still missing.",
+            "Escalate hold or rollback when a critical signal fails.",
+        ],
+        rules=[
+            "No go recommendation without machine-checkable evidence for critical signals.",
+            "Keep pre and post deploy verdicts separate to avoid false confidence.",
+            "If evidence is incomplete, return hold by default and list the exact missing signals.",
+            "Document rollback trigger thresholds before calling a deploy safe.",
+        ],
+    ),
     "handoff-context": utility_provider_spec(
         name="handoff-context",
         description="Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility.",

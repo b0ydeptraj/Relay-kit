@@ -13,6 +13,7 @@ UTILITY_PROVIDER_NAMES = [
     "browser-inspector",
     "repo-map",
     "memory-search",
+    "release-readiness",
     "handoff-context",
     "mermaid-diagrams",
     "ux-structure",
@@ -111,8 +112,8 @@ HUB_SUPPORT_MAP = {
     "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "ux-structure", "mermaid-diagrams"],
     "debug-hub": ["developer", "testing-patterns", "problem-solving", "sequential-thinking", "browser-inspector", "multimodal-evidence", "memory-search"],
     "fix-hub": ["developer", "execution-loop", "project-architecture", "api-integration", "data-persistence", "handoff-context"],
-    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "media-tooling"],
-    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "mermaid-diagrams"],
+    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "release-readiness", "media-tooling"],
+    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "release-readiness", "mermaid-diagrams"],
 }
 
 
@@ -125,6 +126,7 @@ UTILITY_PROVIDER_RULES = {
     "browser-inspector": "Collect browser-side evidence such as console, network, layout, and performance observations.",
     "repo-map": "Produce fast repo maps and dependency summaries for unfamiliar areas.",
     "memory-search": "Retrieve prior decisions, debug evidence, and handoff context from `.ai-kit/state` and `.ai-kit/contracts` without mutating artifacts.",
+    "release-readiness": "Apply explicit pre-deploy and post-deploy smoke gates so release claims are backed by concrete operational signals.",
     "handoff-context": "Prepare the minimum viable context pack for the next skill instead of flooding it with irrelevant detail.",
     "mermaid-diagrams": "Express flows or architecture as diagrams inside the current artifact.",
     "ux-structure": "Contribute UX framing, flow notes, and interface trade-offs when product work has user-facing impact.",

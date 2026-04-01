@@ -47,6 +47,7 @@ Nói ngắn: nó khiến agent bớt làm việc kiểu ứng biến, và làm v
 - runtime skills dùng lại được cho `.claude`, `.agent`, và `.codex`
 - các artifact workflow dùng chung trong `.ai-kit/`
 - utility `memory-search` dạng read-only để tra quyết định và handoff cũ
+- utility `release-readiness` để gate pre/post deploy và theo dõi rollback signal
 - một baseline đang hoạt động và đã được kiểm, không phải bộ skill ghép rời rạc
 - một cách làm việc ổn định hơn mà không phải nhét mọi thứ vào chat memory
 
@@ -124,6 +125,7 @@ Xem chi tiết hơn:
 - [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
 - [`docs/relay-kit-review-flow.md`](docs/relay-kit-review-flow.md)
 - [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
+- [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
 
 ## Nó hoạt động như thế nào
 
@@ -192,6 +194,8 @@ Bí danh cũ vẫn giữ trong một chu kỳ:
   - [`docs/relay-kit-review-flow.md`](docs/relay-kit-review-flow.md)
 - Memory retrieval utility:
   - [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
+- Release readiness và deploy smoke:
+  - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
 - Cấu trúc thư mục:
   - [`.ai-kit/docs/folder-structure.md`](.ai-kit/docs/folder-structure.md)
 - Luật bundle:
