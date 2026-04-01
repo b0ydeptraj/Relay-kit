@@ -73,6 +73,7 @@ Examples:
   python relay_kit.py /path/to/project --bundle round4 --ai all --emit-contracts --emit-docs --emit-reference-templates
   python relay_kit.py /path/to/project --bundle utility-providers --ai codex --emit-docs
   python relay_kit.py /path/to/project --bundle discipline-utilities --ai claude --emit-docs
+  python relay_kit.py /path/to/project --bundle baseline --ai antigravity --emit-contracts --emit-docs --emit-reference-templates
   python relay_kit.py /path/to/project --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
   python relay_kit.py /path/to/project --bundle round3 --ai claude --emit-contracts --emit-docs
   python relay_kit.py /path/to/project --legacy-kit python --ai claude
@@ -83,7 +84,7 @@ Compatibility alias for one cycle:
         """,
     )
     parser.add_argument("project_path", nargs="?", default=".", help="Target project path")
-    parser.add_argument("--ai", choices=["claude", "gemini", "codex", "all", "generic"], default="claude")
+    parser.add_argument("--ai", choices=["claude", "antigravity", "codex", "all", "generic"], default="claude")
     parser.add_argument("--bundle", choices=sorted(BUNDLES.keys()), help="Generate new registry-native skills")
     parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .ai-kit/contracts/ and .ai-kit/state/")
     parser.add_argument("--emit-docs", action="store_true", help="Write topology, migration, gating, and runtime docs into .ai-kit/docs/")

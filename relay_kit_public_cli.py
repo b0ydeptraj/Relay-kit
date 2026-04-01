@@ -92,7 +92,7 @@ def _resolve_ai(args: argparse.Namespace) -> str:
     if args.claude:
         return "claude"
     if args.antigravity:
-        return "gemini"
+        return "antigravity"
     if args.all:
         return "all"
     if args.generic:

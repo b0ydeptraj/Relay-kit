@@ -91,10 +91,10 @@ adapter_runtime:
   claude:
     skill_root: .claude/skills
     model: runtime-skills-only
-  gemini:
+  antigravity:
     skill_root: .agent/skills
     model: runtime-skills-only
-    note: serves as the active compatibility target for Gemini-style usage
+    note: serves as the active runtime target for Antigravity-style usage
   codex:
     skill_root: .codex/skills
     model: runtime-skills-only

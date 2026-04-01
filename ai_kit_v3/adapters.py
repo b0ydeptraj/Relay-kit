@@ -8,7 +8,7 @@ from relay_kit_compat import GENERIC_CANONICAL_DIR, GENERIC_COMPAT_DIR
 
 ADAPTER_TARGETS: Dict[str, List[str]] = {
     "claude": [".claude/skills"],
-    "gemini": [".agent/skills"],
+    "antigravity": [".agent/skills"],
     "codex": [".codex/skills"],
     "all": [".claude/skills", ".agent/skills", ".codex/skills"],
     "generic": [GENERIC_CANONICAL_DIR, GENERIC_COMPAT_DIR],

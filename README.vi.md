@@ -30,7 +30,7 @@ Nó dành cho:
 
 - người làm một mình nhưng dùng coding agent nghiêm túc
 - team sản phẩm và kỹ thuật muốn đầu ra lặp lại được
-- người đang dùng Claude, Codex, hoặc workflow kiểu Gemini nhưng cần nhiều hơn một bộ prompt
+- người đang dùng Claude, Codex, hoặc workflow kiểu Antigravity nhưng cần nhiều hơn một bộ prompt
 
 Relay-kit cho họ một đường đi rõ ràng cho:
 
@@ -75,7 +75,7 @@ relay-kit /path/to/project --antigravity
 Wrapper public map:
 - `--codex` -> `--ai codex`
 - `--claude` -> `--ai claude`
-- `--antigravity` -> `--ai gemini` (runtime target hiện tại: `.agent/skills`)
+- `--antigravity` -> `--ai antigravity` (runtime target hiện tại: `.agent/skills`)
 
 Kiểm tra runtime contract:
 

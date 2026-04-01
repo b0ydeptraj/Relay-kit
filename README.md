@@ -30,7 +30,7 @@ It is for:
 
 - solo builders using coding agents seriously
 - product and engineering teams that want repeatable output
-- people using Claude, Codex, or Gemini-style agent workflows who need more than prompt packs
+- people using Claude, Codex, or Antigravity-style agent workflows who need more than prompt packs
 
 Relay-kit gives them a clear operating flow for:
 
@@ -75,7 +75,7 @@ relay-kit /path/to/project --antigravity
 The public wrapper maps:
 - `--codex` -> `--ai codex`
 - `--claude` -> `--ai claude`
-- `--antigravity` -> `--ai gemini` (current runtime target: `.agent/skills`)
+- `--antigravity` -> `--ai antigravity` (runtime target: `.agent/skills`)
 
 Validate the runtime contract:
 

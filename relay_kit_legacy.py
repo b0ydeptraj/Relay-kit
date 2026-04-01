@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Relay-kit legacy generator - analyze projects and generate AI agent skills.
-Supports multiple AI assistants: Claude, Gemini, or generic output.
+Supports multiple AI assistants: Claude, Antigravity, or generic output.
 
 Skill sets:
 - Python core: 19 analysis skills (architecture, dependencies, api, data, async, cli-gui, utilities, testing, etc.)
@@ -1396,7 +1396,7 @@ PROMPTS.update(FLUTTER_PROMPTS)
 # AI-specific skill folders
 AI_SKILL_FOLDERS = {
     "claude": ".claude/skills",
-    "gemini": ".agent/skills",
+    "antigravity": ".agent/skills",
     "codex": ".codex/skills",
     "all": [".claude/skills", ".agent/skills"],
     "generic": [GENERIC_CANONICAL_DIR, GENERIC_COMPAT_DIR],
@@ -1557,7 +1557,7 @@ def _flavor_from_folder(folder: str) -> str:
     if folder.startswith(".claude"):
         return "claude"
     if folder.startswith(".agent"):
-        return "gemini"
+        return "antigravity"
     if folder.startswith(".codex"):
         return "codex"
     return "generic"
@@ -1571,7 +1571,7 @@ def _rewrite_paths_for_flavor(text: str, flavor: str) -> str:
             (".agent/skills/", ".claude/skills/"),
             (".agent\\skills\\", ".claude\\skills\\"),
         ]
-    elif flavor == "gemini":
+    elif flavor == "antigravity":
         replacements = [
             (".claude/skills/", ".agent/skills/"),
             (".claude\\skills\\", ".agent\\skills\\"),
@@ -1663,7 +1663,7 @@ def copy_template_skill(skill_name: str, project_path: str, ai: str, verbose: bo
 
 def copy_agent_assets(project_path: str, ai: str, verbose: bool = False) -> int:
     """Copy expert-suite rules/workflows/.shared into .agent when applicable."""
-    if ai not in ("gemini", "all"):
+    if ai not in ("antigravity", "all"):
         return 0
 
     src_root = TEMPLATE_ROOT / "agent"
@@ -1763,8 +1763,8 @@ def run_with_claude(prompt: str, project_path: str, skill_name: str, verbose: bo
         return 1
 
 
-def run_with_gemini(prompt: str, project_path: str, skill_name: str, verbose: bool = False) -> int:
-    """Run prompt using Gemini CLI - outputs to .agent/skills/"""
+def run_with_antigravity(prompt: str, project_path: str, skill_name: str, verbose: bool = False) -> int:
+    """Run prompt using the Antigravity adapter - outputs to .agent/skills/."""
     # Replace .ai-skills/ with .agent/skills/ in prompt
     modified_prompt = prompt.replace(".ai-skills/", ".agent/skills/")
     
@@ -1833,7 +1833,7 @@ def run_with_codex(prompt: str, project_path: str, skill_name: str, verbose: boo
 
 
 def run_all(prompt: str, project_path: str, skill_name: str, verbose: bool = False) -> int:
-    """Create skills in both Claude and Gemini folders with FULL content."""
+    """Create skills in both Claude and Antigravity folders with full content."""
     skill_content = _build_skill_content(prompt, skill_name)
 
     claude_dir = Path(project_path) / ".claude" / "skills" / skill_name
@@ -1845,21 +1845,21 @@ def run_all(prompt: str, project_path: str, skill_name: str, verbose: bool = Fal
         f.write(claude_content)
     print(f"   ???? Claude: {claude_file}")
 
-    gemini_dir = Path(project_path) / ".agent" / "skills" / skill_name
-    gemini_dir.mkdir(parents=True, exist_ok=True)
-    gemini_file = gemini_dir / "SKILL.md"
+    antigravity_dir = Path(project_path) / ".agent" / "skills" / skill_name
+    antigravity_dir.mkdir(parents=True, exist_ok=True)
+    antigravity_file = antigravity_dir / "SKILL.md"
 
-    gemini_content = _rewrite_paths_for_flavor(skill_content, "gemini")
-    with open(gemini_file, "w", encoding="utf-8") as f:
-        f.write(gemini_content)
-    print(f"   ???? Gemini: {gemini_file}")
+    antigravity_content = _rewrite_paths_for_flavor(skill_content, "antigravity")
+    with open(antigravity_file, "w", encoding="utf-8") as f:
+        f.write(antigravity_content)
+    print(f"   ???? Antigravity: {antigravity_file}")
 
     return 0
 
 
 ADAPTERS = {
     "claude": run_with_claude,
-    "gemini": run_with_gemini,
+    "antigravity": run_with_antigravity,
     "codex": run_with_codex,
     "generic": run_generic,
     "all": run_all,
@@ -1882,7 +1882,7 @@ def create_python_skills(
     
     Args:
         project_path: Path to the Python project
-        ai: AI adapter to use (claude, gemini, generic)
+        ai: AI adapter to use (claude, antigravity, generic)
         verbose: Enable verbose output
         skills: Specific skills to run (default: skill set)
         kit: Skill set to run when skills not specified
@@ -1992,7 +1992,7 @@ def create_python_skills(
             print(f"Compatibility alias: {project_path}/{GENERIC_COMPAT_DIR}/")
         elif ai == "claude":
             print(f"Skills created in: {project_path}/.claude/skills/")
-        elif ai == "gemini":
+        elif ai == "antigravity":
             print(f"Skills created in: {project_path}/.agent/skills/")
         elif ai == "codex":
             print(f"Skills created in: {project_path}/.codex/skills/")
@@ -2052,9 +2052,9 @@ Compatibility aliases for one cycle:
 
 AI Adapters:
   --ai claude   -> .claude/skills/   (auto-read by Claude Code)
-  --ai gemini   -> .agent/skills/    (auto-read by Gemini)
+  --ai antigravity -> .agent/skills/ (auto-read by Antigravity)
   --ai codex    -> .codex/skills/    (for Codex)
-  --ai all      -> Both folders      (Claude + Gemini)
+  --ai all      -> Both folders      (Claude + Antigravity)
   --ai generic  -> .relay-kit-prompts/ (canonical) + .python-kit-prompts/ (compatibility alias)
 
 Skill sets:

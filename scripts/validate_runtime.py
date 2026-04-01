@@ -64,6 +64,28 @@ def run_cli(script_name: str, *args: str) -> str:
     return result.stdout
 
 
+def run_public_cli(*args: str) -> str:
+    command = [sys.executable, str(REPO_ROOT / "relay_kit_public_cli.py"), *args]
+    env = dict(os.environ)
+    env["RELAY_KIT_CYCLE_SOURCE"] = "validate_runtime"
+    result = subprocess.run(
+        command,
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+    if result.returncode != 0:
+        fail(
+            "relay_kit_public_cli.py failed:\n"
+            f"command: {' '.join(command)}\n"
+            f"stdout:\n{result.stdout}\n"
+            f"stderr:\n{result.stderr}"
+        )
+    return result.stdout
+
+
 def skill_dirs(base: Path, relative_dir: str) -> set[str]:
     target = base / Path(relative_dir)
     if not target.exists():
@@ -147,6 +169,15 @@ def validate_adapter_targets() -> None:
     actual = ADAPTER_TARGETS["all"]
     if actual != expected:
         fail(f"ADAPTER_TARGETS['all'] drifted. Expected {expected}, got {actual}")
+    antigravity_expected = [".agent/skills"]
+    antigravity_actual = ADAPTER_TARGETS["antigravity"]
+    if antigravity_actual != antigravity_expected:
+        fail(
+            "ADAPTER_TARGETS['antigravity'] drifted. "
+            f"Expected {antigravity_expected}, got {antigravity_actual}"
+        )
+    if "gemini" in ADAPTER_TARGETS:
+        fail("Legacy adapter key 'gemini' should not be present in active adapter targets.")
     generic_expected = [GENERIC_CANONICAL_DIR, GENERIC_COMPAT_DIR]
     generic_actual = ADAPTER_TARGETS["generic"]
     if generic_actual != generic_expected:
@@ -166,6 +197,7 @@ def validate_checked_in_docs() -> None:
         REPO_ROOT / "README.md",
         [
             "`--ai all`",
+            "`--antigravity`",
             ".claude/skills",
             ".agent/skills",
             ".codex/skills",
@@ -293,6 +325,24 @@ def validate_legacy_generation() -> None:
             shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+def validate_public_wrapper_surface() -> None:
+    run_public_cli("--list-skills")
+    for adapter, target in (
+        ("codex", ".codex/skills"),
+        ("claude", ".claude/skills"),
+        ("antigravity", ".agent/skills"),
+    ):
+        temp_dir = Path(tempfile.mkdtemp(prefix=f"relay-kit-public-{adapter}-"))
+        try:
+            run_public_cli(str(temp_dir), f"--{adapter}")
+            if not (temp_dir / target).exists():
+                fail(f"Public wrapper failed to generate adapter target {target} for --{adapter}")
+            if not (temp_dir / ".ai-kit").exists():
+                fail(f"Public wrapper failed to emit .ai-kit artifacts for --{adapter}")
+        finally:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
+
 def main() -> int:
     validate_adapter_targets()
     validate_list_output()
@@ -303,6 +353,7 @@ def main() -> int:
         validate_generated_bundle(bundle)
         validate_generated_generic_bundle(bundle)
     validate_legacy_generation()
+    validate_public_wrapper_surface()
     print("Runtime validation passed.")
     return 0
 
