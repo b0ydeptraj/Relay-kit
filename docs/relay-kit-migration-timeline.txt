@@ -1,191 +1,73 @@
-﻿Relay-kit migration timeline reference
-Updated: 2026-03-23
+Relay-kit migration timeline reference
+Updated: 2026-04-01
 
-1. Giai đoạn hiện tại: soak cycle đang chạy
+1. Phase 2 status (as of 2026-04-01)
 
-Mốc thời gian:
-- Bắt đầu tính từ: 2026-03-18
-- Sớm nhất để kết thúc phase này: 2026-03-31
+Đã hoàn thành trong phase 2:
+- public install surface:
+  - `relay-kit <path> --codex`
+  - `relay-kit <path> --claude`
+  - `relay-kit <path> --antigravity`
+- hard switch public naming:
+  - bỏ `--ai gemini` khỏi public surface
+  - dùng `antigravity` cho `.agent/skills`
+- capability backlog đã làm xong:
+  - `memory-search`
+  - `release-readiness`
+  - `accessibility-review`
+  - `skill-gauntlet`
+  - `context-continuity`
+- global gate script và smoke path đã có:
+  - `scripts/validate_runtime.py`
+  - `scripts/skill_gauntlet.py --strict`
+  - smoke `--codex/--claude/--antigravity`
 
-Chỉ làm trong giai đoạn này:
-- dùng Relay-kit thật
-- theo dõi compatibility cycle
+2. Giai đoạn hiện tại: soak cycle phase 2 (đang chạy)
+
+Mốc khuyến nghị:
+- bắt đầu: 2026-04-01
+- cửa sổ soak: 7-14 ngày
+- mốc an toàn để chốt soak: sau giữa tháng 04/2026
+
+Chỉ làm trong soak:
+- dùng Relay-kit thật trên lane thực tế
 - sửa bug nhỏ nếu lòi ra
+- giữ gate pass mỗi ngày và trước mỗi push
 
-Chưa làm trong giai đoạn này:
+Không làm trong soak:
+- rename lớn
+- thay đổi kiến trúc sâu không bắt buộc
+- mở thêm capability mới ngoài fix bug
+
+3. Chỉ còn lại cho phase 3 (chưa làm, không phải sót)
+
+Chỉ làm sau khi soak cycle pass sạch:
 - đổi `.ai-kit` -> `.relay-kit`
 - bỏ `python_kit.py`
-- rename thư mục repo thật trên disk
-- mở public install surface mới như `relay-kit <path> --codex/--claude/--antigravity`
-- đổi public naming từ `--ai gemini` sang `--ai antigravity`
-- thêm capability mới như `memory-search`, `release-readiness`, `accessibility-review`, `skill-gauntlet`, `context-continuity`
+- bỏ `python_kit_legacy.py`
+- bỏ alias/path compatibility cũ
+- rename thư mục repo thật trên disk (`python-kit` -> `relay-kit`)
 
-Tác dụng:
-- giữ số liệu compatibility cycle sạch
-- không trộn migration lớn hoặc public API mới vào lúc đang kiểm rename hiện tại
+4. Điều kiện để qua phase 3
 
-Lưu ý:
-- nếu có fix đụng vào compatibility hiện tại, mốc 2026-03-31 có thể bị lùi vì phải tính lại chu kỳ
+Phải đạt:
+- gate pass ổn định trong cửa sổ soak
+- không có lỗi P0/P1 mở liên quan runtime/adapters
+- không có drift giữa docs và runtime behavior
 
-2. Ngay sau khi compatibility cycle hiện tại pass sạch
+Khi đủ điều kiện mới mở batch rename lớn.
 
-Mốc sớm nhất:
-- từ 2026-04-01
+5. Những thứ để rất sau
 
-Nên làm ở phase này:
-- mở plan riêng cho `.ai-kit` -> `.relay-kit`
-- audit toàn bộ chỗ đang dùng `.ai-kit`
-- mở rộng `docs/how-to-write-skills.md` hoặc `CONTRIBUTING.md` nếu cần
-- làm skill behavior validation hoặc gauntlet regression nếu muốn khóa chất lượng skill chặt hơn
-- xử lý các việc branding nhỏ còn sót như GitHub description/topics hoặc `apps/python-kit-sales-web` nếu quyết định dọn tiếp
-- thiết kế public install surface cho người ngoài:
-  - mục tiêu là chạy được kiểu `relay-kit C:\path\to\my-app --codex`
-  - `--claude`
-  - `--antigravity`
-- đổi public naming theo hướng:
-  - bề mặt người dùng dùng `antigravity`
-  - không ép người dùng phải nhớ `gemini`
-
-Tác dụng:
-- khóa chất lượng trước khi rename lớn
-- biết chính xác rename `.ai-kit` sẽ đụng đâu
-- giảm nguy cơ rename xong mới lòi drift
-- chuẩn bị public install UX tốt hơn cho người ngoài dùng repo
-
-3. Chỉ sau khi phase `.ai-kit` có compatibility layer riêng và chạy thêm một chu kỳ nữa
-
-Yêu cầu:
-- phase 2 phải xong trước
-- sau đó chạy thêm một compatibility cycle riêng cho `.ai-kit` -> `.relay-kit`
-
-Thời lượng khuyên dùng:
-- 7-14 ngày
-
-Mốc thực tế an toàn:
-- nếu bắt đầu phase `.ai-kit` ngay đầu tháng 4/2026 thì mốc sớm nhất để bỏ alias cũ là khoảng 2026-04-08 đến 2026-04-15
-- nhưng mốc an toàn hơn là sau giữa tháng 4/2026
-
-Chỉ lúc đó mới làm:
-- đổi `.ai-kit` sang `.relay-kit`
-- bỏ `python_kit.py`
-- bỏ alias/path cũ
-- rename thư mục repo thật trên disk
-- cân nhắc promote public CLI mới thành surface chính thức nếu phase 2 và cycle riêng đều sạch
-
-Tác dụng:
-- hoàn tất rename kỹ thuật
-- dừng mang compatibility layer lâu hơn cần thiết
-- tránh vừa rename vừa đoán mò
-
-4. Những thứ nên để sau compatibility cycle, nhưng không cần chen vào soak hiện tại
-
-Capability backlog:
-
-4.1 `memory-search` hoặc `artifact-search`
-- Thiếu gì:
-  - một utility để tra cứu nhanh quyết định cũ, pattern debug cũ, handoff cũ trong `.ai-kit/state`
-- Vì sao đáng thêm:
-  - hiện Relay-kit có state file tốt, nhưng vẫn là file tĩnh
-  - chưa có cách query kiểu “trước đây đã xử lý lỗi dạng này thế nào?”
-- Tác dụng:
-  - giảm mất context qua nhiều session
-  - làm shared state hữu dụng hơn, không chỉ là chỗ ghi
-- Loại gap:
-  - capability gap thật
-
-4.2 `release-readiness` hoặc `deploy-smoke`
-- Thiếu gì:
-  - một discipline nhỏ cho:
-    - pre-deploy check
-    - post-deploy smoke check
-    - rollback signals
-- Vì sao đáng thêm:
-  - các hệ lớn ngoài kia có nhiều skill deployment/cloud/release
-  - Relay-kit hiện mạnh ở build/review, nhưng chưa có một path rõ cho “ship rồi kiểm”
-- Tác dụng:
-  - workflow khép kín hơn cho production work
-  - bớt kiểu “ready-check xong là coi như production ổn”
-- Loại gap:
-  - capability gap thật
-- Ghi chú:
-  - không cần làm thành 10 skill cloud riêng lẻ
-  - chỉ cần 1 discipline cross-cutting là đủ
-
-4.3 `accessibility-review` hoặc `a11y QA mode`
-- Thiếu gì:
-  - một review mode hoặc utility rõ cho accessibility
-- Vì sao đáng thêm:
-  - Relay-kit có accessibility content rải trong frontend skills, nhưng chưa thành một discipline review rõ
-  - trong các bộ skill public mạnh, a11y là phần thực chiến rất hay có
-- Tác dụng:
-  - nâng chất lượng frontend thật, không chỉ đẹp mà còn dùng được
-  - hợp với hướng đang siết UI
-- Loại gap:
-  - quality gap gần với capability gap
-- Ghi chú:
-  - không cần thêm hẳn 5 skill frontend mới
-  - chỉ cần làm accessibility thành một gate rõ trong review/test
-
-4.4 `skill-gauntlet` hoặc automated skill behavior validation
-- Thiếu gì:
-  - test tự động kiểu:
-    - prompt X có kích hoạt đúng skill không
-    - skill Y có còn giữ hành vi mong muốn không
-- Vì sao đáng thêm:
-  - Relay-kit hiện có `validate_runtime.py` rất tốt cho cấu trúc
-  - nhưng chưa mạnh ở phần behavior regression của chính skill
-- Tác dụng:
-  - giảm drift khi skill ngày càng nhiều
-  - phù hợp với triết lý engineering discipline của Relay-kit
-- Loại gap:
-  - quality/system gap
-
-4.5 `context-continuity` hoặc `resume-context`
-- Thiếu gì:
-  - một skill chuyên chốt, nén, index, và rehydrate context khi chat quá dài, khi đổi thread, khi đổi AI, hoặc khi quay lại repo sau một khoảng nghỉ
-- Vì sao đáng thêm:
-  - `handoff-context` hiện mạnh ở handoff ngắn theo lane, nhưng chưa phải là hệ cross-chat hoặc cross-session preservation gần lossless
-  - summary chat bình thường làm mất quyết định, open loops, evidence, chronology, và các điều "không được quên"
-- Tác dụng:
-  - giúp chat mới hiểu nhanh repo lane cũ mà không cần replay cả đoạn chat
-  - giảm đứt mạch khi context window đầy hoặc khi phải chuyển sang cuộc trò chuyện khác
-  - giữ được facts, decisions, open loops, evidence, và next move theo format ổn định hơn summary thường
-- Loại gap:
-  - capability gap thật
-- Hướng làm:
-  - làm theo mô hình nhiều lớp thay vì một file summary duy nhất:
-    - current state
-    - decision register
-    - open loops
-    - evidence index
-    - session ledger
-  - về sau nên đi kèm script checkpoint, rehydrate, và search để giảm drift
-- Ghi chú:
-  - đây là một trong các capability đáng làm nhất sau 2026-04-01
-  - nên làm sau `memory-search` và trước các feature memory nặng hơn
-  - spec draft: `docs/relay-kit-context-continuity-design-note.md`
-  - topology rule: `docs/relay-kit-skill-topology-rule.md`
-
-5. Những thứ nên để rất sau, không ưu tiên
-
-Để sau khi rename lớn ổn định:
-- session/queryable memory bản nặng hơn
+Chỉ xét sau khi phase 3 ổn định:
+- session/queryable memory bản nặng
 - slash command shims
-- các feature mới không liên quan trực tiếp đến migration
+- feature mới không liên quan migration
 
-Tác dụng của việc để sau:
+Mục tiêu:
 - không làm nhiễu migration
-- dễ biết bug nào do rename, bug nào do feature mới
+- tách rõ bug do rename và bug do feature mới
 
-6. Tóm tắt cực ngắn
+6. Câu nhắc ngắn cho chat sau
 
-- đến 2026-03-31: chỉ soak cycle hiện tại
-- từ 2026-04-01: audit + plan `.ai-kit`
-- cùng phase đó mới tính public install surface như `relay-kit <path> --antigravity`
-- sau 2026-04-01, làm capability backlog theo thứ tự từ trên xuống nếu không có blocker mới
-- sau đó chạy thêm một cycle riêng cho `.ai-kit`
-- sớm nhất khoảng giữa 04/2026 mới tính chuyện bỏ alias cũ và rename lớn
-
-7. Câu nhắc ngắn để dùng lại trong chat sau này
-
-"Kiểm phase timeline Relay-kit: nếu còn trước 2026-03-31 thì chỉ soak cycle; nếu cycle sạch thì mở phase `.ai-kit` -> `.relay-kit`; trong phase sau 2026-04-01 mới tính public CLI như `relay-kit <path> --antigravity` và làm capability backlog từ trên xuống; chỉ sau cycle riêng của `.ai-kit` mới bỏ alias cũ và rename repo thật."
+"Tính đến 2026-04-01: phase 2 capability đã xong; đang soak cycle. Chỉ sau soak sạch mới làm phase 3 gồm `.ai-kit` -> `.relay-kit`, bỏ `python_kit.py/python_kit_legacy.py`, và rename thư mục repo thật."
