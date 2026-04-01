@@ -15,6 +15,19 @@ With Relay-kit, an agent gets:
 
 The result is simple: agents work with more structure, fewer random moves, and stronger proof before anything is called done.
 
+## Install and use (GitHub)
+
+For users who just want to install and run:
+
+```bash
+pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
+relay-kit "C:\\path\\to\\my-app" --codex
+relay-kit "C:\\path\\to\\my-app" --claude
+relay-kit "C:\\path\\to\\my-app" --antigravity
+```
+
+Use one adapter flag per run.
+
 ## Why use Relay-kit
 
 Most agent workflows break in the same places:
@@ -68,7 +81,7 @@ Generate the active baseline:
 python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
-Public installer surface (phase 2):
+Public installer surface (local repo checkout):
 
 ```bash
 pipx install .
@@ -77,7 +90,7 @@ relay-kit /path/to/project --claude
 relay-kit /path/to/project --antigravity
 ```
 
-Install without cloning the repo first:
+Install directly from GitHub:
 
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"

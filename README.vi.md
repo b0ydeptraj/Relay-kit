@@ -15,6 +15,19 @@ Khi dùng Relay-kit, agent sẽ có:
 
 Kết quả rất thực tế: agent làm việc có cấu trúc hơn, bớt hành động ngẫu hứng hơn, và có bằng chứng tốt hơn trước khi được gọi là xong.
 
+## Cài và dùng nhanh (GitHub)
+
+Dành cho người dùng chỉ cần cài và chạy ngay:
+
+```bash
+pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
+relay-kit "C:\\path\\to\\my-app" --codex
+relay-kit "C:\\path\\to\\my-app" --claude
+relay-kit "C:\\path\\to\\my-app" --antigravity
+```
+
+Mỗi lần chạy chỉ chọn một cờ adapter.
+
 ## Vì sao nên dùng Relay-kit
 
 Phần lớn workflow cho agent hỏng ở những chỗ giống nhau:
@@ -68,7 +81,7 @@ Generate baseline đang hoạt động:
 python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
-Public installer surface (phase 2):
+Public installer surface (khi checkout repo local):
 
 ```bash
 pipx install .
@@ -77,7 +90,7 @@ relay-kit /path/to/project --claude
 relay-kit /path/to/project --antigravity
 ```
 
-Cài không cần clone repo trước:
+Cài trực tiếp từ GitHub:
 
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
