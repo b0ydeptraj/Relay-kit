@@ -63,6 +63,20 @@ Generate the active baseline:
 python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
+Public installer surface (phase 2):
+
+```bash
+pipx install .
+relay-kit /path/to/project --codex
+relay-kit /path/to/project --claude
+relay-kit /path/to/project --antigravity
+```
+
+The public wrapper maps:
+- `--codex` -> `--ai codex`
+- `--claude` -> `--ai claude`
+- `--antigravity` -> `--ai gemini` (current runtime target: `.agent/skills`)
+
 Validate the runtime contract:
 
 ```bash

@@ -63,6 +63,20 @@ Generate baseline đang hoạt động:
 python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
+Public installer surface (phase 2):
+
+```bash
+pipx install .
+relay-kit /path/to/project --codex
+relay-kit /path/to/project --claude
+relay-kit /path/to/project --antigravity
+```
+
+Wrapper public map:
+- `--codex` -> `--ai codex`
+- `--claude` -> `--ai claude`
+- `--antigravity` -> `--ai gemini` (runtime target hiện tại: `.agent/skills`)
+
 Kiểm tra runtime contract:
 
 ```bash
