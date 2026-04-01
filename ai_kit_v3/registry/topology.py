@@ -16,6 +16,7 @@ UTILITY_PROVIDER_NAMES = [
     "release-readiness",
     "accessibility-review",
     "skill-gauntlet",
+    "context-continuity",
     "handoff-context",
     "mermaid-diagrams",
     "ux-structure",
@@ -109,13 +110,14 @@ HUB_SUPPORT_MAP = {
         "doc-pointers",
         "repo-map",
         "memory-search",
+        "context-continuity",
         "handoff-context",
     ],
-    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "ux-structure", "mermaid-diagrams"],
+    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "context-continuity", "ux-structure", "mermaid-diagrams"],
     "debug-hub": ["developer", "testing-patterns", "problem-solving", "sequential-thinking", "browser-inspector", "multimodal-evidence", "memory-search"],
     "fix-hub": ["developer", "execution-loop", "project-architecture", "api-integration", "data-persistence", "accessibility-review", "handoff-context"],
-    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "release-readiness", "accessibility-review", "skill-gauntlet", "media-tooling"],
-    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "release-readiness", "accessibility-review", "skill-gauntlet", "mermaid-diagrams"],
+    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "release-readiness", "accessibility-review", "skill-gauntlet", "context-continuity", "media-tooling"],
+    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "release-readiness", "accessibility-review", "skill-gauntlet", "context-continuity", "mermaid-diagrams"],
 }
 
 
@@ -131,6 +133,7 @@ UTILITY_PROVIDER_RULES = {
     "release-readiness": "Apply explicit pre-deploy and post-deploy smoke gates so release claims are backed by concrete operational signals.",
     "accessibility-review": "Run an explicit accessibility gate for keyboard, focus, semantic structure, labels, and contrast before approving frontend readiness.",
     "skill-gauntlet": "Run deterministic regression checks over SKILL.md trigger wording and required structure before trusting runtime routing quality.",
+    "context-continuity": "Capture and rehydrate durable continuity artifacts so lane state survives chat truncation, thread changes, and AI handoffs.",
     "handoff-context": "Prepare the minimum viable context pack for the next skill instead of flooding it with irrelevant detail.",
     "mermaid-diagrams": "Express flows or architecture as diagrams inside the current artifact.",
     "ux-structure": "Contribute UX framing, flow notes, and interface trade-offs when product work has user-facing impact.",

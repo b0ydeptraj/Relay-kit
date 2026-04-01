@@ -50,6 +50,7 @@ Nói ngắn: nó khiến agent bớt làm việc kiểu ứng biến, và làm v
 - utility `release-readiness` để gate pre/post deploy và theo dõi rollback signal
 - gate `accessibility-review` để chặn thiếu sót a11y trước khi gọi là ready
 - gate `skill-gauntlet` để giữ hành vi routing của skill ổn định
+- utility `context-continuity` cho checkpoint, rehydrate, handoff, và diff
 - một baseline đang hoạt động và đã được kiểm, không phải bộ skill ghép rời rạc
 - một cách làm việc ổn định hơn mà không phải nhét mọi thứ vào chat memory
 
@@ -130,6 +131,7 @@ Xem chi tiết hơn:
 - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
 - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
+- [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
 
 ## Nó hoạt động như thế nào
 
@@ -204,6 +206,9 @@ Bí danh cũ vẫn giữ trong một chu kỳ:
   - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - Skill behavior gauntlet:
   - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
+- Context continuity:
+  - [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
+  - [`docs/relay-kit-context-continuity-design-note.md`](docs/relay-kit-context-continuity-design-note.md)
 - Cấu trúc thư mục:
   - [`.ai-kit/docs/folder-structure.md`](.ai-kit/docs/folder-structure.md)
 - Luật bundle:

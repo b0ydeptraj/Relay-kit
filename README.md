@@ -50,6 +50,7 @@ It makes agents behave less like improvising interns and more like engineers wor
 - a `release-readiness` utility for pre/post deploy smoke gates and rollback signals
 - an `accessibility-review` gate so frontend quality is not only visual
 - a `skill-gauntlet` regression gate to keep skill routing behavior stable
+- a `context-continuity` utility for checkpoint, rehydrate, handoff, and diff flows
 - an active baseline that is validated instead of loosely assembled
 - a way to make work more consistent without forcing everything through raw chat memory
 
@@ -130,6 +131,7 @@ More detail:
 - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
 - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
+- [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
 
 ## How it works
 
@@ -204,6 +206,9 @@ Removal gate:
   - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - Skill behavior gauntlet:
   - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
+- Context continuity:
+  - [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
+  - [`docs/relay-kit-context-continuity-design-note.md`](docs/relay-kit-context-continuity-design-note.md)
 - Skill authoring:
   - [`docs/how-to-write-skills.md`](docs/how-to-write-skills.md)
 - Contributing:

@@ -38,9 +38,11 @@ Prepare the runtime so later steps have an authoritative baseline instead of rel
 - Prefer lightweight initialization over speculative planning.
 - If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.
 - Do not invent project-context facts; mark unknowns and hand off to scout-hub.
+- Use context-continuity rehydrate when resuming across thread or session boundaries.
 
 ## Likely next step
 - workflow-router
 - scout-hub
 - cook
 - team
+- context-continuity

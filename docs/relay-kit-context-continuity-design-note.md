@@ -1,7 +1,7 @@
 # Relay-kit context-continuity design note
 
 Drafted: 2026-03-23
-Status: design note only; implementation deferred until after 2026-04-01
+Status: implemented in v1 on 2026-04-01 (`scripts/context_continuity.py`, `context-continuity` skill)
 
 ## Purpose
 

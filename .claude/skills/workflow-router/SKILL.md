@@ -60,11 +60,13 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - Prefer existing project-context over assumptions.
 - Escalate from quick-flow to product-flow whenever hidden complexity appears.
 - Hand off to bootstrap when base artifacts are missing, to cook for a single request, and to team when multiple lanes must move in parallel.
+- If session continuity is weak, run context-continuity checkpoint or rehydrate before routing deeper work.
 
 ## Likely next step
 - bootstrap
 - cook
 - team
+- context-continuity
 - scout-hub
 - plan-hub
 - debug-hub

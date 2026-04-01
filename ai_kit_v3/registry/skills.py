@@ -74,8 +74,9 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Prefer existing project-context over assumptions.",
             "Escalate from quick-flow to product-flow whenever hidden complexity appears.",
             "Hand off to bootstrap when base artifacts are missing, to cook for a single request, and to team when multiple lanes must move in parallel.",
+            "If session continuity is weak, run context-continuity checkpoint or rehydrate before routing deeper work.",
         ],
-        next_steps=["bootstrap", "cook", "team", "scout-hub", "plan-hub", "debug-hub"],
+        next_steps=["bootstrap", "cook", "team", "context-continuity", "scout-hub", "plan-hub", "debug-hub"],
         body=dedent(
             """\
             # Mission
@@ -127,8 +128,9 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Prefer lightweight initialization over speculative planning.",
             "If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.",
             "Do not invent project-context facts; mark unknowns and hand off to scout-hub.",
+            "Use context-continuity rehydrate when resuming across thread or session boundaries.",
         ],
-        next_steps=["workflow-router", "scout-hub", "cook", "team"],
+        next_steps=["workflow-router", "scout-hub", "cook", "team", "context-continuity"],
         body=dedent(
             """\
             # Mission
@@ -160,8 +162,9 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Assign one owner skill per lane and name merge order explicitly.",
             "Use cook inside a lane, not as a replacement for team.",
             "Use `.ai-kit/docs/parallel-execution.md` to decide when work is independent enough to split safely.",
+            "Require context-continuity handoff packs when ownership shifts across sessions or AIs.",
         ],
-        next_steps=["cook", "plan-hub", "scout-hub", "debug-hub", "review-hub"],
+        next_steps=["cook", "plan-hub", "scout-hub", "debug-hub", "review-hub", "context-continuity"],
         body=dedent(
             """\
             # Mission
@@ -193,8 +196,9 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Cook does not replace hubs; it chooses and sequences them.",
             "Keep each pass small: one hub, one artifact decision, one clear next handoff.",
             "If completion is claimed, force test-hub or review-hub before accepting it.",
+            "If the lane is pausing or switching owners, trigger context-continuity checkpoint before handoff.",
         ],
-        next_steps=["brainstorm-hub", "scout-hub", "plan-hub", "debug-hub", "fix-hub", "test-hub", "review-hub"],
+        next_steps=["brainstorm-hub", "scout-hub", "plan-hub", "debug-hub", "fix-hub", "test-hub", "review-hub", "context-continuity"],
         body=dedent(
             """\
             # Mission
@@ -408,8 +412,9 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.",
             "Do not hide disagreement between artifacts; name it and route accordingly.",
             "Use `.ai-kit/docs/review-loop.md` and `.ai-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.",
+            "If work crosses sessions, require context-continuity artifacts before accepting final completion claims.",
         ],
-        next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "workflow-router"],
+        next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "context-continuity", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -645,8 +650,9 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "When discipline utilities are installed, use `evidence-before-completion` before making completion claims.",
             "Use `.ai-kit/docs/review-loop.md` when review feedback must be validated before action.",
             "Coverage must be explained against acceptance criteria and risk, not just number of tests.",
+            "Use context-continuity when readiness evidence must survive a new thread or handoff before final sign-off.",
         ],
-        next_steps=["review-hub", "debug-hub", "workflow-router"],
+        next_steps=["review-hub", "debug-hub", "context-continuity", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -1135,6 +1141,32 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Keep the gauntlet report small and path-specific so fixes are easy to apply.",
         ],
     ),
+    "context-continuity": utility_provider_spec(
+        name="context-continuity",
+        description="Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions.",
+        outputs=[
+            "checkpoint, rehydrate, handoff, or diff artifacts under .ai-kit/state and .ai-kit/handoffs",
+            "a compact resume brief with explicit next step and open loops",
+        ],
+        references=[
+            "Use `python scripts/context_continuity.py` modes for deterministic continuity artifacts.",
+            "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
+        ],
+        next_steps=["workflow-router", "cook", "team", "handoff-context", "review-hub"],
+        mission="Preserve lane continuity with explicit artifacts so the next session can continue safely without replaying full chat history.",
+        tasks=[
+            "Run checkpoint before likely truncation, compaction, or session break.",
+            "Run rehydrate at the start of a new thread to restore objective, lane, blockers, and next step.",
+            "Run handoff when ownership moves across AI, thread, or operator.",
+            "Run diff-since-last to detect drift from the most recent checkpoint snapshot.",
+        ],
+        rules=[
+            "Separate observed evidence from inferred context in all continuity outputs.",
+            "Do not call continuity complete if next step, blockers, and evidence pointers are missing.",
+            "Treat continuity artifacts as append-first records; avoid destructive rewrites.",
+            "If continuity conflicts with current repo reality, escalate through workflow-router before coding.",
+        ],
+    ),
     "handoff-context": utility_provider_spec(
         name="handoff-context",
         description="Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility.",
@@ -1142,8 +1174,12 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "focused context pack notes added to workflow-state, story, or handoff-log",
             "an explicit include/exclude list for the receiving skill",
         ],
-        references=["Minimize irrelevant context.", "Package only what the receiving skill needs to act safely."],
-        next_steps=["workflow-router", "team", "cook", "developer"],
+        references=[
+            "Minimize irrelevant context.",
+            "Package only what the receiving skill needs to act safely.",
+            "Use context-continuity when the handoff must survive thread, model, or session boundaries.",
+        ],
+        next_steps=["workflow-router", "team", "cook", "developer", "context-continuity"],
         mission="Prepare the smallest complete context pack for the next handoff.",
         tasks=[
             "Select the minimum set of files, artifacts, and rules the receiving skill actually needs.",
@@ -1156,6 +1192,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Use authoritative artifacts over memory.",
             "Update handoff-log when the receiving skill changes.",
             "Stop when the receiving skill can act without reopening the whole repo or replaying the whole chat.",
+            "Escalate to context-continuity when the receiving lane needs durable checkpoint and rehydrate artifacts.",
         ],
     ),
     "mermaid-diagrams": utility_provider_spec(

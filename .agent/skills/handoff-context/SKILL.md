@@ -21,6 +21,7 @@ Prepare the smallest complete context pack for the next handoff.
 - Use authoritative artifacts over memory.
 - Update handoff-log when the receiving skill changes.
 - Stop when the receiving skill can act without reopening the whole repo or replaying the whole chat.
+- Escalate to context-continuity when the receiving lane needs durable checkpoint and rehydrate artifacts.
 
 ## Role
 - utility-provider
@@ -40,9 +41,11 @@ Prepare the smallest complete context pack for the next handoff.
 ## Reference skills and rules
 - Minimize irrelevant context.
 - Package only what the receiving skill needs to act safely.
+- Use context-continuity when the handoff must survive thread, model, or session boundaries.
 
 ## Likely next step
 - workflow-router
 - team
 - cook
 - developer
+- context-continuity

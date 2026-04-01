@@ -86,6 +86,28 @@ def run_public_cli(*args: str) -> str:
     return result.stdout
 
 
+def run_helper_script(script_relative_path: str, *args: str) -> str:
+    command = [sys.executable, str(REPO_ROOT / script_relative_path), *args]
+    env = dict(os.environ)
+    env["RELAY_KIT_CYCLE_SOURCE"] = "validate_runtime"
+    result = subprocess.run(
+        command,
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+    if result.returncode != 0:
+        fail(
+            f"{script_relative_path} failed:\n"
+            f"command: {' '.join(command)}\n"
+            f"stdout:\n{result.stdout}\n"
+            f"stderr:\n{result.stderr}"
+        )
+    return result.stdout
+
+
 def skill_dirs(base: Path, relative_dir: str) -> set[str]:
     target = base / Path(relative_dir)
     if not target.exists():
@@ -155,6 +177,45 @@ def validate_skill_gauntlet() -> None:
             f"stdout:\n{result.stdout}\n"
             f"stderr:\n{result.stderr}"
         )
+
+
+def validate_context_continuity_utility() -> None:
+    temp_dir = Path(tempfile.mkdtemp(prefix="relay-kit-continuity-"))
+    try:
+        run_helper_script(
+            "scripts/context_continuity.py",
+            "checkpoint",
+            str(temp_dir),
+            "--objective",
+            "runtime validation",
+            "--lane",
+            "primary",
+            "--next-step",
+            "run qa gate",
+        )
+        run_helper_script("scripts/context_continuity.py", "rehydrate", str(temp_dir))
+        run_helper_script("scripts/context_continuity.py", "diff-since-last", str(temp_dir))
+        run_helper_script(
+            "scripts/context_continuity.py",
+            "handoff",
+            str(temp_dir),
+            "--reason",
+            "validate-runtime",
+            "--receiver",
+            "qa",
+        )
+        manifest = temp_dir / ".ai-kit" / "state" / "context-manifest.json"
+        ledger = temp_dir / ".ai-kit" / "state" / "session-ledger.jsonl"
+        handoff_dir = temp_dir / ".ai-kit" / "handoffs"
+        if not manifest.exists():
+            fail("context_continuity checkpoint did not create context-manifest.json")
+        if not ledger.exists():
+            fail("context_continuity checkpoint did not create session-ledger.jsonl")
+        handoffs = list(handoff_dir.glob("*.md"))
+        if not handoffs:
+            fail("context_continuity handoff did not create a handoff markdown file")
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
 
 def assert_file_map(name: str, actual: dict[str, str], expected: dict[str, str]) -> None:
@@ -372,6 +433,7 @@ def main() -> int:
     validate_checked_in_runtime()
     assert_skill_descriptions_trigger_first()
     validate_skill_gauntlet()
+    validate_context_continuity_utility()
     validate_checked_in_docs()
     for bundle in ("round4", "discipline-utilities", "baseline", "baseline-next"):
         validate_generated_bundle(bundle)

@@ -74,8 +74,10 @@ For frontend work, a "go" recommendation should usually include:
 - Coverage must be explained against acceptance criteria and risk, not just number of tests.
 - Use `browser-inspector` for browser-native evidence and `review-hub` when a screen is shippable in code but still questionable in presentation.
 - For meaningful UI work, do not treat `lint`, `typecheck`, and `build` as sufficient evidence on their own.
+- Use context-continuity when readiness evidence must survive a new thread or handoff before final sign-off.
 
 ## Likely next step
 - review-hub
 - debug-hub
+- context-continuity
 - workflow-router

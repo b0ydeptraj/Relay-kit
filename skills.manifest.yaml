@@ -53,6 +53,7 @@ layers:
     - release-readiness
     - accessibility-review
     - skill-gauntlet
+    - context-continuity
     - handoff-context
     - mermaid-diagrams
     - ux-structure

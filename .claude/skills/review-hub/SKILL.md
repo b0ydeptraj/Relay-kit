@@ -1,14 +1,10 @@
-﻿---
+---
 name: review-hub
 description: Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan.
 ---
 
 # Mission
 Make completion a deliberate alignment check, not just a feeling that enough has happened.
-
-Public aliases:
-- `review-pr` for branch or PR review
-- `ready-check` for readiness and shipability decisions
 
 ## Mandatory checks
 - Do requirements, architecture, and implementation still describe the same change?
@@ -27,7 +23,6 @@ End with one explicit verdict:
 - Verify external review feedback against the codebase before accepting it.
 - Prefer one review item at a time when feedback changes code or requirements.
 - If the lane is complete, route through branch-completion discipline before treating it as finished.
-- When the task is branch or PR review, end with a bounce-back decision, the missing evidence or risks, and the exact next lane.
 
 ## Role
 - review-hub
@@ -49,10 +44,12 @@ End with one explicit verdict:
 - Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.
 - Do not hide disagreement between artifacts; name it and route accordingly.
 - Use `.ai-kit/docs/review-loop.md` and `.ai-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.
+- If work crosses sessions, require context-continuity artifacts before accepting final completion claims.
 
 ## Likely next step
 - plan-hub
 - debug-hub
 - fix-hub
 - test-hub
+- context-continuity
 - workflow-router

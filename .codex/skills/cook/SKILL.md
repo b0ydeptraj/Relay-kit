@@ -38,6 +38,7 @@ Run the day-to-day loop for one request without letting it skip gates or get stu
 - Cook does not replace hubs; it chooses and sequences them.
 - Keep each pass small: one hub, one artifact decision, one clear next handoff.
 - If completion is claimed, force test-hub or review-hub before accepting it.
+- If the lane is pausing or switching owners, trigger context-continuity checkpoint before handoff.
 
 ## Likely next step
 - brainstorm-hub
@@ -47,3 +48,4 @@ Run the day-to-day loop for one request without letting it skip gates or get stu
 - fix-hub
 - test-hub
 - review-hub
+- context-continuity

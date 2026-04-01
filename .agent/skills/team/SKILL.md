@@ -39,6 +39,7 @@ Coordinate parallel work while preserving one authoritative source of truth for 
 - Assign one owner skill per lane and name merge order explicitly.
 - Use cook inside a lane, not as a replacement for team.
 - Use `.ai-kit/docs/parallel-execution.md` to decide when work is independent enough to split safely.
+- Require context-continuity handoff packs when ownership shifts across sessions or AIs.
 
 ## Likely next step
 - cook
@@ -46,3 +47,4 @@ Coordinate parallel work while preserving one authoritative source of truth for 
 - scout-hub
 - debug-hub
 - review-hub
+- context-continuity

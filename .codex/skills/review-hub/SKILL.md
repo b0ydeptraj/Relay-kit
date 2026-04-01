@@ -69,10 +69,12 @@ End with one explicit verdict:
 - Do not hide disagreement between artifacts; name it and route accordingly.
 - Use `.ai-kit/docs/review-loop.md` and `.ai-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.
 - Use `browser-inspector`, `multimodal-evidence`, and `ux-structure` when the disagreement is visual rather than purely behavioral.
+- If work crosses sessions, require context-continuity artifacts before accepting final completion claims.
 
 ## Likely next step
 - plan-hub
 - debug-hub
 - fix-hub
 - test-hub
+- context-continuity
 - workflow-router
