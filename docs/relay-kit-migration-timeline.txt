@@ -71,3 +71,17 @@ Mục tiêu:
 6. Câu nhắc ngắn cho chat sau
 
 "Tính đến 2026-04-01: phase 2 capability đã xong; đang soak cycle. Chỉ sau soak sạch mới làm phase 3 gồm `.ai-kit` -> `.relay-kit`, bỏ `python_kit.py/python_kit_legacy.py`, và rename thư mục repo thật."
+
+7. Candidate skill moi sau 2026-04-15 (chi mo khi cycle sach)
+
+- impact-radar (uu tien cao)
+  - phan tich blast radius truoc khi sua/merge lon
+  - output bat buoc: file/module anh huong, test can chay, risk level
+
+- runtime-doctor (uu tien cao)
+  - quet drift runtime/topology/state
+  - bat loi: orphan lane, stale state, thieu evidence, lech wave/depends_on
+
+- migration-guard (uu tien trung binh, chi mo khi chuan bi rename lon)
+  - gate rieng cho phase `.ai-kit` -> `.relay-kit`
+  - cover alias removal va path rename
