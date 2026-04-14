@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "relay-kit"
-version = "3.2.0"
+version = "3.3.0"
 description = "Relay-kit public installer CLI for coding-agent runtime generation."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -22,8 +22,6 @@ py-modules = [
   "relay_kit_legacy",
   "relay_kit_compat",
   "relay_kit_cycle_log",
-  "python_kit",
-  "python_kit_legacy",
 ]
 
 [tool.setuptools.packages.find]

@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Relay-kit v3.2 - registry-driven workflow runtime for ai-kit.
+"""Relay-kit v3.3 - registry-driven workflow runtime for .relay-kit artifacts.
 
-How to adopt with minimal breakage:
-1. Use `relay_kit.py` as the preferred Relay-kit v3 entrypoint.
-2. Keep `python_kit.py` as a compatibility alias for one migration cycle.
-3. Keep using legacy kits for project-specific analysis/template generation.
-4. Use the new bundles to generate orchestrators, workflow hubs, utility providers,
-   discipline overlays, next-baseline candidates, artifact contracts, topology docs, and cleaned runtime skills.
+How to adopt:
+1. Use `relay_kit.py` as the runtime entrypoint.
+2. Keep using legacy kits for project-specific analysis/template generation via `relay_kit_legacy.py`.
+3. Use bundles to generate orchestrators, workflow hubs, utility providers,
+   discipline overlays, artifact contracts, topology docs, and cleaned runtime skills.
 """
 
 from __future__ import annotations
@@ -20,8 +19,6 @@ from relay_kit_cycle_log import append_cycle_event, current_source
 from relay_kit_compat import (
     CANONICAL_ENTRYPOINT,
     CANONICAL_LEGACY_ENTRYPOINT,
-    COMPAT_ENTRYPOINT,
-    COMPAT_LEGACY_ENTRYPOINT,
 )
 
 
@@ -50,10 +47,7 @@ def list_everything(repo_root: Path) -> None:
         print(f"  {bundle} ({len(items)}): {', '.join(items)}")
     print()
     if module is None:
-        print(
-            "Legacy kits: unavailable "
-            f"(expected {CANONICAL_LEGACY_ENTRYPOINT} or {COMPAT_LEGACY_ENTRYPOINT})"
-        )
+        print(f"Legacy kits: unavailable (expected {CANONICAL_LEGACY_ENTRYPOINT})")
     else:
         print("Legacy kits:")
         for set_name, skill_list in module.SKILL_SETS.items():
@@ -66,7 +60,7 @@ def list_everything(repo_root: Path) -> None:
 def parse_args(repo_root: Path) -> argparse.Namespace:
     _, legacy = legacy_kits(repo_root)
     parser = argparse.ArgumentParser(
-        description="Relay-kit v3.2 - workflow runtime with orchestrators, workflow hubs, utility providers, discipline overlays, the official baseline bundle, bundle gating, and legacy compatibility",
+        description="Relay-kit v3.3 - workflow runtime with orchestrators, workflow hubs, utility providers, discipline overlays, baseline bundle gating, and legacy generation via relay_kit_legacy.py",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -78,22 +72,18 @@ Examples:
   python relay_kit.py /path/to/project --bundle round3 --ai claude --emit-contracts --emit-docs
   python relay_kit.py /path/to/project --legacy-kit python --ai claude
   python relay_kit.py --list-skills
-
-Compatibility alias for one cycle:
-  python python_kit.py --list-skills
         """,
     )
     parser.add_argument("project_path", nargs="?", default=".", help="Target project path")
     parser.add_argument("--ai", choices=["claude", "antigravity", "codex", "all", "generic"], default="claude")
     parser.add_argument("--bundle", choices=sorted(BUNDLES.keys()), help="Generate new registry-native skills")
-    parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .ai-kit/contracts/ and .ai-kit/state/")
-    parser.add_argument("--emit-docs", action="store_true", help="Write topology, migration, gating, and runtime docs into .ai-kit/docs/")
-    parser.add_argument("--emit-reference-templates", action="store_true", help="Write living reference templates into .ai-kit/references/")
+    parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .relay-kit/contracts/ and .relay-kit/state/")
+    parser.add_argument("--emit-docs", action="store_true", help="Write topology, migration, gating, and runtime docs into .relay-kit/docs/")
+    parser.add_argument("--emit-reference-templates", action="store_true", help="Write living reference templates into .relay-kit/references/")
     parser.add_argument(
         "--legacy-kit",
         help=(
-            f"Run a preserved legacy suite through {CANONICAL_LEGACY_ENTRYPOINT} "
-            f"({COMPAT_LEGACY_ENTRYPOINT} remains as an alias). "
+            f"Run a preserved legacy suite through {CANONICAL_LEGACY_ENTRYPOINT}. "
             f"Visible suites: {', '.join(legacy) if legacy else 'unavailable'}"
         ),
     )
@@ -101,7 +91,7 @@ Compatibility alias for one cycle:
         "--skills",
         nargs="+",
         metavar="SKILL",
-        help=f"Pass specific legacy skills through {CANONICAL_LEGACY_ENTRYPOINT} ({COMPAT_LEGACY_ENTRYPOINT} remains as an alias)",
+        help=f"Pass specific legacy skills through {CANONICAL_LEGACY_ENTRYPOINT}",
     )
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("--list-skills", action="store_true")
@@ -165,8 +155,7 @@ def main(invoked_as: str | None = None) -> int:
     if args.legacy_kit or args.skills:
         if load_legacy_module(repo_root) is None:
             print(
-                "Cannot run legacy generation because neither "
-                f"{CANONICAL_LEGACY_ENTRYPOINT} nor {COMPAT_LEGACY_ENTRYPOINT} is available."
+                f"Cannot run legacy generation because {CANONICAL_LEGACY_ENTRYPOINT} is not available."
             )
             exit_code = 1
             append_cycle_event(repo_root, _build_event(args, entrypoint, exit_code))

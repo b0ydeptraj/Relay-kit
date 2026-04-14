@@ -21,7 +21,6 @@ from pathlib import Path
 from relay_kit_cycle_log import append_cycle_event, current_source
 from relay_kit_compat import (
     GENERIC_CANONICAL_DIR,
-    GENERIC_COMPAT_DIR,
     generic_prompt_dirs,
 )
 
@@ -1399,7 +1398,7 @@ AI_SKILL_FOLDERS = {
     "antigravity": ".agent/skills",
     "codex": ".codex/skills",
     "all": [".claude/skills", ".agent/skills"],
-    "generic": [GENERIC_CANONICAL_DIR, GENERIC_COMPAT_DIR],
+    "generic": [GENERIC_CANONICAL_DIR],
 }
 
 # Template-based skills copied directly into target projects
@@ -1811,8 +1810,6 @@ def run_generic(prompt: str, project_path: str, skill_name: str, verbose: bool =
         output_files.append(output_file)
 
     print(f"   Saved to: {output_files[0]}")
-    if len(output_files) > 1:
-        print(f"   Compatibility alias: {output_files[1]}")
     return 0
 
 
@@ -1989,7 +1986,6 @@ def create_python_skills(
         print(f"All {len(tasks)} skills generated successfully!")
         if ai == "generic":
             print(f"Prompts saved to: {project_path}/{GENERIC_CANONICAL_DIR}/")
-            print(f"Compatibility alias: {project_path}/{GENERIC_COMPAT_DIR}/")
         elif ai == "claude":
             print(f"Skills created in: {project_path}/.claude/skills/")
         elif ai == "antigravity":
@@ -2045,17 +2041,16 @@ Examples:
   python relay_kit_legacy.py --kit full           # Run all skills (analysis + templates)
   python relay_kit_legacy.py --skills project-architecture testing-patterns
 
-Compatibility aliases for one cycle:
+Canonical legacy entrypoint:
   python relay_kit.py --legacy-kit python --ai claude
-  python python_kit.py --legacy-kit python --ai claude
-  python python_kit_legacy.py --kit python
+  python relay_kit_legacy.py --kit python
 
 AI Adapters:
   --ai claude   -> .claude/skills/   (auto-read by Claude Code)
   --ai antigravity -> .agent/skills/ (auto-read by Antigravity)
   --ai codex    -> .codex/skills/    (for Codex)
   --ai all      -> Both folders      (Claude + Antigravity)
-  --ai generic  -> .relay-kit-prompts/ (canonical) + .python-kit-prompts/ (compatibility alias)
+  --ai generic  -> .relay-kit-prompts/
 
 Skill sets:
   python (default)   - Python analysis skills
