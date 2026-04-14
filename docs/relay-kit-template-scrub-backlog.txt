@@ -12,6 +12,8 @@ Purpose
 - Do not treat this as current priority during the compatibility soak window.
 
 High-Risk
+- Status update 2026-04-14: completed batch HR-1 scrub for all listed high-risk skill templates.
+- Result: vendor/imported framing removed; instructions rewritten to Relay-kit runtime voice.
 - templates/skills/browser-inspector/SKILL.md
   - still reads like an imported Chrome DevTools agent pack
 - templates/skills/doc-pointers/SKILL.md
@@ -93,7 +95,9 @@ Low-Risk / Already Relay-kit Enough
 
 When To Resume
 - After the compatibility cycle is clean.
-- Start with High-Risk only.
+- Start with High-Risk
+- Status update 2026-04-14: completed batch HR-1 scrub for all listed high-risk skill templates.
+- Result: vendor/imported framing removed; instructions rewritten to Relay-kit runtime voice. only.
 - Rewrite only what will actually ship or be shown to users first.
 
 Rule
@@ -117,7 +121,9 @@ Priority Rule For These Areas
 Execution Window (post-soak / override)
 - Earliest start: 2026-04-14 (override approved after clean soak evidence)
 - Order:
-  1) 2026-04-14 to 2026-04-15: High-Risk imported-tone scrub
+  1) 2026-04-14 to 2026-04-15: High-Risk
+- Status update 2026-04-14: completed batch HR-1 scrub for all listed high-risk skill templates.
+- Result: vendor/imported framing removed; instructions rewritten to Relay-kit runtime voice. imported-tone scrub
   2) 2026-04-15 to 2026-04-17: Medium-Risk runtime/template scrub
   3) 2026-04-17 to 2026-04-18: demo/docs/public wording scrub
 
