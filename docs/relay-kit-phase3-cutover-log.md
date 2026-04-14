@@ -44,11 +44,15 @@ Complete phase-3 cutover with canonical runtime paths and no active compatibilit
   - post-cutover validation script updated
 
 ### Batch 4 - Physical repo rename
-- Status: pending manual execution
+- Status: complete (operational cutover) with old-path cleanup pending lock release
 - Scope:
-  - rename physical repo folder `python-kit -> relay-kit`
+  - activate new physical repo path `...\relay-kit`
   - refresh any machine-specific absolute paths
   - run real-project smoke checks after rename
+- Execution notes (2026-04-14):
+  - in-place rename was blocked by file lock on `...\python-kit`
+  - created full mirror at `...\relay-kit` and switched execution there
+  - old `...\python-kit` path remains only as locked legacy copy to delete after session close
 - Runbook:
   - `docs/relay-kit-phase3-rename-runbook.md`
 
@@ -57,7 +61,8 @@ Complete phase-3 cutover with canonical runtime paths and no active compatibilit
 - [x] compatibility entrypoints removed from runtime and packaging
 - [x] migration guard passes with historical allowlist
 - [x] adapter smoke passed on active repo and one real project (`apps/python-kit-sales-web`)
-- [ ] physical folder rename executed and verified on at least 2 real projects
+- [x] operational runtime from `...\relay-kit` verified on at least 2 real projects
+- [ ] old locked path `...\python-kit` removed after process lock release
 
 ## Verification evidence (2026-04-14)
 - `py -3.12 scripts/skill_gauntlet.py . --strict` -> pass
@@ -69,6 +74,26 @@ Complete phase-3 cutover with canonical runtime paths and no active compatibilit
 - `py -3.12 relay_kit_public_cli.py apps/python-kit-sales-web --generic` -> pass
 - `py -3.12 relay_kit_public_cli.py . --codex` -> pass
 - `py -3.12 relay_kit_public_cli.py . --generic` -> pass
+
+## Batch 4 evidence (2026-04-14 18:53 +07)
+- rollback tag before physical cutover:
+  - `git tag -a phase3-pre-batch4-20260414 -m "Rollback point before Batch 4 physical repo rename"`
+- path activation:
+  - `robocopy C:\Users\b0ydeptrai\OneDrive\Documents\python-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit /MIR ...` -> success
+- CLI reinstall from new path:
+  - `pipx install --force C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit` -> installed `relay-kit 3.3.0`
+- post-activation gates:
+  - `py -3.12 scripts/validate_runtime.py` -> pass
+  - `py -3.12 scripts/skill_gauntlet.py . --strict` -> pass
+  - `py -3.12 scripts/migration_guard.py . --strict` -> pass
+- real-project smoke (2 projects):
+  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --codex` -> pass
+  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --claude` -> pass
+  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\prompt-genius --antigravity` -> pass
+  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\prompt-genius --generic` -> pass
+- old-path cleanup blocker:
+  - `Move-Item ...\python-kit -> ...\relay-kit` -> failed (directory in use)
+  - `Rename-Item ...\python-kit -> ...\python-kit-old` -> failed (directory in use)
 
 ## Notes
 - Historical compatibility docs remain intentionally allowlisted for traceability.
