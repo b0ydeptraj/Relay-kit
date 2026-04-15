@@ -9,7 +9,7 @@ set EXIT_CODE=%ERRORLEVEL%
 echo.
 if %EXIT_CODE% EQU 0 (
   echo Hoan tat. Da cap nhat phan tong hop trong:
-  echo   C:\Users\b0ydeptrai\OneDrive\Documents\python-kit\docs\relay-kit-compatibility-log.md
+  echo   %CD%\docs\relay-kit-compatibility-log.md
 ) else (
   echo Co loi khi cap nhat tong hop. Ma loi: %EXIT_CODE%
 )
