@@ -187,7 +187,7 @@ export const proofClaims: ProofClaim[] = [
     evidence: [
       "scripts/validate_runtime.py",
       ".github/workflows/validate-runtime.yml",
-      "ai_kit_v3/adapters.py",
+      "relay_kit_v3/adapters.py",
     ],
   },
   {

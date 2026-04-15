@@ -18,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from ai_kit_v3.srs_policy import load_srs_policy, policy_file, should_enforce_srs
+from relay_kit_v3.srs_policy import load_srs_policy, policy_file, should_enforce_srs
 from relay_kit_compat import CANONICAL_ARTIFACT_ROOT
 
 

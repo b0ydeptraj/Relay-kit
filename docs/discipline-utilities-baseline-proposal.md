@@ -24,9 +24,9 @@ Current skills in scope:
 The current baseline already has a clear 4-layer model and strict bundle gating:
 
 - runtime entrypoint: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\relay_kit.py`
-- bundle registry: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\ai_kit_v3\generator.py`
-- bundle gating: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\ai_kit_v3\registry\gating.py`
-- skill registry: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\ai_kit_v3\registry\skills.py`
+- bundle registry: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\relay_kit_v3\generator.py`
+- bundle gating: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\relay_kit_v3\registry\gating.py`
+- skill registry: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\relay_kit_v3\registry\skills.py`
 - topology docs: `C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\.relay-kit\docs\layer-model.md`
 
 That means any future fold must preserve:
