@@ -1,95 +1,52 @@
 ---
 name: backend-development
-description: Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring. Use when designing APIs, implementing authentication, optimizing database queries, setting up CI/CD pipelines, handling security vulnerabilities, building microservices, or developing production-ready backend systems.
-license: MIT
-version: 1.0.0
+description: Use when the request requires focused Backend Development implementation, debugging, or review guidance in the active lane.
+version: 2.0.0
 ---
 
-# Backend Development Skill
+# Backend Development
 
-Production-ready backend development with modern technologies, best practices, and proven patterns.
+Use this skill to provide bounded, evidence-backed domain guidance to the current hub or specialist.
 
 ## When to Use
 
-- Designing RESTful, GraphQL, or gRPC APIs
-- Building authentication/authorization systems
-- Optimizing database queries and schemas
-- Implementing caching and performance optimization
-- OWASP Top 10 security mitigation
-- Designing scalable microservices
-- Testing strategies (unit, integration, E2E)
-- CI/CD pipelines and deployment
-- Monitoring and debugging production systems
+- The active task touches Backend Development behavior or tooling.
+- A decision needs domain constraints before coding.
+- A fix or review needs focused checks for this domain.
 
-## Technology Selection Guide
+## Output Contract
 
-**Languages:** Node.js/TypeScript (full-stack), Python (data/ML), Go (concurrency), Rust (performance)
-**Frameworks:** NestJS, FastAPI, Django, Express, Gin
-**Databases:** PostgreSQL (ACID), MongoDB (flexible schema), Redis (caching)
-**APIs:** REST (simple), GraphQL (flexible), gRPC (performance)
+- Key findings tied to affected files or artifacts.
+- Recommended next action and verification notes.
+- Risks or unknowns that still block safe completion.
 
-See: `references/backend-technologies.md` for detailed comparisons
+## Workflow
 
-## Reference Navigation
+1. Confirm scope and acceptance signal with the owning hub.
+2. Gather only domain evidence needed for this pass.
+3. Propose the smallest safe implementation or review path.
+4. Hand results back to the owning lane with a concrete next step.
 
-**Core Technologies:**
-- `backend-technologies.md` - Languages, frameworks, databases, message queues, ORMs
-- `backend-api-design.md` - REST, GraphQL, gRPC patterns and best practices
+## References
 
-**Security & Authentication:**
-- `backend-security.md` - OWASP Top 10 2025, security best practices, input validation
-- `backend-authentication.md` - OAuth 2.1, JWT, RBAC, MFA, session management
+- references/backend-api-design.md
+- references/backend-architecture.md
+- references/backend-authentication.md
+- references/backend-code-quality.md
+- references/backend-debugging.md
+- references/backend-devops.md
+- references/backend-mindset.md
+- references/backend-performance.md
+- references/backend-security.md
+- references/backend-technologies.md
+- references/backend-testing.md
 
-**Performance & Architecture:**
-- `backend-performance.md` - Caching, query optimization, load balancing, scaling
-- `backend-architecture.md` - Microservices, event-driven, CQRS, saga patterns
+## Scripts
 
-**Quality & Operations:**
-- `backend-testing.md` - Testing strategies, frameworks, tools, CI/CD testing
-- `backend-code-quality.md` - SOLID principles, design patterns, clean code
-- `backend-devops.md` - Docker, Kubernetes, deployment strategies, monitoring
-- `backend-debugging.md` - Debugging strategies, profiling, logging, production debugging
-- `backend-mindset.md` - Problem-solving, architectural thinking, collaboration
+- No bundled scripts required for this skill.
 
-## Key Best Practices (2025)
+## Guardrails
 
-**Security:** Argon2id passwords, parameterized queries (98% SQL injection reduction), OAuth 2.1 + PKCE, rate limiting, security headers
-
-**Performance:** Redis caching (90% DB load reduction), database indexing (30% I/O reduction), CDN (50%+ latency cut), connection pooling
-
-**Testing:** 70-20-10 pyramid (unit-integration-E2E), Vitest 50% faster than Jest, contract testing for microservices, 83% migrations fail without tests
-
-**DevOps:** Blue-green/canary deployments, feature flags (90% fewer failures), Kubernetes 84% adoption, Prometheus/Grafana monitoring, OpenTelemetry tracing
-
-## Quick Decision Matrix
-
-| Need | Choose |
-|------|--------|
-| Fast development | Node.js + NestJS |
-| Data/ML integration | Python + FastAPI |
-| High concurrency | Go + Gin |
-| Max performance | Rust + Axum |
-| ACID transactions | PostgreSQL |
-| Flexible schema | MongoDB |
-| Caching | Redis |
-| Internal services | gRPC |
-| Public APIs | GraphQL/REST |
-| Real-time events | Kafka |
-
-## Implementation Checklist
-
-**API:** Choose style → Design schema → Validate input → Add auth → Rate limiting → Documentation → Error handling
-
-**Database:** Choose DB → Design schema → Create indexes → Connection pooling → Migration strategy → Backup/restore → Test performance
-
-**Security:** OWASP Top 10 → Parameterized queries → OAuth 2.1 + JWT → Security headers → Rate limiting → Input validation → Argon2id passwords
-
-**Testing:** Unit 70% → Integration 20% → E2E 10% → Load tests → Migration tests → Contract tests (microservices)
-
-**Deployment:** Docker → CI/CD → Blue-green/canary → Feature flags → Monitoring → Logging → Health checks
-
-## Resources
-
-- OWASP Top 10: https://owasp.org/www-project-top-ten/
-- OAuth 2.1: https://oauth.net/2.1/
-- OpenTelemetry: https://opentelemetry.io/
+- Keep scope narrow; do not create parallel architecture.
+- Separate observed evidence from recommendation.
+- Do not claim completion without lane-level verification evidence.

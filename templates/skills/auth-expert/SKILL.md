@@ -1,105 +1,42 @@
 ---
 name: auth-expert
-description: Authentication and authorization expert specializing in JWT, OAuth 2.0, session management, RBAC, password security. Use for auth implementation, token management, or security issues.
+description: Use when the request requires focused Auth Expert implementation, debugging, or review guidance in the active lane.
+version: 2.0.0
 ---
 
-# Authentication & Authorization Expert
+# Auth Expert
 
-Expert in JWT, OAuth 2.0, sessions, RBAC, and security best practices.
+Use this skill to provide bounded, evidence-backed domain guidance to the current hub or specialist.
 
-## When Invoked
+## When to Use
 
-### Recommend Specialist and Stop
-- **API design patterns**: recommend rest-api-expert
-- **Database security**: recommend database-expert  
-- **Infrastructure security**: recommend devops-expert
+- The active task touches Auth Expert behavior or tooling.
+- A decision needs domain constraints before coding.
+- A fix or review needs focused checks for this domain.
 
-### Environment Detection
-```bash
-grep -E "passport|jsonwebtoken|next-auth|bcrypt" package.json 2>/dev/null
-find . -type f -name "*auth*" -not -path "./node_modules/*" | head -5
-```
+## Output Contract
 
-## Problem Playbooks
+- Key findings tied to affected files or artifacts.
+- Recommended next action and verification notes.
+- Risks or unknowns that still block safe completion.
 
-### JWT Implementation
+## Workflow
 
-**Secure JWT Pattern:**
-```typescript
-import jwt from 'jsonwebtoken';
+1. Confirm scope and acceptance signal with the owning hub.
+2. Gather only domain evidence needed for this pass.
+3. Propose the smallest safe implementation or review path.
+4. Hand results back to the owning lane with a concrete next step.
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET!;
-const ACCESS_TOKEN_EXPIRY = '15m';
+## References
 
-function generateTokens(payload: TokenPayload) {
-  const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-    expiresIn: ACCESS_TOKEN_EXPIRY,
-  });
-  return { accessToken };
-}
+- Prefer repository docs and nearby code as primary references.
 
-function authenticateToken(req: Request, res: Response, next: NextFunction) {
-  const token = req.cookies.accessToken || 
-    req.headers.authorization?.replace('Bearer ', '');
+## Scripts
 
-  if (!token) return res.status(401).json({ error: 'Auth required' });
+- No bundled scripts required for this skill.
 
-  try {
-    req.user = jwt.verify(token, ACCESS_TOKEN_SECRET);
-    next();
-  } catch {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
-}
-```
+## Guardrails
 
-### Password Security
-
-```typescript
-import bcrypt from 'bcrypt';
-
-const SALT_ROUNDS = 12;
-
-async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, SALT_ROUNDS);
-}
-
-async function verifyPassword(plain: string, hashed: string): Promise<boolean> {
-  return bcrypt.compare(plain, hashed);
-}
-```
-
-### RBAC Pattern
-
-```typescript
-const ROLES = {
-  user: ['read:posts'],
-  admin: ['read:posts', 'write:posts', 'delete:posts'],
-};
-
-function requirePermission(permission: string) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const userRole = req.user?.role;
-    if (!ROLES[userRole]?.includes(permission)) {
-      return res.status(403).json({ error: 'Forbidden' });
-    }
-    next();
-  };
-}
-```
-
-## Code Review Checklist
-
-- [ ] Passwords hashed with bcrypt (cost ≥ 12)
-- [ ] JWT secrets are strong (256-bit)
-- [ ] Cookies are httpOnly, secure, sameSite
-- [ ] Rate limiting on login
-- [ ] All routes have auth middleware
-- [ ] Resource-level authorization
-
-## Anti-Patterns
-
-1. **Storing JWT in localStorage** - Use httpOnly cookies
-2. **Weak passwords** - Enforce complexity
-3. **No rate limiting** - Prevent brute force
-4. **Client-side auth only** - Always validate on server
+- Keep scope narrow; do not create parallel architecture.
+- Separate observed evidence from recommendation.
+- Do not claim completion without lane-level verification evidence.

@@ -1,115 +1,46 @@
 ---
 name: mermaid-diagrams
-description: Create diagrams and visualizations using Mermaid.js v11 syntax. Use when generating flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, Gantt charts, user journeys, timelines, architecture diagrams, or any of 24+ diagram types. Supports JavaScript API integration, CLI rendering to SVG/PNG/PDF, theming, configuration, and accessibility features. Essential for documentation, technical diagrams, project planning, system architecture, and visual communication.
+description: Use when architecture or flow decisions need concise Mermaid diagrams tied to implementation artifacts.
+version: 2.0.0
 ---
 
-# Mermaid.js v11
+# Mermaid Diagrams
 
-## Overview
+Use this skill to provide bounded, evidence-backed domain guidance to the current hub or specialist.
 
-Create text-based diagrams using Mermaid.js v11 declarative syntax. Convert code to SVG/PNG/PDF via CLI or render in browsers/markdown files.
+## When to Use
 
-## Quick Start
+- The active task touches Mermaid Diagrams behavior or tooling.
+- A decision needs domain constraints before coding.
+- A fix or review needs focused checks for this domain.
 
-**Basic Diagram Structure:**
-```
-{diagram-type}
-  {diagram-content}
-```
+## Output Contract
 
-**Common Diagram Types:**
-- `flowchart` - Process flows, decision trees
-- `sequenceDiagram` - Actor interactions, API flows
-- `classDiagram` - OOP structures, data models
-- `stateDiagram` - State machines, workflows
-- `erDiagram` - Database relationships
-- `gantt` - Project timelines
-- `journey` - User experience flows
+- Key findings tied to affected files or artifacts.
+- Recommended next action and verification notes.
+- Risks or unknowns that still block safe completion.
 
-See `references/diagram-types.md` for all 24+ types with syntax.
+## Workflow
 
-## Creating Diagrams
+1. Confirm scope and acceptance signal with the owning hub.
+2. Gather only domain evidence needed for this pass.
+3. Propose the smallest safe implementation or review path.
+4. Hand results back to the owning lane with a concrete next step.
 
-**Inline Markdown Code Blocks:**
-````markdown
-```mermaid
-flowchart TD
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Action]
-    B -->|No| D[End]
-```
-````
+## References
 
-**Configuration via Frontmatter:**
-````markdown
-```mermaid
----
-theme: dark
----
-flowchart LR
-    A --> B
-```
-````
+- references/cli-usage.md
+- references/configuration.md
+- references/diagram-types.md
+- references/examples.md
+- references/integration.md
 
-**Comments:** Use `%% ` prefix for single-line comments.
+## Scripts
 
-## CLI Usage
+- No bundled scripts required for this skill.
 
-Convert `.mmd` files to images:
-```bash
-# Installation
-npm install -g @mermaid-js/mermaid-cli
+## Guardrails
 
-# Basic conversion
-mmdc -i diagram.mmd -o diagram.svg
-
-# With theme and background
-mmdc -i input.mmd -o output.png -t dark -b transparent
-
-# Custom styling
-mmdc -i diagram.mmd --cssFile style.css -o output.svg
-```
-
-See `references/cli-usage.md` for Docker, batch processing, and advanced workflows.
-
-## JavaScript Integration
-
-**HTML Embedding:**
-```html
-<pre class="mermaid">
-  flowchart TD
-    A[Client] --> B[Server]
-</pre>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({ startOnLoad: true });</script>
-```
-
-See `references/integration.md` for Node.js API and advanced integration patterns.
-
-## Configuration & Theming
-
-**Common Options:**
-- `theme`: "default", "dark", "forest", "neutral", "base"
-- `look`: "classic", "handDrawn"
-- `fontFamily`: Custom font specification
-- `securityLevel`: "strict", "loose", "antiscript"
-
-See `references/configuration.md` for complete config options, theming, and customization.
-
-## Practical Patterns
-
-Load `references/examples.md` for:
-- Architecture diagrams
-- API documentation flows
-- Database schemas
-- Project timelines
-- State machines
-- User journey maps
-
-## Resources
-
-- `references/diagram-types.md` - Syntax for all 24+ diagram types
-- `references/configuration.md` - Config, theming, accessibility
-- `references/cli-usage.md` - CLI commands and workflows
-- `references/integration.md` - JavaScript API and embedding
-- `references/examples.md` - Practical patterns and use cases
+- Keep scope narrow; do not create parallel architecture.
+- Separate observed evidence from recommendation.
+- Do not claim completion without lane-level verification evidence.
