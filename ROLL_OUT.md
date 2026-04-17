@@ -11,7 +11,7 @@ Use these files instead:
 - Current public start flow:
   - `docs/relay-kit-start-flow.md`
 - Current compatibility gate:
-  - `docs/relay-kit-compatibility-cycle.md`
+  - `docs/history/relay-kit-compatibility-cycle.md`
 - Current runtime structure:
   - `.relay-kit/docs/folder-structure.md`
 

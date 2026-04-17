@@ -41,7 +41,7 @@ Expected outcome:
 
 ## Evidence references
 
-- `docs/relay-kit-phase3-cutover-log.md`
+- `docs/history/relay-kit-phase3-cutover-log.md`
 - `docs/relay-kit-compatibility-log.md`
 - `.relay-kit-cycle/events.jsonl`
 

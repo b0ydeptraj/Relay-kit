@@ -202,7 +202,7 @@ Phase 3 cutover đã bật và canonical runtime path hiện tại là:
 - `.relay-kit-prompts/`
 
 Nhật ký lịch sử compatibility và removal:
-- [`docs/relay-kit-compatibility-cycle.md`](docs/relay-kit-compatibility-cycle.md)
+- [`docs/history/relay-kit-compatibility-cycle.md`](docs/history/relay-kit-compatibility-cycle.md)
 
 ## Tài liệu sâu hơn
 

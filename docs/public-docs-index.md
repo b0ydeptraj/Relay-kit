@@ -14,7 +14,7 @@ Use this page as the public entrypoint for current runtime behavior.
 - `docs/relay-kit-context-continuity.md`
 - `docs/relay-kit-context-continuity-design-note.md`
 - `docs/relay-kit-srs-first-nontech.md`
-- `docs/relay-kit-compatibility-cycle.md` (archived checklist with final decision)
+- `docs/history/relay-kit-compatibility-cycle.md` (archived checklist with final decision)
 
 Canonical runtime naming:
 
@@ -27,17 +27,17 @@ Canonical runtime naming:
 
 These files are preserved for traceability and older migration context. They are not the primary docs for new users:
 
-- `docs/codex-merge-prompt.md`
-- `docs/codex-round3-merge-prompt.md`
-- `docs/codex-round4-merge-prompt.md`
-- `docs/migration-order.md`
-- `docs/round2-changelog.md`
-- `docs/round3-design.md`
-- `docs/round4-design.md`
-- `docs/gap-matrix.md`
-- `docs/relay-kit-ai-kit-migration-matrix.md`
-- `docs/discipline-utilities-baseline-proposal.md`
+- `docs/history/codex-merge-prompt.md`
+- `docs/history/codex-round3-merge-prompt.md`
+- `docs/history/codex-round4-merge-prompt.md`
+- `docs/history/migration-order.md`
+- `docs/history/round2-changelog.md`
+- `docs/history/round3-design.md`
+- `docs/history/round4-design.md`
+- `docs/history/gap-matrix.md`
+- `docs/history/relay-kit-ai-kit-migration-matrix.md`
+- `docs/history/discipline-utilities-baseline-proposal.md`
 - `docs/gauntlet-runs/**`
 - `docs/relay-kit-compatibility-log.md`
 - `docs/relay-kit-phase3-rename-runbook.md`
-- `docs/relay-kit-gsd-flow-matrix.md`
+- `docs/history/relay-kit-gsd-flow-matrix.md`

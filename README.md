@@ -210,7 +210,7 @@ Phase 3 cutover is active and canonical runtime paths are now:
 - `.relay-kit-prompts/`
 
 Historical compatibility timeline and removal log:
-- [`docs/relay-kit-compatibility-cycle.md`](docs/relay-kit-compatibility-cycle.md)
+- [`docs/history/relay-kit-compatibility-cycle.md`](docs/history/relay-kit-compatibility-cycle.md)
 
 ## Public docs index
 

@@ -30,7 +30,7 @@ Perform the final physical folder rename after code-level cutover is already gre
 7. Confirm generated outputs are canonical:
    - `.relay-kit/`
    - `.relay-kit-prompts/` (for generic mode)
-8. Capture evidence and append to `docs/relay-kit-phase3-cutover-log.md`.
+8. Capture evidence and append to `docs/history/relay-kit-phase3-cutover-log.md`.
 
 ## Rollback
 If any gate fails after physical rename:

@@ -30,7 +30,7 @@ All notable changes to `Relay-kit` are documented here.
 
 ### Added
 
-- Added `docs/relay-kit-compatibility-cycle.md` to make the Relay-kit rename
+- Added `docs/history/relay-kit-compatibility-cycle.md` to make the Relay-kit rename
   soak period explicit.
 
 ### Changed
