@@ -1,4 +1,4 @@
-[English](README.md) | [Tiếng Việt](README.vi.md)
+﻿[English](README.md) | [Tiếng Việt](README.vi.md)
 
 # Relay-kit
 
@@ -175,7 +175,6 @@ Entrypoint chính:
 Baseline đang hoạt động:
 
 - `baseline`
-- bí danh tương thích: `baseline-next`
 
 Sau khi generate, bạn sẽ có:
 
@@ -230,3 +229,4 @@ Nhật ký lịch sử compatibility và removal:
 ## Ghi chú về legacy
 
 Legacy kits vẫn còn để phục vụ migration và compatibility. Chúng không phải là câu chuyện runtime chính của Relay-kit.
+

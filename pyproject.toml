@@ -11,6 +11,9 @@ requires-python = ">=3.10"
 license = { text = "Proprietary" }
 authors = [{ name = "Relay-kit" }]
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
 [project.scripts]
 relay-kit = "relay_kit_public_cli:main"
 

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from typing import Dict, List
 
@@ -30,8 +30,8 @@ ROUND4_DOCS = ROUND3_DOCS + [
 
 
 BUNDLE_CONTRACT_NAMES: Dict[str, List[str]] = {
-    "bmad-core": list(ROUND2_BASE_CONTRACTS),
-    "bmad-lite": list(ROUND2_BASE_CONTRACTS),
+    "legacy-core": list(ROUND2_BASE_CONTRACTS),
+    "legacy-lite": list(ROUND2_BASE_CONTRACTS),
     "cleanup": ["workflow-state", "qa-report", "tech-spec"],
     "legacy-native": [],
     "round2": list(ROUND2_BASE_CONTRACTS),
@@ -46,12 +46,11 @@ BUNDLE_CONTRACT_NAMES: Dict[str, List[str]] = {
     "round4-core": list(ROUND2_BASE_CONTRACTS) + list(ROUND3_EXTRA_CONTRACTS) + list(ROUND4_EXTRA_CONTRACTS),
     "round4": list(ROUND2_BASE_CONTRACTS) + list(ROUND3_EXTRA_CONTRACTS) + list(ROUND4_EXTRA_CONTRACTS),
     "baseline": list(ROUND2_BASE_CONTRACTS) + list(ROUND3_EXTRA_CONTRACTS) + list(ROUND4_EXTRA_CONTRACTS),
-    "baseline-next": list(ROUND2_BASE_CONTRACTS) + list(ROUND3_EXTRA_CONTRACTS) + list(ROUND4_EXTRA_CONTRACTS),
 }
 
 BUNDLE_DOC_NAMES: Dict[str, List[str]] = {
-    "bmad-core": list(ROUND2_DOCS),
-    "bmad-lite": list(ROUND2_DOCS),
+    "legacy-core": list(ROUND2_DOCS),
+    "legacy-lite": list(ROUND2_DOCS),
     "cleanup": [],
     "legacy-native": ["native-support-skills"],
     "round2": list(ROUND2_DOCS),
@@ -66,12 +65,11 @@ BUNDLE_DOC_NAMES: Dict[str, List[str]] = {
     "round4-core": list(ROUND4_DOCS),
     "round4": list(ROUND4_DOCS),
     "baseline": list(ROUND4_DOCS),
-    "baseline-next": list(ROUND4_DOCS),
 }
 
 REFERENCE_NAMES_FOR_BUNDLE: Dict[str, List[str]] = {
-    "bmad-core": list(SUPPORT_REFERENCES.keys()),
-    "bmad-lite": list(SUPPORT_REFERENCES.keys()),
+    "legacy-core": list(SUPPORT_REFERENCES.keys()),
+    "legacy-lite": list(SUPPORT_REFERENCES.keys()),
     "cleanup": [],
     "legacy-native": list(SUPPORT_REFERENCES.keys()),
     "round2": list(SUPPORT_REFERENCES.keys()),
@@ -86,9 +84,9 @@ REFERENCE_NAMES_FOR_BUNDLE: Dict[str, List[str]] = {
     "round4-core": list(SUPPORT_REFERENCES.keys()),
     "round4": list(SUPPORT_REFERENCES.keys()),
     "baseline": list(SUPPORT_REFERENCES.keys()),
-    "baseline-next": list(SUPPORT_REFERENCES.keys()),
 }
 
 
 def contract_names_for_bundle(bundle: str) -> List[str]:
     return BUNDLE_CONTRACT_NAMES.get(bundle, [])
+

@@ -62,6 +62,9 @@ layers:
     - mermaid-diagrams
     - ux-structure
     - media-tooling
+    - aesthetic
+    - frontend-design
+    - ui-styling
   optional_discipline_overlays:
     - root-cause-debugging
     - test-first-development
@@ -87,7 +90,6 @@ bundles:
     - round3
     - round4
     - baseline
-    - baseline-next
   additive_overlays:
     - utility-providers
     - discipline-utilities
@@ -95,7 +97,6 @@ bundles:
   notes:
     - baseline is the current baseline.
     - round4 remains available as the previous compatibility baseline.
-    - baseline-next is a compatibility alias for baseline during the promotion cycle.
     - discipline-utilities remains optional until a future baseline absorbs approved skills.
     - srs-first is an opt-in overlay for non-technical SRS-first planning and traceability gates.
 
@@ -129,3 +130,4 @@ legacy_compatibility:
     - Legacy workflow, rules, and shared assets belong to migration support only.
     - Legacy command and agent surfaces belong to migration support only.
     - Codex support assets may be materialized by the legacy generator under `.codex/support`, but they are not part of the active v3 runtime taxonomy.
+

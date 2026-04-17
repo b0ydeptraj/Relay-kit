@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass
 from textwrap import dedent
@@ -155,6 +155,16 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             - Bootstrap does not do deep planning.
             - Bootstrap does not declare work ready; it only makes later work safer.
             - When in doubt, prefer creating the minimal state needed to hand off cleanly.
+            - Record the exact artifact owner for the next lane before handing off.
+            - If bootstrap detects stale assumptions, force scout-hub before planning.
+            - If continuity artifacts conflict with repo reality, route to workflow-router for reclassification.
+
+            ## Ready-to-handoff checklist
+            - Workflow-state points to one explicit next skill.
+            - Project-context has known unknowns clearly marked.
+            - Team-board ownership is set when multiple lanes exist.
+            - Required contracts for the next lane are present.
+            - Bootstrap output includes one blocking risk and one mitigation step.
             """
         ).strip(),
     ),
@@ -226,6 +236,16 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             - Never jump straight from vague intent to implementation.
             - When evidence is weak, prefer scout-hub, debug-hub, or test-hub over optimistic implementation.
             - When scope shifts, send the lane back through workflow-router.
+            - When implementation starts, route through plan-hub or fix-hub with an explicit artifact target.
+            - Before claiming completion, force test-hub and review-hub evidence checkpoints.
+            - If the next handoff is ambiguous, pause and rewrite workflow-state before proceeding.
+
+            ## Lane execution checks
+            - Current objective and acceptance signal are both visible in workflow-state.
+            - The selected hub has a concrete artifact target.
+            - Evidence gaps are named before coding decisions.
+            - Handoff includes blockers, assumptions, and validation plan.
+            - Lane closes only after review-hub verdict is explicit.
             """
         ).strip(),
     ),
@@ -244,7 +264,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Use analyst for structured discovery and pm only once the shape is coherent enough to plan.",
             "Prefer narrowing the problem over generating a giant feature wish list.",
         ],
-        next_steps=["analyst", "pm", "plan-hub", "workflow-router"],
+        next_steps=["analyst", "pm", "research", "ux-structure", "aesthetic", "frontend-design", "ui-styling", "plan-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -260,6 +280,18 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             1. a brief is ready for planning,
             2. the idea is too weak and should stop, or
             3. one specific question must be answered before planning continues.
+
+            ## Decision hygiene
+            - Name the trade-off that was chosen and one option explicitly rejected.
+            - Flag assumptions that still need evidence and route them to research or analyst.
+            - If UI quality is part of the goal, route through aesthetic/frontend-design/ui-styling before implementation.
+
+            ## Ideation quality checks
+            - Problem statement is specific enough to test.
+            - Success signal is measurable, not aspirational.
+            - At least one non-goal is explicit to constrain scope.
+            - One risky assumption is called out for validation.
+            - Next planning owner is explicit before handoff.
             """
         ).strip(),
     ),
@@ -276,7 +308,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "When the problem starts from a failure, capture findings in investigation-notes.",
             "Run a freshness pass first: stale assumptions or stale artifacts should be called out explicitly before planning.",
         ],
-        next_steps=["plan-hub", "debug-hub", "review-hub", "workflow-router"],
+        next_steps=["project-architecture", "dependency-management", "api-integration", "data-persistence", "testing-patterns", "doc-pointers", "repo-map", "memory-search", "impact-radar", "runtime-doctor", "handoff-context", "plan-hub", "debug-hub", "review-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -291,6 +323,18 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
 
             ## Output contract
             Name exactly what became clearer, what is still unknown, which sources might be stale, and which hub or specialist should use the refreshed context next.
+
+            ## Recon guardrails
+            - Prioritize support skills that match the active subsystem rather than scanning everything.
+            - Record one concrete risk and one safe next step before leaving scout-hub.
+            - If findings show architectural drift, route to plan-hub with dependency and boundary notes.
+
+            ## Recon checklist
+            - Entry points and key modules are named with file paths.
+            - Dependency direction is captured for touched subsystems.
+            - Data/API boundaries are listed when relevant.
+            - Stale docs are flagged with recommended refresh owner.
+            - The next hub is selected with a clear reason.
             """
         ).strip(),
     ),
@@ -309,7 +353,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Lock key UX, API, and behavior assumptions before story slicing so implementation does not drift.",
             "When SRS-first is enabled, call `srs-clarifier` before PM readiness if actors/use cases/pre-post/exception flows are incomplete.",
         ],
-        next_steps=["analyst", "pm", "architect", "scrum-master", "developer", "review-hub"],
+        next_steps=["analyst", "research", "pm", "architect", "mermaid-diagrams", "srs-clarifier", "scrum-master", "developer", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -349,7 +393,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Root cause beats guess-and-patch.",
             "Escalate to plan-hub if the 'bug' is actually an unclear requirement or architectural mismatch.",
         ],
-        next_steps=["fix-hub", "test-hub", "plan-hub", "workflow-router"],
+        next_steps=["root-cause-debugging", "sequential-thinking", "problem-solving", "browser-inspector", "multimodal-evidence", "memory-search", "runtime-doctor", "fix-hub", "test-hub", "plan-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -363,6 +407,18 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
                - `fix-hub` for a real fix,
                - `test-hub` for missing or weak evidence,
                - `plan-hub` when the issue is upstream ambiguity.
+
+            ## Failure decision rules
+            - If no evidence changed after two loops, escalate to scout-hub for context refresh.
+            - If root cause crosses subsystem boundaries, route to workflow-router for lane reclassification.
+            - Capture the exact command or artifact that disproved each rejected hypothesis.
+
+            ## Evidence quality bar
+            - Reproduction signal is stable across at least one rerun.
+            - Notes include what changed between attempts.
+            - Proposed fix path names impacted files and boundary risks.
+            - Missing evidence is explicit, not implied.
+            - Next hub is chosen from evidence, not preference.
             """
         ).strip(),
     ),
@@ -378,7 +434,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Use developer plus execution-loop for execution, not as a replacement for scoping.",
             "If the fix expands the contract or architecture, route back through workflow-router or plan-hub.",
         ],
-        next_steps=["developer", "test-hub", "review-hub", "workflow-router"],
+        next_steps=["project-architecture", "dependency-management", "api-integration", "data-persistence", "developer", "execution-loop", "test-first-development", "accessibility-review", "handoff-context", "test-hub", "review-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -389,6 +445,21 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             2. Name what must not change while fixing the issue.
             3. Hand off to `developer` for execution.
             4. Route to `test-hub` immediately after implementation evidence exists.
+
+            ## Fix guardrails
+            - Keep API and persistence changes explicit by listing affected contracts and tables.
+            - Use support skills before coding when boundary risk is high.
+            - If the fix adds new behavior, require a test-first note before implementation handoff.
+
+            ## Implementation handoff checklist
+            - Files to edit are listed with scope boundaries.
+            - Non-goals are explicit to prevent scope creep.
+            - Verification commands are ready before coding starts.
+            - Migration or compatibility risks are named when present.
+            - Rollback hint is recorded for high-impact changes.
+            - Reviewer owner for the fix path is identified.
+            - Expected blast radius is summarized in one sentence.
+            - Required post-fix monitoring signal is named.
             """
         ).strip(),
     ),
@@ -405,7 +476,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Route back to debug-hub when verification fails unexpectedly.",
             "When discipline utilities are installed, use `evidence-before-completion` before calling the lane ready.",
         ],
-        next_steps=["qa-governor", "review-hub", "debug-hub", "workflow-router"],
+        next_steps=["qa-governor", "testing-patterns", "evidence-before-completion", "release-readiness", "skill-gauntlet", "impact-radar", "runtime-doctor", "migration-guard", "accessibility-review", "media-tooling", "ui-styling", "review-hub", "debug-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -417,6 +488,20 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             3. Use `evidence-before-completion` if available to validate every completion claim against fresh command output.
             4. Write or refresh `qa-report.md`.
             5. If evidence is weak or failing, route to `debug-hub` rather than guessing.
+
+            ## Evidence discipline
+            - Map every acceptance claim to a concrete command output, log, or artifact delta.
+            - Run migration-guard and skill-gauntlet when runtime surfaces or skill files changed.
+            - When UI changes are involved, include accessibility and styling checks before readiness.
+
+            ## Verification exit checklist
+            - QA report links evidence to acceptance criteria.
+            - Regression surface is stated explicitly.
+            - Remaining risk is categorized as acceptable or blocking.
+            - Failed checks route to debug-hub with concrete failure evidence.
+            - Completion claim is rejected when evidence is stale.
+            - Gate outcome (go/hold) is written to workflow-state before handoff.
+            - Any waived check is documented with owner and expiry.
             """
         ).strip(),
     ),
@@ -433,7 +518,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "Use `.relay-kit/docs/review-loop.md` and `.relay-kit/docs/branch-completion.md` for review handling and end-of-branch discipline.",
             "If work crosses sessions, require context-continuity artifacts before accepting final completion claims.",
         ],
-        next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "context-continuity", "workflow-router"],
+        next_steps=["plan-hub", "debug-hub", "fix-hub", "test-hub", "context-continuity", "release-readiness", "skill-gauntlet", "impact-radar", "migration-guard", "doc-pointers", "memory-search", "repo-map", "research", "mermaid-diagrams", "aesthetic", "frontend-design", "ui-styling", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -588,7 +673,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Execution order should be explicit; stories are not considered runnable until dependencies and first verification signals are named.",
             "When SRS-first is enabled, every story must cite at least one UC-ID from srs-spec.",
         ],
-        next_steps=["developer", "test-hub", "review-hub", "workflow-router"],
+        next_steps=["developer", "test-first-development", "test-hub", "review-hub", "workflow-router"],
         body=dedent(
             """\
             # Mission
@@ -1362,6 +1447,78 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         tasks=["Prepare screenshots or assets for evidence.", "Describe required transforms or formats.", "Hand back what the next skill needs to continue."],
         rules=["Keep transformations reversible when possible.", "Name exact asset sources and outputs.", "Route any broader UX or product decisions back to the owning hub."],
     ),
+    "aesthetic": utility_provider_spec(
+        name="aesthetic",
+        description="Use when visual quality matters and output risks looking generic or AI-generated. Aesthetic direction utility for stronger hierarchy and composition.",
+        outputs=[
+            "design direction notes and taste controls appended to the active artifact",
+            "screenshot critique findings with concrete hierarchy corrections",
+        ],
+        references=[
+            "Reference-driven structure beats invented average structure.",
+            "If the first pass looks generic, revise structure before polish.",
+        ],
+        next_steps=["frontend-design", "ui-styling", "brainstorm-hub", "plan-hub", "review-hub"],
+        mission="Raise visual quality through explicit design direction, critique, and revision discipline.",
+        tasks=[
+            "Set design variance, motion intensity, and visual density before proposing UI changes.",
+            "Identify focal point, hierarchy conflicts, and repeated template-like blocks.",
+            "Route implementation-ready guidance to frontend-design or ui-styling.",
+        ],
+        rules=[
+            "Do not approve generic three-card layouts without hierarchy intent.",
+            "Use concrete references or screenshot evidence when suggesting visual changes.",
+            "Keep recommendations tied to product goals and readability, not decoration.",
+        ],
+    ),
+    "frontend-design": utility_provider_spec(
+        name="frontend-design",
+        description="Use when a lane needs to implement or refactor UI with clear visual direction and production-ready structure. Frontend design execution utility.",
+        outputs=[
+            "implementation-ready UI structure guidance appended to the active artifact",
+            "state coverage notes for loading, empty, and error scenarios",
+        ],
+        references=[
+            "Build from explicit design direction, not vague adjectives.",
+            "Treat component libraries as ingredients, not final design.",
+        ],
+        next_steps=["ui-styling", "developer", "fix-hub", "test-hub", "review-hub"],
+        mission="Convert UI intent into implementation-ready structure that remains distinctive and maintainable.",
+        tasks=[
+            "Define composition, hierarchy, and responsive behavior before coding details.",
+            "Ensure loading, empty, and error states are included for real product surfaces.",
+            "Call out where implementation should use shared components versus custom layout work.",
+        ],
+        rules=[
+            "Avoid template-like safe layouts when hierarchy demands stronger composition.",
+            "Prefer explicit section roles (dominant/supporting/quiet) over equal-weight blocks.",
+            "Route accessibility and verification concerns back through test-hub and qa-governor.",
+        ],
+    ),
+    "ui-styling": utility_provider_spec(
+        name="ui-styling",
+        description="Use when a lane needs styling system decisions, component theming, responsive polish, or design token consistency. UI styling utility.",
+        outputs=[
+            "styling-system recommendations appended to tech-spec, qa-report, or workflow-state",
+            "component-level styling guardrails for consistency and accessibility",
+        ],
+        references=[
+            "Style decisions should reinforce hierarchy and usability.",
+            "Prefer consistent tokens over ad-hoc utility-class sprawl.",
+        ],
+        next_steps=["frontend-design", "fix-hub", "test-hub", "review-hub"],
+        mission="Stabilize UI styling decisions so implementation stays cohesive across screens and adapters.",
+        tasks=[
+            "Define typography, spacing, color, and motion constraints for the active surface.",
+            "Review component states for contrast, focus behavior, and responsive integrity.",
+            "Recommend targeted style adjustments tied to concrete product states.",
+        ],
+        rules=[
+            "Do not approve styling that hides weak hierarchy behind decorative gradients.",
+            "Keep motion performance-safe and respect reduced-motion requirements.",
+            "Tie every styling recommendation to a specific screen or component state.",
+        ],
+    ),
 }
 
 
@@ -1429,7 +1586,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
     ),
 }
 
-BASELINE_NEXT_DISCIPLINE_SKILLS: Dict[str, SkillSpec] = {
+BASELINE_DISCIPLINE_SKILLS: Dict[str, SkillSpec] = {
     "root-cause-debugging": DISCIPLINE_UTILITY_SKILLS["root-cause-debugging"],
     "evidence-before-completion": DISCIPLINE_UTILITY_SKILLS["evidence-before-completion"],
 }
@@ -1492,3 +1649,12 @@ def render_skill(spec: SkillSpec) -> str:
     ])
     parts.extend(f"- {item}" for item in spec.next_steps)
     return "\n".join(parts).rstrip() + "\n"
+
+
+
+
+
+
+
+
+

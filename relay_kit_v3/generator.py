@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
@@ -8,7 +8,7 @@ from .adapters import ensure_dirs, targets_for
 from .registry import (
     ALL_V3_SKILLS,
     ARTIFACT_CONTRACTS,
-    BASELINE_NEXT_DISCIPLINE_SKILLS,
+    BASELINE_DISCIPLINE_SKILLS,
     BUNDLE_DOC_NAMES,
     CLEANUP_SKILLS,
     CORE_SKILLS,
@@ -41,8 +41,8 @@ from relay_kit_compat import (
 
 
 BUNDLES: Dict[str, List[str]] = {
-    "bmad-core": list(CORE_SKILLS.keys()),
-    "bmad-lite": list(CORE_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()),
+    "legacy-core": list(CORE_SKILLS.keys()),
+    "legacy-lite": list(CORE_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()),
     "cleanup": list(CLEANUP_SKILLS.keys()),
     "legacy-native": list(NATIVE_SUPPORT_SKILLS.keys()),
     "round2": list(CORE_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()),
@@ -56,8 +56,7 @@ BUNDLES: Dict[str, List[str]] = {
     "srs-first": ["srs-clarifier"],
     "round4-core": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()),
     "round4": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()),
-    "baseline": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(BASELINE_NEXT_DISCIPLINE_SKILLS.keys()),
-    "baseline-next": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(BASELINE_NEXT_DISCIPLINE_SKILLS.keys()),
+    "baseline": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(BASELINE_DISCIPLINE_SKILLS.keys()),
 }
 
 
@@ -227,7 +226,7 @@ def emit_docs(project_path: Path, bundle: str) -> List[Path]:
 
 
 
-def create_bmad_upgrade(project_path: str, ai: str, bundle: str, with_contracts: bool, with_docs: bool, with_reference_templates: bool) -> List[Path]:
+def generate_relay_bundle(project_path: str, ai: str, bundle: str, with_contracts: bool, with_docs: bool, with_reference_templates: bool) -> List[Path]:
     base = Path(project_path).resolve()
     written = emit_core_skills(base, ai, bundle)
     if with_contracts:
@@ -252,3 +251,5 @@ def create_legacy_skills(project_path: str, ai: str, verbose: bool, skills: Opti
         skills=skills,
         kit=kit,
     )
+
+

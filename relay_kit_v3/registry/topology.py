@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from textwrap import dedent
 from typing import Dict, List
@@ -24,6 +24,9 @@ UTILITY_PROVIDER_NAMES = [
     "mermaid-diagrams",
     "ux-structure",
     "media-tooling",
+    "aesthetic",
+    "frontend-design",
+    "ui-styling",
 ]
 
 DISCIPLINE_UTILITY_NAMES = [
@@ -104,7 +107,7 @@ PARALLEL_LANE_RULES = [
 
 
 HUB_SUPPORT_MAP = {
-    "brainstorm-hub": ["analyst", "pm", "research", "ux-structure"],
+    "brainstorm-hub": ["analyst", "pm", "research", "ux-structure", "aesthetic", "frontend-design", "ui-styling"],
     "scout-hub": [
         "project-architecture",
         "dependency-management",
@@ -119,11 +122,11 @@ HUB_SUPPORT_MAP = {
         "context-continuity",
         "handoff-context",
     ],
-    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "impact-radar", "context-continuity", "ux-structure", "mermaid-diagrams", "srs-clarifier"],
+    "plan-hub": ["analyst", "pm", "architect", "scrum-master", "research", "impact-radar", "context-continuity", "ux-structure", "mermaid-diagrams", "srs-clarifier", "frontend-design", "ui-styling"],
     "debug-hub": ["developer", "testing-patterns", "problem-solving", "sequential-thinking", "browser-inspector", "multimodal-evidence", "memory-search", "runtime-doctor"],
     "fix-hub": ["developer", "execution-loop", "project-architecture", "api-integration", "data-persistence", "accessibility-review", "handoff-context"],
-    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "release-readiness", "accessibility-review", "skill-gauntlet", "impact-radar", "runtime-doctor", "migration-guard", "context-continuity", "media-tooling"],
-    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "release-readiness", "accessibility-review", "skill-gauntlet", "impact-radar", "runtime-doctor", "migration-guard", "context-continuity", "mermaid-diagrams"],
+    "test-hub": ["qa-governor", "testing-patterns", "execution-loop", "multimodal-evidence", "release-readiness", "accessibility-review", "skill-gauntlet", "impact-radar", "runtime-doctor", "migration-guard", "context-continuity", "media-tooling", "ui-styling"],
+    "review-hub": ["qa-governor", "testing-patterns", "project-architecture", "doc-pointers", "memory-search", "release-readiness", "accessibility-review", "skill-gauntlet", "impact-radar", "runtime-doctor", "migration-guard", "context-continuity", "mermaid-diagrams", "aesthetic", "frontend-design", "ui-styling"],
 }
 
 
@@ -348,7 +351,7 @@ def render_bundle_gating() -> str:
         | srs-first | srs-spec only (opt-in) | planning discipline docs | none |
         | round4 | round2 base + round3 extras + round4 extras | round2 + round3 + round4 docs | support references |
         | baseline | round4 scope + approved discipline utilities | round4 docs | support references |
-        | baseline-next | compatibility alias for `baseline` during the promotion cycle | round4 docs | support references |
+
 
         Use temporary output directories when you need to prove gating behavior without contamination from prior generated files.
         """
@@ -493,3 +496,6 @@ def render_review_loop() -> str:
         "",
     ]
     return "\n".join(lines).rstrip() + "\n"
+
+
+

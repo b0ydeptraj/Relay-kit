@@ -1,4 +1,4 @@
-[English](README.md) | [Tiáº¿ng Viá»‡t](README.vi.md)
+﻿[English](README.md) | [Tiáº¿ng Viá»‡t](README.vi.md)
 
 # Relay-kit
 
@@ -183,7 +183,6 @@ Main entrypoints:
 Current active baseline:
 
 - `baseline`
-- compatibility alias: `baseline-next`
 
 Generated output includes:
 
@@ -248,3 +247,4 @@ Historical compatibility timeline and removal log:
 ## Legacy note
 
 Legacy kits still exist for migration and compatibility work. They are not the main Relay-kit runtime story.
+

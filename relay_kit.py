@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Relay-kit v3.3 - registry-driven workflow runtime for .relay-kit artifacts.
 
 How to adopt:
@@ -15,13 +15,24 @@ import json
 import sys
 from pathlib import Path
 
-from relay_kit_v3.generator import BUNDLES, create_bmad_upgrade, create_legacy_skills, load_legacy_module
+from relay_kit_v3.generator import BUNDLES, create_legacy_skills, generate_relay_bundle, load_legacy_module
 from relay_kit_v3.srs_policy import policy_file, write_srs_policy
 from relay_kit_cycle_log import append_cycle_event, current_source
 from relay_kit_compat import (
     CANONICAL_ENTRYPOINT,
     CANONICAL_LEGACY_ENTRYPOINT,
 )
+
+ACTIVE_PUBLIC_BUNDLES = [
+    "baseline",
+    "round4",
+    "utility-providers",
+    "discipline-utilities",
+    "srs-first",
+    "legacy-core",
+    "legacy-lite",
+]
+
 
 
 
@@ -46,7 +57,10 @@ def normalize_legacy_kit_name(repo_root: Path, kit: str | None) -> str | None:
 def list_everything(repo_root: Path) -> None:
     module, legacy = legacy_kits(repo_root)
     print("Built-in v3 bundles:")
-    for bundle, items in BUNDLES.items():
+    for bundle in ACTIVE_PUBLIC_BUNDLES:
+        if bundle not in BUNDLES:
+            continue
+        items = BUNDLES[bundle]
         print(f"  {bundle} ({len(items)}): {', '.join(items)}")
     print()
     if module is None:
@@ -78,7 +92,7 @@ Examples:
     )
     parser.add_argument("project_path", nargs="?", default=".", help="Target project path")
     parser.add_argument("--ai", choices=["claude", "antigravity", "codex", "all", "generic"], default="claude")
-    parser.add_argument("--bundle", choices=sorted(BUNDLES.keys()), help="Generate new registry-native skills")
+    parser.add_argument("--bundle", choices=sorted(ACTIVE_PUBLIC_BUNDLES), help="Generate new registry-native skills")
     parser.add_argument("--emit-contracts", action="store_true", help="Write artifact contracts into .relay-kit/contracts/ and .relay-kit/state/")
     parser.add_argument("--emit-docs", action="store_true", help="Write topology, migration, gating, and runtime docs into .relay-kit/docs/")
     parser.add_argument("--emit-reference-templates", action="store_true", help="Write living reference templates into .relay-kit/references/")
@@ -198,7 +212,7 @@ def main(invoked_as: str | None = None) -> int:
     ran_anything = False
 
     if args.bundle:
-        written = create_bmad_upgrade(
+        written = generate_relay_bundle(
             project_path=args.project_path,
             ai=args.ai,
             bundle=args.bundle,
@@ -238,7 +252,7 @@ def main(invoked_as: str | None = None) -> int:
 
     if not ran_anything:
         print("Nothing to do. Use --bundle for v3 generation, --legacy-kit/--skills for legacy generation, or SRS policy flags.")
-        print("Tip: run with --list-skills to see both v3 bundles and legacy kits.")
+        print("Tip: run with --list-skills to see active v3 bundles and legacy kits.")
         exit_code = 1
         append_cycle_event(repo_root, _build_event(args, entrypoint, exit_code))
         return exit_code
@@ -249,3 +263,5 @@ def main(invoked_as: str | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+

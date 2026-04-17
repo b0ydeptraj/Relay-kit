@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Validate Relay-kit runtime integrity for the post-cutover model."""
 
 from __future__ import annotations
@@ -33,10 +33,21 @@ ROUND4_DISCIPLINE_SKILLS = {
     "test-first-development",
     "srs-clarifier",
 }
-BASELINE_NEXT_APPROVED = {
+RUNTIME_ALIAS_SKILLS = {
+    "brainstorm",
+    "build-it",
+    "debug-systematically",
+    "prove-it",
+    "ready-check",
+    "review-pr",
+    "start-here",
+    "write-steps",
+}
+BASELINE_DISCIPLINE_APPROVED = {
     "root-cause-debugging",
     "evidence-before-completion",
 }
+ACTIVE_VALIDATION_BUNDLES = ("round4", "discipline-utilities", "srs-first", "baseline")
 
 
 def fail(message: str) -> None:
@@ -217,9 +228,7 @@ def prompt_files(base: Path, relative_dir: str) -> dict[str, str]:
 
 
 def validate_checked_in_runtime() -> None:
-    adapter_sets = {
-        target: skill_dirs(REPO_ROOT, target) & EXPECTED_RUNTIME_SKILLS for target in ALL_TARGETS
-    }
+    adapter_sets = {target: skill_dirs(REPO_ROOT, target) for target in ALL_TARGETS}
     reference_target, reference_set = next(iter(adapter_sets.items()))
     for target, current_set in adapter_sets.items():
         assert_set(
@@ -227,6 +236,35 @@ def validate_checked_in_runtime() -> None:
             current_set,
             reference_set,
         )
+
+    expected_runtime = EXPECTED_RUNTIME_SKILLS | RUNTIME_ALIAS_SKILLS
+    for target, current_set in adapter_sets.items():
+        assert_set(f"checked-in runtime exact set for {target}", current_set, expected_runtime)
+
+
+def validate_skill_reachability() -> None:
+    inbound = {name: 0 for name in ALL_V3_SKILLS}
+    for spec in ALL_V3_SKILLS.values():
+        for next_step in spec.next_steps:
+            if next_step in inbound:
+                inbound[next_step] += 1
+    orphans = sorted(name for name, count in inbound.items() if count == 0)
+    if orphans:
+        fail(f"skill routing orphan detected: {orphans}")
+
+
+def validate_bundle_identity() -> None:
+    signatures: dict[tuple[str, ...], str] = {}
+    for bundle in ACTIVE_VALIDATION_BUNDLES:
+        signature = tuple(sorted(BUNDLES[bundle]))
+        previous = signatures.get(signature)
+        if previous is not None:
+            fail(f"bundle identity collision: {previous} and {bundle} emit identical skill sets")
+        signatures[signature] = bundle
+
+
+def validate_runtime_core_tests() -> None:
+    run_command([sys.executable, "-m", "pytest", "-q", "tests"], "runtime core pytest")
 
 
 def validate_adapter_targets() -> None:
@@ -240,7 +278,7 @@ def validate_adapter_targets() -> None:
 
 def validate_list_output() -> None:
     output = run_cli(CANONICAL_ENTRYPOINT, "--list-skills")
-    for bundle in ("round4", "discipline-utilities", "srs-first", "baseline", "baseline-next"):
+    for bundle in ACTIVE_VALIDATION_BUNDLES:
         if bundle not in output:
             fail(f"{CANONICAL_ENTRYPOINT} --list-skills output is missing bundle: {bundle}")
 
@@ -255,7 +293,6 @@ def validate_checked_in_docs() -> None:
             ".agent/skills",
             ".codex/skills",
             "baseline",
-            "baseline-next",
             "relay_kit.py",
             ".relay-kit-prompts",
             ".relay-kit/",
@@ -269,13 +306,12 @@ def validate_checked_in_docs() -> None:
             ".codex/skills",
             "discipline-utilities",
             "baseline",
-            "baseline-next",
             ".relay-kit/state/workflow-state.md",
         ],
     )
     assert_contains(
         REPO_ROOT / ".relay-kit" / "docs" / "bundle-gating.md",
-        ["discipline-utilities", "baseline", "baseline-next"],
+        ["discipline-utilities", "baseline"],
     )
 
 
@@ -304,9 +340,9 @@ def validate_generated_bundle(bundle: str) -> None:
             if leaked:
                 fail(f"round4 leaked discipline skills: {sorted(leaked)}")
 
-        if bundle in {"baseline", "baseline-next"}:
+        if bundle == "baseline":
             current = generated_sets[ALL_TARGETS[0]]
-            missing = BASELINE_NEXT_APPROVED - current
+            missing = BASELINE_DISCIPLINE_APPROVED - current
             unexpected = current & {"test-first-development"}
             if missing or unexpected:
                 fail(
@@ -330,7 +366,7 @@ def validate_generated_bundle(bundle: str) -> None:
 
         bundle_gating_doc = temp_dir / CANONICAL_ARTIFACT_ROOT / "docs" / "bundle-gating.md"
         if bundle_gating_doc.exists():
-            assert_contains(bundle_gating_doc, ["discipline-utilities", "baseline", "baseline-next"])
+            assert_contains(bundle_gating_doc, ["discipline-utilities", "baseline"])
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -402,20 +438,26 @@ def main() -> int:
     validate_adapter_targets()
     validate_list_output()
     validate_checked_in_runtime()
+    validate_skill_reachability()
+    validate_bundle_identity()
     assert_skill_descriptions_trigger_first()
     validate_skill_gauntlet()
     validate_context_continuity_utility()
     validate_migration_guard()
     validate_srs_guard()
     validate_checked_in_docs()
-    for bundle in ("round4", "discipline-utilities", "srs-first", "baseline", "baseline-next"):
+    for bundle in ACTIVE_VALIDATION_BUNDLES:
         validate_generated_bundle(bundle)
         validate_generated_generic_bundle(bundle)
     validate_legacy_generation()
     validate_public_wrapper_surface()
+    validate_runtime_core_tests()
     print("Runtime validation passed.")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
