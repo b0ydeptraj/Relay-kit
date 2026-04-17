@@ -167,6 +167,7 @@ More detail:
 - [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
 - [`docs/relay-kit-srs-first-nontech.md`](docs/relay-kit-srs-first-nontech.md)
 - [`docs/relay-kit-5min-quickstart.md`](docs/relay-kit-5min-quickstart.md)
+- [`docs/relay-kit-beta-soak-log.md`](docs/relay-kit-beta-soak-log.md)
 
 ## How it works
 

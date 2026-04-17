@@ -153,6 +153,7 @@ Xem chi tiết hơn:
 - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
 - [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
 - [`docs/relay-kit-5min-quickstart.md`](docs/relay-kit-5min-quickstart.md)
+- [`docs/relay-kit-beta-soak-log.md`](docs/relay-kit-beta-soak-log.md)
 
 ## Nó hoạt động như thế nào
 
