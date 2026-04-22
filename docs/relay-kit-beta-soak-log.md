@@ -95,3 +95,17 @@ python scripts/soak_beta.py /path/to/project-a /path/to/project-b --append-repor
 | `D:\relay-kit-checkpoint\projects\synthetic-proj-4` | `pass` | `0.07` | - |
 | `D:\relay-kit-checkpoint\projects\synthetic-proj-5` | `pass` | `0.07` | - |
 | `D:\relay-kit-checkpoint\projects\synthetic-proj-6` | `pass` | `0.07` | - |
+
+## Deep checkpoint streak summary (2026-04-19 to 2026-04-22)
+
+| Date | Deep checkpoint report | Deep result | Soak-real status | Startup batch status |
+|---|---|---|---|---|
+| `2026-04-19` | `deep-checkpoint-30-20260419-081022.json` | `30/30 pass` | `4/4 pass` | `n/a` |
+| `2026-04-20` | `deep-checkpoint-30-20260420-133038.json` | `30/30 pass` | `4/4 pass` | `n/a` |
+| `2026-04-21` | `deep-checkpoint-30-20260421-125254.json` | `30/30 pass` | `4/4 pass` | `5/5 pass` (`startup-deep-checkpoint-batch-20260421-125034.json`) |
+| `2026-04-22` | `deep-checkpoint-30-20260422-142257.json` | `30/30 pass` | `4/4 pass` | `1/1 pass` (`startup-deep-checkpoint-batch-20260422-142256.json`) |
+
+## Beta gate closure note (early close)
+
+- Governance close was approved early on `2026-04-22` after the streak above remained green.
+- Decision log: `docs/release-gate-early-close-2026-04-22.md`
