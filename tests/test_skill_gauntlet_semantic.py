@@ -61,7 +61,11 @@ def test_semantic_skill_gauntlet_flags_bad_scenario_route(tmp_path: Path) -> Non
         encoding="utf-8",
     )
 
-    findings, checked = collect_scenario_findings(tmp_path, ALL_V3_SKILLS)
+    findings, checked = collect_scenario_findings(
+        tmp_path,
+        ALL_V3_SKILLS,
+        Path("tests") / "fixtures" / "skill_gauntlet" / "scenarios.json",
+    )
 
     assert checked == 1
     assert any(finding.check == "scenario-route" for finding in findings)

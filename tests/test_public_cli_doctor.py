@@ -31,10 +31,13 @@ def test_public_cli_doctor_runs_core_gates(monkeypatch, capsys) -> None:
         "policy_guard.py",
         "srs_guard.py",
         "skill_gauntlet.py",
+        "eval_workflows.py",
     }
     skill_gauntlet_call = next(call for call in calls if Path(call[1]).name == "skill_gauntlet.py")
     assert "--semantic" in skill_gauntlet_call
     assert all(call[0] == sys.executable for call in calls)
+    workflow_eval_call = next(call for call in calls if Path(call[1]).name == "eval_workflows.py")
+    assert "--strict" in workflow_eval_call
 
 
 def test_public_cli_doctor_returns_failure_when_a_gate_fails(monkeypatch) -> None:

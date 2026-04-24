@@ -18,6 +18,7 @@ Source audit status:
 - Fixed in SRS opt-in pass: policy-driven `srs_guard` runs from doctor/CI, defaults to off, and hard-fails only when SRS policy is enabled.
 - Fixed in DX list-skills pass: preserved legacy kits are hidden from default `--list-skills` and require `--show-legacy`.
 - Fixed in runtime policy guard pass: `policy_guard.py` detects deterministic secret, path traversal, destructive shell, prompt-injection, and broad allowlist risks and runs from doctor/CI.
+- Fixed in workflow eval pass: `relay-kit eval run` reports scenario pass rate, predicted skill, top routes, and evidence-term findings from bundled fixtures.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -319,6 +320,7 @@ Status:
 - Fixed on 2026-04-24.
 - Done: `relay-kit doctor` writes JSONL gate events to `.relay-kit/evidence/events.jsonl`.
 - Done: `relay-kit doctor --json` and `relay-kit evidence summary <project>` are available.
+- Done: `relay-kit doctor` also records the `workflow eval` gate.
 - Verification: `python -m pytest tests/test_evidence_ledger.py tests/test_public_cli_doctor.py -q` passes.
 
 Problem:
@@ -348,6 +350,29 @@ Fix:
 Acceptance criteria:
 - Every doctor/gate run writes a structured event.
 - A summary command can show recent failures and drift by gate.
+
+### P2 - Add Workflow Scenario Eval Harness
+
+Status:
+- Fixed on 2026-04-24 for the first measurable routing suite.
+- Done: `relay-kit eval run <project> --strict` reports pass rate, top routes, predicted skill, and per-scenario findings.
+- Done: default fixtures are bundled under `relay_kit_v3/eval_fixtures/workflow_scenarios.json`, so installed CLI runs do not depend on repo test files.
+- Done: `relay-kit doctor` and CI run `scripts/eval_workflows.py . --strict`.
+- Verification: `python scripts/eval_workflows.py . --strict` reports 10/10 scenarios; `python -m pytest tests/test_workflow_eval.py -q` passes.
+
+Problem:
+- Semantic gauntlet proved static contract drift, but commercial quality needs a reportable scenario pass-rate signal.
+
+Fix:
+- Add `scripts/eval_workflows.py`.
+- Add bundled workflow scenario fixtures.
+- Add `relay-kit eval run`.
+- Include workflow eval in doctor and CI.
+
+Acceptance criteria:
+- Scenario reports are machine-readable JSON.
+- A bad route returns non-zero in strict mode.
+- The report includes enough detail to see why a scenario failed without rerunning the scorer manually.
 
 ### P2 - Add Spec Export Contract
 
@@ -510,7 +535,7 @@ Expected gain:
 - Add Pro policy packs.
 - Add support workflow and SLA docs.
 - Add private registry or enterprise bundle story.
-- Add scenario eval harness for real workflow quality.
+- Done first slice: add scenario eval harness for real workflow quality.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.

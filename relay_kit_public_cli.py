@@ -5,6 +5,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit init <project_path> --codex|--claude|--antigravity --baseline
   relay-kit <project_path> --codex|--claude|--antigravity
   relay-kit doctor <project_path>
+  relay-kit eval run <project_path>
 
 It maps to the existing canonical runtime entrypoint (`relay_kit.py`)
 without changing the underlying generation flow.
@@ -176,6 +177,25 @@ def _parse_manifest_args(argv: list[str]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _parse_eval_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit eval",
+        description="Run Relay-kit workflow scenario evaluations.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    run = subparsers.add_parser("run", help="Run workflow routing scenario evals")
+    run.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    run.add_argument(
+        "--scenario-fixtures",
+        default=None,
+        help="JSON scenario fixture file (default: bundled Relay-kit fixtures)",
+    )
+    run.add_argument("--output-file", default=None, help="Optional JSON report output path")
+    run.add_argument("--json", action="store_true", help="Emit JSON report")
+    run.add_argument("--strict", action="store_true", help="Return non-zero when any scenario fails")
+    return parser.parse_args(argv)
+
+
 def _resolve_ai(args: argparse.Namespace) -> str:
     if args.codex:
         return "codex"
@@ -273,6 +293,10 @@ def _doctor_commands(project_path: str, skip_tests: bool) -> list[tuple[str, lis
                 "--strict",
                 "--semantic",
             ],
+        ),
+        (
+            "workflow eval",
+            [sys.executable, str(REPO_ROOT / "scripts" / "eval_workflows.py"), project_path, "--strict"],
         ),
     ]
 
@@ -402,6 +426,23 @@ def run_manifest(args: argparse.Namespace) -> int:
     return 2
 
 
+def run_eval(args: argparse.Namespace) -> int:
+    if args.action != "run":
+        return 2
+    from scripts import eval_workflows
+
+    eval_argv = [args.project_path]
+    if args.scenario_fixtures:
+        eval_argv.extend(["--scenario-fixtures", args.scenario_fixtures])
+    if args.output_file:
+        eval_argv.extend(["--output-file", args.output_file])
+    if args.json:
+        eval_argv.append("--json")
+    if args.strict:
+        eval_argv.append("--strict")
+    return eval_workflows.main(eval_argv)
+
+
 def main(argv: list[str] | None = None) -> int:
     raw_argv = sys.argv[1:] if argv is None else argv
     if raw_argv and raw_argv[0] == "doctor":
@@ -412,6 +453,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_spec(_parse_spec_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "manifest":
         return run_manifest(_parse_manifest_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "eval":
+        return run_eval(_parse_eval_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "init":
         raw_argv = raw_argv[1:]
 

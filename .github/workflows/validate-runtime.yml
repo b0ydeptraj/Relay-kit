@@ -42,5 +42,8 @@ jobs:
       - name: Run skill gauntlet
         run: python scripts/skill_gauntlet.py . --strict --semantic
 
+      - name: Run workflow eval
+        run: python scripts/eval_workflows.py . --strict
+
       - name: Run runtime smoke tests
         run: python -m pytest tests -q

@@ -65,6 +65,7 @@ def test_doctor_records_gate_events(monkeypatch) -> None:
         "policy guard",
         "srs guard",
         "skill gauntlet",
+        "workflow eval",
     }
     assert all(event["command"] == "doctor" for event in events)
     assert all(event["status"] == "pass" for event in events)

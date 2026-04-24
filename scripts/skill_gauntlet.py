@@ -28,7 +28,7 @@ REQUIRED_HEADERS = [
     "## Reference skills and rules",
     "## Likely next step",
 ]
-DEFAULT_SCENARIO_FIXTURE = Path("tests") / "fixtures" / "skill_gauntlet" / "scenarios.json"
+DEFAULT_SCENARIO_FIXTURE = Path("relay_kit_v3") / "eval_fixtures" / "workflow_scenarios.json"
 STOPWORDS = {
     "a",
     "an",
@@ -353,9 +353,21 @@ def rank_prompt_routes(prompt: str, registry: Mapping[str, object]) -> List[tupl
     return sorted(ranked, key=lambda item: (-item[0], item[1]))
 
 
+def resolve_scenario_fixture_path(base: Path, fixture_path: Path) -> Path | None:
+    if fixture_path.is_absolute():
+        candidates = [fixture_path]
+    else:
+        candidates = [base / fixture_path, REPO_ROOT / fixture_path]
+
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def load_scenario_fixtures(base: Path, fixture_path: Path) -> list[dict[str, object]]:
-    path = fixture_path if fixture_path.is_absolute() else base / fixture_path
-    if not path.exists():
+    path = resolve_scenario_fixture_path(base, fixture_path)
+    if path is None:
         return []
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, list):

@@ -122,6 +122,13 @@ relay-kit manifest write /path/to/project
 relay-kit manifest verify /path/to/project
 ```
 
+Measure workflow routing quality with bundled scenarios:
+
+```bash
+relay-kit eval run /path/to/project --strict
+relay-kit eval run /path/to/project --json --output-file workflow-eval.json
+```
+
 Maintainer-only core entrypoint:
 
 ```bash
