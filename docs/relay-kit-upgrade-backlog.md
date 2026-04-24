@@ -15,6 +15,7 @@ Source audit status:
 - Fixed in namespace cutover pass: active runtime imports now use `relay_kit_v3`; `ai_kit_v3` remains only as a one-cycle compatibility shim and allowlisted migration token.
 - Fixed in semantic gauntlet baseline pass: `skill_gauntlet --semantic` checks registry parity, unknown next-step references, empty I/O contracts, and duplicate trigger descriptions within each adapter.
 - Fixed in SRS opt-in pass: policy-driven `srs_guard` runs from doctor/CI, defaults to off, and hard-fails only when SRS policy is enabled.
+- Fixed in DX list-skills pass: preserved legacy kits are hidden from default `--list-skills` and require `--show-legacy`.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -277,7 +278,8 @@ Acceptance criteria:
 Status:
 - Partially fixed on 2026-04-24.
 - Done: `relay-kit doctor <project>` exists and README shows it in the install path.
-- Remaining: simplify README to one happy path and hide legacy kit listing by default.
+- Done: default `--list-skills` hides preserved legacy kits.
+- Remaining: simplify README to one happy path.
 
 Problem:
 - New users can get confused by old and new entrypoints, bundle names, and exposed legacy kits.
@@ -426,7 +428,7 @@ Do not copy popularity. Copy the technical mechanics:
 7. Done: clean `.relay-kit/state/*.md` so live doctor can pass.
 8. Done: make developer skill test-first instruction conditional.
 9. Done: add `relay-kit doctor` as a single support entrypoint.
-10. Pending: hide legacy kits from default skill listing.
+10. Done: hide legacy kits from default skill listing.
 
 ## 30/60/90 Day Roadmap
 

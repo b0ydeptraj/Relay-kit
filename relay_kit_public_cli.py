@@ -93,6 +93,7 @@ def _parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--legacy-kit", help="Optional preserved legacy kit")
     parser.add_argument("--skills", nargs="+", metavar="SKILL", help="Optional legacy skills")
     parser.add_argument("--list-skills", action="store_true", help="List bundles and legacy kits")
+    parser.add_argument("--show-legacy", action="store_true", help="Show preserved legacy kits in --list-skills output")
     parser.add_argument("-v", "--verbose", action="store_true")
 
     return parser.parse_args(argv)
@@ -128,6 +129,8 @@ def _build_relay_argv(args: argparse.Namespace) -> list[str]:
 
     if args.list_skills:
         relay_argv.append("--list-skills")
+        if args.show_legacy:
+            relay_argv.append("--show-legacy")
         return relay_argv
 
     relay_argv.append(args.project_path)

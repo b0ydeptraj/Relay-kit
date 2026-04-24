@@ -42,12 +42,15 @@ def normalize_legacy_kit_name(repo_root: Path, kit: str | None) -> str | None:
     return module.normalize_legacy_kit(kit)
 
 
-def list_everything(repo_root: Path) -> None:
+def list_everything(repo_root: Path, *, include_legacy: bool = False) -> None:
     module, legacy = legacy_kits(repo_root)
     print("Built-in v3 bundles:")
     for bundle, items in BUNDLES.items():
         print(f"  {bundle} ({len(items)}): {', '.join(items)}")
     print()
+    if not include_legacy:
+        print("Additional preserved suites are hidden by default. Use --show-legacy with --list-skills.")
+        return
     if module is None:
         print(f"Legacy kits: unavailable (expected {CANONICAL_LEGACY_ENTRYPOINT})")
     else:
@@ -104,6 +107,7 @@ Examples:
     )
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("--list-skills", action="store_true")
+    parser.add_argument("--show-legacy", action="store_true", help="Show preserved legacy kits in --list-skills output")
     return parser.parse_args()
 
 
@@ -188,7 +192,7 @@ def main(invoked_as: str | None = None) -> int:
     args = parse_args(repo_root)
     exit_code = 0
     if args.list_skills:
-        list_everything(repo_root)
+        list_everything(repo_root, include_legacy=args.show_legacy)
         append_cycle_event(repo_root, _build_event(args, entrypoint, 0))
         return 0
 
