@@ -56,3 +56,42 @@ def test_migration_guard_blocks_legacy_package_token_outside_allowlist(tmp_path:
     assert [(finding.path, finding.line, finding.token) for finding in findings] == [
         ("example.py", 1, token)
     ]
+
+
+def test_migration_guard_rejects_broad_allowlist_rules(tmp_path: Path) -> None:
+    allowlist = tmp_path / "allowlist.txt"
+    allowlist.write_text("docs/**/*|*\n", encoding="utf-8")
+    target = tmp_path / "docs" / "active.md"
+    target.parent.mkdir(parents=True)
+    target.write_text("stale marker: .ai-kit\n", encoding="utf-8")
+
+    policy_findings = migration_guard.collect_allowlist_findings(tmp_path, allowlist)
+    rules = migration_guard.load_allow_rules(allowlist)
+    token_findings = migration_guard.collect_findings(tmp_path, migration_guard.DEFAULT_TOKENS, rules)
+
+    assert any(finding.check == "allowlist-policy" for finding in policy_findings)
+    assert [(finding.path, finding.line, finding.token) for finding in token_findings] == [
+        ("docs/active.md", 1, ".ai-kit")
+    ]
+
+
+def test_migration_guard_accepts_exact_allowlist_with_metadata(tmp_path: Path) -> None:
+    allowlist = tmp_path / "scripts" / "migration_guard_allowlist.txt"
+    allowlist.parent.mkdir(parents=True)
+    allowlist.write_text(
+        "docs/allowed.md|.ai-kit|runtime-migration|2026-04-24|Historical fixture.\n",
+        encoding="utf-8",
+    )
+    allowed_file = tmp_path / "docs" / "allowed.md"
+    blocked_file = tmp_path / "docs" / "blocked.md"
+    allowed_file.parent.mkdir(parents=True)
+    allowed_file.write_text("historical marker: .ai-kit\n", encoding="utf-8")
+    blocked_file.write_text("new marker: .ai-kit\n", encoding="utf-8")
+
+    assert migration_guard.collect_allowlist_findings(tmp_path, allowlist) == []
+    rules = migration_guard.load_allow_rules(allowlist)
+    token_findings = migration_guard.collect_findings(tmp_path, migration_guard.DEFAULT_TOKENS, rules)
+
+    assert [(finding.path, finding.line, finding.token) for finding in token_findings] == [
+        ("docs/blocked.md", 1, ".ai-kit")
+    ]

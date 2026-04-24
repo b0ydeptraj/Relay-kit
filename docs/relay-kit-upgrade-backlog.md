@@ -351,6 +351,12 @@ Acceptance criteria:
 
 ### P2 - Narrow Migration Guard Allowlist
 
+Status:
+- Fixed on 2026-04-24.
+- Done: `migration_guard.py` rejects wildcard paths, token wildcard rules, and allowlist entries missing owner/date/reason metadata.
+- Done: `scripts/migration_guard_allowlist.txt` now uses exact `path|token|owner|date|reason` entries.
+- Verification: `python scripts/migration_guard.py . --strict`, `python scripts/policy_guard.py . --strict`, and `python -m pytest tests/test_namespace_cutover.py tests/test_policy_guard.py -q` pass.
+
 Problem:
 - Broad allowlist patterns reduce confidence in cutover enforcement.
 

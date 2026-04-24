@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List, Sequence
@@ -39,11 +40,21 @@ DEFAULT_EXCLUDED_SEGMENTS = {
     ".relay-kit-cycle",
 }
 
+DEFAULT_EXCLUDED_FILES = {
+    "scripts/migration_guard.py",
+    "scripts/migration_guard_allowlist.txt",
+}
+
+ALLOWLIST_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
 
 @dataclass(frozen=True)
 class AllowRule:
     path_glob: str
     token: str
+    owner: str = ""
+    date: str = ""
+    reason: str = ""
 
 
 @dataclass(frozen=True)
@@ -52,6 +63,7 @@ class Finding:
     line: int
     token: str
     text: str
+    check: str = "blocked-token"
 
 
 def parse_args() -> argparse.Namespace:
@@ -77,6 +89,38 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _parse_allow_rule(line: str) -> AllowRule:
+    parts = [part.strip() for part in line.split("|", 4)]
+    if len(parts) == 5:
+        return AllowRule(
+            path_glob=parts[0],
+            token=parts[1],
+            owner=parts[2],
+            date=parts[3],
+            reason=parts[4],
+        )
+    if len(parts) == 2:
+        return AllowRule(path_glob=parts[0], token=parts[1])
+    return AllowRule(path_glob=parts[0] if parts else "", token="*")
+
+
+def allow_rule_policy_issues(rule: AllowRule) -> List[str]:
+    issues: List[str] = []
+    if not rule.path_glob:
+        issues.append("missing path")
+    if any(marker in rule.path_glob for marker in ("*", "?", "[")):
+        issues.append("path must be an exact file path")
+    if rule.token == "*" or not rule.token:
+        issues.append("token must be explicit")
+    if not rule.owner:
+        issues.append("missing owner")
+    if not rule.date or ALLOWLIST_DATE_PATTERN.match(rule.date) is None:
+        issues.append("missing ISO date")
+    if not rule.reason:
+        issues.append("missing reason")
+    return issues
+
+
 def load_allow_rules(path: Path) -> List[AllowRule]:
     if not path.exists():
         return []
@@ -85,12 +129,36 @@ def load_allow_rules(path: Path) -> List[AllowRule]:
         line = raw.strip()
         if not line or line.startswith("#"):
             continue
-        if "|" in line:
-            path_glob, token = line.split("|", 1)
-            rules.append(AllowRule(path_glob.strip(), token.strip() or "*"))
-        else:
-            rules.append(AllowRule(line, "*"))
+        rule = _parse_allow_rule(line)
+        if allow_rule_policy_issues(rule):
+            continue
+        rules.append(rule)
     return rules
+
+
+def collect_allowlist_findings(base: Path, path: Path) -> List[Finding]:
+    if not path.exists():
+        return []
+    findings: List[Finding] = []
+    rel_path = path.relative_to(base).as_posix() if path.is_relative_to(base) else path.as_posix()
+    for idx, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        rule = _parse_allow_rule(line)
+        issues = allow_rule_policy_issues(rule)
+        if not issues:
+            continue
+        findings.append(
+            Finding(
+                path=rel_path,
+                line=idx,
+                token="allowlist-policy",
+                text=f"{'; '.join(issues)}: {line}",
+                check="allowlist-policy",
+            )
+        )
+    return findings
 
 
 def is_excluded(path: Path) -> bool:
@@ -102,6 +170,9 @@ def candidate_files(base: Path) -> Iterable[Path]:
         if not path.is_file():
             continue
         if is_excluded(path):
+            continue
+        rel_path = path.relative_to(base).as_posix()
+        if rel_path in DEFAULT_EXCLUDED_FILES:
             continue
         if path.suffix.lower() not in DEFAULT_FILE_SUFFIXES:
             continue
@@ -159,6 +230,7 @@ def render_json(findings: Sequence[Finding]) -> str:
         "findings_count": len(findings),
         "findings": [
             {
+                "check": item.check,
                 "path": item.path,
                 "line": item.line,
                 "token": item.token,
@@ -177,8 +249,9 @@ def main() -> int:
     if not allowlist_path.is_absolute():
         allowlist_path = base / allowlist_path
 
+    allowlist_findings = collect_allowlist_findings(base, allowlist_path)
     rules = load_allow_rules(allowlist_path)
-    findings = collect_findings(base, DEFAULT_TOKENS, rules)
+    findings = allowlist_findings + collect_findings(base, DEFAULT_TOKENS, rules)
 
     if args.json:
         print(render_json(findings))
