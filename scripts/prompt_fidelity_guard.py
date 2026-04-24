@@ -98,6 +98,54 @@ def _status_is_pass(value: str) -> bool:
     return value in {"pass", "passed", "ok", "done"}
 
 
+def _status_has_progress(value: str) -> bool:
+    return value not in {"", "unknown", "not-run", "none", "n/a"}
+
+
+def _checked_completed_artifacts(base: Path) -> set[str]:
+    state_path = base / CANONICAL_ARTIFACT_ROOT / "state" / "workflow-state.md"
+    if not state_path.exists():
+        return set()
+    content = state_path.read_text(encoding="utf-8", errors="ignore")
+    checked: set[str] = set()
+    for match in re.finditer(r"^- \[(x|X)\]\s+([^\r\n]+)$", content, flags=re.MULTILINE):
+        checked.add(match.group(2).strip().lower())
+    return checked
+
+
+def _artifact_has_user_content(path: Path, expected_tbd_count: int) -> bool:
+    if not path.exists():
+        return False
+    content = path.read_text(encoding="utf-8", errors="ignore")
+    tbd_count = len(re.findall(r"^\s*TBD\s*$", content, flags=re.MULTILINE | re.IGNORECASE))
+    return tbd_count < expected_tbd_count
+
+
+def _collect_edit_signals(
+    markers: dict[str, str],
+    checked_artifacts: set[str],
+    *,
+    intent_has_content: bool,
+    entity_has_content: bool,
+) -> dict[str, bool]:
+    return {
+        "marker_request_edit": markers["request_class"] == "edit",
+        "marker_intent_required": _is_yes(markers["intent_required"]),
+        "marker_entity_required": _is_yes(markers["entity_required"]),
+        "marker_intent_progress": _status_has_progress(markers["intent_status"]),
+        "marker_entity_progress": _status_has_progress(markers["entity_status"]),
+        "marker_fidelity_progress": _status_has_progress(markers["fidelity_status"]),
+        "completed_intent_contract": "intent-contract" in checked_artifacts,
+        "completed_entity_map": "entity-map" in checked_artifacts,
+        "intent_contract_has_content": intent_has_content,
+        "entity_map_has_content": entity_has_content,
+    }
+
+
+def _has_any_signal(signals: dict[str, bool]) -> bool:
+    return any(signals.values())
+
+
 def collect_findings(base: Path) -> tuple[dict[str, object], List[Finding]]:
     policy = load_fidelity_policy(base)
     gate = str(policy.get("gate", "hard"))
@@ -106,6 +154,27 @@ def collect_findings(base: Path) -> tuple[dict[str, object], List[Finding]]:
     enforce = should_enforce_fidelity(policy, base)
 
     markers = _collect_required_markers(base)
+    contracts_dir = base / CANONICAL_ARTIFACT_ROOT / "contracts"
+    intent_path = contracts_dir / "intent-contract.md"
+    entity_path = contracts_dir / "entity-map.md"
+    qa_path = contracts_dir / "qa-report.md"
+
+    checked_artifacts = _checked_completed_artifacts(base)
+    intent_has_content = _artifact_has_user_content(intent_path, expected_tbd_count=len(INTENT_REQUIRED_SECTIONS))
+    entity_has_content = _artifact_has_user_content(entity_path, expected_tbd_count=len(ENTITY_REQUIRED_SECTIONS))
+    edit_signals = _collect_edit_signals(
+        markers,
+        checked_artifacts,
+        intent_has_content=intent_has_content,
+        entity_has_content=entity_has_content,
+    )
+    unknown_with_edit_signal = (
+        enabled
+        and gate == "hard"
+        and markers["request_class"] == "unknown"
+        and _has_any_signal(edit_signals)
+    )
+
     meta: dict[str, object] = {
         "enabled": enabled,
         "gate": gate,
@@ -113,20 +182,33 @@ def collect_findings(base: Path) -> tuple[dict[str, object], List[Finding]]:
         "enforced": enforce,
         "policy_path": rel(base, policy_file(base)),
         "workflow_markers": markers,
+        "checked_artifacts": sorted(checked_artifacts),
+        "edit_signals": edit_signals,
     }
+
+    findings: List[Finding] = []
+    if unknown_with_edit_signal:
+        findings.append(
+            Finding(
+                rel(base, base / CANONICAL_ARTIFACT_ROOT / "state" / "workflow-state.md"),
+                "Request class cannot stay `unknown` when edit evidence exists (locks/artifacts/progress markers).",
+            )
+        )
+        enforce = True
+        meta["enforced"] = True
+        meta["forced_enforcement_reason"] = "unknown-request-class-with-edit-signal"
 
     if not enforce:
         meta["status"] = "skipped"
-        return meta, []
+        return meta, findings
 
-    findings: List[Finding] = []
-    contracts_dir = base / CANONICAL_ARTIFACT_ROOT / "contracts"
-    intent_path = contracts_dir / "intent-contract.md"
-    entity_path = contracts_dir / "entity-map.md"
-    qa_path = contracts_dir / "qa-report.md"
-
-    intent_required = _is_yes(markers["intent_required"]) or markers["request_class"] == "edit"
-    media_involved = _is_yes(markers["media_involved"]) or markers["request_class"] in {"media-ui", "edit-media"}
+    effective_request_class = "edit" if unknown_with_edit_signal else markers["request_class"]
+    intent_required = _is_yes(markers["intent_required"]) or effective_request_class == "edit" or intent_has_content
+    media_involved = (
+        _is_yes(markers["media_involved"])
+        or effective_request_class in {"media-ui", "edit-media"}
+        or entity_has_content
+    )
     entity_required = _is_yes(markers["entity_required"]) or media_involved
 
     if intent_required and not _status_is_pass(markers["intent_status"]):

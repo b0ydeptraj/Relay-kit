@@ -31,29 +31,30 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
 
             ## Mandatory routing procedure
             1. Read `.relay-kit/contracts/project-context.md` and `.relay-kit/state/workflow-state.md` if they exist.
-            2. Restate the request in one sentence and classify request class in workflow-state (`edit`, `read-only`, or `unknown`).
-            3. If request class is `edit`, run `intent-lock` before implementation hub handoff; if media/UI entities are involved, run `entity-lock` too.
-            4. Score the request on five axes: ambiguity, breadth of change, architecture risk, operational risk, and coordination cost.
-            5. Classify complexity:
+            2. Restate the request in one sentence and classify request class in workflow-state (`edit` or `read-only`).
+            3. Never leave request class as `unknown` when any edit signal exists: edit verbs in user request, changed artifacts, checked `intent-contract`/`entity-map`, or lock status already moved past `not-run`.
+            4. If request class is `edit`, run `intent-lock` before implementation hub handoff; if media/UI entities are involved, run `entity-lock` too.
+            5. Score the request on five axes: ambiguity, breadth of change, architecture risk, operational risk, and coordination cost.
+            6. Classify complexity:
                - `L0`: single bug or tiny refactor
                - `L1`: small feature or bug cluster
                - `L2`: multi-component feature slice
                - `L3`: product or platform change with design trade-offs
                - `L4`: enterprise, compliance, or scale-sensitive work
-            6. Choose track:
+            7. Choose track:
                - `L0-L1` -> quick-flow
                - `L2-L3` -> product-flow
                - `L4` -> enterprise-flow
-            7. Choose the layer-1 entrypoint:
+            8. Choose the layer-1 entrypoint:
                - use `bootstrap` if state, context, or artifacts are missing
                - use `cook` for one active request in one lane
                - use `team` if more than one lane, owner, or branch of work must be coordinated
-            8. Choose the first layer-2 hub:
+            9. Choose the first layer-2 hub:
                - `scout-hub` when the codebase area is unclear
                - `plan-hub` when planning artifacts are missing or stale
                - `debug-hub` when the request starts from a failure or regression
-            9. Mark the lane mode explicitly as one of: discovery, planning, implementation, or verification.
-            10. Update `.relay-kit/state/workflow-state.md` with track choice, next skill, blockers, and intent/entity lock status.
+            10. Mark the lane mode explicitly as one of: discovery, planning, implementation, or verification.
+            11. Update `.relay-kit/state/workflow-state.md` with track choice, next skill, blockers, and intent/entity lock status.
 
             ## SRS-first gate
             - Read `.relay-kit/state/srs-policy.json` when present.

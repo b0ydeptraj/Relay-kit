@@ -51,6 +51,33 @@ def _write_workflow_state_for_edit(project: Path, *, intent_status: str, entity_
     )
 
 
+def _write_workflow_state_unknown_with_edit_output(project: Path) -> None:
+    state_path = project / ".relay-kit" / "state" / "workflow-state.md"
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(
+        "\n".join(
+            [
+                "# workflow-state",
+                "## Intent fidelity lock",
+                "- Request class: unknown",
+                "- Media involved: unknown",
+                "- Intent-lock required: no",
+                "- Intent-lock status: pass",
+                "- Entity-lock required: no",
+                "- Entity-lock status: not-run",
+                "- Prompt-fidelity-check status: pass",
+                "",
+                "## Completed artifacts",
+                "- [x] intent-contract",
+                "- [ ] entity-map",
+                "- [ ] qa-report",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
 def _write_intent_contract(path: Path) -> None:
     allowed = FIXTURE_CASE["allowed"]
     forbidden = FIXTURE_CASE["forbidden"]
@@ -187,3 +214,33 @@ def test_prompt_fidelity_guard_hard_mode_negative_then_positive(tmp_path: Path) 
     positive_payload = json.loads(positive.stdout)
     assert positive_payload["status"] == "ok"
     assert positive_payload["findings_count"] == 0
+
+
+def test_prompt_fidelity_guard_fails_unknown_request_class_when_edit_evidence_exists(tmp_path: Path) -> None:
+    project = tmp_path / "fidelity-unknown-bypass"
+    project.mkdir(parents=True, exist_ok=True)
+
+    _run(
+        str(REPO_ROOT / "relay_kit.py"),
+        str(project),
+        "--bundle",
+        "baseline",
+        "--ai",
+        "codex",
+        "--emit-contracts",
+        "--emit-docs",
+        "--emit-reference-templates",
+    )
+
+    contracts_dir = project / ".relay-kit" / "contracts"
+    _write_intent_contract(contracts_dir / "intent-contract.md")
+    _write_workflow_state_unknown_with_edit_output(project)
+
+    negative = _run(str(REPO_ROOT / "scripts" / "prompt_fidelity_guard.py"), str(project), "--json", expect=2)
+    payload = json.loads(negative.stdout)
+    assert payload["status"] == "failed"
+    assert payload["findings_count"] > 0
+    assert any(
+        "Request class cannot stay `unknown`" in item["detail"]
+        for item in payload["findings"]
+    )

@@ -1,0 +1,55 @@
+---
+name: pm
+description: Use when the work is past discovery and needs a buildable scope. Translate a product brief or scoped request into a prd, release slices, and acceptance criteria.
+---
+
+# Mission
+Create a buildable plan, not a wish list.
+
+## Produce `PRD.md`
+Include:
+- objective and scope
+- functional requirements
+- non-functional requirements
+- out of scope
+- acceptance criteria
+- risks and mitigations
+- release slices
+- SRS Traceability table (UC-ID -> requirement ID -> acceptance criterion)
+## Produce `epics.md`
+Organize the PRD into thin vertical slices with an order that reduces risk early.
+
+## Readiness gate
+The PRD is not ready if any of the following is missing:
+- unambiguous acceptance criteria
+- named risks for hard or irreversible changes
+- explicit out-of-scope section
+- at least one suggested slice order
+
+## Role
+- planning
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- .relay-kit/contracts/srs-spec.md when SRS-first is enabled
+- .relay-kit/contracts/product-brief.md or direct scoped request
+- .relay-kit/contracts/project-context.md
+
+## Outputs
+- .relay-kit/contracts/PRD.md
+- .relay-kit/contracts/epics.md
+- SRS traceability map (UC-ID -> requirement -> acceptance criterion) in PRD
+
+## Reference skills and rules
+- Do not hand wave acceptance criteria.
+- Separate must-have requirements from stretch goals and out-of-scope ideas.
+- Use UX and research support skills when the user experience is part of the risk.
+- When SRS-first is enabled, include explicit UC-ID traceability from srs-spec into PRD requirements and acceptance criteria.
+
+## Likely next step
+- architect
+- scrum-master
+- plan-hub
+- review-hub
