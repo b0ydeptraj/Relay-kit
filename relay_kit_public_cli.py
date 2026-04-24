@@ -13,11 +13,14 @@ without changing the underlying generation flow.
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import relay_kit as relay_core
+from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, parse_findings_count, summarize_events
 
 
 REPO_ROOT = Path(__file__).resolve().parent
@@ -115,6 +118,20 @@ def _parse_doctor_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
     parser.add_argument("--skip-tests", action="store_true", help="Skip the local pytest suite")
     parser.add_argument("--verbose", action="store_true", help="Print stdout and stderr for passing gates")
+    parser.add_argument("--json", action="store_true", help="Emit machine-readable doctor results")
+    return parser.parse_args(argv)
+
+
+def _parse_evidence_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit evidence",
+        description="Inspect Relay-kit evidence ledger events.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    summary = subparsers.add_parser("summary", help="Summarize recent evidence events")
+    summary.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    summary.add_argument("--limit", type=int, default=20, help="Recent event count to show")
+    summary.add_argument("--json", action="store_true", help="Emit JSON summary")
     return parser.parse_args(argv)
 
 
@@ -236,11 +253,15 @@ def _print_doctor_output(label: str, result: subprocess.CompletedProcess[str], v
 
 def run_doctor(args: argparse.Namespace) -> int:
     project_path = str(Path(args.project_path).resolve())
-    print("Relay-kit doctor")
-    print(f"- project: {project_path}")
+    run_id = new_run_id()
+    if not args.json:
+        print("Relay-kit doctor")
+        print(f"- project: {project_path}")
 
     exit_code = 0
+    gate_results: list[dict[str, object]] = []
     for label, command in _doctor_commands(project_path, args.skip_tests):
+        started = time.perf_counter()
         result = subprocess.run(
             command,
             cwd=REPO_ROOT,
@@ -248,17 +269,78 @@ def run_doctor(args: argparse.Namespace) -> int:
             capture_output=True,
             check=False,
         )
-        _print_doctor_output(label, result, args.verbose)
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        status = "pass" if result.returncode == 0 else "fail"
+        gate_event = {
+            "run_id": run_id,
+            "command": "doctor",
+            "gate": label,
+            "adapter": None,
+            "selected_skill": None,
+            "status": status,
+            "exit_code": result.returncode,
+            "findings_count": parse_findings_count(result.stdout, result.stderr),
+            "evidence_files": [],
+            "elapsed_ms": elapsed_ms,
+        }
+        append_event(project_path, gate_event)
+        gate_results.append(gate_event)
+        if not args.json:
+            _print_doctor_output(label, result, args.verbose)
         if result.returncode != 0:
             exit_code = 1
 
+    if args.json:
+        payload = {
+            "run_id": run_id,
+            "project": project_path,
+            "status": "pass" if exit_code == 0 else "fail",
+            "ledger_path": str(ledger_path(project_path)),
+            "results": gate_results,
+        }
+        print(json.dumps(payload, ensure_ascii=True, indent=2))
+
     return exit_code
+
+
+def run_evidence(args: argparse.Namespace) -> int:
+    if args.action != "summary":
+        return 2
+
+    summary = summarize_events(args.project_path, limit=args.limit)
+    if args.json:
+        payload = {
+            "ledger_path": str(summary.ledger_path),
+            "total_events": summary.total_events,
+            "status_counts": summary.status_counts,
+            "gate_counts": summary.gate_counts,
+            "recent_events": summary.recent_events,
+        }
+        print(json.dumps(payload, ensure_ascii=True, indent=2))
+        return 0
+
+    print("Relay-kit evidence summary")
+    print(f"- ledger: {summary.ledger_path}")
+    print(f"- total events: {summary.total_events}")
+    if summary.status_counts:
+        statuses = ", ".join(f"{key}={value}" for key, value in summary.status_counts.items())
+        print(f"- statuses: {statuses}")
+    if summary.recent_events:
+        print("- recent:")
+        for event in summary.recent_events:
+            gate = event.get("gate", event.get("command", "unknown"))
+            status = event.get("status", "unknown")
+            timestamp = event.get("timestamp", "-")
+            print(f"  - {timestamp} {gate}: {status}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     raw_argv = sys.argv[1:] if argv is None else argv
     if raw_argv and raw_argv[0] == "doctor":
         return run_doctor(_parse_doctor_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "evidence":
+        return run_evidence(_parse_evidence_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "init":
         raw_argv = raw_argv[1:]
 

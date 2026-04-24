@@ -100,6 +100,15 @@ Run the support gate:
 relay-kit doctor /path/to/project
 ```
 
+Show recent gate evidence:
+
+```bash
+relay-kit evidence summary /path/to/project
+relay-kit doctor /path/to/project --json
+```
+
+Doctor writes local JSONL events to `.relay-kit/evidence/events.jsonl`.
+
 Maintainer-only core entrypoint:
 
 ```bash

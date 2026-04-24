@@ -15,6 +15,7 @@ def test_public_cli_doctor_runs_core_gates(monkeypatch, capsys) -> None:
         return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
 
     monkeypatch.setattr(relay_kit_public_cli.subprocess, "run", fake_run)
+    monkeypatch.setattr(relay_kit_public_cli, "append_event", lambda project_root, event: Path(project_root))
 
     exit_code = relay_kit_public_cli.main(["doctor", ".", "--skip-tests"])
 
@@ -42,6 +43,7 @@ def test_public_cli_doctor_returns_failure_when_a_gate_fails(monkeypatch) -> Non
         return subprocess.CompletedProcess(command, exit_code, stdout="", stderr="failed\n")
 
     monkeypatch.setattr(relay_kit_public_cli.subprocess, "run", fake_run)
+    monkeypatch.setattr(relay_kit_public_cli, "append_event", lambda project_root, event: Path(project_root))
 
     assert relay_kit_public_cli.main(["doctor", ".", "--skip-tests"]) == 1
 

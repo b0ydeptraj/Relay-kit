@@ -315,6 +315,12 @@ Acceptance criteria:
 
 ### P2 - Add Evidence Ledger and Quality Signals
 
+Status:
+- Fixed on 2026-04-24.
+- Done: `relay-kit doctor` writes JSONL gate events to `.relay-kit/evidence/events.jsonl`.
+- Done: `relay-kit doctor --json` and `relay-kit evidence summary <project>` are available.
+- Verification: `python -m pytest tests/test_evidence_ledger.py tests/test_public_cli_doctor.py -q` passes.
+
 Problem:
 - Relay-kit does not yet produce durable telemetry or quality signals that prove paid value.
 
