@@ -56,9 +56,10 @@ def test_migration_guard_strict_passes() -> None:
 
 
 def test_skill_gauntlet_strict_passes() -> None:
-    result = run_command("scripts/skill_gauntlet.py", ".", "--strict")
+    result = run_command("scripts/skill_gauntlet.py", ".", "--strict", "--semantic")
 
     assert_success(result)
+    assert "Semantic checks: on" in result.stdout
     assert "Findings: 0" in result.stdout
 
 

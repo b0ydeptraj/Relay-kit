@@ -29,6 +29,8 @@ def test_public_cli_doctor_runs_core_gates(monkeypatch, capsys) -> None:
         "migration_guard.py",
         "skill_gauntlet.py",
     }
+    skill_gauntlet_call = next(call for call in calls if Path(call[1]).name == "skill_gauntlet.py")
+    assert "--semantic" in skill_gauntlet_call
     assert all(call[0] == sys.executable for call in calls)
 
 

@@ -171,7 +171,13 @@ def _doctor_commands(project_path: str, skip_tests: bool) -> list[tuple[str, lis
         ),
         (
             "skill gauntlet",
-            [sys.executable, str(REPO_ROOT / "scripts" / "skill_gauntlet.py"), project_path, "--strict"],
+            [
+                sys.executable,
+                str(REPO_ROOT / "scripts" / "skill_gauntlet.py"),
+                project_path,
+                "--strict",
+                "--semantic",
+            ],
         ),
     ]
 

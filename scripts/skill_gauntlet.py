@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
@@ -46,6 +46,11 @@ def parse_args() -> argparse.Namespace:
         "--strict",
         action="store_true",
         help="Return non-zero exit code when any finding is detected",
+    )
+    parser.add_argument(
+        "--semantic",
+        action="store_true",
+        help="Also check registry parity, next-step references, and duplicate trigger descriptions.",
     )
     return parser.parse_args()
 
@@ -135,6 +140,121 @@ def parse_frontmatter(content: str) -> Dict[str, str] | None:
     return data
 
 
+def section_bullets(content: str, section_name: str) -> List[str]:
+    lines = content.splitlines()
+    header = f"## {section_name}"
+    start_index = None
+    for idx, line in enumerate(lines):
+        if line.strip() == header:
+            start_index = idx + 1
+            break
+    if start_index is None:
+        return []
+
+    bullets: List[str] = []
+    for line in lines[start_index:]:
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            break
+        if stripped.startswith("- "):
+            bullets.append(stripped[2:].strip())
+    return bullets
+
+
+def check_expected_bullets(
+    findings: List[Finding],
+    rel_path: str,
+    check: str,
+    section_name: str,
+    actual: Sequence[str],
+    expected: Sequence[str],
+) -> None:
+    actual_list = list(actual)
+    expected_list = list(expected)
+    if actual_list != expected_list:
+        findings.append(
+            Finding(
+                rel_path,
+                check,
+                f"{section_name} drift: expected={expected_list!r} actual={actual_list!r}",
+            )
+        )
+
+
+def check_semantic_skill_file(path: Path, base: Path, spec, known_skill_names: set[str]) -> List[Finding]:
+    findings: List[Finding] = []
+    content = path.read_text(encoding="utf-8")
+    rel_path = path.relative_to(base).as_posix()
+    frontmatter = parse_frontmatter(content)
+    if frontmatter is None:
+        return [Finding(rel_path, "frontmatter", "Missing or malformed frontmatter")]
+
+    description = frontmatter.get("description", "").strip()
+    if description != spec.description:
+        findings.append(
+            Finding(
+                rel_path,
+                "registry-description-drift",
+                f"Expected registry description {spec.description!r}, found {description!r}",
+            )
+        )
+
+    check_expected_bullets(findings, rel_path, "registry-role-drift", "Role", section_bullets(content, "Role"), [spec.role])
+    check_expected_bullets(findings, rel_path, "registry-layer-drift", "Layer", section_bullets(content, "Layer"), [spec.layer])
+    check_expected_bullets(findings, rel_path, "registry-inputs-drift", "Inputs", section_bullets(content, "Inputs"), spec.inputs)
+    check_expected_bullets(findings, rel_path, "registry-outputs-drift", "Outputs", section_bullets(content, "Outputs"), spec.outputs)
+
+    next_steps = section_bullets(content, "Likely next step")
+    check_expected_bullets(findings, rel_path, "registry-next-steps-drift", "Likely next step", next_steps, spec.next_steps)
+    for step in next_steps:
+        if step not in known_skill_names:
+            findings.append(Finding(rel_path, "unknown-next-step", f"Unknown next-step skill: {step}"))
+
+    if not section_bullets(content, "Inputs"):
+        findings.append(Finding(rel_path, "empty-input-contract", "Inputs section has no bullet contract"))
+    if not section_bullets(content, "Outputs"):
+        findings.append(Finding(rel_path, "empty-output-contract", "Outputs section has no bullet contract"))
+
+    return findings
+
+
+def collect_semantic_findings(base: Path, skill_files: Sequence[Path]) -> List[Finding]:
+    findings: List[Finding] = []
+    known_skill_names = set(ALL_V3_SKILLS)
+    description_paths: Dict[tuple[str, str], List[str]] = {}
+
+    for path in skill_files:
+        if not path.exists():
+            continue
+        skill_name = path.parent.name
+        spec = ALL_V3_SKILLS.get(skill_name)
+        if spec is None:
+            continue
+
+        content = path.read_text(encoding="utf-8")
+        frontmatter = parse_frontmatter(content)
+        description = (frontmatter or {}).get("description", "").strip()
+        if description:
+            rel_path = path.relative_to(base).as_posix()
+            parts = rel_path.split("/")
+            adapter = "/".join(parts[:2]) if len(parts) >= 2 else "unknown"
+            description_paths.setdefault((adapter, description), []).append(rel_path)
+
+        findings.extend(check_semantic_skill_file(path, base, spec, known_skill_names))
+
+    for (_adapter, description), paths in sorted(description_paths.items()):
+        if len(paths) > 1:
+            findings.append(
+                Finding(
+                    paths[0],
+                    "duplicate-trigger-description",
+                    f"Description is shared by {len(paths)} skills: {', '.join(paths)}",
+                )
+            )
+
+    return findings
+
+
 def collect_skills(base: Path) -> List[Path]:
     paths: List[Path] = []
     required_names = sorted(ALL_V3_SKILLS.keys())
@@ -152,9 +272,10 @@ def collect_skills(base: Path) -> List[Path]:
     return paths
 
 
-def report_payload(findings: List[Finding], checked_files: int) -> Dict[str, object]:
+def report_payload(findings: List[Finding], checked_files: int, semantic: bool) -> Dict[str, object]:
     return {
         "checked_files": checked_files,
+        "semantic": semantic,
         "findings_count": len(findings),
         "findings": [
             {
@@ -167,9 +288,10 @@ def report_payload(findings: List[Finding], checked_files: int) -> Dict[str, obj
     }
 
 
-def render_text(findings: List[Finding], checked_files: int) -> str:
+def render_text(findings: List[Finding], checked_files: int, semantic: bool) -> str:
     lines = [
         f"Checked {checked_files} SKILL.md files.",
+        f"Semantic checks: {'on' if semantic else 'off'}",
         f"Findings: {len(findings)}",
     ]
     if findings:
@@ -198,12 +320,14 @@ def main() -> int:
             )
             continue
         findings.extend(check_skill_file(path, base))
+    if args.semantic:
+        findings.extend(collect_semantic_findings(base, skill_files))
 
-    payload = report_payload(findings, checked_files=len(skill_files))
+    payload = report_payload(findings, checked_files=len(skill_files), semantic=args.semantic)
     if args.json:
         print(json.dumps(payload, ensure_ascii=True, indent=2))
     else:
-        print(render_text(findings, checked_files=len(skill_files)))
+        print(render_text(findings, checked_files=len(skill_files), semantic=args.semantic))
 
     if args.strict and findings:
         return 2

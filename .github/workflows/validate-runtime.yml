@@ -34,7 +34,7 @@ jobs:
         run: python scripts/migration_guard.py . --strict
 
       - name: Run skill gauntlet
-        run: python scripts/skill_gauntlet.py . --strict
+        run: python scripts/skill_gauntlet.py . --strict --semantic
 
       - name: Run runtime smoke tests
         run: python -m pytest tests -q
