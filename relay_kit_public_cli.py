@@ -7,6 +7,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit doctor <project_path>
   relay-kit eval run <project_path>
   relay-kit upgrade check <project_path>
+  relay-kit policy check <project_path>
 
 It maps to the existing canonical runtime entrypoint (`relay_kit.py`)
 without changing the underlying generation flow.
@@ -24,6 +25,7 @@ from pathlib import Path
 import relay_kit as relay_core
 from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, parse_findings_count, summarize_events
 from relay_kit_v3.bundle_manifest import verify_manifest_file, write_manifest
+from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS
 from relay_kit_v3.spec_export import write_spec
 from relay_kit_v3.upgrade import build_upgrade_report, render_report, write_version_marker
 
@@ -122,6 +124,12 @@ def _parse_doctor_args(argv: list[str]) -> argparse.Namespace:
     )
     parser.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
     parser.add_argument("--skip-tests", action="store_true", help="Skip the local pytest suite")
+    parser.add_argument(
+        "--policy-pack",
+        choices=sorted(POLICY_PACKS),
+        default=DEFAULT_POLICY_PACK,
+        help="Policy pack passed to policy guard",
+    )
     parser.add_argument("--verbose", action="store_true", help="Print stdout and stderr for passing gates")
     parser.add_argument("--json", action="store_true", help="Emit machine-readable doctor results")
     return parser.parse_args(argv)
@@ -230,6 +238,22 @@ def _parse_upgrade_args(argv: list[str]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _parse_policy_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit policy",
+        description="Inspect and run Relay-kit policy guard packs.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    subparsers.add_parser("list", help="List available policy packs")
+
+    check = subparsers.add_parser("check", help="Run policy guard with a named pack")
+    check.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    check.add_argument("--pack", choices=sorted(POLICY_PACKS), default=DEFAULT_POLICY_PACK)
+    check.add_argument("--strict", action="store_true", help="Return non-zero when findings exist")
+    check.add_argument("--json", action="store_true", help="Emit JSON report")
+    return parser.parse_args(argv)
+
+
 def _resolve_ai(args: argparse.Namespace) -> str:
     if args.codex:
         return "codex"
@@ -288,7 +312,7 @@ def _build_relay_argv(args: argparse.Namespace) -> list[str]:
     return relay_argv
 
 
-def _doctor_commands(project_path: str, skip_tests: bool) -> list[tuple[str, list[str]]]:
+def _doctor_commands(project_path: str, skip_tests: bool, policy_pack: str = DEFAULT_POLICY_PACK) -> list[tuple[str, list[str]]]:
     commands = [
         ("validate runtime", [sys.executable, str(REPO_ROOT / "scripts" / "validate_runtime.py")]),
         (
@@ -312,7 +336,14 @@ def _doctor_commands(project_path: str, skip_tests: bool) -> list[tuple[str, lis
         ),
         (
             "policy guard",
-            [sys.executable, str(REPO_ROOT / "scripts" / "policy_guard.py"), project_path, "--strict"],
+            [
+                sys.executable,
+                str(REPO_ROOT / "scripts" / "policy_guard.py"),
+                project_path,
+                "--strict",
+                "--pack",
+                policy_pack,
+            ],
         ),
         (
             "srs guard",
@@ -359,7 +390,7 @@ def run_doctor(args: argparse.Namespace) -> int:
 
     exit_code = 0
     gate_results: list[dict[str, object]] = []
-    for label, command in _doctor_commands(project_path, args.skip_tests):
+    for label, command in _doctor_commands(project_path, args.skip_tests, args.policy_pack):
         started = time.perf_counter()
         result = subprocess.run(
             command,
@@ -500,6 +531,24 @@ def run_upgrade(args: argparse.Namespace) -> int:
     return 2
 
 
+def run_policy(args: argparse.Namespace) -> int:
+    if args.action == "list":
+        print("Relay-kit policy packs")
+        for name, pack in sorted(POLICY_PACKS.items()):
+            print(f"- {name}: {pack.description}")
+        return 0
+    if args.action == "check":
+        from scripts import policy_guard
+
+        policy_argv = [args.project_path, "--pack", args.pack]
+        if args.strict:
+            policy_argv.append("--strict")
+        if args.json:
+            policy_argv.append("--json")
+        return policy_guard.main(policy_argv)
+    return 2
+
+
 def main(argv: list[str] | None = None) -> int:
     raw_argv = sys.argv[1:] if argv is None else argv
     if raw_argv and raw_argv[0] == "doctor":
@@ -514,6 +563,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_eval(_parse_eval_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "upgrade":
         return run_upgrade(_parse_upgrade_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "policy":
+        return run_policy(_parse_policy_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "init":
         raw_argv = raw_argv[1:]
 

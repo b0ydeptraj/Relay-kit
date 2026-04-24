@@ -36,8 +36,26 @@ def test_public_cli_doctor_runs_core_gates(monkeypatch, capsys) -> None:
     skill_gauntlet_call = next(call for call in calls if Path(call[1]).name == "skill_gauntlet.py")
     assert "--semantic" in skill_gauntlet_call
     assert all(call[0] == sys.executable for call in calls)
+    policy_guard_call = next(call for call in calls if Path(call[1]).name == "policy_guard.py")
+    assert policy_guard_call[-2:] == ["--pack", "baseline"]
     workflow_eval_call = next(call for call in calls if Path(call[1]).name == "eval_workflows.py")
     assert "--strict" in workflow_eval_call
+
+
+def test_public_cli_doctor_forwards_policy_pack(monkeypatch) -> None:
+    calls: list[list[str]] = []
+
+    def fake_run(command, cwd, text, capture_output, check):  # noqa: ANN001
+        calls.append([str(part) for part in command])
+        return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
+
+    monkeypatch.setattr(relay_kit_public_cli.subprocess, "run", fake_run)
+    monkeypatch.setattr(relay_kit_public_cli, "append_event", lambda project_root, event: Path(project_root))
+
+    assert relay_kit_public_cli.main(["doctor", ".", "--skip-tests", "--policy-pack", "enterprise"]) == 0
+
+    policy_guard_call = next(call for call in calls if Path(call[1]).name == "policy_guard.py")
+    assert policy_guard_call[-2:] == ["--pack", "enterprise"]
 
 
 def test_public_cli_doctor_returns_failure_when_a_gate_fails(monkeypatch) -> None:

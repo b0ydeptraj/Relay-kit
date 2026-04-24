@@ -6,9 +6,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS, get_policy_pack, missing_required_files
 
 
 DEFAULT_FILE_SUFFIXES = {
@@ -68,12 +75,18 @@ class Finding:
     detail: str
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Detect high-risk runtime policy violations.")
     parser.add_argument("project_path", nargs="?", default=".", help="Target project root")
+    parser.add_argument(
+        "--pack",
+        choices=sorted(POLICY_PACKS),
+        default=DEFAULT_POLICY_PACK,
+        help="Policy pack preset to enforce",
+    )
     parser.add_argument("--strict", action="store_true", help="Return non-zero when findings exist")
     parser.add_argument("--json", action="store_true", help="Emit JSON report")
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def is_excluded(path: Path) -> bool:
@@ -146,8 +159,24 @@ def collect_allowlist_findings(path: Path, base: Path) -> list[Finding]:
     return findings
 
 
-def collect_findings(base: Path) -> list[Finding]:
+def collect_pack_findings(base: Path, pack_name: str | None = None) -> list[Finding]:
+    pack = get_policy_pack(pack_name)
     findings: list[Finding] = []
+    for required_file in missing_required_files(base, pack):
+        findings.append(
+            Finding(
+                required_file,
+                0,
+                "required-policy-file",
+                f"Policy pack {pack.name!r} requires {required_file}",
+            )
+        )
+    return findings
+
+
+def collect_findings(base: Path, pack_name: str | None = None) -> list[Finding]:
+    findings: list[Finding] = []
+    findings.extend(collect_pack_findings(base, pack_name))
     for path in candidate_files(base):
         rel_path = path.relative_to(base).as_posix()
         findings.extend(collect_allowlist_findings(path, base))
@@ -156,9 +185,11 @@ def collect_findings(base: Path) -> list[Finding]:
     return findings
 
 
-def render_text(findings: Sequence[Finding]) -> str:
+def render_text(findings: Sequence[Finding], pack_name: str = DEFAULT_POLICY_PACK) -> str:
+    pack = get_policy_pack(pack_name)
     lines = [
         "Policy guard report",
+        f"- pack: {pack.name}",
         f"- findings: {len(findings)}",
     ]
     if findings:
@@ -171,8 +202,11 @@ def render_text(findings: Sequence[Finding]) -> str:
     return "\n".join(lines)
 
 
-def render_json(findings: Sequence[Finding]) -> str:
+def render_json(findings: Sequence[Finding], pack_name: str = DEFAULT_POLICY_PACK) -> str:
+    pack = get_policy_pack(pack_name)
     payload = {
+        "pack": pack.name,
+        "description": pack.description,
         "findings_count": len(findings),
         "findings": [
             {"path": item.path, "line": item.line, "check": item.check, "detail": item.detail}
@@ -182,14 +216,14 @@ def render_json(findings: Sequence[Finding]) -> str:
     return json.dumps(payload, ensure_ascii=True, indent=2)
 
 
-def main() -> int:
-    args = parse_args()
-    findings = collect_findings(Path(args.project_path).resolve())
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    findings = collect_findings(Path(args.project_path).resolve(), pack_name=args.pack)
 
     if args.json:
-        print(render_json(findings))
+        print(render_json(findings, pack_name=args.pack))
     else:
-        print(render_text(findings))
+        print(render_text(findings, pack_name=args.pack))
 
     if args.strict and findings:
         return 2

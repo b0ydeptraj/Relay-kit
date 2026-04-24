@@ -107,6 +107,7 @@ Run the support gate:
 
 ```bash
 relay-kit doctor /path/to/project
+relay-kit doctor /path/to/project --policy-pack enterprise
 ```
 
 Show recent gate evidence:
@@ -129,6 +130,13 @@ Write and verify the bundle checksum manifest:
 ```bash
 relay-kit manifest write /path/to/project
 relay-kit manifest verify /path/to/project
+```
+
+Run policy guard packs:
+
+```bash
+relay-kit policy list
+relay-kit policy check /path/to/project --pack enterprise --strict
 ```
 
 Measure workflow routing quality with bundled scenarios:

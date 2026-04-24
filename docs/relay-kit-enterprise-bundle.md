@@ -15,7 +15,7 @@ It is not a popularity tier. It changes the installed runtime surface:
 
 ```bash
 relay-kit init /path/to/project --all --bundle enterprise
-relay-kit doctor /path/to/project
+relay-kit doctor /path/to/project --policy-pack enterprise
 relay-kit manifest write /path/to/project
 relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
 ```
@@ -29,6 +29,7 @@ Use `enterprise` for teams that need:
 - policy guard checks before high-risk operations
 - cross-session continuity and handoff contracts
 - repeatable upgrade tracking through manifests and version markers
+- enterprise policy-pack checks for security, testing, observability, review, and handoff surfaces
 
 Use `baseline` when the priority is a smaller first install surface.
 
@@ -39,6 +40,6 @@ This bundle is the first enterprise packaging slice. It does not yet include:
 - private registry distribution
 - signed manifests
 - support SLA workflow
-- Pro policy pack overrides
+- organization-managed policy pack overrides
 
 Those can build on this bundle without changing the baseline install path.

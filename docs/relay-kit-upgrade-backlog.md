@@ -21,6 +21,7 @@ Source audit status:
 - Fixed in workflow eval pass: `relay-kit eval run` reports scenario pass rate, predicted skill, top routes, and evidence-term findings from bundled fixtures.
 - Fixed in upgrade CLI pass: `relay-kit upgrade check|plan|mark-current` tracks installed runtime version and prints safe upgrade actions without auto-overwriting files.
 - Fixed in enterprise bundle pass: `--bundle enterprise` installs baseline plus the full discipline utility set and emits governance docs for paid/team usage.
+- Fixed in Pro policy packs pass: `relay-kit policy check --pack baseline|team|enterprise` and `relay-kit doctor --policy-pack enterprise` enforce stronger governance surfaces for team/paid installs.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -427,6 +428,29 @@ Acceptance criteria:
 - Enterprise install includes `test-first-development`.
 - Enterprise manifest is checksummed and verified by existing manifest logic.
 
+### P2 - Add Pro Policy Packs
+
+Status:
+- Fixed on 2026-04-24 for the first deterministic local policy pack slice.
+- Done: `baseline`, `team`, and `enterprise` policy packs are defined in `relay_kit_v3/policy_packs.py`.
+- Done: `relay-kit policy list` and `relay-kit policy check <project> --pack enterprise --strict` are available.
+- Done: `relay-kit doctor <project> --policy-pack enterprise` passes the selected pack to policy guard.
+- Verification: `python -m pytest tests/test_policy_packs.py tests/test_policy_guard.py tests/test_public_cli_doctor.py -q` passes.
+
+Problem:
+- Paid/team installs need stronger policy gates without making the default 5-minute baseline feel heavy.
+
+Fix:
+- Keep `baseline` as the default source/risk scanner.
+- Add `team` required state/handoff surfaces.
+- Add `enterprise` required security/testing/observability/review governance surfaces.
+- Expose pack selection in public CLI and doctor.
+
+Acceptance criteria:
+- Existing `policy_guard.py . --strict` behavior remains baseline-compatible.
+- Enterprise pack catches missing governance files in fixtures.
+- Enterprise pack passes on the checked-in Relay-kit runtime.
+
 ### P2 - Add Spec Export Contract
 
 Status:
@@ -585,7 +609,7 @@ Expected gain:
 
 - Done first slice: add versioned upgrade/migration CLI.
 - Done: add checksummed bundle manifest with `relay-kit manifest write` and `relay-kit manifest verify`.
-- Add Pro policy packs.
+- Done first slice: add Pro policy packs.
 - Add support workflow and SLA docs.
 - Done first slice: add enterprise bundle story.
 - Done first slice: add scenario eval harness for real workflow quality.
