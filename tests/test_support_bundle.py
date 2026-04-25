@@ -35,6 +35,7 @@ def test_support_bundle_contains_required_diagnostics(tmp_path: Path) -> None:
     assert payload["diagnostics"]["workflow_eval"]["schema_version"] == "relay-kit.workflow-eval.v1"
     assert payload["diagnostics"]["workflow_eval"]["quality"]["evidence_term_coverage"] == 1.0
     assert "relay-kit doctor" in payload["support"]["required_commands"][0]
+    assert any("relay-kit pulse build" in command for command in payload["support"]["required_commands"])
 
 
 def test_support_bundle_enterprise_requires_trusted_manifest_diagnostic(tmp_path: Path) -> None:

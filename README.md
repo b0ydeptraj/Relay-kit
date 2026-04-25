@@ -153,6 +153,13 @@ Prepare a support diagnostics bundle:
 relay-kit support bundle /path/to/project --policy-pack enterprise
 ```
 
+Build a local Pulse quality report:
+
+```bash
+relay-kit pulse build /path/to/project
+relay-kit pulse build /path/to/project --include-readiness --json
+```
+
 Run the paid/team readiness gate:
 
 ```bash
@@ -300,6 +307,8 @@ Historical compatibility timeline and removal log:
   - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - Commercial readiness gate:
   - [`docs/relay-kit-readiness-check.md`](docs/relay-kit-readiness-check.md)
+- Pulse quality report:
+  - [`docs/relay-kit-pulse-report.md`](docs/relay-kit-pulse-report.md)
 - Skill behavior gauntlet:
   - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
 - Context continuity:

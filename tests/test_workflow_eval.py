@@ -148,12 +148,16 @@ def test_public_cli_eval_run_uses_workflow_eval(monkeypatch, capsys) -> None:
     from scripts import eval_workflows
 
     def fake_run_workflow_eval(args):  # noqa: ANN001
+        assert "--min-route-margin" in args
+        assert "--baseline-file" in args
         print("fake workflow eval")
         return 0
 
     monkeypatch.setattr(eval_workflows, "main", fake_run_workflow_eval)
 
-    exit_code = relay_kit_public_cli.main(["eval", "run", ".", "--strict"])
+    exit_code = relay_kit_public_cli.main(
+        ["eval", "run", ".", "--strict", "--min-route-margin", "2", "--baseline-file", "baseline.json"]
+    )
 
     assert exit_code == 0
     assert "fake workflow eval" in capsys.readouterr().out

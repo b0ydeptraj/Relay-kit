@@ -10,6 +10,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit policy check <project_path>
   relay-kit support bundle <project_path>
   relay-kit readiness check <project_path>
+  relay-kit pulse build <project_path>
   relay-kit contract import <project_path> --contract-file <relay-contract.json>
 
 It maps to the existing canonical runtime entrypoint (`relay_kit.py`)
@@ -29,6 +30,7 @@ import relay_kit as relay_core
 from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, parse_findings_count, summarize_events
 from relay_kit_v3.bundle_manifest import verify_manifest_file, verify_trusted_manifest_file, write_manifest, write_trust_stamp
 from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS
+from relay_kit_v3.pulse import build_pulse_report, write_pulse_report
 from relay_kit_v3.readiness import build_readiness_report, render_readiness_report
 from relay_kit_v3.contract_export import write_contract_export
 from relay_kit_v3.contract_import import import_contracts, render_contract_import_report
@@ -238,6 +240,11 @@ def _parse_eval_args(argv: list[str]) -> argparse.Namespace:
         help="JSON scenario fixture file (default: bundled Relay-kit fixtures)",
     )
     run.add_argument("--output-file", default=None, help="Optional JSON report output path")
+    run.add_argument("--baseline-file", default=None, help="Optional prior workflow eval JSON used for regression checks")
+    run.add_argument("--min-pass-rate", type=float, default=None, help="Minimum accepted scenario pass rate")
+    run.add_argument("--min-route-margin", type=int, default=None, help="Minimum top-route score margin")
+    run.add_argument("--min-evidence-coverage", type=float, default=None, help="Minimum expected-term coverage")
+    run.add_argument("--min-scenarios", type=int, default=None, help="Minimum scenario count")
     run.add_argument("--json", action="store_true", help="Emit JSON report")
     run.add_argument("--strict", action="store_true", help="Return non-zero when any scenario fails")
     return parser.parse_args(argv)
@@ -322,6 +329,24 @@ def _parse_readiness_args(argv: list[str]) -> argparse.Namespace:
     check.add_argument("--profile", choices=["team", "enterprise"], default="enterprise")
     check.add_argument("--skip-tests", action="store_true", help="Skip pytest inside the readiness suite")
     check.add_argument("--json", action="store_true", help="Emit machine-readable readiness report")
+    return parser.parse_args(argv)
+
+
+def _parse_pulse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit pulse",
+        description="Build a static Relay-kit Pulse report from quality, readiness, and evidence signals.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    build = subparsers.add_parser("build", help="Write Pulse JSON and HTML reports")
+    build.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    build.add_argument("--output-dir", default=None, help="Output directory (default: <project>/.relay-kit/pulse)")
+    build.add_argument("--profile", choices=["team", "enterprise"], default="enterprise")
+    build.add_argument("--include-readiness", action="store_true", help="Run readiness check with --skip-tests")
+    build.add_argument("--readiness-file", default=None, help="Existing readiness JSON report to include")
+    build.add_argument("--workflow-eval-file", default=None, help="Existing workflow eval JSON report to include")
+    build.add_argument("--evidence-limit", type=int, default=20, help="Recent evidence events to include")
+    build.add_argument("--json", action="store_true", help="Emit machine-readable output paths and report")
     return parser.parse_args(argv)
 
 
@@ -624,6 +649,16 @@ def run_eval(args: argparse.Namespace) -> int:
         eval_argv.extend(["--scenario-fixtures", args.scenario_fixtures])
     if args.output_file:
         eval_argv.extend(["--output-file", args.output_file])
+    if args.baseline_file:
+        eval_argv.extend(["--baseline-file", args.baseline_file])
+    if args.min_pass_rate is not None:
+        eval_argv.extend(["--min-pass-rate", str(args.min_pass_rate)])
+    if args.min_route_margin is not None:
+        eval_argv.extend(["--min-route-margin", str(args.min_route_margin)])
+    if args.min_evidence_coverage is not None:
+        eval_argv.extend(["--min-evidence-coverage", str(args.min_evidence_coverage)])
+    if args.min_scenarios is not None:
+        eval_argv.extend(["--min-scenarios", str(args.min_scenarios)])
     if args.json:
         eval_argv.append("--json")
     if args.strict:
@@ -707,6 +742,32 @@ def run_readiness(args: argparse.Namespace) -> int:
     return 0 if report["status"] == "pass" else 2
 
 
+def run_pulse(args: argparse.Namespace) -> int:
+    if args.action != "build":
+        return 2
+    report = build_pulse_report(
+        args.project_path,
+        profile=args.profile,
+        evidence_limit=args.evidence_limit,
+        include_readiness=args.include_readiness,
+        workflow_eval_file=args.workflow_eval_file,
+        readiness_file=args.readiness_file,
+    )
+    outputs = write_pulse_report(args.project_path, report, output_dir=args.output_dir)
+    if args.json:
+        payload = {
+            "outputs": {name: str(path) for name, path in outputs.items()},
+            "report": report,
+        }
+        print(json.dumps(payload, ensure_ascii=True, indent=2))
+    else:
+        print(f"Wrote {outputs['json']}")
+        print(f"Wrote {outputs['html']}")
+        print(f"Pulse status: {report['status']}")
+        print(f"Pulse score: {report['pulse_score']}")
+    return 0 if report["status"] in {"pass", "attention"} else 2
+
+
 def main(argv: list[str] | None = None) -> int:
     raw_argv = sys.argv[1:] if argv is None else argv
     if raw_argv and raw_argv[0] == "doctor":
@@ -727,6 +788,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_support(_parse_support_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "readiness":
         return run_readiness(_parse_readiness_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "pulse":
+        return run_pulse(_parse_pulse_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "init":
         raw_argv = raw_argv[1:]
 
