@@ -125,6 +125,8 @@ Export planning and QA contracts as machine-readable JSON:
 
 ```bash
 relay-kit spec export /path/to/project
+relay-kit spec import /path/to/project --spec-file /path/to/relay-spec.json
+relay-kit spec import /path/to/project --spec-file /path/to/relay-spec.json --apply
 ```
 
 Write and verify the bundle checksum manifest:

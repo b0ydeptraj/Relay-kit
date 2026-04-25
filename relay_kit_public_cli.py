@@ -9,6 +9,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit upgrade check <project_path>
   relay-kit policy check <project_path>
   relay-kit support bundle <project_path>
+  relay-kit spec import <project_path> --spec-file <relay-spec.json>
 
 It maps to the existing canonical runtime entrypoint (`relay_kit.py`)
 without changing the underlying generation flow.
@@ -28,6 +29,7 @@ from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, 
 from relay_kit_v3.bundle_manifest import verify_manifest_file, verify_trusted_manifest_file, write_manifest, write_trust_stamp
 from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS
 from relay_kit_v3.spec_export import write_spec
+from relay_kit_v3.spec_import import import_spec, render_import_report
 from relay_kit_v3.support_bundle import build_support_bundle, write_support_bundle
 from relay_kit_v3.upgrade import build_upgrade_report, render_report, write_version_marker
 
@@ -153,7 +155,7 @@ def _parse_evidence_args(argv: list[str]) -> argparse.Namespace:
 def _parse_spec_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="relay-kit spec",
-        description="Export Relay-kit planning and QA contracts as machine-readable specs.",
+        description="Export and import Relay-kit planning and QA contracts as machine-readable specs.",
     )
     subparsers = parser.add_subparsers(dest="action", required=True)
     export = subparsers.add_parser("export", help="Export Relay-kit contracts to JSON")
@@ -163,6 +165,17 @@ def _parse_spec_args(argv: list[str]) -> argparse.Namespace:
         default=None,
         help="Output path (default: <project>/.relay-kit/specs/relay-spec.json)",
     )
+    import_cmd = subparsers.add_parser("import", help="Plan or apply Relay spec JSON into contracts")
+    import_cmd.add_argument("project_path", nargs="?", default=".", help="Project root to update")
+    import_cmd.add_argument(
+        "--spec-file",
+        default=None,
+        help="Input spec path (default: <project>/.relay-kit/specs/relay-spec.json)",
+    )
+    import_cmd.add_argument("--apply", action="store_true", help="Write contract updates instead of dry-running")
+    import_cmd.add_argument("--force", action="store_true", help="Overwrite concrete existing contract sections")
+    import_cmd.add_argument("--strict", action="store_true", help="Return non-zero on invalid specs or skipped conflicts")
+    import_cmd.add_argument("--json", action="store_true", help="Emit machine-readable import report")
     return parser.parse_args(argv)
 
 
@@ -528,11 +541,25 @@ def run_evidence(args: argparse.Namespace) -> int:
 
 
 def run_spec(args: argparse.Namespace) -> int:
-    if args.action != "export":
-        return 2
-    output_path = write_spec(args.project_path, args.output_file)
-    print(f"Wrote {output_path}")
-    return 0
+    if args.action == "export":
+        output_path = write_spec(args.project_path, args.output_file)
+        print(f"Wrote {output_path}")
+        return 0
+    if args.action == "import":
+        report = import_spec(
+            args.project_path,
+            spec_file=args.spec_file,
+            apply=args.apply,
+            force=args.force,
+        )
+        if args.json:
+            print(json.dumps(report, ensure_ascii=True, indent=2))
+        else:
+            print(render_import_report(report))
+        if args.strict and report["status"] != "pass":
+            return 2
+        return 2 if report["status"] == "fail" else 0
+    return 2
 
 
 def run_manifest(args: argparse.Namespace) -> int:
