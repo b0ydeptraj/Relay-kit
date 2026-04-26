@@ -346,6 +346,8 @@ def _parse_pulse_args(argv: list[str]) -> argparse.Namespace:
     build.add_argument("--readiness-file", default=None, help="Existing readiness JSON report to include")
     build.add_argument("--workflow-eval-file", default=None, help="Existing workflow eval JSON report to include")
     build.add_argument("--evidence-limit", type=int, default=20, help="Recent evidence events to include")
+    build.add_argument("--history-limit", type=int, default=20, help="Historical Pulse snapshots to include")
+    build.add_argument("--no-history", action="store_true", help="Do not append this run to Pulse history")
     build.add_argument("--json", action="store_true", help="Emit machine-readable output paths and report")
     return parser.parse_args(argv)
 
@@ -752,8 +754,15 @@ def run_pulse(args: argparse.Namespace) -> int:
         include_readiness=args.include_readiness,
         workflow_eval_file=args.workflow_eval_file,
         readiness_file=args.readiness_file,
+        output_dir=args.output_dir,
+        history_limit=args.history_limit,
     )
-    outputs = write_pulse_report(args.project_path, report, output_dir=args.output_dir)
+    outputs = write_pulse_report(
+        args.project_path,
+        report,
+        output_dir=args.output_dir,
+        record_history=not args.no_history,
+    )
     if args.json:
         payload = {
             "outputs": {name: str(path) for name, path in outputs.items()},

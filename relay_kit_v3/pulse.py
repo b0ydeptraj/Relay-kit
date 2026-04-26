@@ -8,13 +8,15 @@ from html import escape
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
-from relay_kit_v3.evidence_ledger import LedgerSummary, summarize_events
+from relay_kit_v3.evidence_ledger import LedgerSummary, summarize_events, utc_timestamp
 from relay_kit_v3.readiness import build_readiness_report
 from scripts import eval_workflows
 
 
 SCHEMA_VERSION = "relay-kit.pulse-report.v1"
+HISTORY_SCHEMA_VERSION = "relay-kit.pulse-history.v1"
 DEFAULT_OUTPUT_DIR = Path(".relay-kit") / "pulse"
+HISTORY_FILE = "history.jsonl"
 
 WorkflowEvalBuilder = Callable[[Path], Mapping[str, Any]]
 ReadinessBuilder = Callable[[Path, str, bool], Mapping[str, Any]]
@@ -30,6 +32,8 @@ def build_pulse_report(
     skip_tests: bool = True,
     workflow_eval_file: Path | str | None = None,
     readiness_file: Path | str | None = None,
+    output_dir: Path | str | None = None,
+    history_limit: int = 20,
     workflow_eval_builder: WorkflowEvalBuilder | None = None,
     readiness_builder: ReadinessBuilder | None = None,
     evidence_summarizer: EvidenceSummarizer | None = None,
@@ -47,6 +51,19 @@ def build_pulse_report(
     evidence = _evidence_payload(root, evidence_limit, evidence_summarizer)
     status = pulse_status(eval_report, readiness_report, evidence)
     score = pulse_score(eval_report, readiness_report, evidence)
+    trend = build_trend(
+        root,
+        output_dir=output_dir,
+        current_snapshot=snapshot_from_values(
+            status=status,
+            pulse_score=score,
+            profile=profile,
+            workflow_eval=eval_report,
+            readiness=readiness_report,
+            evidence=evidence,
+        ),
+        limit=history_limit,
+    )
 
     return {
         "schema_version": SCHEMA_VERSION,
@@ -57,8 +74,9 @@ def build_pulse_report(
         "workflow_eval": eval_report,
         "readiness": readiness_report,
         "evidence": evidence,
+        "trend": trend,
         "outputs": {
-            "default_dir": str(root / DEFAULT_OUTPUT_DIR),
+            "default_dir": str(_resolve_output_dir(root, output_dir)),
         },
     }
 
@@ -68,18 +86,20 @@ def write_pulse_report(
     report: Mapping[str, Any],
     *,
     output_dir: Path | str | None = None,
+    record_history: bool = True,
 ) -> dict[str, Path]:
     root = Path(project_root).resolve()
-    target_dir = Path(output_dir) if output_dir is not None else root / DEFAULT_OUTPUT_DIR
-    if not target_dir.is_absolute():
-        target_dir = root / target_dir
+    target_dir = _resolve_output_dir(root, output_dir)
     target_dir.mkdir(parents=True, exist_ok=True)
 
     json_path = target_dir / "pulse-report.json"
     html_path = target_dir / "index.html"
     json_path.write_text(json.dumps(report, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
     html_path.write_text(render_pulse_html(report), encoding="utf-8")
-    return {"json": json_path, "html": html_path}
+    history_path = target_dir / HISTORY_FILE
+    if record_history:
+        append_pulse_history(history_path, report)
+    return {"json": json_path, "html": html_path, "history": history_path}
 
 
 def render_pulse_html(report: Mapping[str, Any]) -> str:
@@ -87,6 +107,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     quality = _mapping(workflow_eval.get("quality"))
     readiness = _mapping(report.get("readiness"))
     evidence = _mapping(report.get("evidence"))
+    trend = _mapping(report.get("trend"))
     status_counts = _mapping(evidence.get("recent_status_counts"))
     recent_events = evidence.get("recent_events", [])
     if not isinstance(recent_events, list):
@@ -99,6 +120,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Evidence coverage", _percent(quality.get("evidence_term_coverage"))),
         ("Min route margin", str(quality.get("min_route_margin", "-"))),
         ("Readiness", str(readiness.get("verdict", "not-run"))),
+        ("Score delta", _signed(trend.get("pulse_score_delta"))),
         ("Ledger events", str(evidence.get("total_events", 0))),
         ("Recent failures", str(status_counts.get("fail", 0))),
     ]
@@ -110,6 +132,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     rows = "\n".join(_event_row(event) for event in recent_events[-12:])
     if not rows:
         rows = '<tr><td colspan="4">No recent evidence events.</td></tr>'
+    trend_rows = _trend_rows(trend)
 
     report_json = escape(json.dumps(report, ensure_ascii=True, indent=2))
     return f"""<!doctype html>
@@ -233,6 +256,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       </table>
     </section>
     <section class="panel">
+      <h2>Trend</h2>
+      <table>
+        <tr><th>Signal</th><th>Delta</th></tr>
+        {trend_rows}
+      </table>
+    </section>
+    <section class="panel">
       <h2>Recent evidence</h2>
       <table>
         <tr><th>Time</th><th>Gate</th><th>Status</th><th>Findings</th></tr>
@@ -286,6 +316,121 @@ def pulse_score(
     evidence_score = max(0, 5 - (fail_count * 2))
     score = round((pass_rate * 70) + (evidence_coverage * 10) + readiness_score + evidence_score)
     return max(0, min(100, int(score)))
+
+
+def build_trend(
+    root: Path,
+    *,
+    output_dir: Path | str | None,
+    current_snapshot: Mapping[str, Any],
+    limit: int = 20,
+) -> dict[str, Any]:
+    history_path = _resolve_output_dir(root, output_dir) / HISTORY_FILE
+    history = read_pulse_history(history_path, limit=limit)
+    previous = history[-1] if history else None
+    trend: dict[str, Any] = {
+        "history_path": str(history_path),
+        "history_count": len(history),
+        "previous": previous,
+        "recent": history,
+        "pulse_score_delta": None,
+        "pass_rate_delta": None,
+        "evidence_coverage_delta": None,
+        "average_route_margin_delta": None,
+        "status_changed": False,
+    }
+    if previous is None:
+        return trend
+
+    trend.update(
+        {
+            "pulse_score_delta": _delta(current_snapshot.get("pulse_score"), previous.get("pulse_score"), digits=0),
+            "pass_rate_delta": _delta(current_snapshot.get("pass_rate"), previous.get("pass_rate")),
+            "evidence_coverage_delta": _delta(
+                current_snapshot.get("evidence_coverage"),
+                previous.get("evidence_coverage"),
+            ),
+            "average_route_margin_delta": _delta(
+                current_snapshot.get("average_route_margin"),
+                previous.get("average_route_margin"),
+            ),
+            "status_changed": current_snapshot.get("status") != previous.get("status"),
+        }
+    )
+    return trend
+
+
+def append_pulse_history(history_path: Path, report: Mapping[str, Any]) -> Path:
+    history_path.parent.mkdir(parents=True, exist_ok=True)
+    snapshot = pulse_history_snapshot(report)
+    with history_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(snapshot, ensure_ascii=True, sort_keys=True))
+        handle.write("\n")
+    return history_path
+
+
+def read_pulse_history(history_path: Path, *, limit: int = 20) -> list[dict[str, Any]]:
+    if not history_path.exists():
+        return []
+    snapshots: list[dict[str, Any]] = []
+    for line in history_path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            payload = json.loads(stripped)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict):
+            snapshots.append(payload)
+    if limit <= 0:
+        return []
+    return snapshots[-limit:]
+
+
+def pulse_history_snapshot(report: Mapping[str, Any]) -> dict[str, Any]:
+    workflow_eval = _mapping(report.get("workflow_eval"))
+    readiness = _mapping(report.get("readiness"))
+    evidence = _mapping(report.get("evidence"))
+    return {
+        "schema_version": HISTORY_SCHEMA_VERSION,
+        "timestamp": utc_timestamp(),
+        **snapshot_from_values(
+            status=str(report.get("status", "unknown")),
+            pulse_score=int(report.get("pulse_score", 0) or 0),
+            profile=str(report.get("profile", "")),
+            workflow_eval=workflow_eval,
+            readiness=readiness if readiness else None,
+            evidence=evidence,
+        ),
+    }
+
+
+def snapshot_from_values(
+    *,
+    status: str,
+    pulse_score: int,
+    profile: str,
+    workflow_eval: Mapping[str, Any],
+    readiness: Mapping[str, Any] | None,
+    evidence: Mapping[str, Any],
+) -> dict[str, Any]:
+    quality = _mapping(workflow_eval.get("quality"))
+    recent_status_counts = _mapping(evidence.get("recent_status_counts"))
+    return {
+        "status": status,
+        "pulse_score": pulse_score,
+        "profile": profile,
+        "pass_rate": _float(workflow_eval.get("pass_rate")),
+        "scenario_count": int(workflow_eval.get("scenario_count", 0) or 0),
+        "failed": int(workflow_eval.get("failed", 0) or 0),
+        "evidence_coverage": _float(quality.get("evidence_term_coverage"), default=1.0),
+        "average_route_margin": _float(quality.get("average_route_margin")),
+        "min_route_margin": int(quality.get("min_route_margin", 0) or 0),
+        "readiness_status": readiness.get("status") if readiness else None,
+        "readiness_verdict": readiness.get("verdict") if readiness else None,
+        "recent_failures": int(recent_status_counts.get("fail", 0) or 0),
+    }
 
 
 def _load_or_build_workflow_eval(
@@ -350,6 +495,13 @@ def _read_json(root: Path, path: Path | str) -> Mapping[str, Any]:
     return payload
 
 
+def _resolve_output_dir(root: Path, output_dir: Path | str | None = None) -> Path:
+    target_dir = Path(output_dir) if output_dir is not None else root / DEFAULT_OUTPUT_DIR
+    if not target_dir.is_absolute():
+        target_dir = root / target_dir
+    return target_dir
+
+
 def _event_row(event: Mapping[str, Any]) -> str:
     gate = str(event.get("gate", event.get("command", "unknown")))
     return (
@@ -360,6 +512,45 @@ def _event_row(event: Mapping[str, Any]) -> str:
         f"<td>{escape(str(event.get('findings_count', '-')))}</td>"
         "</tr>"
     )
+
+
+def _trend_rows(trend: Mapping[str, Any]) -> str:
+    rows = [
+        ("History snapshots", str(trend.get("history_count", 0))),
+        ("Pulse score", _signed(trend.get("pulse_score_delta"))),
+        ("Pass rate", _signed_percent(trend.get("pass_rate_delta"))),
+        ("Evidence coverage", _signed_percent(trend.get("evidence_coverage_delta"))),
+        ("Average route margin", _signed(trend.get("average_route_margin_delta"))),
+        ("Status changed", "yes" if trend.get("status_changed") else "no"),
+    ]
+    return "\n".join(
+        f"<tr><td>{escape(label)}</td><td>{escape(value)}</td></tr>"
+        for label, value in rows
+    )
+
+
+def _delta(current: Any, previous: Any, *, digits: int = 4) -> float | int:
+    value = _float(current) - _float(previous)
+    if digits == 0:
+        return int(round(value))
+    return round(value, digits)
+
+
+def _signed(value: Any) -> str:
+    if value is None:
+        return "-"
+    number = _float(value)
+    if number > 0:
+        return f"+{number:g}"
+    return f"{number:g}"
+
+
+def _signed_percent(value: Any) -> str:
+    if value is None:
+        return "-"
+    number = _float(value)
+    sign = "+" if number > 0 else ""
+    return f"{sign}{number * 100:.0f}%"
 
 
 def _percent(value: Any) -> str:

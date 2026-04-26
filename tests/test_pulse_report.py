@@ -27,6 +27,17 @@ def sample_eval_report() -> dict[str, object]:
     }
 
 
+def eval_report_with_score_inputs(*, pass_rate: float, evidence_coverage: float, margin: float = 8.5) -> dict[str, object]:
+    report = sample_eval_report()
+    report["pass_rate"] = pass_rate
+    report["quality"] = {
+        **report["quality"],  # type: ignore[index]
+        "average_route_margin": margin,
+        "evidence_term_coverage": evidence_coverage,
+    }
+    return report
+
+
 def sample_readiness_report() -> dict[str, object]:
     return {
         "schema_version": "relay-kit.readiness-report.v1",
@@ -74,6 +85,33 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     html = outputs["html"].read_text(encoding="utf-8")
     assert "Relay-kit Pulse" in html
     assert "Workflow quality" in html
+    assert "Trend" in html
+
+
+def test_pulse_report_records_history_and_reports_delta(tmp_path: Path) -> None:
+    output_dir = tmp_path / "pulse"
+    first = pulse.build_pulse_report(
+        tmp_path,
+        output_dir=output_dir,
+        workflow_eval_builder=lambda root: eval_report_with_score_inputs(pass_rate=0.75, evidence_coverage=0.5),
+    )
+    pulse.write_pulse_report(tmp_path, first, output_dir=output_dir)
+
+    second = pulse.build_pulse_report(
+        tmp_path,
+        output_dir=output_dir,
+        workflow_eval_builder=lambda root: eval_report_with_score_inputs(pass_rate=1.0, evidence_coverage=1.0),
+    )
+    outputs = pulse.write_pulse_report(tmp_path, second, output_dir=output_dir)
+
+    history_path = outputs["history"]
+    history_lines = history_path.read_text(encoding="utf-8").splitlines()
+
+    assert len(history_lines) == 2
+    assert second["trend"]["history_count"] == 1
+    assert second["trend"]["pulse_score_delta"] > 0
+    assert second["trend"]["pass_rate_delta"] == 0.25
+    assert second["trend"]["evidence_coverage_delta"] == 0.5
 
 
 def test_pulse_report_marks_limited_beta_readiness_as_attention(tmp_path: Path) -> None:
@@ -101,3 +139,4 @@ def test_public_cli_pulse_build_json(tmp_path: Path, capsys) -> None:
     assert payload["report"]["schema_version"] == "relay-kit.pulse-report.v1"
     assert Path(payload["outputs"]["json"]).exists()
     assert Path(payload["outputs"]["html"]).exists()
+    assert Path(payload["outputs"]["history"]).exists()
