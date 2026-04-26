@@ -33,6 +33,7 @@ REQUIRED_CI_PATTERNS = [
     "python scripts/skill_gauntlet.py . --strict --semantic",
     "python scripts/eval_workflows.py . --strict",
     "python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise",
+    "python -m pip wheel . --no-deps -w .tmp/wheelhouse",
     "python -m pytest tests -q",
 ]
 
