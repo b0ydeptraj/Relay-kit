@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -38,6 +39,10 @@ def build_support_bundle(
     manifest_status = inspect_manifest(root)
     policy_findings = policy_guard.collect_findings(root, pack_name=pack.name)
     workflow_eval = eval_workflows.build_report(root)
+    signal_export = build_signal_export_summary(
+        root,
+        profile="enterprise" if pack.name == "enterprise" else "team",
+    )
 
     payload: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -90,6 +95,7 @@ def build_support_bundle(
                 "findings_count": workflow_eval["findings_count"],
                 "findings": workflow_eval["findings"],
             },
+            "signal_export": signal_export,
         },
     }
     return redact_value(payload)
@@ -152,7 +158,50 @@ def required_commands(project_root: Path, policy_pack: str) -> list[str]:
         f"relay-kit support bundle {project} --policy-pack {policy_pack}",
         f"relay-kit readiness check {project} --profile {readiness_profile} --json",
         f"relay-kit pulse build {project} --include-readiness",
+        f"relay-kit signal export {project} --json",
     ]
+
+
+def build_signal_export_summary(root: Path, *, profile: str) -> dict[str, Any]:
+    try:
+        from relay_kit_v3.pulse import build_pulse_report, write_pulse_report
+        from relay_kit_v3.signal_export import SCHEMA_VERSION as SIGNAL_EXPORT_SCHEMA_VERSION
+        from relay_kit_v3.signal_export import build_signal_export, write_signal_export
+
+        with tempfile.TemporaryDirectory(prefix="relay-support-pulse-") as temp_dir:
+            pulse_report = build_pulse_report(
+                root,
+                profile=profile,
+                include_readiness=False,
+                skip_tests=True,
+                output_dir=Path(temp_dir),
+            )
+            pulse_outputs = write_pulse_report(
+                root,
+                pulse_report,
+                output_dir=Path(temp_dir),
+                record_history=False,
+            )
+            payload = build_signal_export(root, pulse_file=pulse_outputs["json"])
+        outputs = write_signal_export(root, payload)
+        summary = payload.get("summary", {})
+        signal_count = int(summary.get("signal_count", 0))
+        return {
+            "schema_version": payload.get("schema_version"),
+            "status": "pass" if payload.get("schema_version") == SIGNAL_EXPORT_SCHEMA_VERSION and signal_count > 0 else "fail",
+            "summary": summary,
+            "outputs": {
+                "json": str(outputs["json"]),
+                "jsonl": str(outputs["jsonl"]),
+            },
+        }
+    except Exception as exc:  # pragma: no cover - defensive diagnostic payload
+        return {
+            "schema_version": "relay-kit.signal-export.v1",
+            "status": "fail",
+            "summary": {"signal_count": 0, "metric_count": 0, "event_count": 0},
+            "error": f"{type(exc).__name__}: {exc}",
+        }
 
 
 def redact_value(value: Any) -> Any:

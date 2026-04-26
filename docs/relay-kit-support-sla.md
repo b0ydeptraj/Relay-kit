@@ -24,11 +24,15 @@ relay-kit policy check /path/to/project --pack enterprise --strict --json
 relay-kit manifest verify /path/to/project --trusted
 relay-kit upgrade check /path/to/project --json
 relay-kit eval run /path/to/project --strict --json
+relay-kit pulse build /path/to/project --include-readiness
+relay-kit signal export /path/to/project --json
 ```
 
 Attach:
 
 - `.relay-kit/support/support-bundle.json`
+- `.relay-kit/signals/relay-signals.json`
+- `.relay-kit/signals/relay-signals.jsonl`
 - the failing command output
 - the support request template from `.relay-kit/contracts/support-request.md`
 
@@ -57,7 +61,7 @@ The request must include:
 Included:
 
 - Relay-kit install and generation issues
-- doctor, policy, manifest, upgrade, eval, and evidence-ledger failures
+- doctor, policy, manifest, upgrade, eval, signal export, and evidence-ledger failures
 - bundle and generated skill drift
 - support-bundle interpretation
 - guidance for moving from baseline to enterprise bundle
@@ -73,6 +77,6 @@ Excluded:
 
 1. User runs `relay-kit support bundle`.
 2. User opens a support request with severity and required diagnostics.
-3. Triage validates the bundle schema, package version, manifest status, upgrade status, policy findings, and workflow eval status.
+3. Triage validates the bundle schema, package version, manifest status, upgrade status, policy findings, workflow eval status, and signal export summary.
 4. If the issue is reproducible in Relay-kit, it becomes a fix lane.
 5. If the issue is project-specific, support returns a scoped recommendation and the evidence gap.
