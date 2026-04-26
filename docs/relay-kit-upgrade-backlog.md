@@ -40,11 +40,12 @@ Source audit status:
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
 - Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 106 tests passing and 0 findings.
+- Fixed in release evidence pass: `docs/releases/relay-kit-v3.3.0.md` records PR #1, CI success, release-lane proof, package smoke, enterprise readiness, and rollback evidence for draft release `v3.3.0`.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
-- Current readiness: local commercial-ready candidate.
-- Commercial readiness: locally gated by `relay-kit readiness check` plus `relay-kit release verify`; remote CI result, release upload, and paid support operations still need external release evidence.
+- Current readiness: local commercial-ready candidate with release evidence prepared for `v3.3.0`.
+- Commercial readiness: locally gated by `relay-kit readiness check` plus `relay-kit release verify`; remote CI is green for PR #1/main, while package publication and paid support operations still need external release evidence.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 

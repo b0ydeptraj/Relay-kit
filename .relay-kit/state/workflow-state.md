@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Continue Relay-kit upgrade plan after local commercial-readiness gates, package smoke, release-lane verification, signal export, and support diagnostics were implemented.
+Cut Relay-kit v3.3.0 draft release after PR #1 merged, GitHub Actions passed, and local commercial-readiness gates passed.
 
 ## Active lane
 - Lane id: primary
@@ -10,12 +10,12 @@ Continue Relay-kit upgrade plan after local commercial-readiness gates, package 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: review-hub
+- Layer-2 workflow hub: test-hub
 - Active specialist: developer
 
 ## Active utility providers
-- Primary utility provider: evidence-before-completion
-- Additional utilities in play: testing-patterns
+- Primary utility provider: release-readiness
+- Additional utilities in play: evidence-before-completion, testing-patterns
 
 ## Active standalone/domain skill
 - Skill: release-readiness
@@ -48,13 +48,16 @@ Continue Relay-kit upgrade plan after local commercial-readiness gates, package 
 | none | none | none | none |
 
 ## Next skill
-review-hub
+release-readiness
 
 ## Known blockers
-Remote CI result, release upload, and paid support operations require external release evidence after the branch is pushed or opened as a PR.
+GitHub draft release must be created for tag `v3.3.0`; publishing and package upload remain manual/external release actions.
 
 ## Escalation triggers noticed
 Release and packaging changes touch CI workflow, public CLI, support diagnostics, readiness gates, and package installation proof.
 
 ## Notes
-Candidate branch: `codex/package-install-smoke`. Local evidence from the latest slice: full pytest passed, runtime validation passed, migration guard passed, package install smoke passed, and enterprise readiness returned `commercial-ready-candidate`.
+Merged PR: https://github.com/b0ydeptraj/Relay-kit/pull/1.
+Main commit: d717898ed216bdb0c0655f68478c02557b169a3f.
+Remote CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24953893415 completed successfully.
+Local release evidence: release verify passed, runtime validation passed, migration guard passed, package install smoke passed, pre-release readiness strict gate passed, and enterprise readiness returned `commercial-ready-candidate`.
