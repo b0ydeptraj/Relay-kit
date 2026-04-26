@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Validate Relay-kit runtime integrity for the post-cutover model."""
 
 from __future__ import annotations
@@ -15,9 +15,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from ai_kit_v3.adapters import ADAPTER_TARGETS
-from ai_kit_v3.generator import BUNDLES
-from ai_kit_v3.registry.skills import ALL_V3_SKILLS
+from relay_kit_v3.adapters import ADAPTER_TARGETS
+from relay_kit_v3.generator import BUNDLES
+from relay_kit_v3.registry.skills import ALL_V3_SKILLS
 from relay_kit_compat import (
     CANONICAL_ARTIFACT_ROOT,
     CANONICAL_ENTRYPOINT,
@@ -257,12 +257,13 @@ def validate_checked_in_docs() -> None:
             "discipline-utilities",
             "baseline",
             "baseline-next",
+            "enterprise",
             ".relay-kit/state/workflow-state.md",
         ],
     )
     assert_contains(
         REPO_ROOT / ".relay-kit" / "docs" / "bundle-gating.md",
-        ["discipline-utilities", "baseline", "baseline-next"],
+        ["discipline-utilities", "baseline", "baseline-next", "enterprise"],
     )
 
 
@@ -314,9 +315,15 @@ def validate_generated_bundle(bundle: str) -> None:
                 },
             )
 
+        if bundle == "enterprise":
+            current = generated_sets[ALL_TARGETS[0]]
+            missing = {"test-first-development", "policy-guard", "release-readiness"} - current
+            if missing:
+                fail(f"enterprise bundle missing expected governance skills: {sorted(missing)}")
+
         bundle_gating_doc = temp_dir / CANONICAL_ARTIFACT_ROOT / "docs" / "bundle-gating.md"
         if bundle_gating_doc.exists():
-            assert_contains(bundle_gating_doc, ["discipline-utilities", "baseline", "baseline-next"])
+            assert_contains(bundle_gating_doc, ["discipline-utilities", "baseline", "baseline-next", "enterprise"])
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -393,7 +400,7 @@ def main() -> int:
     validate_context_continuity_utility()
     validate_migration_guard()
     validate_checked_in_docs()
-    for bundle in ("round4", "discipline-utilities", "baseline", "baseline-next"):
+    for bundle in ("round4", "discipline-utilities", "baseline", "baseline-next", "enterprise"):
         validate_generated_bundle(bundle)
         validate_generated_generic_bundle(bundle)
     validate_legacy_generation()

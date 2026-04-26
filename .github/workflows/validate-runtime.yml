@@ -18,5 +18,49 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install test dependencies
+        run: python -m pip install pytest
+
       - name: Validate runtime parity and bundle gating
         run: python scripts/validate_runtime.py
+
+      - name: Run runtime doctor template mode
+        run: python scripts/runtime_doctor.py . --strict
+
+      - name: Run runtime doctor live mode
+        run: python scripts/runtime_doctor.py . --strict --state-mode live
+
+      - name: Run migration guard
+        run: python scripts/migration_guard.py . --strict
+
+      - name: Run policy guard
+        run: python scripts/policy_guard.py . --strict
+
+      - name: Run SRS guard
+        run: python scripts/srs_guard.py . --strict
+
+      - name: Run skill gauntlet
+        run: python scripts/skill_gauntlet.py . --strict --semantic
+
+      - name: Run workflow eval
+        run: python scripts/eval_workflows.py . --strict
+
+      - name: Write trusted manifest evidence
+        run: |
+          python relay_kit_public_cli.py manifest write .
+          python relay_kit_public_cli.py manifest stamp . --issuer ci --channel enterprise
+
+      - name: Run public enterprise doctor
+        run: python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise
+
+      - name: Run release lane verification
+        run: python relay_kit_public_cli.py release verify .
+
+      - name: Build package smoke wheel
+        run: python -m pip wheel . --no-deps -w .tmp/wheelhouse
+
+      - name: Run package install smoke
+        run: python scripts/package_smoke.py .
+
+      - name: Run runtime smoke tests
+        run: python -m pytest tests -q

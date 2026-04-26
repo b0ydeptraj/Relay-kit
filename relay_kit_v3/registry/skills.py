@@ -624,8 +624,8 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Use execution-loop as the execution engine.",
             "Pull in project-architecture, api-integration, data-persistence, and testing-patterns as needed.",
             "Hand off to test-hub or qa-governor; do not self-certify completion without evidence.",
-            "Default to `test-first-development` whenever the change introduces or fixes behavior that can be exercised with a test or clear reproduction harness.",
-            "If test-first is not practical, say why before coding and name the alternative failing signal you will use.",
+            "Use `test-first-development` when it is installed, selected, or provided by the active bundle; otherwise run the test-first loop directly inside this skill and name the fallback evidence path.",
+            "If a test-first loop is not practical, say why before coding and name the alternative failing signal you will use.",
             "Default to plain ASCII in source code, comments, identifiers, test names, placeholder copy, and sample data unless the repo or product explicitly requires non-ASCII content.",
             "If tasks are truly independent and the platform supports collaboration, follow `.relay-kit/docs/parallel-execution.md` before using subagent-style execution.",
         ],
@@ -638,9 +638,9 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             ## Mandatory behavior
             1. Read the active story or tech-spec completely before changing code.
             2. Pull only the support references needed for the specific files or boundaries involved.
-            3. Default to `test-first-development` whenever the behavior is testable.
+            3. Use `test-first-development` when it is installed, selected, or provided by the active bundle; otherwise run the test-first loop directly inside this skill.
             4. Capture the failing test or failing reproduction signal before the main implementation pass.
-            5. If test-first is not practical, say why and name the fallback evidence path before editing code.
+            5. If a test-first loop is not practical, say why and name the fallback evidence path before editing code.
             6. Default to plain ASCII in source code, comments, identifiers, test names, placeholder copy, and sample data. Do not add decorative icons, emojis, or unusual Unicode characters unless the existing repo or product content explicitly requires them.
             7. Execute through `execution-loop` rather than piling unrelated changes into one pass.
             8. Keep one behavior or fix slice per red-green cycle instead of widening scope during the green phase.
@@ -654,14 +654,14 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "qa-governor": SkillSpec(
         name="qa-governor",
-        description="Use when work is about to be called done or implementation confidence is low. Check readiness and completion against acceptance criteria, risk, and regression scope, then write a QA report.",
+        description="Use when work needs a readiness verdict or implementation confidence is low. Check readiness against acceptance criteria, risk, and regression scope, then write a QA report.",
         role="quality",
         layer="layer-4-specialists-and-standalones",
         inputs=["PRD or tech-spec", "architecture or story", "evidence from tests and reviews"],
         outputs=[".relay-kit/contracts/qa-report.md"],
         references=[
             "Use testing-patterns as the evidence map for the project.",
-            "When discipline utilities are installed, use `evidence-before-completion` before making completion claims.",
+            "Use `evidence-before-completion` only for the narrow claim-to-evidence pass before this readiness gate.",
             "Use `.relay-kit/docs/review-loop.md` when review feedback must be validated before action.",
             "Coverage must be explained against acceptance criteria and risk, not just number of tests.",
             "Use context-continuity when readiness evidence must survive a new thread or handoff before final sign-off.",
@@ -670,7 +670,12 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
         body=dedent(
             """\
             # Mission
-            Prevent premature completion claims and surface residual risk clearly.
+            Produce a readiness verdict and surface residual risk clearly.
+
+            ## Boundary
+            - Use qa-governor for readiness verdict, shipability, acceptance coverage, risk, and regression scope.
+            - This is not a one-claim proof pass; use evidence-before-completion for claim-to-evidence checks.
+            - End with a go or no-go recommendation grounded in evidence.
 
             ## Produce `qa-report.md`
             Include:
@@ -686,7 +691,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             - Name the regression surface explicitly.
             - Call out missing tests, weak evidence, or unverified assumptions.
             - Bounce work back when story, tech-spec, or architecture is still underspecified.
-            - Treat completion claims as invalid until they are backed by fresh verification evidence.
+            - Treat completion claims as invalid until the claim-to-evidence pass has fresh verification evidence.
             """
         ).strip(),
     ),
@@ -911,14 +916,37 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
 }
 
 
-def utility_provider_spec(name: str, description: str, outputs: list[str], references: list[str], next_steps: list[str], mission: str, tasks: list[str], rules: list[str]) -> SkillSpec:
+def utility_provider_spec(
+    name: str,
+    description: str,
+    outputs: list[str],
+    references: list[str],
+    next_steps: list[str],
+    mission: str,
+    tasks: list[str],
+    rules: list[str],
+    boundary: list[str] | None = None,
+    evidence_contract: list[str] | None = None,
+) -> SkillSpec:
     body_lines = [
         "# Mission",
         mission,
         "",
-        "## Default outputs",
     ]
+    if boundary:
+        body_lines.extend(["## Boundary"])
+        body_lines.extend([f"- {item}" for item in boundary])
+        body_lines.append("")
+    body_lines.extend([
+        "## Default outputs",
+    ])
     body_lines.extend([f"- {item}" for item in outputs])
+    if evidence_contract:
+        body_lines.extend([
+            "",
+            "## Evidence contract",
+        ])
+        body_lines.extend([f"- {item}" for item in evidence_contract])
     body_lines.extend([
         "",
         "## Typical tasks",
@@ -997,6 +1025,16 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=["Break work into explicit steps and checkpoints.", "Reasoning should support a decision, not become the decision owner."],
         next_steps=["debug-hub", "plan-hub", "fix-hub"],
         mission="Turn a messy question into a short sequence of evidence-backed steps.",
+        boundary=[
+            "Use for ordering a known problem into steps, checkpoints, or observations.",
+            "Do not use for ranking competing solution options; hand that to problem-solving.",
+            "Do not become the decision owner; return the sequence to the active hub.",
+        ],
+        evidence_contract=[
+            "Input must include the active question, current artifact, and at least one known constraint or evidence source.",
+            "Output must be a numbered sequence with a reason for each step and the evidence or artifact it depends on.",
+            "End with the next most informative observation or test, not a completion claim.",
+        ],
         tasks=["Decompose the problem into checkpoints.", "Identify what must be known before acting.", "Recommend the next most informative test or observation."],
         rules=["Keep the sequence short and testable.", "Tie each step to an artifact or evidence source.", "Do not claim completion for the lane."],
     ),
@@ -1007,6 +1045,16 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=["Root cause beats guess-and-patch.", "Surface trade-offs before implementation starts."],
         next_steps=["debug-hub", "plan-hub", "review-hub"],
         mission="Turn evidence into plausible options and ranked next moves.",
+        boundary=[
+            "Use for hypotheses, trade-offs, and option ranking after evidence exists.",
+            "Do not use for step ordering or checkpoint decomposition; hand that to sequential-thinking.",
+            "Do not own implementation, release, or completion verdicts.",
+        ],
+        evidence_contract=[
+            "Input must include current evidence, constraints, and the decision that needs options.",
+            "Output must separate option, supporting evidence, risk, cheapest validation, and recommended next owner.",
+            "Mark uncertainty explicitly when evidence is weak or conflicting.",
+        ],
         tasks=["Generate root-cause hypotheses.", "Compare implementation or mitigation options.", "Call out the cheapest validating experiment."],
         rules=["Ground every option in evidence already collected.", "State uncertainty instead of bluffing.", "Recommend escalation if the issue is really a planning problem."],
     ),
@@ -1017,6 +1065,16 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=["Describe what is visible and why it matters.", "Feed observations back to the owning hub."],
         next_steps=["debug-hub", "test-hub", "review-hub"],
         mission="Translate visual or media evidence into concrete observations the active lane can use.",
+        boundary=[
+            "Use only when an image, video, diagram, rendered UI, or media artifact is itself the evidence.",
+            "Use browser-inspector instead when the required evidence is live DOM, console, network, or performance state.",
+            "Do not infer hidden behavior from visuals alone; label visible facts separately from interpretation.",
+        ],
+        evidence_contract=[
+            "Input must identify the artifact path, source, timestamp or version, and the question being answered.",
+            "Output must list visible observations, confidence, affected acceptance criteria, and follow-up checks.",
+            "Reference any helper used, such as `templates/skills/multimodal-evidence/scripts/document_converter.py` or `media_optimizer.py`.",
+        ],
         tasks=["Inspect screenshots, diagrams, or logs embedded as images.", "Summarize what changed between before/after artifacts.", "Call out ambiguous areas that need manual confirmation."],
         rules=["Do not over-interpret weak signals.", "Tie observations to UI states, logs, or acceptance criteria.", "Keep the output compact and actionable."],
     ),
@@ -1027,6 +1085,16 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=["Collect evidence first, then suggest the next move.", "Capture the smallest reproducible browser path."],
         next_steps=["debug-hub", "test-hub", "review-hub"],
         mission="Collect browser-native evidence that narrows a web issue fast.",
+        boundary=[
+            "Use only when live browser state is needed: console, network, DOM, layout, accessibility tree, or performance.",
+            "Use multimodal-evidence instead for static screenshots or media artifacts without a live browser session.",
+            "Do not browse generally or claim the fix; return observations to the owning hub.",
+        ],
+        evidence_contract=[
+            "Input must include target URL or route, repro steps, expected behavior, actual symptom, and environment when known.",
+            "Output must include observed console/network/DOM/performance facts, reproduction confidence, and captured artifacts.",
+            "Reference the helper used when available, such as `templates/skills/browser-inspector/scripts/console.js`, `network.js`, `snapshot.js`, or `performance.js`.",
+        ],
         tasks=["Inspect console, network, layout, and performance clues.", "Note the exact page state and reproduction path.", "Return the evidence to the owning hub."],
         rules=["Prefer reproducible steps and specific requests over general browsing notes.", "Link evidence to the failing acceptance criterion or symptom.", "Do not claim the fix; supply the evidence."],
     ),
@@ -1241,6 +1309,30 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Keep findings deterministic so repeated runs produce stable verdicts.",
         ],
     ),
+    "policy-guard": utility_provider_spec(
+        name="policy-guard",
+        description="Use when high-risk agent operations need deterministic policy checks before trusting shell, path, secret, prompt, or allowlist changes.",
+        outputs=[
+            "policy risk findings appended to qa-report or workflow-state",
+            "explicit pass or hold verdict for high-risk runtime operations",
+        ],
+        references=[
+            "Use `python scripts/policy_guard.py <project> --strict` as the canonical policy gate.",
+            "Treat policy findings as release blockers until reviewed by qa-governor or review-hub.",
+        ],
+        next_steps=["qa-governor", "review-hub", "fix-hub"],
+        mission="Fail closed on deterministic high-risk agent operation patterns before they reach release or handoff.",
+        tasks=[
+            "Scan runtime and source surfaces for path traversal, destructive shell commands, hard-coded secrets, prompt-injection phrases, and broad migration allowlists.",
+            "Report exact file, line, and check names so the owning hub can fix or explicitly escalate.",
+            "Rerun the strict policy gate after any remediation before claiming the lane is safe.",
+        ],
+        rules=[
+            "Do not treat policy findings as cosmetic lint.",
+            "Prefer fixing the risky surface over allowlisting it.",
+            "Escalate to review-hub when a finding is intentional but operationally sensitive.",
+        ],
+    ),
     "context-continuity": utility_provider_spec(
         name="context-continuity",
         description="Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions.",
@@ -1374,14 +1466,24 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
     ),
     "evidence-before-completion": utility_provider_spec(
         name="evidence-before-completion",
-        description="Use when a hub or specialist is about to say work is done, fixed, or ready. Completion-evidence utility.",
-        outputs=["fresh verification evidence and claim checks appended to qa-report, workflow-state, or the active artifact"],
-        references=["No completion claims without fresh verification output.", "Match every claim to the command or evidence that proves it."],
+        description="Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility.",
+        outputs=["fresh claim-to-evidence checks and proof output appended to workflow-state or the active artifact"],
+        references=["No completion claims without fresh verification output.", "Match every claim to the command or evidence that proves it.", "Hand formal readiness verdicts to qa-governor or ready-check."],
         next_steps=["test-hub", "qa-governor", "review-hub"],
         mission="Stop premature completion claims by forcing a claim-to-evidence check.",
+        boundary=[
+            "Use for specific completion claims that need proof output.",
+            "This is not a readiness verdict and does not decide shipability.",
+            "This utility does not own `qa-report.md`; qa-governor owns formal QA reports and go or no-go recommendations.",
+        ],
+        evidence_contract=[
+            "Input must include the exact claims being made and the newest available evidence.",
+            "Output must map each claim to a command, artifact, or observed proof output.",
+            "Reject any claim without fresh evidence and route back to testing or debugging.",
+        ],
         tasks=[
             "List the exact claims being made.",
-            "Name the command, artifact, or output that proves each claim.",
+            "Name the command, artifact, or proof output that proves each claim.",
             "Check whether expected artifact deltas actually exist for code-change claims.",
             "Reject claims that are not backed by fresh evidence.",
         ],
@@ -1457,5 +1559,3 @@ def render_skill(spec: SkillSpec) -> str:
     ])
     parts.extend(f"- {item}" for item in spec.next_steps)
     return "\n".join(parts).rstrip() + "\n"
-
-

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Check runtime drift and adapter parity for Relay-kit surfaces."""
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from ai_kit_v3.registry.skills import ALL_V3_SKILLS
+from relay_kit_v3.registry.skills import ALL_V3_SKILLS
 
 
 REQUIRED_DOCS = [
@@ -27,6 +27,8 @@ STATE_FILES = [
     ".relay-kit/state/lane-registry.md",
     ".relay-kit/state/handoff-log.md",
 ]
+
+CONTRACTS_DIR = ".relay-kit/contracts"
 
 ADAPTERS = [
     ".claude/skills",
@@ -112,6 +114,19 @@ def check_state_placeholders(root: Path, findings: list[str], mode: str) -> None
             findings.append(f"Live state artifact still contains TBD markers: {rel}")
 
 
+def check_contract_placeholders(root: Path, findings: list[str], mode: str) -> None:
+    if mode != "live":
+        return
+    contracts_dir = root / CONTRACTS_DIR
+    if not contracts_dir.exists():
+        return
+    for path in sorted(contracts_dir.rglob("*.md")):
+        content = path.read_text(encoding="utf-8")
+        if "TBD" in content:
+            rel = path.relative_to(root).as_posix()
+            findings.append(f"Live contract artifact still contains TBD markers: {rel}")
+
+
 def main() -> int:
     args = parse_args()
     root = Path(args.project).resolve()
@@ -120,6 +135,7 @@ def main() -> int:
     check_exists(root, findings)
     check_adapter_parity(root, findings)
     check_state_placeholders(root, findings, args.state_mode)
+    check_contract_placeholders(root, findings, args.state_mode)
 
     print("Runtime doctor report")
     print(f"- state mode: {args.state_mode}")

@@ -43,6 +43,24 @@ ARTIFACT_CONTRACTS: Dict[str, ArtifactContract] = {
         ],
         used_by=["pm", "architect", "scrum-master", "qa-governor", "plan-hub"],
     ),
+    "srs-spec": ArtifactContract(
+        name="srs-spec",
+        path=".relay-kit/contracts/srs-spec.md",
+        purpose="Provide a non-technical SRS-first contract that anchors actors, use cases, preconditions, postconditions, and exception flows before PRD slicing.",
+        sections=[
+            "Goal",
+            "Actors",
+            "Use Cases",
+            "Preconditions",
+            "Main Flows",
+            "Postconditions",
+            "Exception Flows",
+            "Business Rules",
+            "Acceptance Examples",
+            "Open Questions",
+        ],
+        used_by=["workflow-router", "plan-hub", "pm", "scrum-master", "qa-governor"],
+    ),
     "architecture": ArtifactContract(
         name="architecture",
         path=".relay-kit/contracts/architecture.md",
@@ -189,6 +207,18 @@ SECTION_HINTS = {
         "Risks and mitigations": "Product, technical, delivery, and adoption risks.",
         "Release slices": "Propose thin vertical slices or milestones.",
     },
+    "srs-spec": {
+        "Goal": "Describe the user or business outcome in plain language.",
+        "Actors": "Name each actor and their constraints or permissions.",
+        "Use Cases": "List use cases with stable UC-IDs and expected user feedback.",
+        "Preconditions": "State what must be true before each use case starts.",
+        "Main Flows": "Write the happy path steps as user-system interaction.",
+        "Postconditions": "State what must be true after successful completion.",
+        "Exception Flows": "Describe failure paths, retries, and user-facing error messages.",
+        "Business Rules": "Capture hard rules the system must not violate.",
+        "Acceptance Examples": "Give concrete pass/fail examples mapped to UC-IDs.",
+        "Open Questions": "Capture unresolved points blocking confident implementation.",
+    },
     "architecture": {
         "Current-system constraints": "Patterns that already exist and should not be broken casually.",
         "Proposed design": "High-level shape of the change and why it fits the current system.",
@@ -246,7 +276,6 @@ def render_artifact(contract: ArtifactContract) -> str:
         lines.append(f"## {section}")
         lines.append(hints.get(section, "Fill in only with evidence, decisions, or open questions relevant to this artifact."))
         lines.append("")
-        lines.append("TBD")
+        lines.append("No evidence recorded yet.")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
-

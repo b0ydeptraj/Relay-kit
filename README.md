@@ -1,4 +1,4 @@
-﻿[English](README.md) | [Tiáº¿ng Viá»‡t](README.vi.md)
+[English](README.md) | [Tiếng Việt](README.vi.md)
 
 # Relay-kit
 
@@ -15,18 +15,25 @@ With Relay-kit, an agent gets:
 
 The result is simple: agents work with more structure, fewer random moves, and stronger proof before anything is called done.
 
-## Install and use (GitHub)
+## 5-minute start
 
-For users who just want to install and run:
+For users who just want to install Relay-kit and generate one runtime:
 
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
-relay-kit "C:\\path\\to\\my-app" --codex
-relay-kit "C:\\path\\to\\my-app" --claude
-relay-kit "C:\\path\\to\\my-app" --antigravity
+relay-kit init "C:\\path\\to\\my-app" --codex --baseline
+relay-kit doctor "C:\\path\\to\\my-app"
 ```
 
-Use one adapter flag per run.
+Use one adapter flag per run. Replace `--codex` with `--claude` or `--antigravity` when that is the target agent.
+
+For a local repo checkout:
+
+```bash
+pipx install .
+relay-kit init /path/to/project --codex --baseline
+relay-kit doctor /path/to/project
+```
 
 ## Why use Relay-kit
 
@@ -64,48 +71,139 @@ It makes agents behave less like improvising interns and more like engineers wor
 - an `accessibility-review` gate so frontend quality is not only visual
 - a `skill-gauntlet` regression gate to keep skill routing behavior stable
 - a `context-continuity` utility for checkpoint, rehydrate, handoff, and diff flows
+- a `readiness check` gate that combines tests, doctor, policy, manifest trust, upgrade, support, contract sync, and signal export proof
+- local Pulse reports and signal exports for quality review and support diagnostics
 - an active baseline that is validated instead of loosely assembled
 - a way to make work more consistent without forcing everything through raw chat memory
 
-## Quick start
+## Useful commands
 
-List available skills and bundles:
+List active bundles without legacy migration-only noise:
 
 ```bash
-python relay_kit.py --list-skills
+relay-kit --list-skills
 ```
 
-Generate the active baseline:
+Show preserved legacy suites only when you need migration/debug detail:
 
 ```bash
-python relay_kit.py . --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
+relay-kit --list-skills --show-legacy
 ```
 
-Public installer surface (local repo checkout):
+Generate all active adapters:
 
 ```bash
-pipx install .
-relay-kit /path/to/project --codex
-relay-kit /path/to/project --claude
-relay-kit /path/to/project --antigravity
+relay-kit init /path/to/project --all --baseline
 ```
 
-Install directly from GitHub:
+Generate the enterprise governance bundle:
 
 ```bash
-pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
-relay-kit /path/to/project --codex
+relay-kit init /path/to/project --all --bundle enterprise
+relay-kit manifest write /path/to/project
+relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
+relay-kit doctor /path/to/project --policy-pack enterprise
+relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
+relay-kit readiness check /path/to/project --profile enterprise
 ```
 
-The public wrapper maps:
-- `--codex` -> `--ai codex`
-- `--claude` -> `--ai claude`
-- `--antigravity` -> `--ai antigravity` (runtime target: `.agent/skills`)
-
-Validate the runtime contract:
+Run the support gate:
 
 ```bash
-python scripts/validate_runtime.py
+relay-kit doctor /path/to/project
+relay-kit manifest verify /path/to/project --trusted
+relay-kit doctor /path/to/project --policy-pack enterprise
+```
+
+Show recent gate evidence:
+
+```bash
+relay-kit evidence summary /path/to/project
+relay-kit doctor /path/to/project --json
+```
+
+Doctor writes local JSONL events to `.relay-kit/evidence/events.jsonl`.
+
+Export planning and QA contracts as machine-readable JSON:
+
+```bash
+relay-kit contract export /path/to/project
+relay-kit contract import /path/to/project --contract-file /path/to/relay-contract.json
+relay-kit contract import /path/to/project --contract-file /path/to/relay-contract.json --apply
+```
+
+Write and verify the bundle checksum manifest:
+
+```bash
+relay-kit manifest write /path/to/project
+relay-kit manifest verify /path/to/project
+relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
+relay-kit manifest verify /path/to/project --trusted
+```
+
+Run policy guard packs:
+
+```bash
+relay-kit policy list
+relay-kit policy check /path/to/project --pack enterprise --strict
+```
+
+Prepare a support diagnostics bundle:
+
+```bash
+relay-kit support bundle /path/to/project --policy-pack enterprise
+```
+
+Build a local Pulse quality report:
+
+```bash
+relay-kit pulse build /path/to/project
+relay-kit pulse build /path/to/project --include-readiness --json
+relay-kit pulse build /path/to/project --history-limit 50
+```
+
+Export Pulse and evidence ledger signals:
+
+```bash
+relay-kit signal export /path/to/project
+relay-kit signal export /path/to/project --json
+```
+
+Run the paid/team readiness gate:
+
+```bash
+relay-kit readiness check /path/to/project --profile enterprise
+relay-kit readiness check /path/to/project --profile enterprise --json
+```
+
+Verify local release-lane prerequisites:
+
+```bash
+relay-kit release verify /path/to/project
+relay-kit release verify /path/to/project --json
+```
+
+Measure workflow routing quality with bundled scenarios:
+
+```bash
+relay-kit eval run /path/to/project --strict
+relay-kit eval run /path/to/project --json --output-file workflow-eval.json
+relay-kit eval run /path/to/project --strict --baseline-file previous-workflow-eval.json
+```
+
+Track installed runtime version and print upgrade actions:
+
+```bash
+relay-kit manifest write /path/to/project
+relay-kit upgrade mark-current /path/to/project --bundle baseline --adapter codex
+relay-kit upgrade check /path/to/project --strict
+relay-kit upgrade plan /path/to/project
+```
+
+Maintainer-only core entrypoint:
+
+```bash
+python relay_kit.py /path/to/project --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
 ```
 
 ## Start flow
@@ -143,6 +241,8 @@ Default path for branch or PR review:
 1. `review-pr`
 2. `ready-check` if you need a real readiness or shipability verdict
 3. `prove-it` if the completion claim still sounds stronger than the proof
+
+Use `prove-it` for a narrow claim-to-evidence pass. Use `ready-check` when you need a go / no-go readiness verdict and `qa-report.md`.
 
 More detail:
 - [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
@@ -219,8 +319,16 @@ Historical compatibility timeline and removal log:
   - [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
 - Release readiness and deploy smoke:
   - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
+- Release lane verification:
+  - [`docs/relay-kit-release-lane.md`](docs/relay-kit-release-lane.md)
 - Accessibility gate:
   - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
+- Commercial readiness gate:
+  - [`docs/relay-kit-readiness-check.md`](docs/relay-kit-readiness-check.md)
+- Pulse quality report:
+  - [`docs/relay-kit-pulse-report.md`](docs/relay-kit-pulse-report.md)
+- Signal export:
+  - [`docs/relay-kit-signal-export.md`](docs/relay-kit-signal-export.md)
 - Skill behavior gauntlet:
   - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
 - Context continuity:
@@ -238,5 +346,3 @@ Historical compatibility timeline and removal log:
 ## Legacy note
 
 Legacy kits still exist for migration and compatibility work. They are not the main Relay-kit runtime story.
-
-
