@@ -26,6 +26,7 @@ relay-kit upgrade check /path/to/project --json
 relay-kit eval run /path/to/project --strict --json
 relay-kit pulse build /path/to/project --include-readiness
 relay-kit signal export /path/to/project --json
+relay-kit release verify /path/to/project --json
 ```
 
 Attach:
@@ -61,7 +62,7 @@ The request must include:
 Included:
 
 - Relay-kit install and generation issues
-- doctor, policy, manifest, upgrade, eval, signal export, and evidence-ledger failures
+- doctor, policy, manifest, upgrade, eval, signal export, release-lane, and evidence-ledger failures
 - bundle and generated skill drift
 - support-bundle interpretation
 - guidance for moving from baseline to enterprise bundle

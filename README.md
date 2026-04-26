@@ -176,6 +176,13 @@ relay-kit readiness check /path/to/project --profile enterprise
 relay-kit readiness check /path/to/project --profile enterprise --json
 ```
 
+Verify local release-lane prerequisites:
+
+```bash
+relay-kit release verify /path/to/project
+relay-kit release verify /path/to/project --json
+```
+
 Measure workflow routing quality with bundled scenarios:
 
 ```bash
@@ -312,6 +319,8 @@ Historical compatibility timeline and removal log:
   - [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
 - Release readiness and deploy smoke:
   - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
+- Release lane verification:
+  - [`docs/relay-kit-release-lane.md`](docs/relay-kit-release-lane.md)
 - Accessibility gate:
   - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
 - Commercial readiness gate:

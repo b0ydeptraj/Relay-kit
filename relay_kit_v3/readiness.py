@@ -14,6 +14,7 @@ from relay_kit_v3.contract_export import SCHEMA_VERSION as CONTRACT_EXPORT_SCHEM
 from relay_kit_v3.contract_export import export_contracts
 from relay_kit_v3.contract_import import IMPORT_SCHEMA_VERSION as CONTRACT_IMPORT_SCHEMA_VERSION
 from relay_kit_v3.contract_import import import_contracts
+from relay_kit_v3.release_lane import build_release_lane_report
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_SCHEMA_VERSION
 from relay_kit_v3.support_bundle import build_support_bundle
 from relay_kit_v3.upgrade import build_upgrade_report
@@ -61,6 +62,7 @@ def build_readiness_report(
     gates.append(_upgrade_gate(root, upgrade))
     gates.append(_contract_sync_gate(root, contract_export, contract_import))
     gates.append(_signal_export_gate(root, selected_profile))
+    gates.append(_release_lane_gate(root))
     gates.append(_commercial_docs_gate(root))
 
     required_failures = [gate for gate in gates if gate["required"] and gate["status"] not in {"pass", "skipped"}]
@@ -87,7 +89,7 @@ def build_readiness_report(
         if gate["status"] not in {"pass", "skipped"}
     ]
     residual_risks = [
-        "Remote CI, release upload, and paid support operations are not verified by this local gate.",
+        "Remote CI result, release upload, and paid support operations are not verified by this local gate.",
         "This gate produces a commercial-ready candidate verdict, not a cryptographic release attestation.",
     ]
 
@@ -359,6 +361,24 @@ def _commercial_docs_gate(root: Path) -> dict[str, Any]:
         "summary": "all required commercial docs exist" if not missing else f"missing: {', '.join(missing)}",
         "details": {"missing": missing},
     }
+
+
+def _release_lane_gate(root: Path) -> dict[str, Any]:
+    try:
+        report = build_release_lane_report(root)
+        return {
+            "id": "release-lane",
+            "label": "release lane",
+            "status": "pass" if report.get("status") == "pass" else "fail",
+            "required": True,
+            "summary": f"release lane status: {report.get('status')}; findings: {len(report.get('findings', []))}",
+            "details": {
+                "findings": report.get("findings", []),
+                "residual_risks": report.get("residual_risks", []),
+            },
+        }
+    except Exception as exc:  # pragma: no cover - defensive gate summary
+        return _exception_gate("release-lane", "release lane", exc)
 
 
 def _default_support_builder(root: Path, policy_pack: str) -> Mapping[str, Any]:

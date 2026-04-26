@@ -23,12 +23,63 @@ def failing_policy_runner(command: list[str], cwd: Path) -> subprocess.Completed
 
 
 def write_required_docs(root: Path) -> None:
+    (root / "README.md").write_text("# Relay-kit\n", encoding="utf-8")
     (root / "docs").mkdir(parents=True, exist_ok=True)
     (root / "docs" / "relay-kit-support-sla.md").write_text("# Support\n", encoding="utf-8")
     (root / "docs" / "relay-kit-enterprise-bundle.md").write_text("# Enterprise Bundle\n", encoding="utf-8")
     (root / "docs" / "relay-kit-contract-sync.md").write_text("# Contract Sync\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-readiness-check.md").write_text("# Readiness Check\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-pulse-report.md").write_text("# Pulse Report\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-signal-export.md").write_text("# Signal Export\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-release-readiness.md").write_text("# Release Readiness\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-release-lane.md").write_text("# Release Lane\n", encoding="utf-8")
     (root / ".relay-kit" / "contracts").mkdir(parents=True, exist_ok=True)
     (root / ".relay-kit" / "contracts" / "support-request.md").write_text("# Support Request\n", encoding="utf-8")
+    (root / "pyproject.toml").write_text(
+        """
+[project]
+name = "relay-kit"
+version = "3.3.0"
+
+[project.scripts]
+relay-kit = "relay_kit_public_cli:main"
+
+[tool.setuptools.packages.find]
+include = ["relay_kit_v3*", "scripts*"]
+        """.strip()
+        + "\n",
+        encoding="utf-8",
+    )
+    workflow = root / ".github" / "workflows"
+    workflow.mkdir(parents=True, exist_ok=True)
+    (workflow / "validate-runtime.yml").write_text(
+        "\n".join(
+            [
+                "python scripts/validate_runtime.py",
+                "python scripts/runtime_doctor.py . --strict",
+                "python scripts/runtime_doctor.py . --strict --state-mode live",
+                "python scripts/migration_guard.py . --strict",
+                "python scripts/policy_guard.py . --strict",
+                "python scripts/skill_gauntlet.py . --strict --semantic",
+                "python scripts/eval_workflows.py . --strict",
+                "python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise",
+                "python -m pytest tests -q",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    manifest = root / ".relay-kit" / "manifest"
+    manifest.mkdir(parents=True, exist_ok=True)
+    (manifest / "bundles.json").write_text("{}\n", encoding="utf-8")
+    (manifest / "trust.json").write_text("{}\n", encoding="utf-8")
+    (root / ".relay-kit" / "version.json").write_text("{}\n", encoding="utf-8")
+    support = root / ".relay-kit" / "support"
+    support.mkdir(parents=True, exist_ok=True)
+    (support / ".gitignore").write_text("support-bundle.json\n", encoding="utf-8")
+    signals = root / ".relay-kit" / "signals"
+    signals.mkdir(parents=True, exist_ok=True)
+    (signals / ".gitignore").write_text("relay-signals.json\nrelay-signals.jsonl\n", encoding="utf-8")
 
 
 def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: Path) -> None:
@@ -61,6 +112,7 @@ def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: P
         "upgrade-check",
         "contract-sync",
         "signal-export",
+        "release-lane",
         "commercial-docs",
     }
     signal_gate = next(gate for gate in report["gates"] if gate["id"] == "signal-export")

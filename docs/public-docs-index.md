@@ -9,6 +9,7 @@ Use this page as the public entrypoint for current runtime behavior.
 - `docs/relay-kit-review-flow.md`
 - `docs/relay-kit-memory-search.md`
 - `docs/relay-kit-release-readiness.md`
+- `docs/relay-kit-release-lane.md`
 - `docs/relay-kit-accessibility-review.md`
 - `docs/relay-kit-readiness-check.md`
 - `docs/relay-kit-pulse-report.md`

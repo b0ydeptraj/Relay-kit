@@ -10,6 +10,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit policy check <project_path>
   relay-kit support bundle <project_path>
   relay-kit readiness check <project_path>
+  relay-kit release verify <project_path>
   relay-kit pulse build <project_path>
   relay-kit signal export <project_path>
   relay-kit contract import <project_path> --contract-file <relay-contract.json>
@@ -32,6 +33,7 @@ from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, 
 from relay_kit_v3.bundle_manifest import verify_manifest_file, verify_trusted_manifest_file, write_manifest, write_trust_stamp
 from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS
 from relay_kit_v3.pulse import build_pulse_report, write_pulse_report
+from relay_kit_v3.release_lane import build_release_lane_report, render_release_lane_report, write_release_lane_report
 from relay_kit_v3.readiness import build_readiness_report, render_readiness_report
 from relay_kit_v3.signal_export import build_signal_export, write_signal_export
 from relay_kit_v3.contract_export import write_contract_export
@@ -331,6 +333,20 @@ def _parse_readiness_args(argv: list[str]) -> argparse.Namespace:
     check.add_argument("--profile", choices=["team", "enterprise"], default="enterprise")
     check.add_argument("--skip-tests", action="store_true", help="Skip pytest inside the readiness suite")
     check.add_argument("--json", action="store_true", help="Emit machine-readable readiness report")
+    return parser.parse_args(argv)
+
+
+def _parse_release_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit release",
+        description="Verify local release-lane prerequisites for Relay-kit.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    verify = subparsers.add_parser("verify", help="Verify local release-lane prerequisites")
+    verify.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    verify.add_argument("--require-clean", action="store_true", help="Fail when the git worktree is dirty")
+    verify.add_argument("--output-file", default=None, help="Optional JSON report output path")
+    verify.add_argument("--json", action="store_true", help="Emit machine-readable release-lane report")
     return parser.parse_args(argv)
 
 
@@ -761,6 +777,19 @@ def run_readiness(args: argparse.Namespace) -> int:
     return 0 if report["status"] == "pass" else 2
 
 
+def run_release(args: argparse.Namespace) -> int:
+    if args.action != "verify":
+        return 2
+    report = build_release_lane_report(args.project_path, require_clean=args.require_clean)
+    if args.output_file:
+        write_release_lane_report(args.project_path, report, output_file=args.output_file)
+    if args.json:
+        print(json.dumps(report, ensure_ascii=True, indent=2))
+    else:
+        print(render_release_lane_report(report))
+    return 0 if report["status"] == "pass" else 2
+
+
 def run_pulse(args: argparse.Namespace) -> int:
     if args.action != "build":
         return 2
@@ -841,6 +870,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_support(_parse_support_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "readiness":
         return run_readiness(_parse_readiness_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "release":
+        return run_release(_parse_release_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "pulse":
         return run_pulse(_parse_pulse_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "signal":

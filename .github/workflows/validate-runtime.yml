@@ -53,5 +53,8 @@ jobs:
       - name: Run public enterprise doctor
         run: python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise
 
+      - name: Run release lane verification
+        run: python relay_kit_public_cli.py release verify .
+
       - name: Run runtime smoke tests
         run: python -m pytest tests -q

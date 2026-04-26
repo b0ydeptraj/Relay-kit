@@ -26,6 +26,7 @@ Source audit status:
 - Fixed in Pulse history pass: Pulse now appends compact history snapshots and reports trend deltas for score, pass rate, evidence coverage, route margin, and status changes.
 - Fixed in signal export pass: `relay-kit signal export` writes local JSON/JSONL telemetry-style signals from Pulse and the evidence ledger.
 - Fixed in readiness signal gate pass: `relay-kit readiness check` now requires the local signal export gate before returning a commercial-ready candidate.
+- Fixed in release-lane verification pass: `relay-kit release verify` checks package metadata, CI gate coverage, commercial docs, manifest/trust/version artifacts, and generated artifact ignore policy; readiness now includes this local gate.
 - Fixed in upgrade CLI pass: `relay-kit upgrade check|plan|mark-current` tracks installed runtime version and prints safe upgrade actions without auto-overwriting files.
 - Fixed in enterprise bundle pass: `--bundle enterprise` installs baseline plus the full discipline utility set and emits governance docs for paid/team usage.
 - Fixed in Pro policy packs pass: `relay-kit policy check --pack baseline|team|enterprise` and `relay-kit doctor --policy-pack enterprise` enforce stronger governance surfaces for team/paid installs.
@@ -40,7 +41,7 @@ Source audit status:
 
 Current verdict:
 - Current readiness: local commercial-ready candidate.
-- Commercial readiness: locally gated by `relay-kit readiness check`; remote CI, release upload, and paid support operations still need release-lane verification.
+- Commercial readiness: locally gated by `relay-kit readiness check` plus `relay-kit release verify`; remote CI result, release upload, and paid support operations still need external release evidence.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
@@ -690,6 +691,7 @@ Expected gain:
 - Done second Pulse slice: add local trend/history JSONL so Pulse can compare current quality against prior runs.
 - Done first signal export slice: add local JSON/JSONL telemetry-style export from Pulse and evidence ledger signals.
 - Done second signal export slice: readiness now verifies signal export as a required commercial gate.
+- Done first release-lane slice: add `relay-kit release verify` and include it in readiness/support evidence.
 - Done first slice: add `relay-kit readiness check` as the single commercial readiness verdict.
 
 Expected gain:
@@ -710,6 +712,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Paid support/upgrade path is documented.
 - `relay-kit readiness check --profile enterprise` returns `commercial-ready-candidate` for the release candidate.
 - `relay-kit readiness check` proves signal export artifacts can be generated locally.
+- `relay-kit release verify` passes for local release-lane prerequisites.
 
 Review-hub verdict for this backlog:
 - Go forward by fixing P0 first, then P1 items in order.
