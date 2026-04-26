@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Cut Relay-kit v3.3.0 draft release after PR #1 merged, GitHub Actions passed, and local commercial-readiness gates passed.
+Publish Relay-kit v3.3.0 after PR #1 merged, GitHub Actions passed, local commercial-readiness gates passed, and draft release evidence was created.
 
 ## Active lane
 - Lane id: primary
@@ -48,16 +48,17 @@ Cut Relay-kit v3.3.0 draft release after PR #1 merged, GitHub Actions passed, an
 | none | none | none | none |
 
 ## Next skill
-release-readiness
+workflow-router
 
 ## Known blockers
-GitHub draft release must be created for tag `v3.3.0`; publishing and package upload remain manual/external release actions.
+Package upload or marketplace publication remains a separate external release action.
 
 ## Escalation triggers noticed
 Release and packaging changes touch CI workflow, public CLI, support diagnostics, readiness gates, and package installation proof.
 
 ## Notes
 Merged PR: https://github.com/b0ydeptraj/Relay-kit/pull/1.
-Main commit: d717898ed216bdb0c0655f68478c02557b169a3f.
-Remote CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24953893415 completed successfully.
-Local release evidence: release verify passed, runtime validation passed, migration guard passed, package install smoke passed, pre-release readiness strict gate passed, and enterprise readiness returned `commercial-ready-candidate`.
+Release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
+Tag commit: d46f9c934805010cbf64fca00c28c6bc9dc233a9.
+Remote CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24955362678 completed successfully.
+Local release evidence: release verify passed, runtime validation passed, migration guard passed, package install smoke passed, pre-release and post-release readiness strict gates passed, and enterprise readiness returned `commercial-ready-candidate`.

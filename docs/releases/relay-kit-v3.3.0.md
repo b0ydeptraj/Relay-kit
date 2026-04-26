@@ -1,15 +1,22 @@
 # Relay-kit v3.3.0 Release Evidence
 
 Date: 2026-04-26
-Commit: d717898ed216bdb0c0655f68478c02557b169a3f
+Tag: v3.3.0
+Tag commit: d46f9c934805010cbf64fca00c28c6bc9dc233a9
+Implementation baseline commit: d717898ed216bdb0c0655f68478c02557b169a3f
 PR: https://github.com/b0ydeptraj/Relay-kit/pull/1
-GitHub Actions: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24953893415
+Final GitHub Actions: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24955362678
+Baseline GitHub Actions: https://github.com/b0ydeptraj/Relay-kit/actions/runs/24953893415
+Release URL: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0
+Published: 2026-04-26T12:01:08Z
 
 ## Verdict
 
+Release status: published.
 Local release lane: pass.
 Enterprise readiness: commercial-ready-candidate.
 GitHub Actions Validate Runtime: success.
+Post-release readiness: pass.
 
 ## Major Changes
 
@@ -26,21 +33,22 @@ GitHub Actions Validate Runtime: success.
 ## Evidence Commands
 
 - `python -m pytest -q --basetemp=.tmp\pytest-release-v3-3-0` -> 123 passed.
+- `python -m pytest -q --basetemp=.tmp\pytest-release-note-commit` -> 123 passed.
 - `python scripts\validate_runtime.py` -> pass.
 - `python scripts\migration_guard.py . --strict` -> findings: 0.
-- `python scripts\package_smoke.py . --json` -> pass.
+- `python scripts\package_smoke.py . --json` -> pass; wheel `relay_kit-3.3.0-py3-none-any.whl`; installed CLI smoke passed.
 - `python relay_kit_public_cli.py release verify . --require-clean --json` -> pass.
-- `python relay_kit_public_cli.py readiness check . --profile enterprise --json` -> commercial-ready-candidate.
+- `python relay_kit_public_cli.py readiness check . --profile enterprise --json` -> commercial-ready-candidate, 123 passed.
 - `python scripts\release_readiness.py . --phase pre --signals-file .tmp\release-v3.3.0-signals.json --strict --json` -> pass.
-- GitHub Actions `Validate Runtime` run `24953893415` -> success.
+- `python scripts\release_readiness.py . --phase post --signals-file .tmp\release-v3.3.0-post-signals.json --strict --json` -> pass.
+- GitHub Actions `Validate Runtime` run `24955362678` -> success.
 
 ## Residual Risks
 
-- GitHub release is draft until explicitly published.
-- Package upload or marketplace publication is not performed by this release note.
+- Package upload or marketplace publication is not performed by this release.
 - Paid support operations are documented and diagnostically supported, but not a legal SLA.
 
 ## Rollback
 
-- Do not publish the draft release if remote CI or local release gates fail.
 - If a published release regresses, delete or supersede tag `v3.3.0`, restore main to prior stable commit `4fd2faa231709ab716f14c5505b84a9a8e904ace`, and rerun `relay-kit release verify`.
+- Rollback triggers: CI failure on the release commit, package smoke failure, enterprise readiness failure, or a support-diagnosed P0 runtime regression.
