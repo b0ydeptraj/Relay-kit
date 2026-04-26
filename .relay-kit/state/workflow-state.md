@@ -1,33 +1,33 @@
 # workflow-state
 
 ## Current request
-No active request recorded.
+Continue Relay-kit upgrade plan after local commercial-readiness gates, package smoke, release-lane verification, signal export, and support diagnostics were implemented.
 
 ## Active lane
 - Lane id: primary
 - Mode: serial
-- Lane owner: unassigned
+- Lane owner: Codex
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: none selected
-- Active specialist: none
+- Layer-2 workflow hub: review-hub
+- Active specialist: developer
 
 ## Active utility providers
-- Primary utility provider: none
-- Additional utilities in play: none
+- Primary utility provider: evidence-before-completion
+- Additional utilities in play: testing-patterns
 
 ## Active standalone/domain skill
-- Skill: none selected
-- Why selected: no standalone or domain skill selected
+- Skill: release-readiness
+- Why selected: local gates are implemented; remaining risk is integration/release evidence.
 
 ## Complexity level
-- Level: unclassified
-- Reasoning: no active request classified
+- Level: L4
+- Reasoning: release, packaging, CI, support diagnostics, and commercial-readiness gates are enterprise-sensitive.
 
 ## Chosen track
-- Track: unselected
-- Why this track fits: no active track selected
+- Track: enterprise-flow
+- Why this track fits: the next step is integration and release proof, not another isolated runtime feature.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -37,7 +37,7 @@ No active request recorded.
 - [ ] story
 - [ ] tech-spec
 - [ ] investigation-notes
-- [ ] qa-report
+- [x] qa-report
 - [ ] team-board
 - [ ] lane-registry
 - [ ] handoff-log
@@ -48,13 +48,13 @@ No active request recorded.
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+review-hub
 
 ## Known blockers
-none recorded
+Remote CI result, release upload, and paid support operations require external release evidence after the branch is pushed or opened as a PR.
 
 ## Escalation triggers noticed
-none observed
+Release and packaging changes touch CI workflow, public CLI, support diagnostics, readiness gates, and package installation proof.
 
 ## Notes
-Empty live state initialized. Replace these values when a request is active.
+Candidate branch: `codex/package-install-smoke`. Local evidence from the latest slice: full pytest passed, runtime validation passed, migration guard passed, package install smoke passed, and enterprise readiness returned `commercial-ready-candidate`.
