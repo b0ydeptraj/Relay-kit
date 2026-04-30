@@ -45,6 +45,10 @@ Attach:
 - the failing command output
 - the support request template from `.relay-kit/contracts/support-request.md`
 
+When `.relay-kit/support/support-request.json` already exists, the support bundle
+also includes a redacted `diagnostics.support_request` summary with status,
+severity, environment, diagnostic count, and finding count.
+
 ## Support Request Template
 
 Use:

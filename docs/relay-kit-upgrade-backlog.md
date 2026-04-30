@@ -40,7 +40,7 @@ Source audit status:
 - Fixed in governance reference pass: enterprise policy guard now fails required governance files that still contain unresolved `TBD` or template markers.
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
-- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 146 tests passing and 0 findings.
+- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 147 tests passing and 0 findings.
 - Fixed in release publication pass: `v3.3.0` is published with PR #1, CI success, release-lane proof, package smoke, enterprise readiness, post-release readiness, and rollback evidence.
 - Fixed in Relay OTLP export pass: `relay-kit signal export --otlp` writes dependency-free OTLP-compatible `relay-signals-otlp.json` with `resourceMetrics` and `resourceLogs` for external observability pipelines.
 - Fixed in OTLP readiness/support pass: readiness and support diagnostics now generate and report the OTLP signal artifact, not only JSON and JSONL exports.
@@ -51,6 +51,7 @@ Source audit status:
 - Fixed in publication trail hardening pass: `relay-kit publish trail` now writes JSON/Markdown runbooks with deterministic capture paths and copyable commands for readiness, release verify, build, twine-check capture, plan, upload-log capture, and evidence generation.
 - Fixed in next-dev version hygiene pass: `main` now uses PEP 440 package version `3.4.0.dev0` after the published `v3.3.0` tag, with runtime version marker and trusted manifest regenerated for the next-dev channel.
 - Fixed in support request Pulse pass: `relay-kit pulse build` can include support-request readiness in JSON/HTML, and signal export emits `relay.support_request.ready`.
+- Fixed in support bundle request summary pass: support bundles include a redacted support-request summary when `.relay-kit/support/support-request.json` exists.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -641,6 +642,7 @@ Acceptance criteria:
 | Publication trail hardening | Done | P2 | `relay-kit publish trail` writes copyable shell commands and deterministic evidence paths so publish evidence is captured consistently. |
 | Publication execution evidence | Done | P2 | `relay-kit publish evidence` records dist artifact hashes, twine-check output, upload confirmation, and package-index URLs into a machine-readable evidence file. |
 | Support operations dashboard signal | Done | P2 | Pulse shows support-request readiness and `relay-kit signal export` emits `relay.support_request.ready`. |
+| Support bundle request summary | Done | P2 | `relay-kit support bundle` includes a redacted `diagnostics.support_request` summary when the intake artifact exists. |
 
 ## Benchmark Lessons to Import
 
@@ -718,6 +720,7 @@ Expected gain:
 - Done first publication-execution slice: add `relay-kit publish evidence` as the post-upload evidence artifact for support and release review.
 - Done first publication workflow hardening slice: add `relay-kit publish trail` for deterministic capture commands and evidence paths.
 - Done support operations signal slice: Pulse and signal export now surface support-request readiness for paid-support review.
+- Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
