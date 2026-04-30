@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Add support request readiness to Pulse and local signal export so paid-support operations can see whether the intake artifact is actionable.
+Refresh live workflow state after PR #17 so source-of-truth artifacts match the merged support request Pulse/signal lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Add support request readiness to Pulse and local signal export so paid-support o
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: fix-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
-- Primary utility provider: testing-patterns
-- Additional utilities in play: evidence-before-completion, doc-pointers
+- Primary utility provider: memory-search
+- Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded implementation slice over Pulse, signal export, CLI flags, tests, and docs.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the support request Pulse/signal feature merged.
 
 ## Complexity level
-- Level: L2
-- Reasoning: this pass changes one report/signal feature path with targeted tests and docs.
+- Level: L1
+- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: the feature is narrow, already covered by existing Pulse and signal export test patterns, and does not change package metadata.
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Add support request readiness to Pulse and local signal export so paid-support o
 | none | none | none | none |
 
 ## Next skill
-test-hub
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25171387991, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25173791427, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -76,8 +76,9 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #13 merged publication trail hardening: https://github.com/b0ydeptraj/Relay-kit/pull/13.
 - PR #15 merged support request intake: https://github.com/b0ydeptraj/Relay-kit/pull/15.
 - PR #16 merged post-support-request state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/16.
-- Bootstrap local verification: `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python -m pytest -q --basetemp=.tmp\pytest-bootstrap-current-state-2` passed.
-- Current main baseline: `a9661a0db13deb73ead95177a72c479042e0e241`.
+- PR #17 merged support request Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/17.
+- PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
+- Current main baseline: `c3b693a7a1ee141039f4bbaa81fea69b95cb1e07`.
 
 ## Recommended next lane
-After this branch merges, refresh live state and then continue broader dashboard/eval expansion or optional support operations reporting.
+Continue broader dashboard/eval expansion, support operations polish, or optional publish trail execution automation.
