@@ -12,6 +12,8 @@ relay-kit pulse build /path/to/project --include-readiness
 relay-kit pulse build /path/to/project --workflow-eval-file workflow-eval.json --readiness-file readiness.json
 relay-kit pulse build /path/to/project --include-publication
 relay-kit pulse build /path/to/project --publication-file publication-plan.json
+relay-kit pulse build /path/to/project --include-support-request
+relay-kit pulse build /path/to/project --support-request-file .relay-kit/support/support-request.json
 relay-kit pulse build /path/to/project --history-limit 50
 relay-kit pulse build /path/to/project --no-history
 ```
@@ -31,13 +33,14 @@ Pulse combines:
 - workflow eval status, pass rate, route margin, route confidence, evidence coverage, and skill distribution
 - readiness status and verdict when `--include-readiness` or `--readiness-file` is used
 - publication plan status, channel, version, and finding count when `--include-publication` or `--publication-file` is used
+- support request status, severity, diagnostic count, and finding count when `--include-support-request` or `--support-request-file` is used
 - evidence ledger event counts, gate counts, and recent events
 - Pulse history snapshots from previous report builds
 
 ## Status
 
 - `pass`: workflow eval passed, readiness passed when included, and no recent failed evidence events are present
-- `attention`: core quality gates passed, but recent evidence contains failed events, included readiness is only `limited-beta`, or included publication plan is not `ready`
+- `attention`: core quality gates passed, but recent evidence contains failed events, included readiness is only `limited-beta`, included publication plan is not `ready`, or included support request is not `ready`
 - `hold`: workflow eval or readiness is failing
 
 `pulse_score` is a local summary score built from pass rate, evidence coverage, readiness status, and recent evidence failures. Treat it as a triage signal, not a release attestation.
@@ -66,7 +69,8 @@ Run Pulse after eval/readiness evidence exists:
 relay-kit eval run /path/to/project --strict --json --output-file workflow-eval.json
 relay-kit readiness check /path/to/project --profile enterprise --json > readiness.json
 relay-kit publish plan /path/to/project --channel pypi --json > publication-plan.json
-relay-kit pulse build /path/to/project --workflow-eval-file workflow-eval.json --readiness-file readiness.json --publication-file publication-plan.json
+relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json > support-request.json
+relay-kit pulse build /path/to/project --workflow-eval-file workflow-eval.json --readiness-file readiness.json --publication-file publication-plan.json --support-request-file support-request.json
 ```
 
 Use the HTML file for human review and the JSON file for support bundles or future dashboards.
@@ -77,4 +81,4 @@ To export Pulse plus recent evidence events as local telemetry-style artifacts, 
 relay-kit signal export /path/to/project
 ```
 
-Signal export includes `relay.publication.ready` when a Pulse report contains publication-plan data.
+Signal export includes `relay.publication.ready` and `relay.support_request.ready` when a Pulse report contains publication-plan or support-request data.

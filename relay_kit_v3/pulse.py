@@ -11,6 +11,7 @@ from typing import Any, Callable, Mapping
 from relay_kit_v3.evidence_ledger import LedgerSummary, summarize_events, utc_timestamp
 from relay_kit_v3.publication import build_publication_plan
 from relay_kit_v3.readiness import build_readiness_report
+from relay_kit_v3.support_request import DEFAULT_OUTPUT as DEFAULT_SUPPORT_REQUEST_OUTPUT
 from scripts import eval_workflows
 
 
@@ -22,6 +23,7 @@ HISTORY_FILE = "history.jsonl"
 WorkflowEvalBuilder = Callable[[Path], Mapping[str, Any]]
 ReadinessBuilder = Callable[[Path, str, bool], Mapping[str, Any]]
 PublicationBuilder = Callable[[Path], Mapping[str, Any]]
+SupportRequestBuilder = Callable[[Path], Mapping[str, Any]]
 EvidenceSummarizer = Callable[[Path, int], LedgerSummary]
 
 
@@ -35,12 +37,15 @@ def build_pulse_report(
     workflow_eval_file: Path | str | None = None,
     readiness_file: Path | str | None = None,
     publication_file: Path | str | None = None,
+    support_request_file: Path | str | None = None,
     include_publication: bool = False,
+    include_support_request: bool = False,
     output_dir: Path | str | None = None,
     history_limit: int = 20,
     workflow_eval_builder: WorkflowEvalBuilder | None = None,
     readiness_builder: ReadinessBuilder | None = None,
     publication_builder: PublicationBuilder | None = None,
+    support_request_builder: SupportRequestBuilder | None = None,
     evidence_summarizer: EvidenceSummarizer | None = None,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
@@ -59,9 +64,15 @@ def build_pulse_report(
         publication_file=publication_file,
         publication_builder=publication_builder,
     )
+    support_request = _load_or_build_support_request(
+        root,
+        include_support_request=include_support_request,
+        support_request_file=support_request_file,
+        support_request_builder=support_request_builder,
+    )
     evidence = _evidence_payload(root, evidence_limit, evidence_summarizer)
-    status = pulse_status(eval_report, readiness_report, publication_report, evidence)
-    score = pulse_score(eval_report, readiness_report, publication_report, evidence)
+    status = pulse_status(eval_report, readiness_report, publication_report, support_request, evidence)
+    score = pulse_score(eval_report, readiness_report, publication_report, support_request, evidence)
     trend = build_trend(
         root,
         output_dir=output_dir,
@@ -72,6 +83,7 @@ def build_pulse_report(
             workflow_eval=eval_report,
             readiness=readiness_report,
             publication=publication_report,
+            support_request=support_request,
             evidence=evidence,
         ),
         limit=history_limit,
@@ -86,6 +98,7 @@ def build_pulse_report(
         "workflow_eval": eval_report,
         "readiness": readiness_report,
         "publication": publication_report,
+        "support_request": support_request,
         "evidence": evidence,
         "trend": trend,
         "outputs": {
@@ -120,6 +133,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     quality = _mapping(workflow_eval.get("quality"))
     readiness = _mapping(report.get("readiness"))
     publication = _mapping(report.get("publication"))
+    support_request = _mapping(report.get("support_request"))
     evidence = _mapping(report.get("evidence"))
     trend = _mapping(report.get("trend"))
     status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -135,6 +149,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Min route margin", str(quality.get("min_route_margin", "-"))),
         ("Readiness", str(readiness.get("verdict", "not-run"))),
         ("Publication", str(publication.get("status", "not-run"))),
+        ("Support request", str(support_request.get("status", "not-run"))),
         ("Score delta", _signed(trend.get("pulse_score_delta"))),
         ("Ledger events", str(evidence.get("total_events", 0))),
         ("Recent failures", str(status_counts.get("fail", 0))),
@@ -149,6 +164,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         rows = '<tr><td colspan="4">No recent evidence events.</td></tr>'
     trend_rows = _trend_rows(trend)
     publication_rows = _publication_rows(publication)
+    support_request_rows = _support_request_rows(support_request)
 
     report_json = escape(json.dumps(report, ensure_ascii=True, indent=2))
     return f"""<!doctype html>
@@ -286,6 +302,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       </table>
     </section>
     <section class="panel">
+      <h2>Support request</h2>
+      <table>
+        <tr><th>Signal</th><th>Value</th></tr>
+        {support_request_rows}
+      </table>
+    </section>
+    <section class="panel">
       <h2>Recent evidence</h2>
       <table>
         <tr><th>Time</th><th>Gate</th><th>Status</th><th>Findings</th></tr>
@@ -306,6 +329,7 @@ def pulse_status(
     workflow_eval: Mapping[str, Any],
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
+    support_request: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> str:
     if workflow_eval.get("status") != "pass":
@@ -315,6 +339,8 @@ def pulse_status(
     if readiness is not None and readiness.get("verdict") not in {None, "commercial-ready-candidate"}:
         return "attention"
     if publication is not None and publication.get("status") != "ready":
+        return "attention"
+    if support_request is not None and support_request.get("status") != "ready":
         return "attention"
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
     if int(recent_status_counts.get("fail", 0) or 0) > 0:
@@ -326,6 +352,7 @@ def pulse_score(
     workflow_eval: Mapping[str, Any],
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
+    support_request: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> int:
     quality = _mapping(workflow_eval.get("quality"))
@@ -345,9 +372,12 @@ def pulse_score(
         publication_score = 5
     else:
         publication_score = 0
+    support_penalty = 0
+    if support_request is not None and support_request.get("status") != "ready":
+        support_penalty = 5
     fail_count = int(_mapping(evidence.get("recent_status_counts")).get("fail", 0) or 0)
     evidence_score = max(0, 5 - (fail_count * 2))
-    score = round((pass_rate * 65) + (evidence_coverage * 10) + readiness_score + publication_score + evidence_score)
+    score = round((pass_rate * 65) + (evidence_coverage * 10) + readiness_score + publication_score + evidence_score - support_penalty)
     return max(0, min(100, int(score)))
 
 
@@ -425,6 +455,7 @@ def pulse_history_snapshot(report: Mapping[str, Any]) -> dict[str, Any]:
     workflow_eval = _mapping(report.get("workflow_eval"))
     readiness = _mapping(report.get("readiness"))
     publication = _mapping(report.get("publication"))
+    support_request = _mapping(report.get("support_request"))
     evidence = _mapping(report.get("evidence"))
     return {
         "schema_version": HISTORY_SCHEMA_VERSION,
@@ -436,6 +467,7 @@ def pulse_history_snapshot(report: Mapping[str, Any]) -> dict[str, Any]:
             workflow_eval=workflow_eval,
             readiness=readiness if readiness else None,
             publication=publication if publication else None,
+            support_request=support_request if support_request else None,
             evidence=evidence,
         ),
     }
@@ -449,6 +481,7 @@ def snapshot_from_values(
     workflow_eval: Mapping[str, Any],
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
+    support_request: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> dict[str, Any]:
     quality = _mapping(workflow_eval.get("quality"))
@@ -467,6 +500,9 @@ def snapshot_from_values(
         "readiness_verdict": readiness.get("verdict") if readiness else None,
         "publication_status": publication.get("status") if publication else None,
         "publication_findings": len(publication.get("findings", [])) if publication else None,
+        "support_request_status": support_request.get("status") if support_request else None,
+        "support_request_severity": support_request.get("severity") if support_request else None,
+        "support_request_findings": len(support_request.get("findings", [])) if support_request else None,
         "recent_failures": int(recent_status_counts.get("fail", 0) or 0),
     }
 
@@ -517,6 +553,21 @@ def _load_or_build_publication(
     if not include_publication:
         return None
     builder = publication_builder or (lambda project_root: build_publication_plan(project_root, channel="pypi"))
+    return builder(root)
+
+
+def _load_or_build_support_request(
+    root: Path,
+    *,
+    include_support_request: bool,
+    support_request_file: Path | str | None,
+    support_request_builder: SupportRequestBuilder | None,
+) -> Mapping[str, Any] | None:
+    if support_request_file is not None:
+        return _read_json(root, support_request_file)
+    if not include_support_request:
+        return None
+    builder = support_request_builder or (lambda project_root: _read_json(project_root, DEFAULT_SUPPORT_REQUEST_OUTPUT))
     return builder(root)
 
 
@@ -591,6 +642,24 @@ def _publication_rows(publication: Mapping[str, Any]) -> str:
             ("Status", str(publication.get("status", "-"))),
             ("Channel", str(publication.get("channel", "-"))),
             ("Version", str(publication.get("version", "-"))),
+            ("Findings", str(len(findings) if isinstance(findings, list) else 0)),
+        ]
+    return "\n".join(
+        f"<tr><td>{escape(label)}</td><td>{escape(value)}</td></tr>"
+        for label, value in rows
+    )
+
+
+def _support_request_rows(support_request: Mapping[str, Any]) -> str:
+    if not support_request:
+        rows = [("Status", "not-run")]
+    else:
+        findings = support_request.get("findings", [])
+        diagnostics = support_request.get("diagnostics", [])
+        rows = [
+            ("Status", str(support_request.get("status", "-"))),
+            ("Severity", str(support_request.get("severity", "-"))),
+            ("Diagnostics", str(len(diagnostics) if isinstance(diagnostics, list) else 0)),
             ("Findings", str(len(findings) if isinstance(findings, list) else 0)),
         ]
     return "\n".join(

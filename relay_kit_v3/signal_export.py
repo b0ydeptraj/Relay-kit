@@ -141,6 +141,7 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
     quality = _mapping(workflow_eval.get("quality"))
     readiness = _mapping(pulse_report.get("readiness"))
     publication = _mapping(pulse_report.get("publication"))
+    support_request = _mapping(pulse_report.get("support_request"))
     evidence = _mapping(pulse_report.get("evidence"))
     status_counts = _mapping(evidence.get("status_counts"))
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -174,6 +175,16 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
                 **base_attrs,
                 "relay.publication_status": str(publication.get("status", "not-run")),
                 "relay.publication_channel": str(publication.get("channel", "")),
+            },
+        ),
+        metric(
+            "relay.support_request.ready",
+            1 if support_request.get("status") == "ready" else 0,
+            "1",
+            {
+                **base_attrs,
+                "relay.support_request_status": str(support_request.get("status", "not-run")),
+                "relay.support_request_severity": str(support_request.get("severity", "")),
             },
         ),
     ]
