@@ -19,6 +19,8 @@ from scripts import eval_workflows, policy_guard
 
 SCHEMA_VERSION = "relay-kit.support-bundle.v1"
 DEFAULT_OUTPUT = Path(".relay-kit") / "support" / "support-bundle.json"
+SUPPORT_REQUEST_SCHEMA_VERSION = "relay-kit.support-request.v1"
+DEFAULT_SUPPORT_REQUEST_OUTPUT = Path(".relay-kit") / "support" / "support-request.json"
 
 REDACTION_PATTERNS = (
     re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
@@ -45,6 +47,7 @@ def build_support_bundle(
         profile="enterprise" if pack.name == "enterprise" else "team",
     )
     release_lane = build_release_lane_summary(root)
+    support_request = build_support_request_summary(root)
 
     payload: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -99,6 +102,7 @@ def build_support_bundle(
             },
             "signal_export": signal_export,
             "release_lane": release_lane,
+            "support_request": support_request,
         },
     }
     return redact_value(payload)
@@ -238,6 +242,56 @@ def build_release_lane_summary(root: Path) -> dict[str, Any]:
             "findings": [{"gate": "release-lane", "status": "fail", "summary": f"{type(exc).__name__}: {exc}"}],
             "residual_risks": [],
         }
+
+
+def build_support_request_summary(root: Path) -> dict[str, Any]:
+    path = root / DEFAULT_SUPPORT_REQUEST_OUTPUT
+    if not path.exists():
+        return {
+            "schema_version": SUPPORT_REQUEST_SCHEMA_VERSION,
+            "status": "not-found",
+            "path": str(path),
+            "summary": "support request artifact not found",
+            "findings_count": None,
+            "diagnostics_count": None,
+        }
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {
+            "schema_version": SUPPORT_REQUEST_SCHEMA_VERSION,
+            "status": "fail",
+            "path": str(path),
+            "summary": f"{type(exc).__name__}: {exc}",
+            "findings_count": 1,
+            "diagnostics_count": None,
+        }
+    if not isinstance(payload, dict):
+        return {
+            "schema_version": SUPPORT_REQUEST_SCHEMA_VERSION,
+            "status": "fail",
+            "path": str(path),
+            "summary": "support request artifact must be a JSON object",
+            "findings_count": 1,
+            "diagnostics_count": None,
+        }
+
+    findings = payload.get("findings", [])
+    diagnostics = payload.get("diagnostics", [])
+    environment = payload.get("environment", {})
+    return {
+        "schema_version": payload.get("schema_version", SUPPORT_REQUEST_SCHEMA_VERSION),
+        "status": payload.get("status", "unknown"),
+        "path": str(path),
+        "severity": payload.get("severity", ""),
+        "summary": payload.get("summary", ""),
+        "environment": environment if isinstance(environment, dict) else {},
+        "findings_count": len(findings) if isinstance(findings, list) else 0,
+        "diagnostics_count": len(diagnostics) if isinstance(diagnostics, list) else 0,
+        "findings": findings if isinstance(findings, list) else [],
+    }
+
+
 def redact_value(value: Any) -> Any:
     if isinstance(value, str):
         redacted = value

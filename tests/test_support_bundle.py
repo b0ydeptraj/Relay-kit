@@ -39,6 +39,7 @@ def test_support_bundle_contains_required_diagnostics(tmp_path: Path) -> None:
     assert Path(payload["diagnostics"]["signal_export"]["outputs"]["otlp"]).exists()
     assert payload["diagnostics"]["release_lane"]["schema_version"] == "relay-kit.release-lane.v1"
     assert payload["diagnostics"]["release_lane"]["status"] in {"pass", "fail"}
+    assert payload["diagnostics"]["support_request"]["status"] == "not-found"
     assert "relay-kit doctor" in payload["support"]["required_commands"][0]
     assert any("relay-kit support request" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit pulse build" in command for command in payload["support"]["required_commands"])
@@ -46,6 +47,45 @@ def test_support_bundle_contains_required_diagnostics(tmp_path: Path) -> None:
     assert any("relay-kit publish trail" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit publish plan" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit publish evidence" in command for command in payload["support"]["required_commands"])
+
+
+def test_support_bundle_summarizes_existing_support_request(tmp_path: Path) -> None:
+    request_path = tmp_path / ".relay-kit" / "support" / "support-request.json"
+    request_path.parent.mkdir(parents=True)
+    request_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "relay-kit.support-request.v1",
+                "status": "ready",
+                "severity": "P1",
+                "summary": "Token sk-test_abcdefghijklmnopqrstuvwxyz123456 should be redacted.",
+                "environment": {
+                    "package_version": "3.4.0.dev0",
+                    "installed_bundle": "enterprise",
+                    "adapter_target": "codex",
+                    "policy_pack": "enterprise",
+                },
+                "diagnostics": [
+                    {"path": ".relay-kit/support/support-bundle.json", "status": "present"},
+                    {"path": ".relay-kit/signals/relay-signals.json", "status": "present"},
+                ],
+                "findings": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    payload = support_bundle.build_support_bundle(tmp_path, policy_pack="baseline")
+    summary = payload["diagnostics"]["support_request"]
+    encoded = json.dumps(summary, ensure_ascii=True)
+
+    assert summary["schema_version"] == "relay-kit.support-request.v1"
+    assert summary["status"] == "ready"
+    assert summary["severity"] == "P1"
+    assert summary["diagnostics_count"] == 2
+    assert summary["findings_count"] == 0
+    assert "sk-test_abcdefghijklmnopqrstuvwxyz123456" not in encoded
+    assert "[REDACTED]" in encoded
 
 
 def test_support_bundle_enterprise_requires_trusted_manifest_diagnostic(tmp_path: Path) -> None:

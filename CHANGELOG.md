@@ -10,6 +10,8 @@ All notable changes to `Relay-kit` are documented here.
   signal export metric for package release dashboards.
 - Added Pulse support-request visibility and a `relay.support_request.ready`
   signal export metric for paid-support operations review.
+- Added support-request summary data to support bundles when a structured
+  intake artifact exists.
 - Added `relay-kit publish trail` to write a publication runbook with
   deterministic capture paths and copyable commands for build, twine check,
   upload logging, plan, and evidence generation.

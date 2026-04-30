@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #17 so source-of-truth artifacts match the merged support request Pulse/signal lane.
+Add support-request summary data to support bundles so paid-support triage can inspect intake readiness from the main diagnostic artifact.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Refresh live workflow state after PR #17 so source-of-truth artifacts match the 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: bootstrap
-- Active specialist: context-continuity
+- Layer-2 workflow hub: fix-hub
+- Active specialist: developer
 
 ## Active utility providers
-- Primary utility provider: memory-search
-- Additional utilities in play: evidence-before-completion
+- Primary utility provider: testing-patterns
+- Additional utilities in play: evidence-before-completion, doc-pointers
 
 ## Active standalone/domain skill
-- Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the support request Pulse/signal feature merged.
+- Skill: developer
+- Why selected: this is a bounded support operations polish slice over support bundle diagnostics, tests, and docs.
 
 ## Complexity level
-- Level: L1
-- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
+- Level: L2
+- Reasoning: this pass changes one diagnostic payload path and mirrors existing support bundle tests.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Why this track fits: the feature is narrow, locally testable, and does not change package metadata.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Refresh live workflow state after PR #17 so source-of-truth artifacts match the 
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+test-hub
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -81,4 +81,4 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Current main baseline: `c3b693a7a1ee141039f4bbaa81fea69b95cb1e07`.
 
 ## Recommended next lane
-Continue broader dashboard/eval expansion, support operations polish, or optional publish trail execution automation.
+After this branch merges, refresh live state and then continue broader dashboard/eval expansion or optional publish trail execution automation.

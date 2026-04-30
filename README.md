@@ -155,6 +155,9 @@ relay-kit support bundle /path/to/project --policy-pack enterprise
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json
 ```
 
+When the support request artifact already exists, the support bundle includes a
+redacted support-request summary for triage.
+
 Build a local Pulse quality report:
 
 ```bash
