@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Keep Relay-kit post-PR #17 state current and ready for the next single-lane implementation slice.
+Keep Relay-kit post-PR #19 state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Keep Relay-kit post-PR #17 state current and ready for the next single-lane impl
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after support request Pulse/signal visibility. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after support bundle request-summary diagnostics. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,7 +24,7 @@ Keep Relay-kit post-PR #17 state current and ready for the next single-lane impl
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #17 passed. Remote CI must pass after merge.
+Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #19 passed. Remote CI must pass after merge.
 
 ## Conflict risks
 Low. This slice edits state/context artifacts only.
@@ -32,3 +32,4 @@ Low. This slice edits state/context artifacts only.
 ## Decision log
 - 2026-04-27: Refresh state artifacts instead of starting a new feature slice because project-context was empty and workflow-state still referenced completed branch work.
 - 2026-04-30: Refresh state artifacts after PR #17 merged and main CI `25173791427` passed.
+- 2026-04-30: Refresh state artifacts after PR #19 merged and main CI `25174419399` passed.

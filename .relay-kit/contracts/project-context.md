@@ -55,7 +55,9 @@
 - PR #15 merged support request intake: https://github.com/b0ydeptraj/Relay-kit/pull/15, merge commit `51aa01985d7bbac06c944dfeef1f948e7a6eddbf`.
 - PR #16 merged post-support-request state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/16, merge commit `a9661a0db13deb73ead95177a72c479042e0e241`.
 - PR #17 merged support request Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/17, merge commit `c3b693a7a1ee141039f4bbaa81fea69b95cb1e07`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25173791427, conclusion `success`.
+- PR #18 merged post-support-Pulse state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/18, merge commit `7b1d74df5c1e66e7e21c2fff9b51dcee3437d67c`.
+- PR #19 merged support bundle request-summary diagnostics: https://github.com/b0ydeptraj/Relay-kit/pull/19, merge commit `0499a66f73b51fd37b83f20575817d35f91ae2d0`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25174419399, conclusion `success`.
 
 ## Known sharp edges
 
