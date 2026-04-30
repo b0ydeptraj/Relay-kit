@@ -160,6 +160,7 @@ Build a local Pulse quality report:
 ```bash
 relay-kit pulse build /path/to/project
 relay-kit pulse build /path/to/project --include-readiness --json
+relay-kit pulse build /path/to/project --support-request-file .relay-kit/support/support-request.json
 relay-kit pulse build /path/to/project --history-limit 50
 ```
 

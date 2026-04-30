@@ -67,6 +67,26 @@ def sample_publication_plan(*, status: str = "ready") -> dict[str, object]:
     }
 
 
+def sample_support_request(*, status: str = "ready") -> dict[str, object]:
+    findings = [] if status == "ready" else [{"gate": "diagnostics", "status": "hold", "summary": "missing diagnostics"}]
+    return {
+        "schema_version": "relay-kit.support-request.v1",
+        "status": status,
+        "severity": "P1",
+        "summary": "Enterprise doctor fails after manifest trust metadata drift.",
+        "environment": {
+            "package_version": "3.4.0.dev0",
+            "installed_bundle": "enterprise",
+            "adapter_target": "codex",
+            "policy_pack": "enterprise",
+        },
+        "diagnostics": [
+            {"path": ".relay-kit/support/support-bundle.json", "status": "present", "size_bytes": 10},
+        ],
+        "findings": findings,
+    }
+
+
 def test_pulse_report_summarizes_eval_readiness_and_evidence(tmp_path: Path) -> None:
     append_event(tmp_path, {"command": "doctor", "gate": "policy guard", "status": "pass"})
     append_event(tmp_path, {"command": "doctor", "gate": "workflow eval", "status": "fail"})
@@ -99,6 +119,32 @@ def test_pulse_report_includes_publication_plan_when_requested(tmp_path: Path) -
     assert report["status"] == "pass"
 
 
+def test_pulse_report_includes_support_request_when_requested(tmp_path: Path) -> None:
+    report = pulse.build_pulse_report(
+        tmp_path,
+        workflow_eval_builder=lambda root: sample_eval_report(),
+        support_request_builder=lambda root: sample_support_request(status="ready"),
+        include_support_request=True,
+    )
+
+    assert report["support_request"]["schema_version"] == "relay-kit.support-request.v1"
+    assert report["support_request"]["status"] == "ready"
+    assert report["support_request"]["severity"] == "P1"
+    assert report["status"] == "pass"
+
+
+def test_pulse_report_marks_support_request_hold_as_attention(tmp_path: Path) -> None:
+    report = pulse.build_pulse_report(
+        tmp_path,
+        workflow_eval_builder=lambda root: sample_eval_report(),
+        support_request_builder=lambda root: sample_support_request(status="hold"),
+        include_support_request=True,
+    )
+
+    assert report["status"] == "attention"
+    assert report["support_request"]["findings"][0]["gate"] == "diagnostics"
+
+
 def test_pulse_report_marks_publication_hold_as_attention(tmp_path: Path) -> None:
     report = pulse.build_pulse_report(
         tmp_path,
@@ -126,6 +172,7 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     assert "Relay-kit Pulse" in html
     assert "Workflow quality" in html
     assert "Publication readiness" in html
+    assert "Support request" in html
     assert "Trend" in html
 
 
@@ -202,3 +249,24 @@ def test_public_cli_pulse_build_accepts_publication_file(tmp_path: Path, capsys)
 
     assert exit_code == 0
     assert payload["report"]["publication"]["status"] == "ready"
+
+
+def test_public_cli_pulse_build_accepts_support_request_file(tmp_path: Path, capsys) -> None:
+    support_request_file = tmp_path / "support-request.json"
+    support_request_file.write_text(json.dumps(sample_support_request(status="ready")), encoding="utf-8")
+
+    exit_code = relay_kit_public_cli.main(
+        [
+            "pulse",
+            "build",
+            str(tmp_path),
+            "--support-request-file",
+            str(support_request_file),
+            "--json",
+            "--no-history",
+        ]
+    )
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["report"]["support_request"]["status"] == "ready"

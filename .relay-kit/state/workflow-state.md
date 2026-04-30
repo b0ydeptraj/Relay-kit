@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #15 so the source of truth matches the merged support request intake lane.
+Add support request readiness to Pulse and local signal export so paid-support operations can see whether the intake artifact is actionable.
 
 ## Active lane
 - Lane id: primary
@@ -15,19 +15,19 @@ Refresh live workflow state after PR #15 so the source of truth matches the merg
 
 ## Active utility providers
 - Primary utility provider: testing-patterns
-- Additional utilities in play: evidence-before-completion
+- Additional utilities in play: evidence-before-completion, doc-pointers
 
 ## Active standalone/domain skill
 - Skill: developer
-- Why selected: this is a bounded state/context hygiene update after the support request intake feature merged.
+- Why selected: this is a bounded implementation slice over Pulse, signal export, CLI flags, tests, and docs.
 
 ## Complexity level
-- Level: L1
-- Reasoning: this pass updates live state and context only; runtime code is already merged.
+- Level: L2
+- Reasoning: this pass changes one report/signal feature path with targeted tests and docs.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Why this track fits: the feature is narrow, already covered by existing Pulse and signal export test patterns, and does not change package metadata.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25170611317, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25171387991, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -75,8 +75,9 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #12 merged post-publication-evidence state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/12.
 - PR #13 merged publication trail hardening: https://github.com/b0ydeptraj/Relay-kit/pull/13.
 - PR #15 merged support request intake: https://github.com/b0ydeptraj/Relay-kit/pull/15.
+- PR #16 merged post-support-request state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/16.
 - Bootstrap local verification: `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python -m pytest -q --basetemp=.tmp\pytest-bootstrap-current-state-2` passed.
-- Current main baseline: `51aa01985d7bbac06c944dfeef1f948e7a6eddbf`.
+- Current main baseline: `a9661a0db13deb73ead95177a72c479042e0e241`.
 
 ## Recommended next lane
-Next feature lane should be dashboard/eval signal expansion or optional support operations reporting.
+After this branch merges, refresh live state and then continue broader dashboard/eval expansion or optional support operations reporting.

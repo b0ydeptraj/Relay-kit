@@ -40,6 +40,12 @@ def write_pulse_report(root: Path) -> Path:
                     "version": "3.3.0",
                     "findings": [],
                 },
+                "support_request": {
+                    "status": "ready",
+                    "severity": "P1",
+                    "findings": [],
+                    "diagnostics": [{"path": ".relay-kit/support/support-bundle.json", "status": "present"}],
+                },
             }
         ),
         encoding="utf-8",
@@ -63,6 +69,7 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.workflow.pass_rate" in metric_names
     assert "relay.workflow.evidence_coverage" in metric_names
     assert "relay.publication.ready" in metric_names
+    assert "relay.support_request.ready" in metric_names
     assert "relay.evidence.event" in event_names
     assert payload["summary"]["signal_count"] == len(payload["signals"])
 
