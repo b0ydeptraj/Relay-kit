@@ -8,7 +8,7 @@
 ## Active lanes
 | Lane | Owner skill | Source orchestrator | Target hub | Primary artifact | Lock scope | Merge prerequisite | Status |
 |---|---|---|---|---|---|---|---|
-| primary | developer | workflow-router | test-hub | `relay_kit_v3/eval_fixtures/workflow_scenarios.json` | eval fixtures/tests/docs/state | remote CI after PR | ready-for-pr |
+| primary | bootstrap | workflow-router | none | `.relay-kit/contracts/project-context.md` | none | CI after merge | ready-for-merge |
 | lane-2 | unassigned | none | none | none | none | none | parked |
 | lane-3 | unassigned | none | none | none | none | none | parked |
 
@@ -16,6 +16,7 @@
 | Lane | Artifact | Previous scope | Released because |
 |---|---|---|---|
 | primary | `pyproject.toml`, `.relay-kit/version.json` | next-dev version bump | PR #3 merged and CI passed |
+| primary | `relay_kit_v3/eval_fixtures/workflow_scenarios.json`, temp path helpers, workflow eval docs/tests | workflow eval scenario expansion | PR #33 merged and CI passed |
 | primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | Pulse gate drilldowns | PR #31 merged and CI passed |
 | primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | Pulse gate summary | PR #29 merged and CI passed |
 | primary | `relay_kit_v3/support_triage.py`, `relay_kit_public_cli.py`, support docs/tests | support triage readiness gate | PR #27 merged and CI passed |

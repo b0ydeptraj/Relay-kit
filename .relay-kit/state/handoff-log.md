@@ -14,6 +14,7 @@
 | workflow-router | bootstrap | primary | state/context drift after PR #29 Pulse gate summary merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #29, main CI `25215207136`, readiness `commercial-ready-candidate`, pytest 155 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | bootstrap | primary | state/context drift after PR #31 Pulse gate drilldowns merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #31, main CI `25216356829`, readiness `commercial-ready-candidate`, pytest 156 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | developer | primary | workflow eval scenario expansion after PR #32 state refresh | eval fixtures, workflow eval tests, workflow eval docs, upgrade backlog, live state | `python scripts\eval_workflows.py . --strict --json` reports 28/28 scenarios | return through qa-governor after pytest, doctor, runtime doctor, readiness, and CI evidence |
+| workflow-router | bootstrap | primary | state/context drift after PR #33 workflow eval expansion merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #33, main CI `25224916323`, readiness `commercial-ready-candidate`, pytest 156 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 
 ## Rules
 - Every non-trivial handoff should update this log before the receiving skill starts work.

@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Expand Relay-kit workflow eval coverage and keep live state current for the active single-lane implementation slice.
+Keep Relay-kit post-PR #33 state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Expand Relay-kit workflow eval coverage and keep live state current for the acti
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | developer | test-hub | workflow_scenarios/test_workflow_eval/upgrade-note/state | eval fixture and note files | ready for PR | verified locally | Default workflow eval coverage expanded from 20 to 28 scenarios; root pytest and enterprise gates pass. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after workflow eval expansion merged. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,7 +24,7 @@ Expand Relay-kit workflow eval coverage and keep live state current for the acti
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode, enterprise doctor, root pytest, readiness, workflow eval, and remote CI must pass before merge.
+Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #33 passed. Remote CI must pass after merge.
 
 ## Conflict risks
 Low. This slice edits state/context artifacts only.
@@ -41,3 +41,4 @@ Low. This slice edits state/context artifacts only.
 - 2026-05-01: Refresh state artifacts after PR #31 merged and main CI `25216356829` passed.
 - 2026-05-01: Start workflow eval scenario expansion from 20 to 28 bundled scenarios on `codex/eval-scenario-expansion-v2`.
 - 2026-05-01: Verify eval scenario expansion locally with root pytest, eval, doctor, runtime doctor, readiness, Pulse, and signal export.
+- 2026-05-01: Refresh state artifacts after PR #33 merged and main CI `25224916323` passed.
