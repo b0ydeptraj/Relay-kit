@@ -176,6 +176,7 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     assert "Relay-kit Pulse" in html
     assert "Workflow quality" in html
     assert "Layer coverage" in html
+    assert "Gate summary" in html
     assert "Publication readiness" in html
     assert "Support request" in html
     assert "Trend" in html
@@ -222,6 +223,37 @@ def test_pulse_report_marks_limited_beta_readiness_as_attention(tmp_path: Path) 
 
     assert report["status"] == "attention"
     assert report["pulse_score"] < 100
+
+
+def test_pulse_report_includes_gate_summary_and_next_actions(tmp_path: Path) -> None:
+    append_event(tmp_path, {"command": "doctor", "gate": "policy guard", "status": "fail", "findings_count": 1})
+    limited_readiness = {
+        **sample_readiness_report(),
+        "verdict": "limited-beta",
+    }
+
+    report = pulse.build_pulse_report(
+        tmp_path,
+        include_readiness=True,
+        include_publication=True,
+        include_support_request=True,
+        workflow_eval_builder=lambda root: sample_eval_report(),
+        readiness_builder=lambda root, profile, skip_tests: limited_readiness,
+        publication_builder=lambda root: sample_publication_plan(status="hold"),
+        support_request_builder=lambda root: sample_support_request(status="hold"),
+    )
+
+    summary = report["gate_summary"]
+    gate_statuses = {gate["id"]: gate["status"] for gate in summary["gates"]}
+    next_action_gates = {action["gate"] for action in summary["next_actions"]}
+
+    assert summary["status_counts"] == {"pass": 1, "attention": 4, "hold": 0, "not-run": 0}
+    assert gate_statuses["workflow-eval"] == "pass"
+    assert gate_statuses["readiness"] == "attention"
+    assert gate_statuses["publication"] == "attention"
+    assert gate_statuses["support-request"] == "attention"
+    assert gate_statuses["evidence"] == "attention"
+    assert {"readiness", "publication", "support-request", "evidence"} <= next_action_gates
 
 
 def test_public_cli_pulse_build_json(tmp_path: Path, capsys) -> None:

@@ -142,6 +142,8 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
     readiness = _mapping(pulse_report.get("readiness"))
     publication = _mapping(pulse_report.get("publication"))
     support_request = _mapping(pulse_report.get("support_request"))
+    gate_summary = _mapping(pulse_report.get("gate_summary"))
+    gate_status_counts = _mapping(gate_summary.get("status_counts"))
     evidence = _mapping(pulse_report.get("evidence"))
     status_counts = _mapping(evidence.get("status_counts"))
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -159,6 +161,10 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
         metric("relay.workflow.expected_layer_count", len(_mapping(quality.get("expected_layer_counts"))), "1", base_attrs),
         metric("relay.workflow.average_route_margin", _number(quality.get("average_route_margin")), "1", base_attrs),
         metric("relay.workflow.min_route_margin", _number(quality.get("min_route_margin")), "1", base_attrs),
+        metric("relay.gates.pass", _number(gate_status_counts.get("pass")), "1", base_attrs),
+        metric("relay.gates.attention", _number(gate_status_counts.get("attention")), "1", base_attrs),
+        metric("relay.gates.hold", _number(gate_status_counts.get("hold")), "1", base_attrs),
+        metric("relay.gates.not_run", _number(gate_status_counts.get("not-run")), "1", base_attrs),
         metric("relay.evidence.total_events", _number(evidence.get("total_events")), "1", base_attrs),
         metric("relay.evidence.failures_total", _number(status_counts.get("fail")), "1", base_attrs),
         metric("relay.evidence.failures_recent", _number(recent_status_counts.get("fail")), "1", base_attrs),

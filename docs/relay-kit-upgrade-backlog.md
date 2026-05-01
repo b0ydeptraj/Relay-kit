@@ -54,6 +54,7 @@ Source audit status:
 - Fixed in support request Pulse pass: `relay-kit pulse build` can include support-request readiness in JSON/HTML, and signal export emits `relay.support_request.ready`.
 - Fixed in support bundle request summary pass: support bundles include a redacted support-request summary when `.relay-kit/support/support-request.json` exists.
 - Fixed in workflow eval coverage pass: `relay-kit eval run` now reports layer and role coverage for expected/predicted skills; Pulse and signal export expose expected-layer coverage.
+- Fixed in Pulse gate summary pass: Pulse JSON/HTML now reports workflow eval, readiness, publication, support request, and evidence gates with pass/attention/hold/not-run counts; signal export emits `relay.gates.*` metrics.
 - Fixed in publication trail status pass: `relay-kit publish status` reads the publication trail and local evidence files, reporting complete, pending, failed, and not-observable publication steps without uploading packages.
 - Fixed in readiness pytest output hygiene pass: `relay-kit readiness check` runs pytest with a stable `.tmp/readiness-pytest` base temp directory so Windows temp-cleanup noise does not pollute captured evidence.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
@@ -66,8 +67,8 @@ Current verdict:
 
 Progress snapshot, updated 2026-05-01:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 92% for repo-owned work. Remaining work is broader dashboard/eval expansion, support workflow soak, and external legal/SLA/package-index operations outside local repo gates.
-- Overall tracked progress in this file: 94%. This percentage excludes star/community/popularity and external customer commitments.
+- Commercial hardening roadmap: 93% for repo-owned work. Remaining work is dashboard drilldowns/eval expansion, support workflow soak, and external legal/SLA/package-index operations outside local repo gates.
+- Overall tracked progress in this file: 95%. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
 
@@ -655,6 +656,7 @@ Acceptance criteria:
 | Support operations dashboard signal | Done | P2 | Pulse shows support-request readiness and `relay-kit signal export` emits `relay.support_request.ready`. |
 | Support bundle request summary | Done | P2 | `relay-kit support bundle` includes a redacted `diagnostics.support_request` summary when the intake artifact exists. |
 | Workflow eval layer coverage | Done | P2 | Eval reports layer/role coverage, Pulse shows layer coverage, and signal export emits `relay.workflow.expected_layer_count`. |
+| Pulse gate summary | Done | P2 | Pulse JSON/HTML shows workflow eval, readiness, publication, support request, and evidence gate status; signal export emits `relay.gates.*` counts. |
 
 ## Benchmark Lessons to Import
 
@@ -735,6 +737,7 @@ Expected gain:
 - Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
 - Done support triage polish slice: support request and support bundle artifacts now have one strict handoff gate.
 - Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
+- Done Pulse gate summary slice: dashboard inputs now include per-gate pass, attention, hold, and not-run counts plus next actions.
 - Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 
 Expected gain:
@@ -763,7 +766,8 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - `relay-kit publish evidence --channel pypi --strict` reaches `published` only after wheel/sdist hashes, twine-check proof, upload confirmation, and external CI/release/package evidence are present.
 - `relay-kit publish status --strict` reaches `complete` only after the trail file, dist artifacts, twine-check log, upload log, publication plan, and publication evidence are locally inspectable.
 - Pulse and signal export surface support-request readiness so support operations can see whether the intake artifact is actionable.
+- Pulse and signal export surface per-gate pass, attention, hold, and not-run counts so dashboard review can target the exact degraded gate.
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with broader dashboard/eval expansion and support operations polish after the read-only publication status gate has soaked.
+- Continue with dashboard drilldowns/eval expansion and support operations polish after the Pulse gate summary has soaked.

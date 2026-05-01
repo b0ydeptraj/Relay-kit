@@ -73,6 +73,7 @@ def build_pulse_report(
     evidence = _evidence_payload(root, evidence_limit, evidence_summarizer)
     status = pulse_status(eval_report, readiness_report, publication_report, support_request, evidence)
     score = pulse_score(eval_report, readiness_report, publication_report, support_request, evidence)
+    gate_summary = build_gate_summary(eval_report, readiness_report, publication_report, support_request, evidence)
     trend = build_trend(
         root,
         output_dir=output_dir,
@@ -99,6 +100,7 @@ def build_pulse_report(
         "readiness": readiness_report,
         "publication": publication_report,
         "support_request": support_request,
+        "gate_summary": gate_summary,
         "evidence": evidence,
         "trend": trend,
         "outputs": {
@@ -134,6 +136,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     readiness = _mapping(report.get("readiness"))
     publication = _mapping(report.get("publication"))
     support_request = _mapping(report.get("support_request"))
+    gate_summary = _mapping(report.get("gate_summary"))
     evidence = _mapping(report.get("evidence"))
     trend = _mapping(report.get("trend"))
     status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -164,6 +167,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     if not rows:
         rows = '<tr><td colspan="4">No recent evidence events.</td></tr>'
     trend_rows = _trend_rows(trend)
+    gate_summary_rows = _gate_summary_rows(gate_summary)
     publication_rows = _publication_rows(publication)
     support_request_rows = _support_request_rows(support_request)
 
@@ -297,6 +301,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       </table>
     </section>
     <section class="panel">
+      <h2>Gate summary</h2>
+      <table>
+        <tr><th>Gate</th><th>Status</th><th>Summary</th></tr>
+        {gate_summary_rows}
+      </table>
+    </section>
+    <section class="panel">
       <h2>Publication readiness</h2>
       <table>
         <tr><th>Signal</th><th>Value</th></tr>
@@ -381,6 +392,164 @@ def pulse_score(
     evidence_score = max(0, 5 - (fail_count * 2))
     score = round((pass_rate * 65) + (evidence_coverage * 10) + readiness_score + publication_score + evidence_score - support_penalty)
     return max(0, min(100, int(score)))
+
+
+def build_gate_summary(
+    workflow_eval: Mapping[str, Any],
+    readiness: Mapping[str, Any] | None,
+    publication: Mapping[str, Any] | None,
+    support_request: Mapping[str, Any] | None,
+    evidence: Mapping[str, Any],
+) -> dict[str, Any]:
+    gates = [
+        _workflow_eval_gate(workflow_eval),
+        _readiness_gate(readiness),
+        _publication_gate(publication),
+        _support_request_gate(support_request),
+        _evidence_gate(evidence),
+    ]
+    counts = {"pass": 0, "attention": 0, "hold": 0, "not-run": 0}
+    for gate in gates:
+        status = str(gate.get("status", "not-run"))
+        counts[status] = counts.get(status, 0) + 1
+    return {
+        "status_counts": counts,
+        "gates": gates,
+        "next_actions": _gate_next_actions(gates),
+    }
+
+
+def _workflow_eval_gate(workflow_eval: Mapping[str, Any]) -> dict[str, Any]:
+    scenario_count = int(workflow_eval.get("scenario_count", 0) or 0)
+    failed = int(workflow_eval.get("failed", 0) or 0)
+    passed = int(workflow_eval.get("passed", max(0, scenario_count - failed)) or 0)
+    status = "pass" if workflow_eval.get("status") == "pass" else "hold"
+    return {
+        "id": "workflow-eval",
+        "label": "Workflow eval",
+        "status": status,
+        "summary": f"{passed}/{scenario_count} scenarios passed",
+        "details": {
+            "pass_rate": _float(workflow_eval.get("pass_rate")),
+            "failed": failed,
+        },
+    }
+
+
+def _readiness_gate(readiness: Mapping[str, Any] | None) -> dict[str, Any]:
+    if readiness is None:
+        return {
+            "id": "readiness",
+            "label": "Readiness",
+            "status": "not-run",
+            "summary": "Readiness check was not included.",
+            "details": {},
+        }
+    findings = readiness.get("findings", [])
+    if readiness.get("status") != "pass":
+        status = "hold"
+    elif readiness.get("verdict") == "commercial-ready-candidate":
+        status = "pass"
+    else:
+        status = "attention"
+    return {
+        "id": "readiness",
+        "label": "Readiness",
+        "status": status,
+        "summary": str(readiness.get("verdict", readiness.get("status", "-"))),
+        "details": {
+            "profile": readiness.get("profile"),
+            "findings": len(findings) if isinstance(findings, list) else 0,
+        },
+    }
+
+
+def _publication_gate(publication: Mapping[str, Any] | None) -> dict[str, Any]:
+    if publication is None:
+        return {
+            "id": "publication",
+            "label": "Publication",
+            "status": "not-run",
+            "summary": "Publication status was not included.",
+            "details": {},
+        }
+    findings = publication.get("findings", [])
+    status = "pass" if publication.get("status") == "ready" else "attention"
+    return {
+        "id": "publication",
+        "label": "Publication",
+        "status": status,
+        "summary": str(publication.get("status", "-")),
+        "details": {
+            "channel": publication.get("channel"),
+            "version": publication.get("version"),
+            "findings": len(findings) if isinstance(findings, list) else 0,
+        },
+    }
+
+
+def _support_request_gate(support_request: Mapping[str, Any] | None) -> dict[str, Any]:
+    if support_request is None:
+        return {
+            "id": "support-request",
+            "label": "Support request",
+            "status": "not-run",
+            "summary": "Support request status was not included.",
+            "details": {},
+        }
+    findings = support_request.get("findings", [])
+    status = "pass" if support_request.get("status") == "ready" else "attention"
+    return {
+        "id": "support-request",
+        "label": "Support request",
+        "status": status,
+        "summary": str(support_request.get("status", "-")),
+        "details": {
+            "severity": support_request.get("severity"),
+            "findings": len(findings) if isinstance(findings, list) else 0,
+        },
+    }
+
+
+def _evidence_gate(evidence: Mapping[str, Any]) -> dict[str, Any]:
+    recent_status_counts = _mapping(evidence.get("recent_status_counts"))
+    fail_count = int(recent_status_counts.get("fail", 0) or 0)
+    total_events = int(evidence.get("total_events", 0) or 0)
+    status = "attention" if fail_count > 0 else "pass"
+    return {
+        "id": "evidence",
+        "label": "Evidence ledger",
+        "status": status,
+        "summary": f"{fail_count} recent failures across {total_events} ledger events",
+        "details": {
+            "recent_failures": fail_count,
+            "total_events": total_events,
+        },
+    }
+
+
+def _gate_next_actions(gates: list[Mapping[str, Any]]) -> list[dict[str, str]]:
+    action_by_gate = {
+        "workflow-eval": "Fix failing workflow scenarios before trusting the Pulse score.",
+        "readiness": "Run or fix readiness check until the enterprise verdict is commercial-ready-candidate.",
+        "publication": "Resolve publication findings or generate a fresh publication status before release.",
+        "support-request": "Complete support request diagnostics and clear support findings before paid handoff.",
+        "evidence": "Inspect recent failing evidence events and rerun the affected gate.",
+    }
+    actions: list[dict[str, str]] = []
+    for gate in gates:
+        status = str(gate.get("status", "not-run"))
+        gate_id = str(gate.get("id", ""))
+        if status not in {"attention", "hold"}:
+            continue
+        actions.append(
+            {
+                "gate": gate_id,
+                "status": status,
+                "action": action_by_gate.get(gate_id, "Review this gate before release."),
+            }
+        )
+    return actions
 
 
 def build_trend(
@@ -633,6 +802,26 @@ def _trend_rows(trend: Mapping[str, Any]) -> str:
         f"<tr><td>{escape(label)}</td><td>{escape(value)}</td></tr>"
         for label, value in rows
     )
+
+
+def _gate_summary_rows(gate_summary: Mapping[str, Any]) -> str:
+    gates = gate_summary.get("gates", [])
+    if not isinstance(gates, list) or not gates:
+        return '<tr><td colspan="3">No gate summary available.</td></tr>'
+    rows = []
+    for gate in gates:
+        if not isinstance(gate, Mapping):
+            continue
+        rows.append(
+            "<tr>"
+            f"<td>{escape(str(gate.get('label', gate.get('id', '-'))))}</td>"
+            f"<td>{escape(str(gate.get('status', '-')))}</td>"
+            f"<td>{escape(str(gate.get('summary', '-')))}</td>"
+            "</tr>"
+        )
+    if not rows:
+        return '<tr><td colspan="3">No gate summary available.</td></tr>'
+    return "\n".join(rows)
 
 
 def _publication_rows(publication: Mapping[str, Any]) -> str:

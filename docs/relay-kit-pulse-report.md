@@ -34,6 +34,7 @@ Pulse combines:
 - readiness status and verdict when `--include-readiness` or `--readiness-file` is used
 - publication plan status, channel, version, and finding count when `--include-publication` or `--publication-file` is used
 - support request status, severity, diagnostic count, and finding count when `--include-support-request` or `--support-request-file` is used
+- gate summary status for workflow eval, readiness, publication, support request, and evidence ledger
 - evidence ledger event counts, gate counts, and recent events
 - Pulse history snapshots from previous report builds
 
@@ -44,6 +45,17 @@ Pulse combines:
 - `hold`: workflow eval or readiness is failing
 
 `pulse_score` is a local summary score built from pass rate, evidence coverage, readiness status, and recent evidence failures. Treat it as a triage signal, not a release attestation.
+
+## Gate Summary
+
+The JSON report includes `gate_summary`:
+
+- `status_counts`: count of gates in `pass`, `attention`, `hold`, and `not-run`
+- `gates`: per-gate status and short summary for workflow eval, readiness, publication, support request, and evidence
+- `next_actions`: concrete follow-up items for `attention` or `hold` gates
+
+The HTML report renders the same gate summary as a table so dashboard reviews can
+spot the blocking or degraded surface without reading raw JSON.
 
 ## History
 
@@ -81,4 +93,6 @@ To export Pulse plus recent evidence events as local telemetry-style artifacts, 
 relay-kit signal export /path/to/project
 ```
 
-Signal export includes `relay.publication.ready` and `relay.support_request.ready` when a Pulse report contains publication-plan or support-request data.
+Signal export includes `relay.gates.pass`, `relay.gates.attention`,
+`relay.gates.hold`, `relay.gates.not_run`, `relay.publication.ready`, and
+`relay.support_request.ready` when a Pulse report contains those surfaces.

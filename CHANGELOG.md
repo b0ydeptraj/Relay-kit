@@ -14,6 +14,8 @@ All notable changes to `Relay-kit` are documented here.
   intake artifact exists.
 - Added workflow eval layer/role coverage signals and exposed expected-layer
   coverage in Pulse and signal export.
+- Added Pulse gate summary data and `relay.gates.*` signal metrics so dashboard
+  review can see pass, attention, hold, and not-run gate counts.
 - Added `relay-kit publish status` to read publication trail/evidence artifacts
   and report complete, pending, failed, and not-observable publication steps
   without uploading packages.

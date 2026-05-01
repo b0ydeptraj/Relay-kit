@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #27 so source-of-truth artifacts match the merged support triage lane.
+Implement Pulse gate summary for the dashboard/eval expansion lane so quality reports show per-gate pass, attention, hold, and not-run status.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Refresh live workflow state after PR #27 so source-of-truth artifacts match the 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: bootstrap
-- Active specialist: context-continuity
+- Layer-2 workflow hub: test-hub
+- Active specialist: developer
 
 ## Active utility providers
 - Primary utility provider: memory-search
-- Additional utilities in play: evidence-before-completion
+- Additional utilities in play: evidence-before-completion, skill-gauntlet
 
 ## Active standalone/domain skill
-- Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the support triage feature merged.
+- Skill: developer
+- Why selected: this is a bounded runtime/dashboard change with tests, docs, and verification gates.
 
 ## Complexity level
-- Level: L1
-- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
+- Level: L2
+- Reasoning: this pass changes Pulse report schema, HTML rendering, signal export metrics, tests, and release notes.
 
 ## Chosen track
-- Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Track: implementation-flow
+- Why this track fits: the slice is code-backed and needs runtime proof before opening a PR.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -35,7 +35,7 @@ Refresh live workflow state after PR #27 so source-of-truth artifacts match the 
 - [ ] architecture
 - [ ] epics
 - [ ] story
-- [ ] tech-spec
+- [x] tech-spec
 - [ ] investigation-notes
 - [x] project-context
 - [x] qa-report
@@ -49,7 +49,7 @@ Refresh live workflow state after PR #27 so source-of-truth artifacts match the 
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+qa-governor
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -62,6 +62,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
 - Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25211668550, conclusion `success`.
+- Current feature branch: `codex/pulse-gate-summary`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -87,13 +88,15 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25.
 - PR #26 merged post-readiness-output state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/26.
 - PR #27 merged support triage readiness gate: https://github.com/b0ydeptraj/Relay-kit/pull/27.
+- PR #28 merged post-support-triage state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/28.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #23 verification: `python -m pytest -q --basetemp=.tmp\pytest-publication-status-full-2`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py publish status . --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #25 verification: `python -m pytest -q --basetemp=.tmp\pytest-readiness-basetemp-full`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed before merge.
 - PR #27 verification: `python -m pytest tests\test_support_triage.py tests\test_support_bundle.py tests\test_support_request.py -q --basetemp=.tmp\pytest-support-triage-green-3`, `python -m pytest -q --basetemp=.tmp\pytest-support-triage-full`, `python relay_kit_public_cli.py support triage . --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
-- Current main baseline: `23a54d70089efc062b531db9a65d777423d9a233`.
+- Pulse gate summary branch verification: `python -m pytest tests\test_pulse_report.py tests\test_signal_export.py -q --basetemp=.tmp\pytest-pulse-gate-summary-green`, `python -m pytest -q --basetemp=.tmp\pytest-pulse-gate-summary-full`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --json --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
+- Current main baseline: `bb64950`.
 
 ## Recommended next lane
-Continue broader dashboard/eval expansion.
+Continue dashboard drilldowns/eval expansion after the Pulse gate summary PR is merged.
