@@ -18,6 +18,7 @@ except ModuleNotFoundError:  # pragma: no cover - Python < 3.11 fallback
 SCHEMA_VERSION = "relay-kit.publication-plan.v1"
 EVIDENCE_SCHEMA_VERSION = "relay-kit.publication-evidence.v1"
 TRAIL_SCHEMA_VERSION = "relay-kit.publication-trail.v1"
+TRAIL_STATUS_SCHEMA_VERSION = "relay-kit.publication-trail-status.v1"
 CHANNELS = {"pypi", "testpypi", "internal"}
 SHELLS = {"powershell", "bash"}
 DEFAULT_OUTPUT = Path(".relay-kit") / "release" / "publication-plan.json"
@@ -284,6 +285,126 @@ def build_publication_trail(
     }
 
 
+def build_publication_trail_status(
+    project_root: Path | str,
+    *,
+    trail_file: Path | str | None = None,
+) -> dict[str, Any]:
+    root = Path(project_root).resolve()
+    path = _resolve_optional_path(root, trail_file) if trail_file is not None else root / DEFAULT_TRAIL_OUTPUT
+
+    trail = read_json_object(path)
+    if trail is None:
+        return {
+            "schema_version": TRAIL_STATUS_SCHEMA_VERSION,
+            "status": "hold",
+            "project_path": str(root),
+            "trail_file": str(path),
+            "summary": {"complete": 0, "pending": 0, "not_observable": 0, "failed": 1, "total": 1},
+            "steps": [
+                {
+                    "id": "publication-trail",
+                    "label": "Publication trail",
+                    "status": "fail",
+                    "summary": f"publication trail file is missing or invalid: {path}",
+                }
+            ],
+            "findings": [
+                {
+                    "gate": "publication-trail",
+                    "status": "fail",
+                    "summary": f"publication trail file is missing or invalid: {path}",
+                }
+            ],
+        }
+
+    if trail.get("schema_version") != TRAIL_SCHEMA_VERSION:
+        return {
+            "schema_version": TRAIL_STATUS_SCHEMA_VERSION,
+            "status": "hold",
+            "project_path": str(root),
+            "trail_file": str(path),
+            "summary": {"complete": 0, "pending": 0, "not_observable": 0, "failed": 1, "total": 1},
+            "steps": [
+                {
+                    "id": "publication-trail",
+                    "label": "Publication trail",
+                    "status": "fail",
+                    "summary": "publication trail schema does not match",
+                }
+            ],
+            "findings": [
+                {
+                    "gate": "publication-trail",
+                    "status": "fail",
+                    "summary": "publication trail schema does not match",
+                }
+            ],
+        }
+
+    package = read_package_metadata(root)
+    version = str(trail.get("version") or package.get("version") or "")
+    name = str(trail.get("package_name") or package.get("name") or "")
+    dist_dir = Path(str(trail.get("dist_dir") or root / "dist"))
+    if not dist_dir.is_absolute():
+        dist_dir = root / dist_dir
+    evidence_paths = _mapping(trail.get("evidence_paths"))
+    step_reports = [
+        publication_trail_step_status(
+            step,
+            root=root,
+            dist_dir=dist_dir,
+            package_name=name,
+            version=version,
+            evidence_paths=evidence_paths,
+        )
+        for step in trail.get("steps", [])
+        if isinstance(step, Mapping)
+    ]
+    summary = count_step_statuses(step_reports)
+    findings: list[dict[str, str]] = []
+    if trail.get("status") != "ready":
+        findings.append(
+            {
+                "gate": "publication-trail",
+                "status": str(trail.get("status", "hold")),
+                "summary": "publication trail is not ready",
+            }
+        )
+    findings.extend(
+        {
+            "gate": str(step.get("id", "publication-step")),
+            "status": str(step.get("status", "")),
+            "summary": str(step.get("summary", "")),
+        }
+        for step in step_reports
+        if step.get("status") in {"fail", "pending"}
+    )
+    if summary["failed"] or trail.get("status") != "ready":
+        status = "hold"
+    elif summary["pending"]:
+        status = "in-progress"
+    else:
+        status = "complete"
+
+    return {
+        "schema_version": TRAIL_STATUS_SCHEMA_VERSION,
+        "status": status,
+        "project_path": str(root),
+        "trail_file": str(path),
+        "channel": trail.get("channel"),
+        "package_name": name,
+        "version": version,
+        "summary": summary,
+        "steps": step_reports,
+        "findings": findings,
+        "residual_risks": [
+            "This status reads local files only and does not query package-index state.",
+            "Readiness and release-verify steps are command-only unless their outputs are captured elsewhere.",
+        ],
+    }
+
+
 def write_publication_trail(
     project_root: Path | str,
     report: Mapping[str, Any],
@@ -297,6 +418,28 @@ def write_publication_trail(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(report, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
     return output_path
+
+
+def render_publication_trail_status(report: Mapping[str, Any]) -> str:
+    summary = _mapping(report.get("summary"))
+    lines = [
+        "Relay-kit publication trail status",
+        f"- project: {report.get('project_path')}",
+        f"- channel: {report.get('channel')}",
+        f"- version: {report.get('version')}",
+        f"- status: {report.get('status')}",
+        (
+            "- steps: "
+            f"complete={summary.get('complete', 0)}, "
+            f"pending={summary.get('pending', 0)}, "
+            f"not_observable={summary.get('not_observable', 0)}, "
+            f"failed={summary.get('failed', 0)}"
+        ),
+    ]
+    for step in report.get("steps", []):
+        if isinstance(step, Mapping):
+            lines.append(f"  - {step.get('id')}: {step.get('status')} - {step.get('summary')}")
+    return "\n".join(lines)
 
 
 def write_publication_trail_markdown(
@@ -638,6 +781,105 @@ def publication_plan_file_check(path: Path) -> dict[str, Any]:
     return check("publication-plan", "publication plan", "pass", "publication plan is ready", details={"path": str(path)})
 
 
+def publication_evidence_file_check(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return check("publication-evidence", "publication evidence", "hold", "missing publication evidence file", details={"path": str(path)})
+    payload = read_json_object(path)
+    if payload is None:
+        return check("publication-evidence", "publication evidence", "hold", "publication evidence is not valid JSON", details={"path": str(path)})
+    if payload.get("schema_version") != EVIDENCE_SCHEMA_VERSION:
+        return check(
+            "publication-evidence",
+            "publication evidence",
+            "hold",
+            "publication evidence schema does not match",
+            details={"path": str(path), "schema_version": payload.get("schema_version")},
+        )
+    if payload.get("status") != "published":
+        return check(
+            "publication-evidence",
+            "publication evidence",
+            "hold",
+            f"publication evidence status is {payload.get('status')}",
+            details={"path": str(path), "status": payload.get("status")},
+        )
+    return check("publication-evidence", "publication evidence", "pass", "publication evidence is published", details={"path": str(path)})
+
+
+def publication_trail_step_status(
+    step: Mapping[str, Any],
+    *,
+    root: Path,
+    dist_dir: Path,
+    package_name: str,
+    version: str,
+    evidence_paths: Mapping[str, Any],
+) -> dict[str, Any]:
+    step_id = str(step.get("id", "publication-step"))
+    label = str(step.get("label", step_id))
+    if step_id == "build":
+        check_result = distribution_artifacts_check(dist_dir, name=package_name, version=version)
+        return step_status_from_check(step_id, label, check_result, pending_status="pending")
+    if step_id == "twine-check":
+        path = _path_from_evidence(root, evidence_paths, "twine_check_file")
+        check_result = text_evidence_file_check("twine-check", "twine check", path, required_text="passed", failure_tokens=("failed", "error"))
+        return step_status_from_check(step_id, label, check_result, pending_status="pending")
+    if step_id == "publication-plan":
+        path = _path_from_evidence(root, evidence_paths, "publication_plan_file")
+        check_result = publication_plan_file_check(path)
+        return step_status_from_check(step_id, label, check_result, pending_status="pending")
+    if step_id == "upload":
+        path = _path_from_evidence(root, evidence_paths, "upload_log_file")
+        check_result = text_evidence_file_check("upload-log", "upload log", path, required_text=None, failure_tokens=("failed", "error", "traceback"))
+        return step_status_from_check(step_id, label, check_result, pending_status="pending")
+    if step_id == "publication-evidence":
+        path = _path_from_evidence(root, evidence_paths, "publication_evidence_file")
+        check_result = publication_evidence_file_check(path)
+        return step_status_from_check(step_id, label, check_result, pending_status="pending")
+    return {
+        "id": step_id,
+        "label": label,
+        "status": "not-observable",
+        "summary": "step has no local evidence file to inspect",
+        "details": {"command": step.get("command", "")},
+    }
+
+
+def step_status_from_check(
+    step_id: str,
+    label: str,
+    check_result: Mapping[str, Any],
+    *,
+    pending_status: str,
+) -> dict[str, Any]:
+    check_status = str(check_result.get("status", "hold"))
+    status = "complete" if check_status == "pass" else pending_status
+    if check_status == "fail":
+        status = "fail"
+    return {
+        "id": step_id,
+        "label": label,
+        "status": status,
+        "summary": check_result.get("summary", ""),
+        "details": check_result.get("details", {}),
+    }
+
+
+def count_step_statuses(steps: list[dict[str, Any]]) -> dict[str, int]:
+    summary = {"complete": 0, "pending": 0, "not_observable": 0, "failed": 0, "total": len(steps)}
+    for step in steps:
+        status = str(step.get("status", ""))
+        if status == "complete":
+            summary["complete"] += 1
+        elif status == "pending":
+            summary["pending"] += 1
+        elif status == "not-observable":
+            summary["not_observable"] += 1
+        else:
+            summary["failed"] += 1
+    return summary
+
+
 def shell_check(shell: str) -> dict[str, Any]:
     return check(
         "shell",
@@ -871,6 +1113,14 @@ def _resolve_optional_path(root: Path, value: Path | str | None) -> Path | None:
     return path if path.is_absolute() else root / path
 
 
+def _path_from_evidence(root: Path, evidence_paths: Mapping[str, Any], key: str) -> Path:
+    value = evidence_paths.get(key)
+    if not value:
+        return root / DEFAULT_TRAIL_OUTPUT.parent / f"missing-{key}"
+    path = Path(str(value))
+    return path if path.is_absolute() else root / path
+
+
 def _resolve_evidence_dir(root: Path, value: Path | str | None, *, version: str) -> Path:
     path = Path(value) if value is not None else root / ".tmp" / "relay-publication" / version
     return path if path.is_absolute() else root / path
@@ -887,6 +1137,14 @@ def _looks_like_url(value: str) -> bool:
 
 def _mapping(value: object) -> Mapping[str, Any]:
     return value if isinstance(value, Mapping) else {}
+
+
+def read_json_object(path: Path) -> dict[str, Any] | None:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def _shell_arg(path: Path) -> str:

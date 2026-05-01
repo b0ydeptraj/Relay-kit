@@ -3,6 +3,7 @@
 `relay-kit publish plan` checks the evidence needed before a Relay-kit package is uploaded to a package index.
 `relay-kit publish trail` writes the concrete capture commands and evidence paths for a package publication run.
 `relay-kit publish evidence` records the execution proof after the build/check/upload path has evidence files.
+`relay-kit publish status` reads the trail and local evidence files to report publication progress.
 
 It is a planning and verification command. It never uploads a package.
 
@@ -15,6 +16,7 @@ relay-kit publish plan /path/to/project --channel testpypi --target-version 3.4.
 relay-kit publish plan /path/to/project --output-file .relay-kit/release/publication-plan.json
 relay-kit publish trail /path/to/project --channel pypi --strict --json
 relay-kit publish evidence /path/to/project --channel pypi --strict --json
+relay-kit publish status /path/to/project --strict --json
 ```
 
 Default checks:
@@ -41,6 +43,14 @@ Publication evidence checks:
 - captured `twine check` output with a passing result
 - captured upload/package-index confirmation log
 - optional linkage to a `relay-kit publish plan` JSON file
+
+Publication status checks:
+
+- `.relay-kit/release/publication-trail.json` exists and uses the expected trail schema
+- distribution artifacts exist after the build step
+- captured twine-check and upload logs exist and do not contain failure tokens
+- publication plan and publication evidence JSON files exist with ready/published status
+- readiness and release-verify steps are reported as `not-observable` unless their outputs are captured by another gate
 
 ## Release Use
 
@@ -75,6 +85,7 @@ relay-kit publish evidence /path/to/project \
   --publication-plan-file .relay-kit/release/publication-plan.json \
   --strict \
   --json
+relay-kit publish status /path/to/project --strict --json
 ```
 
 The trail reaches `ready` when metadata, version/channel policy, release-lane status, shell support, and external URLs are valid. It intentionally does not require distribution artifacts yet because it includes the build step that creates them.
@@ -82,3 +93,5 @@ The trail reaches `ready` when metadata, version/channel policy, release-lane st
 The plan reaches `ready` only when local release gates pass, distribution artifacts exist, and external evidence pointers are present. Package upload, package-index ownership, and commercial support staffing remain external operational actions.
 
 The evidence report writes `.relay-kit/release/publication-evidence.json` by default and reaches `published` only when the local artifacts, URL evidence, twine check output, and upload confirmation exist. It still does not upload a package itself.
+
+The status report is a read-only progress gate over the trail and evidence files. It reaches `complete` when all locally inspectable publication steps have proof; missing or incomplete local proof returns `in-progress` or `hold` under `--strict`.
