@@ -17,6 +17,8 @@ All notable changes to `Relay-kit` are documented here.
 - Added `relay-kit publish status` to read publication trail/evidence artifacts
   and report complete, pending, failed, and not-observable publication steps
   without uploading packages.
+- Added `relay-kit support triage` to validate support request and support
+  bundle artifacts before paid-support handoff.
 - Added `relay-kit publish trail` to write a publication runbook with
   deterministic capture paths and copyable commands for build, twine check,
   upload logging, plan, and evidence generation.
