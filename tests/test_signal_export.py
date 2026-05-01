@@ -50,6 +50,17 @@ def write_pulse_report(root: Path) -> Path:
                     "findings": [],
                     "diagnostics": [{"path": ".relay-kit/support/support-bundle.json", "status": "present"}],
                 },
+                "gate_summary": {
+                    "status_counts": {"pass": 4, "attention": 1, "hold": 0, "not-run": 0},
+                    "gates": [
+                        {"id": "workflow-eval", "status": "pass"},
+                        {"id": "readiness", "status": "pass"},
+                        {"id": "publication", "status": "pass"},
+                        {"id": "support-request", "status": "pass"},
+                        {"id": "evidence", "status": "attention"},
+                    ],
+                    "next_actions": [{"gate": "evidence", "status": "attention", "action": "Inspect failing evidence."}],
+                },
             }
         ),
         encoding="utf-8",
@@ -73,6 +84,10 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.workflow.pass_rate" in metric_names
     assert "relay.workflow.evidence_coverage" in metric_names
     assert "relay.workflow.expected_layer_count" in metric_names
+    assert "relay.gates.pass" in metric_names
+    assert "relay.gates.attention" in metric_names
+    assert "relay.gates.hold" in metric_names
+    assert "relay.gates.not_run" in metric_names
     assert "relay.publication.ready" in metric_names
     assert "relay.support_request.ready" in metric_names
     assert "relay.evidence.event" in event_names
