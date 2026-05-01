@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #23 so source-of-truth artifacts match the merged publication trail status lane.
+Refresh live workflow state after PR #25 so source-of-truth artifacts match the merged readiness pytest output hygiene lane.
 
 ## Active lane
 - Lane id: primary
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210492548, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210793716, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -83,11 +83,14 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #21 merged workflow eval layer/role coverage signals: https://github.com/b0ydeptraj/Relay-kit/pull/21.
 - PR #22 merged post-workflow-eval state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/22.
 - PR #23 merged publication trail status: https://github.com/b0ydeptraj/Relay-kit/pull/23.
+- PR #24 merged post-publication-status state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/24.
+- PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #23 verification: `python -m pytest -q --basetemp=.tmp\pytest-publication-status-full-2`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py publish status . --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
-- Current main baseline: `55ead4d83215a41ec5468a78fb99f2c34330ddbb`.
+- PR #25 verification: `python -m pytest -q --basetemp=.tmp\pytest-readiness-basetemp-full`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed before merge.
+- Current main baseline: `cfa83987490288b7381c4a90a685f84573ceb687`.
 
 ## Recommended next lane
 Continue broader dashboard/eval expansion or support operations polish.

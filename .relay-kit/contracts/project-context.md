@@ -61,7 +61,9 @@
 - PR #21 merged workflow eval layer/role coverage signals: https://github.com/b0ydeptraj/Relay-kit/pull/21, merge commit `f9cc9fa452719473389bf091a52e110626bbfa31`.
 - PR #22 merged post-workflow-eval state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/22, merge commit `83e60cbe16bbf3ece194d83734969b7ade6d720c`.
 - PR #23 merged publication trail status: https://github.com/b0ydeptraj/Relay-kit/pull/23, merge commit `55ead4d83215a41ec5468a78fb99f2c34330ddbb`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210492548, conclusion `success`.
+- PR #24 merged post-publication-status state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/24, merge commit `10d14f31e1666f056a2fd9260d934e583ef18cdc`.
+- PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25, merge commit `cfa83987490288b7381c4a90a685f84573ceb687`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210793716, conclusion `success`.
 
 ## Known sharp edges
 
