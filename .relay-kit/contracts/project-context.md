@@ -32,7 +32,7 @@
 ## Domain and compliance constraints
 
 - Relay-kit is positioned as an agent workflow governance kit, not a CrewAI/n8n-style full agent runtime.
-- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, and `relay-kit publish status . --json` when package upload evidence exists.
+- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, and `relay-kit publish status . --json` when package upload evidence exists.
 - Enterprise trust metadata is deterministic, not cryptographic. `relay-kit manifest verify . --trusted` is required before enterprise readiness claims.
 - Release/publication evidence must distinguish local readiness from external package upload, marketplace publication, and legal SLA commitments.
 
@@ -63,7 +63,9 @@
 - PR #23 merged publication trail status: https://github.com/b0ydeptraj/Relay-kit/pull/23, merge commit `55ead4d83215a41ec5468a78fb99f2c34330ddbb`.
 - PR #24 merged post-publication-status state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/24, merge commit `10d14f31e1666f056a2fd9260d934e583ef18cdc`.
 - PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25, merge commit `cfa83987490288b7381c4a90a685f84573ceb687`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210793716, conclusion `success`.
+- PR #26 merged post-readiness-output state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/26, merge commit `b3316d0d26370e9d56ffa6c6375bd0edb271d2e0`.
+- PR #27 merged support triage readiness gate: https://github.com/b0ydeptraj/Relay-kit/pull/27, merge commit `23a54d70089efc062b531db9a65d777423d9a233`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25211668550, conclusion `success`.
 
 ## Known sharp edges
 
@@ -78,6 +80,6 @@
 - Version and upgrade logic: `relay_kit_v3/upgrade.py`, `.relay-kit/version.json`, `pyproject.toml`
 - Release readiness logic: `relay_kit_v3/release_lane.py`, `relay_kit_v3/readiness.py`, `scripts/release_readiness.py`
 - Publication planning and evidence logic: `relay_kit_v3/publication.py`
-- Support diagnostics and request intake logic: `relay_kit_v3/support_bundle.py`, `relay_kit_v3/support_request.py`
+- Support diagnostics, request intake, and triage logic: `relay_kit_v3/support_bundle.py`, `relay_kit_v3/support_request.py`, `relay_kit_v3/support_triage.py`
 - Signal and observability logic: `relay_kit_v3/signal_export.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/evidence_ledger.py`
 - Tests to mirror for new CLI slices: `tests/test_publication_plan.py`, `tests/test_signal_export.py`, `tests/test_release_lane.py`, `tests/test_readiness_check.py`, `tests/test_public_cli_doctor.py`
