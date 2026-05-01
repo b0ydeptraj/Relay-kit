@@ -15,6 +15,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit publish plan <project_path>
   relay-kit publish evidence <project_path>
   relay-kit publish trail <project_path>
+  relay-kit publish status <project_path>
   relay-kit pulse build <project_path>
   relay-kit signal export <project_path>
   relay-kit contract import <project_path> --contract-file <relay-contract.json>
@@ -41,9 +42,11 @@ from relay_kit_v3.publication import (
     build_publication_evidence,
     build_publication_plan,
     build_publication_trail,
+    build_publication_trail_status,
     render_publication_evidence,
     render_publication_plan,
     render_publication_trail,
+    render_publication_trail_status,
     write_publication_evidence,
     write_publication_plan,
     write_publication_trail,
@@ -459,6 +462,16 @@ def _parse_publish_args(argv: list[str]) -> argparse.Namespace:
     )
     trail.add_argument("--strict", action="store_true", help="Return non-zero unless the publication trail is ready")
     trail.add_argument("--json", action="store_true", help="Emit machine-readable publication trail")
+
+    status = subparsers.add_parser("status", help="Inspect local publication trail and execution evidence")
+    status.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    status.add_argument(
+        "--trail-file",
+        default=None,
+        help="Publication trail JSON path (default: <project>/.relay-kit/release/publication-trail.json)",
+    )
+    status.add_argument("--strict", action="store_true", help="Return non-zero unless the publication trail is complete")
+    status.add_argument("--json", action="store_true", help="Emit machine-readable publication trail status")
     return parser.parse_args(argv)
 
 
@@ -1026,6 +1039,15 @@ def run_publish(args: argparse.Namespace) -> int:
             print(f"Wrote {output_path}")
             print(f"Wrote {markdown_path}")
         if args.strict and report["status"] != "ready":
+            return 2
+        return 0
+    if args.action == "status":
+        report = build_publication_trail_status(args.project_path, trail_file=args.trail_file)
+        if args.json:
+            print(json.dumps(report, ensure_ascii=True, indent=2))
+        else:
+            print(render_publication_trail_status(report))
+        if args.strict and report["status"] != "complete":
             return 2
         return 0
     return 2

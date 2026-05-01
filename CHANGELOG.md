@@ -14,6 +14,9 @@ All notable changes to `Relay-kit` are documented here.
   intake artifact exists.
 - Added workflow eval layer/role coverage signals and exposed expected-layer
   coverage in Pulse and signal export.
+- Added `relay-kit publish status` to read publication trail/evidence artifacts
+  and report complete, pending, failed, and not-observable publication steps
+  without uploading packages.
 - Added `relay-kit publish trail` to write a publication runbook with
   deterministic capture paths and copyable commands for build, twine check,
   upload logging, plan, and evidence generation.

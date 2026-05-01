@@ -40,7 +40,7 @@ Source audit status:
 - Fixed in governance reference pass: enterprise policy guard now fails required governance files that still contain unresolved `TBD` or template markers.
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
-- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 147 tests passing and 0 findings.
+- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 150 tests passing and 0 findings.
 - Fixed in release publication pass: `v3.3.0` is published with PR #1, CI success, release-lane proof, package smoke, enterprise readiness, post-release readiness, and rollback evidence.
 - Fixed in Relay OTLP export pass: `relay-kit signal export --otlp` writes dependency-free OTLP-compatible `relay-signals-otlp.json` with `resourceMetrics` and `resourceLogs` for external observability pipelines.
 - Fixed in OTLP readiness/support pass: readiness and support diagnostics now generate and report the OTLP signal artifact, not only JSON and JSONL exports.
@@ -53,11 +53,12 @@ Source audit status:
 - Fixed in support request Pulse pass: `relay-kit pulse build` can include support-request readiness in JSON/HTML, and signal export emits `relay.support_request.ready`.
 - Fixed in support bundle request summary pass: support bundles include a redacted support-request summary when `.relay-kit/support/support-request.json` exists.
 - Fixed in workflow eval coverage pass: `relay-kit eval run` now reports layer and role coverage for expected/predicted skills; Pulse and signal export expose expected-layer coverage.
+- Fixed in publication trail status pass: `relay-kit publish status` reads the publication trail and local evidence files, reporting complete, pending, failed, and not-observable publication steps without uploading packages.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit publish trail`, `relay-kit publish plan`, and `relay-kit publish evidence`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
+- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
@@ -642,6 +643,7 @@ Acceptance criteria:
 | Publication planning | Done | P2 | `relay-kit publish plan` checks release-lane status, version/channel safety, dist artifacts, and external evidence URLs without uploading artifacts. |
 | Publication trail hardening | Done | P2 | `relay-kit publish trail` writes copyable shell commands and deterministic evidence paths so publish evidence is captured consistently. |
 | Publication execution evidence | Done | P2 | `relay-kit publish evidence` records dist artifact hashes, twine-check output, upload confirmation, and package-index URLs into a machine-readable evidence file. |
+| Publication trail status | Done | P2 | `relay-kit publish status` reads the trail and evidence files to show complete, pending, failed, and not-observable publication steps without uploading artifacts. |
 | Support operations dashboard signal | Done | P2 | Pulse shows support-request readiness and `relay-kit signal export` emits `relay.support_request.ready`. |
 | Support bundle request summary | Done | P2 | `relay-kit support bundle` includes a redacted `diagnostics.support_request` summary when the intake artifact exists. |
 | Workflow eval layer coverage | Done | P2 | Eval reports layer/role coverage, Pulse shows layer coverage, and signal export emits `relay.workflow.expected_layer_count`. |
@@ -724,6 +726,7 @@ Expected gain:
 - Done support operations signal slice: Pulse and signal export now surface support-request readiness for paid-support review.
 - Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
 - Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
+- Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
@@ -748,8 +751,9 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - `relay-kit publish plan --channel pypi --strict` reaches `ready` only after release-lane, dist artifacts, version/channel policy, and external CI/release/package evidence are present.
 - `relay-kit publish trail --channel pypi --strict` reaches `ready` only after metadata, version/channel policy, release-lane status, shell support, and external CI/release/package URLs are present.
 - `relay-kit publish evidence --channel pypi --strict` reaches `published` only after wheel/sdist hashes, twine-check proof, upload confirmation, and external CI/release/package evidence are present.
+- `relay-kit publish status --strict` reaches `complete` only after the trail file, dist artifacts, twine-check log, upload log, publication plan, and publication evidence are locally inspectable.
 - Pulse and signal export surface support-request readiness so support operations can see whether the intake artifact is actionable.
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with broader dashboard/eval expansion, support operations polish, and optional publish trail execution automation after the non-upload trail has soaked.
+- Continue with broader dashboard/eval expansion and support operations polish after the read-only publication status gate has soaked.
