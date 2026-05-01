@@ -29,6 +29,7 @@ COMMERCIAL_DOCS = [
     "docs/relay-kit-contract-sync.md",
     ".relay-kit/contracts/support-request.md",
 ]
+READINESS_PYTEST_BASETEMP = Path(".tmp") / "readiness-pytest"
 
 CommandRunner = Callable[[list[str], Path], subprocess.CompletedProcess[str]]
 SupportBuilder = Callable[[Path, str], Mapping[str, Any]]
@@ -160,7 +161,7 @@ def _run_command_gates(root: Path, profile: str, skip_tests: bool, runner: Comma
             _run_subprocess_gate(
                 "pytest",
                 "pytest",
-                [sys.executable, "-m", "pytest", "-q"],
+                [sys.executable, "-m", "pytest", "-q", "--basetemp", str(READINESS_PYTEST_BASETEMP)],
                 REPO_ROOT,
                 runner,
             )
