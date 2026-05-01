@@ -8,24 +8,25 @@ from relay_kit_v3 import support_request, support_triage
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_BUNDLE_SCHEMA_VERSION
 
 
-def write_ready_support_artifacts(root: Path) -> None:
+def write_ready_support_artifacts(root: Path, *, include_bundle: bool = True) -> None:
     support_dir = root / ".relay-kit" / "support"
     support_dir.mkdir(parents=True, exist_ok=True)
     bundle_path = support_dir / "support-bundle.json"
-    bundle_path.write_text(
-        json.dumps(
-            {
-                "schema_version": SUPPORT_BUNDLE_SCHEMA_VERSION,
-                "diagnostics": {
-                    "manifest": {"status": "valid"},
-                    "policy": {"findings_count": 0},
-                    "workflow_eval": {"status": "pass"},
-                },
-            }
+    if include_bundle:
+        bundle_path.write_text(
+            json.dumps(
+                {
+                    "schema_version": SUPPORT_BUNDLE_SCHEMA_VERSION,
+                    "diagnostics": {
+                        "manifest": {"status": "valid"},
+                        "policy": {"findings_count": 0},
+                        "workflow_eval": {"status": "pass"},
+                    },
+                }
+            )
+            + "\n",
+            encoding="utf-8",
         )
-        + "\n",
-        encoding="utf-8",
-    )
     signal_dir = root / ".relay-kit" / "signals"
     signal_dir.mkdir(parents=True, exist_ok=True)
     signal_json = signal_dir / "relay-signals.json"
@@ -48,7 +49,7 @@ def write_ready_support_artifacts(root: Path) -> None:
         actual_behavior="Trusted manifest verification fails after a local skill edit.",
         recent_changes="Regenerated skills and edited manifest metadata.",
         workaround="Regenerate manifest trust metadata before release.",
-        diagnostic_files=[bundle_path, signal_json, signal_jsonl, signal_otlp],
+        diagnostic_files=([bundle_path] if include_bundle else []) + [signal_json, signal_jsonl, signal_otlp],
     )
     support_request.write_support_request(root, request)
 
@@ -68,8 +69,7 @@ def test_support_triage_ready_with_request_and_bundle(tmp_path: Path) -> None:
 
 
 def test_support_triage_holds_without_support_bundle(tmp_path: Path) -> None:
-    write_ready_support_artifacts(tmp_path)
-    (tmp_path / ".relay-kit" / "support" / "support-bundle.json").unlink()
+    write_ready_support_artifacts(tmp_path, include_bundle=False)
 
     report = support_triage.build_support_triage(tmp_path)
 

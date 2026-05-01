@@ -118,5 +118,53 @@
     "prompt": "Use ux-structure when a user-facing flow needs sharper information hierarchy, cleaner interaction flow, loading empty error states, and less generic AI-looking UI.",
     "expected_skill": "ux-structure",
     "expected_terms": ["information hierarchy", "loading", "empty"]
+  },
+  {
+    "id": "bootstrap-missing-runtime-state",
+    "prompt": "Use bootstrap when starting a repo lane and workflow-state or project-context is missing or stale. Initialize or refresh the shared Relay-kit runtime, record artifacts, and create team-board if the request may split into lanes.",
+    "expected_skill": "bootstrap",
+    "expected_terms": ["workflow-state", "project-context", "team-board"]
+  },
+  {
+    "id": "debug-hub-regression-triage",
+    "prompt": "Use debug-hub because work starts from a regression, flaky behavior, or unexplained mismatch. Reproduce the issue, collect logs and test output, write investigation-notes, and decide whether the next move is fix-hub, test-hub, or plan-hub.",
+    "expected_skill": "debug-hub",
+    "expected_terms": ["reproduce", "investigation-notes", "root cause"]
+  },
+  {
+    "id": "fix-hub-bounded-findings",
+    "prompt": "Use fix-hub after debug-hub validated findings. Convert the known problem into a bounded implementation path, update tech-spec with files and verification steps, name what must not change, and hand off to developer.",
+    "expected_skill": "fix-hub",
+    "expected_terms": ["bounded implementation path", "tech-spec", "developer"]
+  },
+  {
+    "id": "review-hub-artifact-alignment",
+    "prompt": "Use review-hub when requirements, architecture, implementation, and quality evidence may disagree. Check alignment, decide go forward or bounce to planning, debugging, implementation, or hold for missing evidence.",
+    "expected_skill": "review-hub",
+    "expected_terms": ["requirements", "architecture", "quality evidence"]
+  },
+  {
+    "id": "pm-buildable-scope",
+    "prompt": "Use pm after discovery when the work needs buildable scope. Translate product brief or scoped request into PRD, release slices, acceptance criteria, risks, mitigations, and epics.",
+    "expected_skill": "pm",
+    "expected_terms": ["acceptance criteria", "release slices", "PRD.md"]
+  },
+  {
+    "id": "architect-module-boundaries",
+    "prompt": "Use architect when PRD exists or a change alters module boundaries, data flow, security, or operations. Convert requirements into implementation-ready architecture with trade-offs and a readiness verdict.",
+    "expected_skill": "architect",
+    "expected_terms": ["module boundaries", "data flow", "readiness verdict"]
+  },
+  {
+    "id": "scrum-master-story-slicing",
+    "prompt": "Use scrum-master when planning is done and work must be sliced into safe verifiable increments. Turn PRD, architecture, epics, or tech-spec into story files with acceptance criteria and verification steps.",
+    "expected_skill": "scrum-master",
+    "expected_terms": ["story files", "acceptance criteria", "verification"]
+  },
+  {
+    "id": "runtime-doctor-adapter-parity",
+    "prompt": "Use runtime-doctor when runtime integrity may have drifted. Run deterministic diagnostics for adapter parity, generated artifacts, live state-mode checks, missing skills, extra skills, and placeholder state markers.",
+    "expected_skill": "runtime-doctor",
+    "expected_terms": ["adapter parity", "runtime diagnostics", "state-mode live"]
   }
 ]

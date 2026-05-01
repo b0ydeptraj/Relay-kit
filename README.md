@@ -213,6 +213,9 @@ relay-kit eval run /path/to/project --json --output-file workflow-eval.json
 relay-kit eval run /path/to/project --strict --baseline-file previous-workflow-eval.json
 ```
 
+The bundled default eval suite covers 28 production/team scenarios across
+orchestration, hubs, utility providers, specialists, and runtime diagnostics.
+
 Track installed runtime version and print upgrade actions:
 
 ```bash

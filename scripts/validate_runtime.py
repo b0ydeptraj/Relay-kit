@@ -8,7 +8,6 @@ import re
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +17,7 @@ if str(REPO_ROOT) not in sys.path:
 from relay_kit_v3.adapters import ADAPTER_TARGETS
 from relay_kit_v3.generator import BUNDLES
 from relay_kit_v3.registry.skills import ALL_V3_SKILLS
+from relay_kit_v3.temp_paths import stable_temp_dir
 from relay_kit_compat import (
     CANONICAL_ARTIFACT_ROOT,
     CANONICAL_ENTRYPOINT,
@@ -154,7 +154,7 @@ def validate_migration_guard() -> None:
 
 
 def validate_context_continuity_utility() -> None:
-    temp_dir = Path(tempfile.mkdtemp(prefix="relay-kit-continuity-"))
+    temp_dir = stable_temp_dir(REPO_ROOT, "continuity")
     try:
         run_helper_script(
             "scripts/context_continuity.py",
@@ -269,7 +269,7 @@ def validate_checked_in_docs() -> None:
 
 def validate_generated_bundle(bundle: str) -> None:
     expected_skills = set(BUNDLES[bundle])
-    temp_dir = Path(tempfile.mkdtemp(prefix=f"relay-kit-{bundle}-"))
+    temp_dir = stable_temp_dir(REPO_ROOT, f"bundle-{bundle}")
     try:
         run_cli(
             CANONICAL_ENTRYPOINT,
@@ -330,7 +330,7 @@ def validate_generated_bundle(bundle: str) -> None:
 
 def validate_generated_generic_bundle(bundle: str) -> None:
     expected_files = {f"{name}.md" for name in BUNDLES[bundle]}
-    temp_dir = Path(tempfile.mkdtemp(prefix=f"relay-kit-generic-{bundle}-"))
+    temp_dir = stable_temp_dir(REPO_ROOT, f"generic-{bundle}")
     try:
         run_cli(
             CANONICAL_ENTRYPOINT,
@@ -350,7 +350,7 @@ def validate_generated_generic_bundle(bundle: str) -> None:
 
 
 def validate_legacy_generation() -> None:
-    temp_dir = Path(tempfile.mkdtemp(prefix="relay-kit-legacy-generic-"))
+    temp_dir = stable_temp_dir(REPO_ROOT, "legacy-generic")
     try:
         run_cli(
             CANONICAL_LEGACY_ENTRYPOINT,
@@ -380,7 +380,7 @@ def validate_public_wrapper_surface() -> None:
         ("claude", ".claude/skills"),
         ("antigravity", ".agent/skills"),
     ):
-        temp_dir = Path(tempfile.mkdtemp(prefix=f"relay-kit-public-{adapter}-"))
+        temp_dir = stable_temp_dir(REPO_ROOT, f"public-{adapter}")
         try:
             run_public_cli(str(temp_dir), f"--{adapter}")
             if not (temp_dir / target).exists():

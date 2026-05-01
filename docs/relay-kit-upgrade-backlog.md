@@ -56,8 +56,10 @@ Source audit status:
 - Fixed in workflow eval coverage pass: `relay-kit eval run` now reports layer and role coverage for expected/predicted skills; Pulse and signal export expose expected-layer coverage.
 - Fixed in Pulse gate summary pass: Pulse JSON/HTML now reports workflow eval, readiness, publication, support request, and evidence gates with pass/attention/hold/not-run counts; signal export emits `relay.gates.*` metrics.
 - Fixed in Pulse gate drilldown pass: each degraded Pulse gate now carries concrete drilldown rows for failed scenarios, readiness gates, publication findings, support diagnostics, or recent failed evidence events; signal export emits `relay.gates.drilldown_items`.
+- Fixed in workflow eval scenario expansion pass: bundled workflow scenarios increased from 20 to 28 and now cover bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor routing.
 - Fixed in publication trail status pass: `relay-kit publish status` reads the publication trail and local evidence files, reporting complete, pending, failed, and not-observable publication steps without uploading packages.
 - Fixed in readiness pytest output hygiene pass: `relay-kit readiness check` runs pytest with a stable `.tmp/readiness-pytest` base temp directory so Windows temp-cleanup noise does not pollute captured evidence.
+- Fixed in pytest temp hardening pass: repo tests and runtime validators now use Relay-kit workspace temp paths and disable pytest cacheprovider, so `python -m pytest -q` passes on Windows without temp-root permission noise.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -68,8 +70,8 @@ Current verdict:
 
 Progress snapshot, updated 2026-05-01:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 94% for repo-owned work. Remaining work is eval scenario expansion, support workflow soak, and external legal/SLA/package-index operations outside local repo gates.
-- Overall tracked progress in this file: 96%. This percentage excludes star/community/popularity and external customer commitments.
+- Commercial hardening roadmap: 95% for repo-owned work. Remaining work is support workflow soak, broader dashboard/eval polish, and external legal/SLA/package-index operations outside local repo gates.
+- Overall tracked progress in this file: 97%. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
 
@@ -402,9 +404,9 @@ Status:
 - Fixed on 2026-04-24 for the first measurable routing suite.
 - Done: `relay-kit eval run <project> --strict` reports pass rate, top routes, predicted skill, and per-scenario findings.
 - Done: default fixtures are bundled under `relay_kit_v3/eval_fixtures/workflow_scenarios.json`, so installed CLI runs do not depend on repo test files.
-- Done: default fixture coverage expanded to 20 scenarios, including production support lanes for API integration, data persistence, dependency management, accessibility, policy, impact, project architecture, and UX structure.
+- Done: default fixture coverage expanded to 28 scenarios, including production support lanes for API integration, data persistence, dependency management, accessibility, policy, impact, project architecture, UX structure, bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor.
 - Done: `relay-kit doctor` and CI run `scripts/eval_workflows.py . --strict`.
-- Verification: `python scripts/eval_workflows.py . --strict` reports 20/20 scenarios; `python -m pytest tests/test_workflow_eval.py -q` passes.
+- Verification: `python scripts/eval_workflows.py . --strict --json` reports 28/28 scenarios; `python -m pytest tests/test_workflow_eval.py -q` passes in CI-compatible temp environments.
 
 Problem:
 - Semantic gauntlet proved static contract drift, but commercial quality needs a reportable scenario pass-rate signal.
@@ -659,6 +661,8 @@ Acceptance criteria:
 | Workflow eval layer coverage | Done | P2 | Eval reports layer/role coverage, Pulse shows layer coverage, and signal export emits `relay.workflow.expected_layer_count`. |
 | Pulse gate summary | Done | P2 | Pulse JSON/HTML shows workflow eval, readiness, publication, support request, and evidence gate status; signal export emits `relay.gates.*` counts. |
 | Pulse gate drilldowns | Done | P2 | Degraded Pulse gates now expose concrete scenario, finding, diagnostic, and evidence-event rows; signal export emits `relay.gates.drilldown_items`. |
+| Workflow eval scenario expansion | Done | P2 | Default eval suite now covers 28 production/team scenarios, including bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor routing. |
+| Pytest temp hardening | Done | P2 | `tests/conftest.py`, `relay_kit_v3/temp_paths.py`, readiness/support/validate helpers, and pytest config avoid Windows temp-root/cache permission failures. |
 
 ## Benchmark Lessons to Import
 
@@ -725,6 +729,7 @@ Expected gain:
 - Done first slice: add scenario eval harness for real workflow quality.
 - Done second slice: add eval quality metrics, configurable thresholds, and baseline regression comparison.
 - Done third eval slice: expand bundled scenario coverage from 12 to 20 production/team workflows.
+- Done fourth eval slice: expand bundled scenario coverage from 20 to 28 production/team workflows.
 - Done first Pulse slice: add static JSON/HTML report generator for local quality review before dashboard/server work.
 - Done second Pulse slice: add local trend/history JSONL so Pulse can compare current quality against prior runs.
 - Done first signal export slice: add local JSON/JSONL telemetry-style export from Pulse and evidence ledger signals.
@@ -741,6 +746,7 @@ Expected gain:
 - Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
 - Done Pulse gate summary slice: dashboard inputs now include per-gate pass, attention, hold, and not-run counts plus next actions.
 - Done Pulse gate drilldown slice: dashboard inputs now include concrete degraded gate rows for failed scenarios, readiness gates, publication findings, support diagnostics, and failed evidence events.
+- Done workflow eval scenario expansion slice: default scenario fixtures now cover 28 production/team routes, including bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor.
 - Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 
 Expected gain:
@@ -771,7 +777,8 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Pulse and signal export surface support-request readiness so support operations can see whether the intake artifact is actionable.
 - Pulse and signal export surface per-gate pass, attention, hold, and not-run counts so dashboard review can target the exact degraded gate.
 - Pulse and signal export surface gate drilldown item counts and rows so a reviewer can inspect the first concrete failure without parsing raw reports.
+- Workflow eval default suite covers 28 production/team scenarios across orchestration, hubs, utility providers, specialists, and runtime diagnostics.
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with eval scenario expansion and support operations polish after the Pulse drilldown surface has soaked.
+- Continue with support operations soak, broader dashboard/eval polish, and external publication/legal/SLA work after the workflow eval scenario expansion lands.
