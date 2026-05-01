@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Add a support triage handoff gate so Relay-kit can validate support request and support bundle artifacts before paid-support handoff.
+Refresh live workflow state after PR #27 so source-of-truth artifacts match the merged support triage lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Add a support triage handoff gate so Relay-kit can validate support request and 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: fix-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
-- Primary utility provider: testing-patterns
+- Primary utility provider: memory-search
 - Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded support-operations CLI/runtime/docs slice.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the support triage feature merged.
 
 ## Complexity level
 - Level: L1
-- Reasoning: this pass adds one read-only support triage report over existing support request and bundle artifacts.
+- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: scope is limited to deterministic checks, CLI wiring, docs, and regression tests.
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Add a support triage handoff gate so Relay-kit can validate support request and 
 | none | none | none | none |
 
 ## Next skill
-test-hub
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210896003, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25211668550, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -86,13 +86,14 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #24 merged post-publication-status state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/24.
 - PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25.
 - PR #26 merged post-readiness-output state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/26.
+- PR #27 merged support triage readiness gate: https://github.com/b0ydeptraj/Relay-kit/pull/27.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #23 verification: `python -m pytest -q --basetemp=.tmp\pytest-publication-status-full-2`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py publish status . --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #25 verification: `python -m pytest -q --basetemp=.tmp\pytest-readiness-basetemp-full`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed before merge.
-- Support triage branch verification: `python -m pytest tests\test_support_triage.py tests\test_support_bundle.py tests\test_support_request.py -q --basetemp=.tmp\pytest-support-triage-green-2`, `python -m pytest -q --basetemp=.tmp\pytest-support-triage-full`, `python relay_kit_public_cli.py support triage . --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
-- Current main baseline: `b3316d0d26370e9d56ffa6c6375bd0edb271d2e0`.
+- PR #27 verification: `python -m pytest tests\test_support_triage.py tests\test_support_bundle.py tests\test_support_request.py -q --basetemp=.tmp\pytest-support-triage-green-3`, `python -m pytest -q --basetemp=.tmp\pytest-support-triage-full`, `python relay_kit_public_cli.py support triage . --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
+- Current main baseline: `23a54d70089efc062b531db9a65d777423d9a233`.
 
 ## Recommended next lane
-Finish support triage verification, then continue broader dashboard/eval expansion.
+Continue broader dashboard/eval expansion.
