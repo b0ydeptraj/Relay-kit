@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Add a read-only publication trail status gate so Relay-kit can inspect package publication progress from local trail and evidence artifacts.
+Refresh live workflow state after PR #23 so source-of-truth artifacts match the merged publication trail status lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Add a read-only publication trail status gate so Relay-kit can inspect package p
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: fix-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
-- Primary utility provider: testing-patterns
+- Primary utility provider: memory-search
 - Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded CLI/runtime/docs slice with existing publication trail artifacts.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the publication trail status feature merged.
 
 ## Complexity level
 - Level: L1
-- Reasoning: this pass adds one read-only command over existing publication plan, trail, and evidence surfaces.
+- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: scope is limited to a deterministic status report, CLI wiring, docs, and regression tests.
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Add a read-only publication trail status gate so Relay-kit can inspect package p
 | none | none | none | none |
 
 ## Next skill
-test-hub
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25208805110, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25210492548, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -82,11 +82,12 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #20 merged post-support-bundle state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/20.
 - PR #21 merged workflow eval layer/role coverage signals: https://github.com/b0ydeptraj/Relay-kit/pull/21.
 - PR #22 merged post-workflow-eval state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/22.
+- PR #23 merged publication trail status: https://github.com/b0ydeptraj/Relay-kit/pull/23.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
-- Publication trail status branch verification: `python -m pytest -q --basetemp=.tmp\pytest-publication-status-full-2`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py publish status . --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
-- Current main baseline: `83e60cbe16bbf3ece194d83734969b7ade6d720c`.
+- PR #23 verification: `python -m pytest -q --basetemp=.tmp\pytest-publication-status-full-2`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py publish status . --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
+- Current main baseline: `55ead4d83215a41ec5468a78fb99f2c34330ddbb`.
 
 ## Recommended next lane
-Finish publication trail status verification, then continue broader dashboard/eval expansion or support operations polish.
+Continue broader dashboard/eval expansion or support operations polish.

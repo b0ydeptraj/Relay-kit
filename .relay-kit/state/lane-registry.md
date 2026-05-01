@@ -16,6 +16,7 @@
 | Lane | Artifact | Previous scope | Released because |
 |---|---|---|---|
 | primary | `pyproject.toml`, `.relay-kit/version.json` | next-dev version bump | PR #3 merged and CI passed |
+| primary | `relay_kit_v3/publication.py`, `relay_kit_public_cli.py`, publication docs/tests | publication trail status | PR #23 merged and CI passed |
 | primary | `scripts/eval_workflows.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, workflow eval docs/tests | workflow eval layer/role coverage signals | PR #21 merged and CI passed |
 | primary | `relay_kit_v3/support_bundle.py`, support docs/tests | support bundle request-summary diagnostics | PR #19 merged and CI passed |
 | primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, `relay_kit_public_cli.py`, Pulse/signal docs/tests | support request Pulse/signal visibility | PR #17 merged and CI passed |
