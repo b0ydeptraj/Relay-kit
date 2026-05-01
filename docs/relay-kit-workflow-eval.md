@@ -5,7 +5,7 @@
 It is intentionally separate from `skill-gauntlet`:
 
 - `skill-gauntlet --semantic` protects the runtime skill files from drift.
-- `workflow eval` reports scenario pass rate, predicted skill, top routes, and missing evidence terms.
+- `workflow eval` reports scenario pass rate, predicted skill, top routes, layer/role coverage, and missing evidence terms.
 - The bundled default suite covers 20 scenarios across routing, implementation, QA, release, policy, architecture, UX, dependency, API, and data workflows.
 
 ## Commands
@@ -32,7 +32,11 @@ The JSON report uses `schema_version=relay-kit.workflow-eval.v1` and includes:
 - `baseline`
 - `findings_count`
 - per-scenario `expected_skill`
+- per-scenario `expected_layer`
+- per-scenario `expected_role`
 - per-scenario `predicted_skill`
+- per-scenario `predicted_layer`
+- per-scenario `predicted_role`
 - per-scenario `route_margin`
 - per-scenario `route_confidence`
 - per-scenario `top_routes`
@@ -47,6 +51,10 @@ The `quality` block includes:
 - `evidence_term_coverage`
 - `expected_skill_counts`
 - `predicted_skill_counts`
+- `expected_layer_counts`
+- `predicted_layer_counts`
+- `expected_role_counts`
+- `predicted_role_counts`
 
 Default thresholds are:
 
