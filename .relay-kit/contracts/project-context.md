@@ -26,6 +26,7 @@
 - Runtime supports Python `>=3.10`; local verification is currently run with Python 3.12.
 - Root pytest is scoped to `tests/` through `pyproject.toml`.
 - CI workflow `.github/workflows/validate-runtime.yml` is the remote release gate and runs runtime validation, pytest, runtime doctor, migration guard, policy guard, semantic skill gauntlet, workflow eval, package wheel, and package smoke checks.
+- Pytest disables cacheprovider through `pyproject.toml` and tests use a workspace temp fixture so Windows temp/cache permission noise does not block root test proof.
 - GitHub CLI is available at `C:\Program Files\GitHub CLI\gh.exe` in this workspace.
 - `rg` may be unavailable on this Windows machine because prior calls hit access errors; PowerShell `Select-String` is the reliable fallback.
 
@@ -69,7 +70,9 @@
 - PR #29 merged Pulse gate summary: https://github.com/b0ydeptraj/Relay-kit/pull/29, merge commit `e88a29e63b72cb250421e248edd4dce67514a868`.
 - PR #30 merged post-Pulse-gate-summary state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/30, merge commit `64a8c6a`.
 - PR #31 merged Pulse gate drilldowns: https://github.com/b0ydeptraj/Relay-kit/pull/31, merge commit `535be14c95f8551d42b972db160a1a1c4b251217`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25216356829, conclusion `success`.
+- PR #32 merged post-Pulse-drilldowns state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/32, merge commit `19f24493e300c42eefe8bc01e10aef8a8a755902`.
+- PR #33 merged workflow eval scenario expansion and pytest temp hardening: https://github.com/b0ydeptraj/Relay-kit/pull/33, merge commit `8b14b6e88bb26bc6d8c972d40ec80cd8c9ee6ad0`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
 
 ## Known sharp edges
 
@@ -77,6 +80,7 @@
 - `.relay-kit/manifest/bundles.json` and `.relay-kit/manifest/trust.json` are ignored generated artifacts. Regenerate and verify them locally when version, skill hashes, or trust metadata changes.
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
 - Pulse now includes `gate_summary`, per-gate `drilldown` rows, and signal export emits `relay.gates.*`; future dashboard/eval work should preserve those schema keys.
+- Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
 ## Files or modules to mirror

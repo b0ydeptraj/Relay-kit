@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Expand workflow eval scenario coverage from 20 to 28 production/team routes and refresh the upgrade note with the new progress position.
+Refresh live workflow state after PR #33 so source-of-truth artifacts match the merged workflow eval scenario expansion lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Expand workflow eval scenario coverage from 20 to 28 production/team routes and 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: test-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
-- Primary utility provider: skill-gauntlet
+- Primary utility provider: memory-search
 - Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded eval fixture, test expectation, and documentation update.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the workflow eval scenario expansion feature merged.
 
 ## Complexity level
-- Level: L2
-- Reasoning: this pass changes bundled eval fixtures and tests, then verifies routing quality through eval, doctor, readiness, and runtime gates.
+- Level: L1
+- Reasoning: runtime code is already merged and main CI passed; this pass only updates live state/context.
 
 ## Chosen track
-- Track: enterprise-flow
-- Why this track fits: bundled eval coverage affects commercial readiness signals and should be verified with the same gates used for paid/team claims.
+- Track: quick-flow
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Expand workflow eval scenario coverage from 20 to 28 production/team routes and 
 | none | none | none | none |
 
 ## Next skill
-qa-governor
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25216531367, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -92,6 +92,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #30 merged post-Pulse-gate-summary state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/30.
 - PR #31 merged Pulse gate drilldowns: https://github.com/b0ydeptraj/Relay-kit/pull/31.
 - PR #32 merged post-Pulse-drilldowns state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/32.
+- PR #33 merged workflow eval scenario expansion and pytest temp hardening: https://github.com/b0ydeptraj/Relay-kit/pull/33.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
@@ -103,8 +104,8 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Pulse gate drilldown branch verification: `python -m pytest tests\test_pulse_report.py tests\test_signal_export.py -q --basetemp=.tmp\pytest-pulse-drilldowns-green-2`, `python -m pytest -q --basetemp=.tmp\pytest-pulse-drilldowns-full-2`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
 - PR #31 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25216356829, conclusion `success`.
 - Eval scenario expansion branch verification: `python -m pytest tests\test_workflow_eval.py -q --tb=short -p no:cacheprovider`, `python scripts\eval_workflows.py . --strict --json`, `python -m pytest -q`, `python scripts\validate_runtime.py`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, and `python relay_kit_public_cli.py signal export . --otlp --json` passed locally; signal export reports `relay.workflow.scenario_count=28`.
-- Current feature branch: `codex/eval-scenario-expansion-v2`.
-- Current main baseline: `19f24493e300c42eefe8bc01e10aef8a8a755902`.
+- PR #33 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
+- Current main baseline: `8b14b6e88bb26bc6d8c972d40ec80cd8c9ee6ad0`.
 
 ## Recommended next lane
-Complete eval scenario expansion, then continue support operations soak and broader dashboard/eval polish.
+Continue support operations soak and broader dashboard/eval polish now that workflow eval expansion is merged and CI is green.
