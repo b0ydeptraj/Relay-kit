@@ -8,7 +8,7 @@
 ## Active lanes
 | Lane | Owner skill | Source orchestrator | Target hub | Primary artifact | Lock scope | Merge prerequisite | Status |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | workflow-router | none | `.relay-kit/contracts/project-context.md` | none | CI after merge | ready-for-merge |
+| primary | developer | workflow-router | test-hub | `relay_kit_v3/eval_fixtures/workflow_scenarios.json` | eval fixtures/tests/docs/state | remote CI after PR | ready-for-pr |
 | lane-2 | unassigned | none | none | none | none | none | parked |
 | lane-3 | unassigned | none | none | none | none | none | parked |
 

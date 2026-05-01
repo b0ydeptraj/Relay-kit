@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import re
-import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -13,6 +12,7 @@ from relay_kit_v3 import bundle_manifest
 from relay_kit_v3.evidence_ledger import summarize_events
 from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, get_policy_pack
 from relay_kit_v3.release_lane import build_release_lane_report
+from relay_kit_v3.temp_paths import temp_dir
 from relay_kit_v3.upgrade import build_upgrade_report, inspect_manifest
 from scripts import eval_workflows, policy_guard
 
@@ -185,18 +185,18 @@ def build_signal_export_summary(root: Path, *, profile: str) -> dict[str, Any]:
         from relay_kit_v3.signal_export import SCHEMA_VERSION as SIGNAL_EXPORT_SCHEMA_VERSION
         from relay_kit_v3.signal_export import build_signal_export, write_signal_export
 
-        with tempfile.TemporaryDirectory(prefix="relay-support-pulse-") as temp_dir:
+        with temp_dir(root, "support-pulse") as work_dir:
             pulse_report = build_pulse_report(
                 root,
                 profile=profile,
                 include_readiness=False,
                 skip_tests=True,
-                output_dir=Path(temp_dir),
+                output_dir=work_dir,
             )
             pulse_outputs = write_pulse_report(
                 root,
                 pulse_report,
-                output_dir=Path(temp_dir),
+                output_dir=work_dir,
                 record_history=False,
             )
             payload = build_signal_export(root, pulse_file=pulse_outputs["json"])

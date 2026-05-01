@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
 import time
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
@@ -17,6 +16,7 @@ from relay_kit_v3.contract_import import import_contracts
 from relay_kit_v3.release_lane import build_release_lane_report
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_SCHEMA_VERSION
 from relay_kit_v3.support_bundle import build_support_bundle
+from relay_kit_v3.temp_paths import temp_dir
 from relay_kit_v3.upgrade import build_upgrade_report
 
 
@@ -310,18 +310,18 @@ def _signal_export_gate(root: Path, profile: str) -> dict[str, Any]:
         from relay_kit_v3.signal_export import SCHEMA_VERSION as SIGNAL_EXPORT_SCHEMA_VERSION
         from relay_kit_v3.signal_export import build_signal_export, write_signal_export
 
-        with tempfile.TemporaryDirectory(prefix="relay-readiness-pulse-") as temp_dir:
+        with temp_dir(root, "readiness-pulse") as work_dir:
             pulse_report = build_pulse_report(
                 root,
                 profile=profile,
                 include_readiness=False,
                 skip_tests=True,
-                output_dir=Path(temp_dir),
+                output_dir=work_dir,
             )
             pulse_outputs = write_pulse_report(
                 root,
                 pulse_report,
-                output_dir=Path(temp_dir),
+                output_dir=work_dir,
                 record_history=False,
             )
             payload = build_signal_export(root, pulse_file=pulse_outputs["json"])
@@ -397,25 +397,10 @@ def _default_contract_exporter(root: Path) -> Mapping[str, Any]:
 
 
 def _default_contract_importer(root: Path, payload: Mapping[str, Any]) -> Mapping[str, Any]:
-    tmp_dir = root / ".relay-kit" / "contract-sync"
-    tmp_dir.mkdir(parents=True, exist_ok=True)
-    tmp_path: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            "w",
-            encoding="utf-8",
-            delete=False,
-            dir=tmp_dir,
-            prefix="readiness-",
-            suffix=".json",
-        ) as handle:
-            json.dump(payload, handle, ensure_ascii=True, indent=2)
-            handle.write("\n")
-            tmp_path = Path(handle.name)
+    with temp_dir(root, "contract-sync") as work_dir:
+        tmp_path = work_dir / "readiness-contracts.json"
+        tmp_path.write_text(json.dumps(payload, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
         return import_contracts(root, contract_file=tmp_path, apply=False)
-    finally:
-        if tmp_path and tmp_path.exists():
-            tmp_path.unlink()
 
 
 def _exception_gate(gate_id: str, label: str, exc: Exception) -> dict[str, Any]:

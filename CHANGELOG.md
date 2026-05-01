@@ -18,6 +18,9 @@ All notable changes to `Relay-kit` are documented here.
   review can see pass, attention, hold, and not-run gate counts.
 - Added Pulse gate drilldowns and a `relay.gates.drilldown_items` metric so
   degraded gates point to concrete scenarios, findings, diagnostics, or events.
+- Expanded bundled workflow eval coverage from 20 to 28 production/team
+  scenarios, including bootstrap, debug/fix/review hubs, PM, architect,
+  scrum-master, and runtime-doctor routing.
 - Added `relay-kit publish status` to read publication trail/evidence artifacts
   and report complete, pending, failed, and not-observable publication steps
   without uploading packages.
@@ -41,6 +44,9 @@ All notable changes to `Relay-kit` are documented here.
 
 ### Changed
 
+- Hardened local pytest/runtime temp handling for Windows by routing Relay-kit
+  temp artifacts through workspace `.tmp` paths and disabling pytest cache
+  writes.
 - Readiness now runs pytest with a stable `.tmp/readiness-pytest` base temp
   directory so Windows temp-cleanup noise does not pollute readiness evidence.
 - Updated the runtime validation workflow to use Node 24-ready GitHub Actions
