@@ -65,13 +65,16 @@
 - PR #25 merged readiness pytest output hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/25, merge commit `cfa83987490288b7381c4a90a685f84573ceb687`.
 - PR #26 merged post-readiness-output state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/26, merge commit `b3316d0d26370e9d56ffa6c6375bd0edb271d2e0`.
 - PR #27 merged support triage readiness gate: https://github.com/b0ydeptraj/Relay-kit/pull/27, merge commit `23a54d70089efc062b531db9a65d777423d9a233`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25211668550, conclusion `success`.
+- PR #28 merged post-support-triage state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/28, merge commit `bb64950`.
+- PR #29 merged Pulse gate summary: https://github.com/b0ydeptraj/Relay-kit/pull/29, merge commit `e88a29e63b72cb250421e248edd4dce67514a868`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25215207136, conclusion `success`.
 
 ## Known sharp edges
 
 - `v3.3.0` remains the published release tag, while `main` is now `3.4.0.dev0`. Do not publish or package from `main` as `3.3.0`.
 - `.relay-kit/manifest/bundles.json` and `.relay-kit/manifest/trust.json` are ignored generated artifacts. Regenerate and verify them locally when version, skill hashes, or trust metadata changes.
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
+- Pulse now includes `gate_summary` and signal export emits `relay.gates.*`; future dashboard/eval work should preserve those schema keys.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
 ## Files or modules to mirror
