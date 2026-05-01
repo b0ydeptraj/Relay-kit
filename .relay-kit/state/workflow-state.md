@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Implement Pulse gate drilldowns so dashboard/eval reports show concrete degraded scenarios, findings, diagnostics, and failed evidence events.
+Refresh live workflow state after PR #31 so source-of-truth artifacts match the merged Pulse gate drilldown lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Implement Pulse gate drilldowns so dashboard/eval reports show concrete degraded
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: test-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
 - Primary utility provider: memory-search
-- Additional utilities in play: evidence-before-completion, skill-gauntlet
+- Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded dashboard/eval runtime change with tests, docs, and verification gates.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the Pulse gate drilldown feature merged.
 
 ## Complexity level
-- Level: L2
-- Reasoning: this pass changes Pulse report schema, HTML rendering, signal export metrics, tests, docs, and release notes.
+- Level: L1
+- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
 
 ## Chosen track
-- Track: implementation-flow
-- Why this track fits: the slice is code-backed and needs runtime proof before opening a PR.
+- Track: quick-flow
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -35,7 +35,7 @@ Implement Pulse gate drilldowns so dashboard/eval reports show concrete degraded
 - [ ] architecture
 - [ ] epics
 - [ ] story
-- [x] tech-spec
+- [ ] tech-spec
 - [ ] investigation-notes
 - [x] project-context
 - [x] qa-report
@@ -49,7 +49,7 @@ Implement Pulse gate drilldowns so dashboard/eval reports show concrete degraded
 | none | none | none | none |
 
 ## Next skill
-qa-governor
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,8 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25215207136, conclusion `success`.
-- Current feature branch: `codex/pulse-gate-drilldowns`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25216356829, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -90,6 +89,8 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #27 merged support triage readiness gate: https://github.com/b0ydeptraj/Relay-kit/pull/27.
 - PR #28 merged post-support-triage state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/28.
 - PR #29 merged Pulse gate summary: https://github.com/b0ydeptraj/Relay-kit/pull/29.
+- PR #30 merged post-Pulse-gate-summary state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/30.
+- PR #31 merged Pulse gate drilldowns: https://github.com/b0ydeptraj/Relay-kit/pull/31.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
@@ -98,7 +99,9 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #27 verification: `python -m pytest tests\test_support_triage.py tests\test_support_bundle.py tests\test_support_request.py -q --basetemp=.tmp\pytest-support-triage-green-3`, `python -m pytest -q --basetemp=.tmp\pytest-support-triage-full`, `python relay_kit_public_cli.py support triage . --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - Pulse gate summary branch verification: `python -m pytest tests\test_pulse_report.py tests\test_signal_export.py -q --basetemp=.tmp\pytest-pulse-gate-summary-green`, `python -m pytest -q --basetemp=.tmp\pytest-pulse-gate-summary-full`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --json --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
 - PR #29 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25215207136, conclusion `success`.
-- Current main baseline: `e88a29e63b72cb250421e248edd4dce67514a868`.
+- Pulse gate drilldown branch verification: `python -m pytest tests\test_pulse_report.py tests\test_signal_export.py -q --basetemp=.tmp\pytest-pulse-drilldowns-green-2`, `python -m pytest -q --basetemp=.tmp\pytest-pulse-drilldowns-full-2`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed locally.
+- PR #31 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25216356829, conclusion `success`.
+- Current main baseline: `535be14c95f8551d42b972db160a1a1c4b251217`.
 
 ## Recommended next lane
-Continue eval scenario expansion and support operations polish after the Pulse drilldown PR is merged.
+Continue eval scenario expansion and support operations polish now that Pulse drilldowns are merged and CI is green.
