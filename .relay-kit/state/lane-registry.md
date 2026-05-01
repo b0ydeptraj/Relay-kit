@@ -16,6 +16,7 @@
 | Lane | Artifact | Previous scope | Released because |
 |---|---|---|---|
 | primary | `pyproject.toml`, `.relay-kit/version.json` | next-dev version bump | PR #3 merged and CI passed |
+| primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | Pulse gate drilldowns | PR #31 merged and CI passed |
 | primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | Pulse gate summary | PR #29 merged and CI passed |
 | primary | `relay_kit_v3/support_triage.py`, `relay_kit_public_cli.py`, support docs/tests | support triage readiness gate | PR #27 merged and CI passed |
 | primary | `relay_kit_v3/readiness.py`, readiness docs/tests | readiness pytest output hygiene | PR #25 merged and CI passed |
