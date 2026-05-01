@@ -40,7 +40,7 @@ Source audit status:
 - Fixed in governance reference pass: enterprise policy guard now fails required governance files that still contain unresolved `TBD` or template markers.
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
-- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 150 tests passing and 0 findings.
+- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 151 tests passing and 0 findings.
 - Fixed in release publication pass: `v3.3.0` is published with PR #1, CI success, release-lane proof, package smoke, enterprise readiness, post-release readiness, and rollback evidence.
 - Fixed in Relay OTLP export pass: `relay-kit signal export --otlp` writes dependency-free OTLP-compatible `relay-signals-otlp.json` with `resourceMetrics` and `resourceLogs` for external observability pipelines.
 - Fixed in OTLP readiness/support pass: readiness and support diagnostics now generate and report the OTLP signal artifact, not only JSON and JSONL exports.
@@ -54,6 +54,7 @@ Source audit status:
 - Fixed in support bundle request summary pass: support bundles include a redacted support-request summary when `.relay-kit/support/support-request.json` exists.
 - Fixed in workflow eval coverage pass: `relay-kit eval run` now reports layer and role coverage for expected/predicted skills; Pulse and signal export expose expected-layer coverage.
 - Fixed in publication trail status pass: `relay-kit publish status` reads the publication trail and local evidence files, reporting complete, pending, failed, and not-observable publication steps without uploading packages.
+- Fixed in readiness pytest output hygiene pass: `relay-kit readiness check` runs pytest with a stable `.tmp/readiness-pytest` base temp directory so Windows temp-cleanup noise does not pollute captured evidence.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:

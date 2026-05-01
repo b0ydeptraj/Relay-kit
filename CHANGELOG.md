@@ -35,6 +35,8 @@ All notable changes to `Relay-kit` are documented here.
 
 ### Changed
 
+- Readiness now runs pytest with a stable `.tmp/readiness-pytest` base temp
+  directory so Windows temp-cleanup noise does not pollute readiness evidence.
 - Updated the runtime validation workflow to use Node 24-ready GitHub Actions
   major versions for checkout and Python setup.
 - Extended release-lane generated-artifact ignore checks to include publication

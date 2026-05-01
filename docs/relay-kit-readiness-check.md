@@ -13,7 +13,7 @@ Use `--profile team` for non-enterprise projects. Use `--skip-tests` only after 
 
 ## Required Gates
 
-- `pytest`: runs the root test suite.
+- `pytest`: runs the root test suite with a stable `.tmp/readiness-pytest` base temp directory so captured evidence is not polluted by platform temp-cleanup noise.
 - `doctor-enterprise`: runs `relay-kit doctor --skip-tests --policy-pack <profile>`.
 - `trusted-manifest`: verifies bundle checksums and trust metadata for `--profile enterprise`.
 - `bundle-manifest`: verifies bundle checksums for `--profile team`.

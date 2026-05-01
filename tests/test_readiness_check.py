@@ -133,6 +133,34 @@ def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: P
     assert Path(signal_gate["details"]["otlp"]).exists()
 
 
+def test_readiness_pytest_gate_uses_stable_basetemp(tmp_path: Path) -> None:
+    write_required_docs(tmp_path)
+    commands: list[list[str]] = []
+
+    def recording_runner(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+        commands.append(command)
+        return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
+
+    readiness.build_readiness_report(
+        tmp_path,
+        profile="enterprise",
+        command_runner=recording_runner,
+        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
+        contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
+        contract_importer=lambda root, payload: {
+            "schema_version": CONTRACT_IMPORT_SCHEMA_VERSION,
+            "status": "pass",
+            "findings": [],
+        },
+    )
+
+    pytest_command = next(command for command in commands if command[:3] == [readiness.sys.executable, "-m", "pytest"])
+
+    assert "--basetemp" in pytest_command
+    assert str(Path(".tmp") / "readiness-pytest") in pytest_command
+
+
 def test_readiness_report_holds_when_required_gate_fails(tmp_path: Path) -> None:
     write_required_docs(tmp_path)
 
