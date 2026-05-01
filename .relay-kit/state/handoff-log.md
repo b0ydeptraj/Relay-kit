@@ -11,6 +11,7 @@
 | workflow-router | bootstrap | primary | state/context drift after PR #23 publication trail status merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #23, main CI `25210492548`, readiness `commercial-ready-candidate`, pytest 150 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | bootstrap | primary | state/context drift after PR #25 readiness pytest output hygiene merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #25, main CI `25210793716`, readiness `commercial-ready-candidate`, pytest 151 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | bootstrap | primary | state/context drift after PR #27 support triage merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #27, main CI `25211668550`, readiness `commercial-ready-candidate`, pytest 154 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
+| workflow-router | bootstrap | primary | state/context drift after PR #29 Pulse gate summary merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #29, main CI `25215207136`, readiness `commercial-ready-candidate`, pytest 155 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 
 ## Rules
 - Every non-trivial handoff should update this log before the receiving skill starts work.
