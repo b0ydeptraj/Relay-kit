@@ -16,6 +16,8 @@ All notable changes to `Relay-kit` are documented here.
   coverage in Pulse and signal export.
 - Added Pulse gate summary data and `relay.gates.*` signal metrics so dashboard
   review can see pass, attention, hold, and not-run gate counts.
+- Added Pulse gate drilldowns and a `relay.gates.drilldown_items` metric so
+  degraded gates point to concrete scenarios, findings, diagnostics, or events.
 - Added `relay-kit publish status` to read publication trail/evidence artifacts
   and report complete, pending, failed, and not-observable publication steps
   without uploading packages.

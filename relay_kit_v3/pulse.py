@@ -19,6 +19,7 @@ SCHEMA_VERSION = "relay-kit.pulse-report.v1"
 HISTORY_SCHEMA_VERSION = "relay-kit.pulse-history.v1"
 DEFAULT_OUTPUT_DIR = Path(".relay-kit") / "pulse"
 HISTORY_FILE = "history.jsonl"
+DRILLDOWN_LIMIT = 8
 
 WorkflowEvalBuilder = Callable[[Path], Mapping[str, Any]]
 ReadinessBuilder = Callable[[Path, str, bool], Mapping[str, Any]]
@@ -168,6 +169,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         rows = '<tr><td colspan="4">No recent evidence events.</td></tr>'
     trend_rows = _trend_rows(trend)
     gate_summary_rows = _gate_summary_rows(gate_summary)
+    gate_drilldown_rows = _gate_drilldown_rows(gate_summary)
     publication_rows = _publication_rows(publication)
     support_request_rows = _support_request_rows(support_request)
 
@@ -308,6 +310,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       </table>
     </section>
     <section class="panel">
+      <h2>Gate details</h2>
+      <table>
+        <tr><th>Gate</th><th>Item</th><th>Status</th><th>Summary</th></tr>
+        {gate_drilldown_rows}
+      </table>
+    </section>
+    <section class="panel">
       <h2>Publication readiness</h2>
       <table>
         <tr><th>Signal</th><th>Value</th></tr>
@@ -412,8 +421,10 @@ def build_gate_summary(
     for gate in gates:
         status = str(gate.get("status", "not-run"))
         counts[status] = counts.get(status, 0) + 1
+    drilldown_item_count = sum(len(_list(gate.get("drilldown"))) for gate in gates)
     return {
         "status_counts": counts,
+        "drilldown_item_count": drilldown_item_count,
         "gates": gates,
         "next_actions": _gate_next_actions(gates),
     }
@@ -433,6 +444,7 @@ def _workflow_eval_gate(workflow_eval: Mapping[str, Any]) -> dict[str, Any]:
             "pass_rate": _float(workflow_eval.get("pass_rate")),
             "failed": failed,
         },
+        "drilldown": _workflow_eval_drilldown(workflow_eval),
     }
 
 
@@ -444,6 +456,7 @@ def _readiness_gate(readiness: Mapping[str, Any] | None) -> dict[str, Any]:
             "status": "not-run",
             "summary": "Readiness check was not included.",
             "details": {},
+            "drilldown": [],
         }
     findings = readiness.get("findings", [])
     if readiness.get("status") != "pass":
@@ -461,6 +474,7 @@ def _readiness_gate(readiness: Mapping[str, Any] | None) -> dict[str, Any]:
             "profile": readiness.get("profile"),
             "findings": len(findings) if isinstance(findings, list) else 0,
         },
+        "drilldown": _readiness_drilldown(readiness),
     }
 
 
@@ -472,6 +486,7 @@ def _publication_gate(publication: Mapping[str, Any] | None) -> dict[str, Any]:
             "status": "not-run",
             "summary": "Publication status was not included.",
             "details": {},
+            "drilldown": [],
         }
     findings = publication.get("findings", [])
     status = "pass" if publication.get("status") == "ready" else "attention"
@@ -485,6 +500,7 @@ def _publication_gate(publication: Mapping[str, Any] | None) -> dict[str, Any]:
             "version": publication.get("version"),
             "findings": len(findings) if isinstance(findings, list) else 0,
         },
+        "drilldown": _publication_drilldown(publication),
     }
 
 
@@ -496,6 +512,7 @@ def _support_request_gate(support_request: Mapping[str, Any] | None) -> dict[str
             "status": "not-run",
             "summary": "Support request status was not included.",
             "details": {},
+            "drilldown": [],
         }
     findings = support_request.get("findings", [])
     status = "pass" if support_request.get("status") == "ready" else "attention"
@@ -508,6 +525,7 @@ def _support_request_gate(support_request: Mapping[str, Any] | None) -> dict[str
             "severity": support_request.get("severity"),
             "findings": len(findings) if isinstance(findings, list) else 0,
         },
+        "drilldown": _support_request_drilldown(support_request),
     }
 
 
@@ -525,6 +543,7 @@ def _evidence_gate(evidence: Mapping[str, Any]) -> dict[str, Any]:
             "recent_failures": fail_count,
             "total_events": total_events,
         },
+        "drilldown": _evidence_drilldown(evidence),
     }
 
 
@@ -550,6 +569,143 @@ def _gate_next_actions(gates: list[Mapping[str, Any]]) -> list[dict[str, str]]:
             }
         )
     return actions
+
+
+def _workflow_eval_drilldown(workflow_eval: Mapping[str, Any]) -> list[dict[str, str]]:
+    items: list[dict[str, str]] = []
+    for result in _list(workflow_eval.get("results")):
+        if not isinstance(result, Mapping) or result.get("passed") is not False:
+            continue
+        expected = str(result.get("expected_skill", "-"))
+        predicted = str(result.get("predicted_skill", "-"))
+        items.append(
+            {
+                "kind": "scenario",
+                "id": str(result.get("id", "workflow-scenario")),
+                "status": "fail",
+                "summary": f"expected {expected}, predicted {predicted}",
+            }
+        )
+    for finding in _list(workflow_eval.get("findings")):
+        if not isinstance(finding, Mapping):
+            continue
+        items.append(
+            {
+                "kind": "finding",
+                "id": str(finding.get("gate", finding.get("id", "workflow-eval"))),
+                "status": str(finding.get("status", "attention")),
+                "summary": str(finding.get("summary", finding.get("message", "workflow eval finding"))),
+            }
+        )
+    return items[:DRILLDOWN_LIMIT]
+
+
+def _readiness_drilldown(readiness: Mapping[str, Any]) -> list[dict[str, str]]:
+    items: list[dict[str, str]] = []
+    for gate in _list(readiness.get("gates")):
+        if not isinstance(gate, Mapping):
+            continue
+        status = str(gate.get("status", "unknown"))
+        if status == "pass":
+            continue
+        gate_id = str(gate.get("id", gate.get("gate", "readiness")))
+        items.append(
+            {
+                "kind": "gate",
+                "id": gate_id,
+                "status": status,
+                "summary": str(gate.get("summary", gate_id)),
+            }
+        )
+    items.extend(_finding_drilldown_items(readiness.get("findings"), default_id="readiness"))
+    return _dedupe_drilldown(items)[:DRILLDOWN_LIMIT]
+
+
+def _publication_drilldown(publication: Mapping[str, Any]) -> list[dict[str, str]]:
+    items = _finding_drilldown_items(publication.get("findings"), default_id="publication")
+    for check in _list(publication.get("checks")):
+        if not isinstance(check, Mapping):
+            continue
+        status = str(check.get("status", "unknown"))
+        if status == "pass":
+            continue
+        check_id = str(check.get("id", check.get("gate", "publication")))
+        items.append(
+            {
+                "kind": "check",
+                "id": check_id,
+                "status": status,
+                "summary": str(check.get("summary", check_id)),
+            }
+        )
+    return _dedupe_drilldown(items)[:DRILLDOWN_LIMIT]
+
+
+def _support_request_drilldown(support_request: Mapping[str, Any]) -> list[dict[str, str]]:
+    items = _finding_drilldown_items(support_request.get("findings"), default_id="support-request")
+    for diagnostic in _list(support_request.get("diagnostics")):
+        if not isinstance(diagnostic, Mapping):
+            continue
+        status = str(diagnostic.get("status", "unknown"))
+        if status == "present":
+            continue
+        path = str(diagnostic.get("path", "diagnostic"))
+        items.append(
+            {
+                "kind": "diagnostic",
+                "id": path,
+                "status": status,
+                "summary": path,
+            }
+        )
+    return _dedupe_drilldown(items)[:DRILLDOWN_LIMIT]
+
+
+def _evidence_drilldown(evidence: Mapping[str, Any]) -> list[dict[str, str]]:
+    items: list[dict[str, str]] = []
+    for event in _list(evidence.get("recent_events")):
+        if not isinstance(event, Mapping) or str(event.get("status", "")).lower() != "fail":
+            continue
+        gate = str(event.get("gate", event.get("command", "evidence")))
+        findings_count = event.get("findings_count", "-")
+        items.append(
+            {
+                "kind": "event",
+                "id": gate,
+                "status": "fail",
+                "summary": f"recent failure, findings: {findings_count}",
+            }
+        )
+    return items[-DRILLDOWN_LIMIT:]
+
+
+def _finding_drilldown_items(value: Any, *, default_id: str) -> list[dict[str, str]]:
+    items: list[dict[str, str]] = []
+    for finding in _list(value):
+        if not isinstance(finding, Mapping):
+            continue
+        finding_id = str(finding.get("gate", finding.get("id", default_id)))
+        items.append(
+            {
+                "kind": "finding",
+                "id": finding_id,
+                "status": str(finding.get("status", "attention")),
+                "summary": str(finding.get("summary", finding.get("message", finding_id))),
+            }
+        )
+    return items
+
+
+def _dedupe_drilldown(items: list[dict[str, str]]) -> list[dict[str, str]]:
+    seen: set[tuple[str, str]] = set()
+    deduped: list[dict[str, str]] = []
+    for item in items:
+        key = (item.get("id", ""), item.get("summary", ""))
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(item)
+    return deduped
 
 
 def build_trend(
@@ -824,6 +980,31 @@ def _gate_summary_rows(gate_summary: Mapping[str, Any]) -> str:
     return "\n".join(rows)
 
 
+def _gate_drilldown_rows(gate_summary: Mapping[str, Any]) -> str:
+    gates = gate_summary.get("gates", [])
+    if not isinstance(gates, list) or not gates:
+        return '<tr><td colspan="4">No gate details available.</td></tr>'
+    rows = []
+    for gate in gates:
+        if not isinstance(gate, Mapping):
+            continue
+        gate_label = str(gate.get("label", gate.get("id", "-")))
+        for item in _list(gate.get("drilldown")):
+            if not isinstance(item, Mapping):
+                continue
+            rows.append(
+                "<tr>"
+                f"<td>{escape(gate_label)}</td>"
+                f"<td>{escape(str(item.get('id', item.get('kind', '-'))))}</td>"
+                f"<td>{escape(str(item.get('status', '-')))}</td>"
+                f"<td>{escape(str(item.get('summary', '-')))}</td>"
+                "</tr>"
+            )
+    if not rows:
+        return '<tr><td colspan="4">No degraded gate details.</td></tr>'
+    return "\n".join(rows)
+
+
 def _publication_rows(publication: Mapping[str, Any]) -> str:
     if not publication:
         rows = [("Status", "not-run")]
@@ -896,3 +1077,7 @@ def _float(value: Any, *, default: float = 0.0) -> float:
 
 def _mapping(value: Any) -> Mapping[str, Any]:
     return value if isinstance(value, Mapping) else {}
+
+
+def _list(value: Any) -> list[Any]:
+    return value if isinstance(value, list) else []

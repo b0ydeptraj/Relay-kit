@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #29 so source-of-truth artifacts match the merged Pulse gate summary lane.
+Implement Pulse gate drilldowns so dashboard/eval reports show concrete degraded scenarios, findings, diagnostics, and failed evidence events.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Refresh live workflow state after PR #29 so source-of-truth artifacts match the 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: bootstrap
-- Active specialist: context-continuity
+- Layer-2 workflow hub: test-hub
+- Active specialist: developer
 
 ## Active utility providers
 - Primary utility provider: memory-search
-- Additional utilities in play: evidence-before-completion
+- Additional utilities in play: evidence-before-completion, skill-gauntlet
 
 ## Active standalone/domain skill
-- Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the Pulse gate summary feature merged.
+- Skill: developer
+- Why selected: this is a bounded dashboard/eval runtime change with tests, docs, and verification gates.
 
 ## Complexity level
-- Level: L1
-- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
+- Level: L2
+- Reasoning: this pass changes Pulse report schema, HTML rendering, signal export metrics, tests, docs, and release notes.
 
 ## Chosen track
-- Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Track: implementation-flow
+- Why this track fits: the slice is code-backed and needs runtime proof before opening a PR.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -35,7 +35,7 @@ Refresh live workflow state after PR #29 so source-of-truth artifacts match the 
 - [ ] architecture
 - [ ] epics
 - [ ] story
-- [ ] tech-spec
+- [x] tech-spec
 - [ ] investigation-notes
 - [x] project-context
 - [x] qa-report
@@ -49,7 +49,7 @@ Refresh live workflow state after PR #29 so source-of-truth artifacts match the 
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+qa-governor
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -62,6 +62,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
 - Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25215207136, conclusion `success`.
+- Current feature branch: `codex/pulse-gate-drilldowns`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -100,4 +101,4 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Current main baseline: `e88a29e63b72cb250421e248edd4dce67514a868`.
 
 ## Recommended next lane
-Continue dashboard drilldowns/eval expansion now that Pulse gate summary is merged and CI is green.
+Continue eval scenario expansion and support operations polish after the Pulse drilldown PR is merged.

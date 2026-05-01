@@ -52,10 +52,14 @@ The JSON report includes `gate_summary`:
 
 - `status_counts`: count of gates in `pass`, `attention`, `hold`, and `not-run`
 - `gates`: per-gate status and short summary for workflow eval, readiness, publication, support request, and evidence
+- `gates[].drilldown`: degraded scenarios, gates, findings, diagnostics, or recent failed evidence events for that gate
+- `drilldown_item_count`: total number of drilldown rows across the gate summary
 - `next_actions`: concrete follow-up items for `attention` or `hold` gates
 
 The HTML report renders the same gate summary as a table so dashboard reviews can
-spot the blocking or degraded surface without reading raw JSON.
+spot the blocking or degraded surface without reading raw JSON. It also renders
+Gate details so a reviewer can see the first failing scenario, release check,
+support diagnostic, or evidence event attached to each degraded gate.
 
 ## History
 
@@ -94,5 +98,6 @@ relay-kit signal export /path/to/project
 ```
 
 Signal export includes `relay.gates.pass`, `relay.gates.attention`,
-`relay.gates.hold`, `relay.gates.not_run`, `relay.publication.ready`, and
-`relay.support_request.ready` when a Pulse report contains those surfaces.
+`relay.gates.hold`, `relay.gates.not_run`, `relay.gates.drilldown_items`,
+`relay.publication.ready`, and `relay.support_request.ready` when a Pulse report
+contains those surfaces.
