@@ -51,6 +51,7 @@ Metric signals include:
 - `relay.workflow.scenario_count`
 - `relay.workflow.failed_count`
 - `relay.workflow.evidence_coverage`
+- `relay.workflow.expected_layer_count`
 - `relay.workflow.average_route_margin`
 - `relay.workflow.min_route_margin`
 - `relay.evidence.total_events`

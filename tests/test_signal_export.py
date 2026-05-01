@@ -28,6 +28,10 @@ def write_pulse_report(root: Path) -> Path:
                         "evidence_term_coverage": 1.0,
                         "average_route_margin": 10.5,
                         "min_route_margin": 2,
+                        "expected_layer_counts": {
+                            "layer-1-orchestrators": 2,
+                            "layer-4-specialists-and-standalones": 2,
+                        },
                     },
                 },
                 "readiness": {
@@ -68,6 +72,7 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.pulse.score" in metric_names
     assert "relay.workflow.pass_rate" in metric_names
     assert "relay.workflow.evidence_coverage" in metric_names
+    assert "relay.workflow.expected_layer_count" in metric_names
     assert "relay.publication.ready" in metric_names
     assert "relay.support_request.ready" in metric_names
     assert "relay.evidence.event" in event_names

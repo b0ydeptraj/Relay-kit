@@ -52,6 +52,7 @@ Source audit status:
 - Fixed in next-dev version hygiene pass: `main` now uses PEP 440 package version `3.4.0.dev0` after the published `v3.3.0` tag, with runtime version marker and trusted manifest regenerated for the next-dev channel.
 - Fixed in support request Pulse pass: `relay-kit pulse build` can include support-request readiness in JSON/HTML, and signal export emits `relay.support_request.ready`.
 - Fixed in support bundle request summary pass: support bundles include a redacted support-request summary when `.relay-kit/support/support-request.json` exists.
+- Fixed in workflow eval coverage pass: `relay-kit eval run` now reports layer and role coverage for expected/predicted skills; Pulse and signal export expose expected-layer coverage.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -643,6 +644,7 @@ Acceptance criteria:
 | Publication execution evidence | Done | P2 | `relay-kit publish evidence` records dist artifact hashes, twine-check output, upload confirmation, and package-index URLs into a machine-readable evidence file. |
 | Support operations dashboard signal | Done | P2 | Pulse shows support-request readiness and `relay-kit signal export` emits `relay.support_request.ready`. |
 | Support bundle request summary | Done | P2 | `relay-kit support bundle` includes a redacted `diagnostics.support_request` summary when the intake artifact exists. |
+| Workflow eval layer coverage | Done | P2 | Eval reports layer/role coverage, Pulse shows layer coverage, and signal export emits `relay.workflow.expected_layer_count`. |
 
 ## Benchmark Lessons to Import
 
@@ -721,6 +723,7 @@ Expected gain:
 - Done first publication workflow hardening slice: add `relay-kit publish trail` for deterministic capture commands and evidence paths.
 - Done support operations signal slice: Pulse and signal export now surface support-request readiness for paid-support review.
 - Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
+- Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.

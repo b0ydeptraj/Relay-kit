@@ -20,6 +20,10 @@ def sample_eval_report() -> dict[str, object]:
             "min_route_margin": 3,
             "average_route_margin": 8.5,
             "evidence_term_coverage": 1.0,
+            "expected_layer_counts": {
+                "layer-1-orchestrators": 1,
+                "layer-4-specialists-and-standalones": 1,
+            },
             "expected_skill_counts": {"developer": 1, "qa-governor": 1},
         },
         "findings_count": 0,
@@ -171,6 +175,7 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     html = outputs["html"].read_text(encoding="utf-8")
     assert "Relay-kit Pulse" in html
     assert "Workflow quality" in html
+    assert "Layer coverage" in html
     assert "Publication readiness" in html
     assert "Support request" in html
     assert "Trend" in html

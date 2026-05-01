@@ -147,6 +147,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Eval pass rate", _percent(workflow_eval.get("pass_rate"))),
         ("Evidence coverage", _percent(quality.get("evidence_term_coverage"))),
         ("Min route margin", str(quality.get("min_route_margin", "-"))),
+        ("Layer coverage", str(len(_mapping(quality.get("expected_layer_counts"))))),
         ("Readiness", str(readiness.get("verdict", "not-run"))),
         ("Publication", str(publication.get("status", "not-run"))),
         ("Support request", str(support_request.get("status", "not-run"))),
@@ -284,6 +285,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         <tr><td>Scenario count</td><td>{escape(str(workflow_eval.get("scenario_count", 0)))}</td></tr>
         <tr><td>Average route margin</td><td>{escape(str(quality.get("average_route_margin", "-")))}</td></tr>
         <tr><td>Mean route confidence</td><td>{escape(str(quality.get("mean_route_confidence", "-")))}</td></tr>
+        <tr><td>Expected layers</td><td>{escape(", ".join(_mapping(quality.get("expected_layer_counts")).keys()))}</td></tr>
         <tr><td>Expected skills</td><td>{escape(", ".join(_mapping(quality.get("expected_skill_counts")).keys()))}</td></tr>
       </table>
     </section>

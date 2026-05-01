@@ -64,6 +64,8 @@ def evaluate_scenario(
     scenario_id = str(scenario.get("id", "")).strip() or "unnamed-scenario"
     prompt = str(scenario.get("prompt", "")).strip()
     expected_skill = str(scenario.get("expected_skill", "")).strip()
+    expected_layer = skill_metadata(registry, expected_skill, "layer")
+    expected_role = skill_metadata(registry, expected_skill, "role")
     expected_terms = scenario.get("expected_terms", [])
     findings: list[dict[str, str]] = []
     ranked: list[tuple[int, str]] = []
@@ -128,7 +130,11 @@ def evaluate_scenario(
         "id": scenario_id,
         "prompt": prompt,
         "expected_skill": expected_skill,
+        "expected_layer": expected_layer,
+        "expected_role": expected_role,
         "predicted_skill": predicted_skill,
+        "predicted_layer": skill_metadata(registry, predicted_skill, "layer"),
+        "predicted_role": skill_metadata(registry, predicted_skill, "role"),
         "passed": not findings,
         "top_score": top_score,
         "second_score": second_score,
@@ -234,6 +240,10 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
     matched_terms = sum(int(result.get("matched_terms_count", 0)) for result in results)
     expected_skills = [str(result.get("expected_skill", "")) for result in results if str(result.get("expected_skill", ""))]
     predicted_skills = [str(result.get("predicted_skill", "")) for result in results if str(result.get("predicted_skill", ""))]
+    expected_layers = [str(result.get("expected_layer", "")) for result in results if str(result.get("expected_layer", ""))]
+    predicted_layers = [str(result.get("predicted_layer", "")) for result in results if str(result.get("predicted_layer", ""))]
+    expected_roles = [str(result.get("expected_role", "")) for result in results if str(result.get("expected_role", ""))]
+    predicted_roles = [str(result.get("predicted_role", "")) for result in results if str(result.get("predicted_role", ""))]
 
     return {
         "min_route_margin": min(route_margins) if route_margins else 0,
@@ -245,8 +255,16 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
         "evidence_term_coverage": round(matched_terms / expected_terms, 4) if expected_terms else 1.0,
         "unique_expected_skills": sorted(set(expected_skills)),
         "unique_predicted_skills": sorted(set(predicted_skills)),
+        "unique_expected_layers": sorted(set(expected_layers)),
+        "unique_predicted_layers": sorted(set(predicted_layers)),
+        "unique_expected_roles": sorted(set(expected_roles)),
+        "unique_predicted_roles": sorted(set(predicted_roles)),
         "expected_skill_counts": count_values(expected_skills),
         "predicted_skill_counts": count_values(predicted_skills),
+        "expected_layer_counts": count_values(expected_layers),
+        "predicted_layer_counts": count_values(predicted_layers),
+        "expected_role_counts": count_values(expected_roles),
+        "predicted_role_counts": count_values(predicted_roles),
     }
 
 
@@ -382,6 +400,14 @@ def count_values(values: list[str]) -> dict[str, int]:
     for value in values:
         counts[value] = counts.get(value, 0) + 1
     return dict(sorted(counts.items()))
+
+
+def skill_metadata(registry: Mapping[str, object], skill_name: str, field: str) -> str:
+    spec = registry.get(skill_name)
+    if spec is None:
+        return ""
+    value = getattr(spec, field, "")
+    return str(value)
 
 
 def _float_value(value: Any) -> float:

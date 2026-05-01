@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #19 so source-of-truth artifacts match the merged support bundle request-summary lane.
+Add workflow eval layer and role coverage so Pulse and local signal export can report dashboard-ready coverage beyond pass rate.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Refresh live workflow state after PR #19 so source-of-truth artifacts match the 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: bootstrap
-- Active specialist: context-continuity
+- Layer-2 workflow hub: fix-hub
+- Active specialist: developer
 
 ## Active utility providers
-- Primary utility provider: memory-search
-- Additional utilities in play: evidence-before-completion
+- Primary utility provider: testing-patterns
+- Additional utilities in play: evidence-before-completion, doc-pointers
 
 ## Active standalone/domain skill
-- Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the support bundle request-summary feature merged.
+- Skill: developer
+- Why selected: this is a bounded dashboard/eval expansion slice over workflow eval, Pulse, signal export, tests, and docs.
 
 ## Complexity level
-- Level: L1
-- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
+- Level: L2
+- Reasoning: this pass changes one evaluation/reporting surface with targeted tests and docs.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Why this track fits: the feature is narrow, derived from existing registry metadata, and does not change package metadata.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Refresh live workflow state after PR #19 so source-of-truth artifacts match the 
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+test-hub
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -84,4 +84,4 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Current main baseline: `0499a66f73b51fd37b83f20575817d35f91ae2d0`.
 
 ## Recommended next lane
-Continue broader dashboard/eval expansion or optional publish trail execution automation.
+After this branch merges, refresh live state and then continue broader dashboard/eval expansion or optional publish trail execution automation.

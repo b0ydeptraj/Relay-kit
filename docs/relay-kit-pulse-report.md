@@ -30,7 +30,7 @@ Default output:
 
 Pulse combines:
 
-- workflow eval status, pass rate, route margin, route confidence, evidence coverage, and skill distribution
+- workflow eval status, pass rate, route margin, route confidence, evidence coverage, layer coverage, role coverage, and skill distribution
 - readiness status and verdict when `--include-readiness` or `--readiness-file` is used
 - publication plan status, channel, version, and finding count when `--include-publication` or `--publication-file` is used
 - support request status, severity, diagnostic count, and finding count when `--include-support-request` or `--support-request-file` is used

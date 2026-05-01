@@ -35,8 +35,13 @@ def test_workflow_eval_reports_pass_rate_and_top_routes() -> None:
     assert payload["quality"]["min_route_margin"] >= 1
     assert payload["quality"]["evidence_term_coverage"] == 1.0
     assert payload["thresholds"]["min_route_margin"] == 1
+    assert payload["quality"]["expected_layer_counts"]["layer-1-orchestrators"] >= 1
+    assert payload["quality"]["expected_layer_counts"]["layer-4-specialists-and-standalones"] >= 1
+    assert payload["quality"]["expected_role_counts"]["implementation"] >= 1
     assert "qa-governor" in payload["quality"]["expected_skill_counts"]
     assert payload["results"][0]["top_routes"][0]["skill"] == payload["results"][0]["expected_skill"]
+    assert payload["results"][0]["expected_layer"] == "layer-1-orchestrators"
+    assert payload["results"][0]["predicted_layer"] == "layer-1-orchestrators"
     assert payload["results"][0]["route_margin"] >= 1
     assert payload["results"][0]["evidence_coverage"] == 1.0
 
@@ -47,6 +52,11 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
     assert result.returncode == 0, result.stdout + result.stderr
     payload = json.loads(result.stdout)
     expected_skills = set(payload["quality"]["unique_expected_skills"])
+    expected_layers = set(payload["quality"]["unique_expected_layers"])
+    assert "layer-1-orchestrators" in expected_layers
+    assert "layer-2-workflow-hubs" in expected_layers
+    assert "layer-3-utility-providers" in expected_layers
+    assert "layer-4-specialists-and-standalones" in expected_layers
     for skill in {
         "api-integration",
         "data-persistence",

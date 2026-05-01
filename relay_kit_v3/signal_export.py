@@ -156,6 +156,7 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
         metric("relay.workflow.scenario_count", _number(workflow_eval.get("scenario_count")), "1", base_attrs),
         metric("relay.workflow.failed_count", _number(workflow_eval.get("failed")), "1", base_attrs),
         metric("relay.workflow.evidence_coverage", _number(quality.get("evidence_term_coverage")), "1", base_attrs),
+        metric("relay.workflow.expected_layer_count", len(_mapping(quality.get("expected_layer_counts"))), "1", base_attrs),
         metric("relay.workflow.average_route_margin", _number(quality.get("average_route_margin")), "1", base_attrs),
         metric("relay.workflow.min_route_margin", _number(quality.get("min_route_margin")), "1", base_attrs),
         metric("relay.evidence.total_events", _number(evidence.get("total_events")), "1", base_attrs),
