@@ -2,7 +2,7 @@
 
 > Path: `.relay-kit/contracts/project-context.md`
 > Purpose: Current source-of-truth context for Relay-kit work after the `v3.3.0` release and `3.4.0.dev0` next-dev bump.
-> Last refreshed: 2026-04-30
+> Last refreshed: 2026-05-01
 
 ## Existing architecture
 
@@ -57,7 +57,9 @@
 - PR #17 merged support request Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/17, merge commit `c3b693a7a1ee141039f4bbaa81fea69b95cb1e07`.
 - PR #18 merged post-support-Pulse state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/18, merge commit `7b1d74df5c1e66e7e21c2fff9b51dcee3437d67c`.
 - PR #19 merged support bundle request-summary diagnostics: https://github.com/b0ydeptraj/Relay-kit/pull/19, merge commit `0499a66f73b51fd37b83f20575817d35f91ae2d0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25174419399, conclusion `success`.
+- PR #20 merged post-support-bundle state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/20, merge commit `9b8613472bf34e0cd381fb838b999809faa15fb0`.
+- PR #21 merged workflow eval layer/role coverage signals: https://github.com/b0ydeptraj/Relay-kit/pull/21, merge commit `f9cc9fa452719473389bf091a52e110626bbfa31`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25208682877, conclusion `success`.
 
 ## Known sharp edges
 

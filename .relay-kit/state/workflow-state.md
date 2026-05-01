@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Add workflow eval layer and role coverage so Pulse and local signal export can report dashboard-ready coverage beyond pass rate.
+Refresh live workflow state after PR #21 so source-of-truth artifacts match the merged workflow eval coverage lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Add workflow eval layer and role coverage so Pulse and local signal export can r
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: fix-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
-- Primary utility provider: testing-patterns
-- Additional utilities in play: evidence-before-completion, doc-pointers
+- Primary utility provider: memory-search
+- Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded dashboard/eval expansion slice over workflow eval, Pulse, signal export, tests, and docs.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the workflow eval coverage feature merged.
 
 ## Complexity level
-- Level: L2
-- Reasoning: this pass changes one evaluation/reporting surface with targeted tests and docs.
+- Level: L1
+- Reasoning: this pass updates live state and context only; runtime code is already merged and main CI passed.
 
 ## Chosen track
 - Track: quick-flow
-- Why this track fits: the feature is narrow, derived from existing registry metadata, and does not change package metadata.
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Add workflow eval layer and role coverage so Pulse and local signal export can r
 | none | none | none | none |
 
 ## Next skill
-test-hub
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25174419399, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25208682877, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -79,9 +79,12 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #17 merged support request Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/17.
 - PR #18 merged post-support-Pulse state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/18.
 - PR #19 merged support bundle request-summary diagnostics: https://github.com/b0ydeptraj/Relay-kit/pull/19.
+- PR #20 merged post-support-bundle state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/20.
+- PR #21 merged workflow eval layer/role coverage signals: https://github.com/b0ydeptraj/Relay-kit/pull/21.
 - PR #17 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-request-pulse-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
 - PR #19 verification: `python -m pytest -q --basetemp=.tmp\pytest-support-bundle-request-summary-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
-- Current main baseline: `0499a66f73b51fd37b83f20575817d35f91ae2d0`.
+- PR #21 verification: `python -m pytest -q --basetemp=.tmp\pytest-workflow-eval-coverage-full`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python scripts\eval_workflows.py . --strict --json`, and `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed before merge.
+- Current main baseline: `f9cc9fa452719473389bf091a52e110626bbfa31`.
 
 ## Recommended next lane
-After this branch merges, refresh live state and then continue broader dashboard/eval expansion or optional publish trail execution automation.
+Continue broader dashboard/eval expansion or optional publish trail execution automation.

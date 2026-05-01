@@ -7,6 +7,7 @@
 | bootstrap | workflow-router | primary | bootstrap slice complete | project-context, workflow-state, team-board, lane-registry, handoff-log | runtime doctor live pass, enterprise doctor pass, pytest 125 pass; PR CI pending | next implementation slice selected |
 | workflow-router | bootstrap | primary | state/context drift after PR #17 support request Pulse/signal merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #17, main CI `25173791427`, readiness `commercial-ready-candidate`, pytest 146 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | bootstrap | primary | state/context drift after PR #19 support bundle request-summary merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #19, main CI `25174419399`, readiness `commercial-ready-candidate`, pytest 147 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
+| workflow-router | bootstrap | primary | state/context drift after PR #21 workflow eval coverage merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #21, main CI `25208682877`, readiness `commercial-ready-candidate`, pytest 147 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 
 ## Rules
 - Every non-trivial handoff should update this log before the receiving skill starts work.
