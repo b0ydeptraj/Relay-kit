@@ -31,6 +31,7 @@ relay-kit publish trail /path/to/project --channel pypi --json
 relay-kit publish plan /path/to/project --channel pypi --json
 relay-kit publish evidence /path/to/project --channel pypi --twine-check-file .tmp/twine-check.txt --upload-log-file .tmp/upload-log.txt --publication-plan-file .relay-kit/release/publication-plan.json --json
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json
+relay-kit support triage /path/to/project --strict --json
 ```
 
 Attach:
@@ -48,6 +49,10 @@ Attach:
 When `.relay-kit/support/support-request.json` already exists, the support bundle
 also includes a redacted `diagnostics.support_request` summary with status,
 severity, environment, diagnostic count, and finding count.
+
+Run `relay-kit support triage` after the bundle and request exist. It returns
+`ready` only when both local artifacts are valid and the request diagnostics are
+present.
 
 ## Support Request Template
 
@@ -110,6 +115,7 @@ Excluded:
 
 1. User runs `relay-kit support bundle`.
 2. User opens a support request with severity and required diagnostics.
-3. Triage validates the support request schema, bundle schema, package version, manifest status, upgrade status, policy findings, workflow eval status, signal export summary, release-lane summary, and publication evidence when applicable.
-4. If the issue is reproducible in Relay-kit, it becomes a fix lane.
-5. If the issue is project-specific, support returns a scoped recommendation and the evidence gap.
+3. User runs `relay-kit support triage` to validate the support request and bundle artifacts before handoff.
+4. Triage validates the support request schema, bundle schema, package version, manifest status, upgrade status, policy findings, workflow eval status, signal export summary, release-lane summary, and publication evidence when applicable.
+5. If the issue is reproducible in Relay-kit, it becomes a fix lane.
+6. If the issue is project-specific, support returns a scoped recommendation and the evidence gap.

@@ -34,13 +34,14 @@ Source audit status:
 - Fixed in Pro policy packs pass: `relay-kit policy check --pack baseline|team|enterprise` and `relay-kit doctor --policy-pack enterprise` enforce stronger governance surfaces for team/paid installs.
 - Fixed in support workflow pass: `relay-kit support bundle` creates redacted diagnostic JSON and docs define severity, evidence, support scope, and escalation workflow.
 - Fixed in support request intake pass: `relay-kit support request` writes `.relay-kit/support/support-request.json` with severity, environment, diagnostic-file checks, required-field findings, and redaction.
+- Fixed in support triage pass: `relay-kit support triage` validates the support request and support bundle artifacts together before paid-support handoff.
 - Fixed in support signal summary pass: support bundles include signal export summary/output paths and required diagnostics include `relay-kit signal export`.
 - Fixed in support release summary pass: support bundles include release-lane status/findings/residual risks so paid support can inspect release prerequisites from one diagnostic file.
 - Fixed in trusted manifest pass: `relay-kit manifest stamp`, `relay-kit manifest verify --trusted`, and enterprise doctor require deterministic trust metadata for enterprise release evidence.
 - Fixed in governance reference pass: enterprise policy guard now fails required governance files that still contain unresolved `TBD` or template markers.
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
-- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 151 tests passing and 0 findings.
+- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 154 tests passing and 0 findings.
 - Fixed in release publication pass: `v3.3.0` is published with PR #1, CI success, release-lane proof, package smoke, enterprise readiness, post-release readiness, and rollback evidence.
 - Fixed in Relay OTLP export pass: `relay-kit signal export --otlp` writes dependency-free OTLP-compatible `relay-signals-otlp.json` with `resourceMetrics` and `resourceLogs` for external observability pipelines.
 - Fixed in OTLP readiness/support pass: readiness and support diagnostics now generate and report the OTLP signal artifact, not only JSON and JSONL exports.
@@ -59,9 +60,14 @@ Source audit status:
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
+- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
+
+Progress snapshot, updated 2026-05-01:
+- Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
+- Commercial hardening roadmap: 92% for repo-owned work. Remaining work is broader dashboard/eval expansion, support workflow soak, and external legal/SLA/package-index operations outside local repo gates.
+- Overall tracked progress in this file: 94%. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
 
@@ -637,6 +643,7 @@ Acceptance criteria:
 | Runtime policy guard | Done | P1 | `scripts/policy_guard.py` with deterministic secret, path, shell, prompt, and allowlist checks. |
 | Evidence ledger | Done | P2 | `.relay-kit/evidence/events.jsonl` plus `relay-kit evidence summary`. |
 | Support request intake | Done | P2 | `relay-kit support request` validates required support fields and diagnostic artifacts before paid-support handoff. |
+| Support triage readiness | Done | P2 | `relay-kit support triage` reads the request and bundle artifacts together before paid-support handoff. |
 | Contract export/import | Add | P2 | Done: `relay-kit contract export` exports Relay contracts to JSON; `relay-kit contract import` previews/applies JSON back into Relay contracts with overwrite protection. |
 | Completion proof overlap | Merge or clarify | P3 | Done: `prove-it` delegates to `evidence-before-completion`; `qa-governor` owns readiness verdicts and `qa-report.md` |
 | Legacy kit exposure | Done | P2 | `--list-skills` excludes migration-only/legacy unless `--show-legacy` is used. |
@@ -726,6 +733,7 @@ Expected gain:
 - Done first publication workflow hardening slice: add `relay-kit publish trail` for deterministic capture commands and evidence paths.
 - Done support operations signal slice: Pulse and signal export now surface support-request readiness for paid-support review.
 - Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
+- Done support triage polish slice: support request and support bundle artifacts now have one strict handoff gate.
 - Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
 - Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 
@@ -746,6 +754,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Evidence ledger records gate runs and findings.
 - Paid support/upgrade path is documented.
 - `relay-kit support request --strict` reaches `ready` only when severity, environment, behavior details, recent changes, workaround, and diagnostic artifacts are present.
+- `relay-kit support triage --strict` reaches `ready` only when the support request and support bundle artifacts are locally valid.
 - `relay-kit readiness check --profile enterprise` returns `commercial-ready-candidate` for the release candidate.
 - `relay-kit readiness check` proves signal export artifacts can be generated locally.
 - `relay-kit release verify` passes for local release-lane prerequisites.

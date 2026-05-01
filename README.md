@@ -153,10 +153,12 @@ Prepare a support diagnostics bundle:
 ```bash
 relay-kit support bundle /path/to/project --policy-pack enterprise
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json
+relay-kit support triage /path/to/project --strict --json
 ```
 
 When the support request artifact already exists, the support bundle includes a
-redacted support-request summary for triage.
+redacted support-request summary for triage. `support triage` reads the request
+and bundle artifacts together before the case is handed to paid support.
 
 Build a local Pulse quality report:
 
