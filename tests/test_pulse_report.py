@@ -256,6 +256,66 @@ def test_pulse_report_includes_gate_summary_and_next_actions(tmp_path: Path) -> 
     assert {"readiness", "publication", "support-request", "evidence"} <= next_action_gates
 
 
+def test_pulse_report_includes_gate_drilldowns(tmp_path: Path) -> None:
+    append_event(
+        tmp_path,
+        {
+            "command": "doctor",
+            "gate": "policy guard",
+            "status": "fail",
+            "findings_count": 1,
+        },
+    )
+    eval_report = {
+        **sample_eval_report(),
+        "status": "fail",
+        "passed": 1,
+        "failed": 1,
+        "pass_rate": 0.5,
+        "results": [
+            {
+                "id": "developer-routing",
+                "passed": False,
+                "expected_skill": "developer",
+                "predicted_skill": "pm",
+                "findings": [{"summary": "expected developer but routed to pm"}],
+            }
+        ],
+    }
+    readiness_report = {
+        **sample_readiness_report(),
+        "status": "fail",
+        "verdict": "hold",
+        "findings": [{"gate": "pytest", "status": "fail", "summary": "pytest failed"}],
+        "gates": [{"id": "pytest", "status": "fail", "summary": "pytest failed"}],
+    }
+
+    report = pulse.build_pulse_report(
+        tmp_path,
+        include_readiness=True,
+        include_publication=True,
+        include_support_request=True,
+        workflow_eval_builder=lambda root: eval_report,
+        readiness_builder=lambda root, profile, skip_tests: readiness_report,
+        publication_builder=lambda root: sample_publication_plan(status="hold"),
+        support_request_builder=lambda root: sample_support_request(status="hold"),
+    )
+
+    gates = {gate["id"]: gate for gate in report["gate_summary"]["gates"]}
+
+    assert report["gate_summary"]["drilldown_item_count"] >= 5
+    assert gates["workflow-eval"]["drilldown"][0]["id"] == "developer-routing"
+    assert gates["readiness"]["drilldown"][0]["id"] == "pytest"
+    assert gates["publication"]["drilldown"][0]["id"] == "distribution-artifacts"
+    assert gates["support-request"]["drilldown"][0]["id"] == "diagnostics"
+    assert gates["evidence"]["drilldown"][0]["id"] == "policy guard"
+
+    html = pulse.render_pulse_html(report)
+    assert "Gate details" in html
+    assert "developer-routing" in html
+    assert "pytest failed" in html
+
+
 def test_public_cli_pulse_build_json(tmp_path: Path, capsys) -> None:
     exit_code = relay_kit_public_cli.main(["pulse", "build", str(tmp_path), "--json"])
     payload = json.loads(capsys.readouterr().out)

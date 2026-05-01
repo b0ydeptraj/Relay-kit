@@ -165,6 +165,7 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
         metric("relay.gates.attention", _number(gate_status_counts.get("attention")), "1", base_attrs),
         metric("relay.gates.hold", _number(gate_status_counts.get("hold")), "1", base_attrs),
         metric("relay.gates.not_run", _number(gate_status_counts.get("not-run")), "1", base_attrs),
+        metric("relay.gates.drilldown_items", _number(gate_summary.get("drilldown_item_count")), "1", base_attrs),
         metric("relay.evidence.total_events", _number(evidence.get("total_events")), "1", base_attrs),
         metric("relay.evidence.failures_total", _number(status_counts.get("fail")), "1", base_attrs),
         metric("relay.evidence.failures_recent", _number(recent_status_counts.get("fail")), "1", base_attrs),
