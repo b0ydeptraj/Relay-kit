@@ -81,8 +81,9 @@
 - `v3.3.0` remains the published release tag, while `main` is now `3.4.0.dev0`. Do not publish or package from `main` as `3.3.0`.
 - `.relay-kit/manifest/bundles.json` and `.relay-kit/manifest/trust.json` are ignored generated artifacts. Regenerate and verify them locally when version, skill hashes, or trust metadata changes.
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
-- Pulse now includes `gate_summary`, per-gate `drilldown` rows, and signal export emits `relay.gates.*`; future dashboard/eval work should preserve those schema keys.
+- Pulse now includes `gate_summary`, per-gate `drilldown` rows, and `workflow_focus`; signal export emits `relay.gates.*`, `relay.workflow.weak_route_count`, and `relay.workflow.coverage_gap_count`; future dashboard/eval work should preserve those schema keys.
 - Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
+- Workflow eval also reports weak route candidates and registry coverage gaps under `quality.weak_routes` and `quality.coverage_gaps`.
 - Support operations now include `relay-kit support soak`, which validates P0/P1/P2 paid-support handoff fixtures and fails degraded support bundle diagnostics.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 

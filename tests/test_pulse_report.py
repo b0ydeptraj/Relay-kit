@@ -25,6 +25,25 @@ def sample_eval_report() -> dict[str, object]:
                 "layer-4-specialists-and-standalones": 1,
             },
             "expected_skill_counts": {"developer": 1, "qa-governor": 1},
+            "weak_route_threshold": 3,
+            "weak_route_count": 1,
+            "weak_routes": [
+                {
+                    "id": "developer-implementation-ready",
+                    "expected_skill": "developer",
+                    "predicted_skill": "developer",
+                    "route_margin": 1,
+                    "route_confidence": 0.51,
+                }
+            ],
+            "coverage_gaps": {
+                "missing_layers": [],
+                "missing_roles": ["debug-hub"],
+                "missing_skills": ["debug-hub"],
+                "covered_skill_count": 2,
+                "registry_skill_count": 46,
+                "covered_skill_ratio": 0.0435,
+            },
         },
         "findings_count": 0,
         "findings": [],
@@ -106,6 +125,8 @@ def test_pulse_report_summarizes_eval_readiness_and_evidence(tmp_path: Path) -> 
     assert report["status"] == "attention"
     assert report["pulse_score"] < 100
     assert report["workflow_eval"]["quality"]["average_route_margin"] == 8.5
+    assert report["workflow_focus"]["weak_route_count"] == 1
+    assert report["workflow_focus"]["coverage_gap_count"] == 1
     assert report["readiness"]["verdict"] == "commercial-ready-candidate"
     assert report["evidence"]["status_counts"]["fail"] == 1
 
@@ -177,6 +198,8 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     assert "Workflow quality" in html
     assert "Layer coverage" in html
     assert "Gate summary" in html
+    assert "Workflow focus" in html
+    assert "developer-implementation-ready" in html
     assert "Publication readiness" in html
     assert "Support request" in html
     assert "Trend" in html

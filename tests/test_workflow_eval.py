@@ -39,6 +39,11 @@ def test_workflow_eval_reports_pass_rate_and_top_routes() -> None:
     assert payload["quality"]["expected_layer_counts"]["layer-4-specialists-and-standalones"] >= 1
     assert payload["quality"]["expected_role_counts"]["implementation"] >= 1
     assert "qa-governor" in payload["quality"]["expected_skill_counts"]
+    assert payload["quality"]["weak_route_threshold"] == 3
+    assert payload["quality"]["weak_route_count"] >= 1
+    assert payload["quality"]["weak_routes"][0]["route_margin"] <= 3
+    assert payload["quality"]["coverage_gaps"]["missing_layers"] == []
+    assert payload["quality"]["coverage_gaps"]["covered_skill_count"] == len(payload["quality"]["unique_expected_skills"])
     assert payload["results"][0]["top_routes"][0]["skill"] == payload["results"][0]["expected_skill"]
     assert payload["results"][0]["expected_layer"] == "layer-1-orchestrators"
     assert payload["results"][0]["predicted_layer"] == "layer-1-orchestrators"

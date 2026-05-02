@@ -32,7 +32,18 @@ def write_pulse_report(root: Path) -> Path:
                             "layer-1-orchestrators": 2,
                             "layer-4-specialists-and-standalones": 2,
                         },
+                        "weak_route_count": 1,
+                        "coverage_gaps": {
+                            "missing_layers": [],
+                            "missing_roles": ["debug-hub"],
+                            "missing_skills": ["debug-hub"],
+                        },
                     },
+                },
+                "workflow_focus": {
+                    "weak_route_count": 1,
+                    "coverage_gap_count": 2,
+                    "next_actions": [{"action": "Review low-margin routes."}],
                 },
                 "readiness": {
                     "status": "pass",
@@ -92,6 +103,8 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.workflow.pass_rate" in metric_names
     assert "relay.workflow.evidence_coverage" in metric_names
     assert "relay.workflow.expected_layer_count" in metric_names
+    assert "relay.workflow.weak_route_count" in metric_names
+    assert "relay.workflow.coverage_gap_count" in metric_names
     assert "relay.gates.pass" in metric_names
     assert "relay.gates.attention" in metric_names
     assert "relay.gates.hold" in metric_names
