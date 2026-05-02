@@ -24,6 +24,7 @@ REQUIRED_RELEASE_DOCS = [
     "docs/relay-kit-release-readiness.md",
     "docs/relay-kit-release-lane.md",
     "docs/relay-kit-publication-plan.md",
+    "docs/relay-kit-commercial-dossier.md",
 ]
 REQUIRED_CI_PATTERNS = [
     "python scripts/validate_runtime.py",
@@ -155,6 +156,7 @@ def artifact_ignore_policy_check(root: Path) -> dict[str, Any]:
             "publication-trail.json",
             "publication-trail.md",
         ],
+        ".relay-kit/commercial/.gitignore": ["commercial-dossier.json"],
     }
     missing: list[str] = []
     for rel, entries in required_entries.items():

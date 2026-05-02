@@ -18,6 +18,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit publish evidence <project_path>
   relay-kit publish trail <project_path>
   relay-kit publish status <project_path>
+  relay-kit commercial dossier <project_path>
   relay-kit pulse build <project_path>
   relay-kit signal export <project_path>
   relay-kit contract import <project_path> --contract-file <relay-contract.json>
@@ -40,6 +41,11 @@ from relay_kit_v3.evidence_ledger import append_event, ledger_path, new_run_id, 
 from relay_kit_v3.bundle_manifest import verify_manifest_file, verify_trusted_manifest_file, write_manifest, write_trust_stamp
 from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, POLICY_PACKS
 from relay_kit_v3.pulse import build_pulse_report, write_pulse_report
+from relay_kit_v3.commercial_dossier import (
+    build_commercial_dossier,
+    render_commercial_dossier,
+    write_commercial_dossier,
+)
 from relay_kit_v3.publication import (
     build_publication_evidence,
     build_publication_plan,
@@ -503,6 +509,49 @@ def _parse_publish_args(argv: list[str]) -> argparse.Namespace:
     )
     status.add_argument("--strict", action="store_true", help="Return non-zero unless the publication trail is complete")
     status.add_argument("--json", action="store_true", help="Emit machine-readable publication trail status")
+    return parser.parse_args(argv)
+
+
+def _parse_commercial_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit commercial",
+        description="Assemble commercial proof dossiers from local gates and external evidence pointers.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    dossier = subparsers.add_parser("dossier", help="Write a commercial readiness proof dossier")
+    dossier.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    dossier.add_argument("--channel", choices=["pypi", "testpypi", "internal"], default="pypi")
+    dossier.add_argument("--ci-url", default=None, help="Green remote CI evidence URL")
+    dossier.add_argument("--release-url", default=None, help="Release page or release-note URL")
+    dossier.add_argument("--package-url", default=None, help="Package-index or internal registry URL")
+    dossier.add_argument("--sla-url", default=None, help="Approved SLA/support policy URL")
+    dossier.add_argument("--support-url", default=None, help="Paid-support intake or escalation workflow URL")
+    dossier.add_argument("--legal-owner", default=None, help="Owner who approved legal/SLA commitments")
+    dossier.add_argument("--support-owner", default=None, help="Owner accountable for paid-support triage")
+    dossier.add_argument("--readiness-profile", choices=["team", "enterprise"], default="enterprise")
+    dossier.add_argument("--skip-readiness-tests", action="store_true", help="Skip pytest inside the readiness gate")
+    dossier.add_argument(
+        "--publication-trail-file",
+        default=None,
+        help="Publication trail JSON path (default: <project>/.relay-kit/release/publication-trail.json)",
+    )
+    dossier.add_argument(
+        "--support-request-file",
+        default=None,
+        help="Support request JSON path (default: <project>/.relay-kit/support/support-request.json)",
+    )
+    dossier.add_argument(
+        "--support-bundle-file",
+        default=None,
+        help="Support bundle JSON path (default: <project>/.relay-kit/support/support-bundle.json)",
+    )
+    dossier.add_argument(
+        "--output-file",
+        default=None,
+        help="JSON dossier output path (default: <project>/.relay-kit/commercial/commercial-dossier.json)",
+    )
+    dossier.add_argument("--strict", action="store_true", help="Return non-zero unless the dossier is ready")
+    dossier.add_argument("--json", action="store_true", help="Emit machine-readable commercial dossier")
     return parser.parse_args(argv)
 
 
@@ -1102,6 +1151,45 @@ def run_publish(args: argparse.Namespace) -> int:
     return 2
 
 
+def run_commercial(args: argparse.Namespace) -> int:
+    if args.action != "dossier":
+        return 2
+    report = build_commercial_dossier(
+        args.project_path,
+        channel=args.channel,
+        ci_url=args.ci_url,
+        release_url=args.release_url,
+        package_url=args.package_url,
+        sla_url=args.sla_url,
+        support_url=args.support_url,
+        legal_owner=args.legal_owner,
+        support_owner=args.support_owner,
+        readiness_profile=args.readiness_profile,
+        skip_readiness_tests=args.skip_readiness_tests,
+        publication_trail_file=args.publication_trail_file,
+        support_request_file=args.support_request_file,
+        support_bundle_file=args.support_bundle_file,
+    )
+    output_path = write_commercial_dossier(args.project_path, report, output_file=args.output_file)
+    if args.json:
+        print(
+            json.dumps(
+                {
+                    "output_file": str(output_path),
+                    "dossier": report,
+                },
+                ensure_ascii=True,
+                indent=2,
+            )
+        )
+    else:
+        print(render_commercial_dossier(report))
+        print(f"Wrote {output_path}")
+    if args.strict and report["status"] != "ready":
+        return 2
+    return 0
+
+
 def run_pulse(args: argparse.Namespace) -> int:
     if args.action != "build":
         return 2
@@ -1192,6 +1280,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_release(_parse_release_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "publish":
         return run_publish(_parse_publish_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "commercial":
+        return run_commercial(_parse_commercial_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "pulse":
         return run_pulse(_parse_pulse_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "signal":

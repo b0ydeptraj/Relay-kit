@@ -28,6 +28,7 @@ COMMERCIAL_DOCS = [
     "docs/relay-kit-support-sla.md",
     "docs/relay-kit-enterprise-bundle.md",
     "docs/relay-kit-contract-sync.md",
+    "docs/relay-kit-commercial-dossier.md",
     ".relay-kit/contracts/support-request.md",
 ]
 READINESS_PYTEST_BASETEMP = Path(".tmp") / "readiness-pytest"

@@ -34,6 +34,7 @@ def write_required_docs(root: Path) -> None:
     (root / "docs" / "relay-kit-release-readiness.md").write_text("# Release Readiness\n", encoding="utf-8")
     (root / "docs" / "relay-kit-release-lane.md").write_text("# Release Lane\n", encoding="utf-8")
     (root / "docs" / "relay-kit-publication-plan.md").write_text("# Publication Plan\n", encoding="utf-8")
+    (root / "docs" / "relay-kit-commercial-dossier.md").write_text("# Commercial Dossier\n", encoding="utf-8")
     (root / ".relay-kit" / "contracts").mkdir(parents=True, exist_ok=True)
     (root / ".relay-kit" / "contracts" / "support-request.md").write_text("# Support Request\n", encoding="utf-8")
     (root / "pyproject.toml").write_text(
@@ -92,6 +93,9 @@ include = ["relay_kit_v3*", "scripts*"]
         "publication-evidence.json\npublication-trail.json\npublication-trail.md\n",
         encoding="utf-8",
     )
+    commercial = root / ".relay-kit" / "commercial"
+    commercial.mkdir(parents=True, exist_ok=True)
+    (commercial / ".gitignore").write_text("commercial-dossier.json\n", encoding="utf-8")
 
 
 def healthy_support_bundle_payload() -> dict[str, object]:

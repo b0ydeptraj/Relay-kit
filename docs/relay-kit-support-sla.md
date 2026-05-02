@@ -30,6 +30,7 @@ relay-kit release verify /path/to/project --json
 relay-kit publish trail /path/to/project --channel pypi --json
 relay-kit publish plan /path/to/project --channel pypi --json
 relay-kit publish evidence /path/to/project --channel pypi --twine-check-file .tmp/twine-check.txt --upload-log-file .tmp/upload-log.txt --publication-plan-file .relay-kit/release/publication-plan.json --json
+relay-kit commercial dossier /path/to/project --channel pypi --ci-url <ci-url> --release-url <release-url> --package-url <package-url> --sla-url <sla-url> --support-url <support-url> --legal-owner <owner> --support-owner <owner> --strict --json
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json
 relay-kit support triage /path/to/project --strict --json
 relay-kit support soak /path/to/project --strict --json
@@ -43,6 +44,7 @@ Attach:
 - `.relay-kit/signals/relay-signals-otlp.json`
 - `.relay-kit/release/publication-trail.json` when the issue involves package publication workflow
 - `.relay-kit/release/publication-evidence.json` when the issue involves package publication
+- `.relay-kit/commercial/commercial-dossier.json` when the issue involves commercial release readiness
 - `.relay-kit/support/support-request.json`
 - the failing command output
 - the support request template from `.relay-kit/contracts/support-request.md`

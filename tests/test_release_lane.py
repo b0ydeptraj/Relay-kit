@@ -68,6 +68,9 @@ include = ["relay_kit_v3*", "scripts*"]
         "publication-evidence.json\npublication-trail.json\npublication-trail.md\n",
         encoding="utf-8",
     )
+    commercial = root / ".relay-kit" / "commercial"
+    commercial.mkdir(parents=True, exist_ok=True)
+    (commercial / ".gitignore").write_text("commercial-dossier.json\n", encoding="utf-8")
 
 
 def test_release_lane_report_passes_complete_project(tmp_path: Path) -> None:

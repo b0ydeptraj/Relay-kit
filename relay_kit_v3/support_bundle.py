@@ -175,6 +175,12 @@ def required_commands(project_root: Path, policy_pack: str) -> list[str]:
             "--twine-check-file <twine-check-output> --upload-log-file <upload-log-output> "
             "--publication-plan-file .relay-kit/release/publication-plan.json --json"
         ),
+        (
+            f"relay-kit commercial dossier {project} --channel pypi "
+            "--ci-url <ci-url> --release-url <release-url> --package-url <package-url> "
+            "--sla-url <sla-url> --support-url <support-url> "
+            "--legal-owner <owner> --support-owner <owner> --strict --json"
+        ),
         f"relay-kit pulse build {project} --include-readiness",
         f"relay-kit signal export {project} --otlp --json",
     ]
