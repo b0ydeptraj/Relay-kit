@@ -74,7 +74,9 @@
 - PR #33 merged workflow eval scenario expansion and pytest temp hardening: https://github.com/b0ydeptraj/Relay-kit/pull/33, merge commit `8b14b6e88bb26bc6d8c972d40ec80cd8c9ee6ad0`.
 - PR #34 merged post-eval-expansion state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/34, merge commit `785afcd200790bb78e08480530f2b594e2b81245`.
 - PR #35 merged support operations soak: https://github.com/b0ydeptraj/Relay-kit/pull/35, merge commit `baab1a7e576cf24eaa04534f8b7f879efe79ce5d`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25245871501, conclusion `success`.
+- PR #36 merged post-support-soak state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/36, merge commit `a80a21298913aa8f0a4f58081ccf0b99be462222`.
+- PR #37 merged workflow focus dashboard polish: https://github.com/b0ydeptraj/Relay-kit/pull/37, merge commit `585029a04505e6200f4ae0eece2303271c4f8936`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25247371453, conclusion `success`.
 
 ## Known sharp edges
 

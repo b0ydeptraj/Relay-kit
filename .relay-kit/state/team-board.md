@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Add workflow focus polish so dashboard/eval review shows weak routes and coverage gaps before route failures happen.
+Keep Relay-kit post-PR #37 state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Add workflow focus polish so dashboard/eval review shows weak routes and coverag
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | developer | fix-hub | eval/Pulse/signal/docs/tests/state | workflow focus dashboard | ready for PR | verified | Full pytest, doctor, runtime doctor live, readiness, CLI eval, Pulse, and signal export pass locally. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after workflow focus dashboard polish merged. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,10 +24,10 @@ Add workflow focus polish so dashboard/eval review shows weak routes and coverag
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Full pytest, doctor, runtime doctor live, and readiness pass locally. Remote CI must pass before merge.
+Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #37 passed. Remote CI must pass after merge.
 
 ## Conflict risks
-Low to medium. This slice changes eval JSON schema, Pulse HTML/JSON, and signal metrics; focused regression tests cover the new fields.
+Low. This slice edits state/context artifacts only.
 
 ## Decision log
 - 2026-04-27: Refresh state artifacts instead of starting a new feature slice because project-context was empty and workflow-state still referenced completed branch work.
@@ -45,3 +45,4 @@ Low to medium. This slice changes eval JSON schema, Pulse HTML/JSON, and signal 
 - 2026-05-02: Start support operations soak on `codex/support-operations-soak`; local evidence includes support triage/soak strict, readiness enterprise full, doctor enterprise, runtime doctor live, and full pytest `160 passed`.
 - 2026-05-02: Refresh state artifacts after PR #35 merged and main CI `25245871501` passed.
 - 2026-05-02: Start workflow focus dashboard polish on `codex/dashboard-eval-polish`; full local evidence passes and CLI output includes weak-route and coverage-gap metrics.
+- 2026-05-02: Refresh state artifacts after PR #37 merged and main CI `25247371453` passed.
