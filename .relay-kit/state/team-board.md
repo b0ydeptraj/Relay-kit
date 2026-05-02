@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Keep Relay-kit post-PR #35 state current and ready for the next single-lane implementation slice.
+Add workflow focus polish so dashboard/eval review shows weak routes and coverage gaps before route failures happen.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Keep Relay-kit post-PR #35 state current and ready for the next single-lane impl
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after support operations soak merged. |
+| primary | developer | fix-hub | eval/Pulse/signal/docs/tests/state | workflow focus dashboard | ready for PR | verified | Full pytest, doctor, runtime doctor live, readiness, CLI eval, Pulse, and signal export pass locally. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,10 +24,10 @@ Keep Relay-kit post-PR #35 state current and ready for the next single-lane impl
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #35 passed. Remote CI must pass after merge.
+Full pytest, doctor, runtime doctor live, and readiness pass locally. Remote CI must pass before merge.
 
 ## Conflict risks
-Low. This slice edits state/context artifacts only.
+Low to medium. This slice changes eval JSON schema, Pulse HTML/JSON, and signal metrics; focused regression tests cover the new fields.
 
 ## Decision log
 - 2026-04-27: Refresh state artifacts instead of starting a new feature slice because project-context was empty and workflow-state still referenced completed branch work.
@@ -44,3 +44,4 @@ Low. This slice edits state/context artifacts only.
 - 2026-05-01: Refresh state artifacts after PR #33 merged and main CI `25224916323` passed.
 - 2026-05-02: Start support operations soak on `codex/support-operations-soak`; local evidence includes support triage/soak strict, readiness enterprise full, doctor enterprise, runtime doctor live, and full pytest `160 passed`.
 - 2026-05-02: Refresh state artifacts after PR #35 merged and main CI `25245871501` passed.
+- 2026-05-02: Start workflow focus dashboard polish on `codex/dashboard-eval-polish`; full local evidence passes and CLI output includes weak-route and coverage-gap metrics.

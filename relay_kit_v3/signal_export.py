@@ -144,6 +144,11 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
     support_request = _mapping(pulse_report.get("support_request"))
     gate_summary = _mapping(pulse_report.get("gate_summary"))
     gate_status_counts = _mapping(gate_summary.get("status_counts"))
+    workflow_focus = _mapping(pulse_report.get("workflow_focus"))
+    coverage_gaps = _mapping(quality.get("coverage_gaps"))
+    coverage_gap_count = workflow_focus.get("coverage_gap_count")
+    if coverage_gap_count is None:
+        coverage_gap_count = len(_list(coverage_gaps.get("missing_layers"))) + len(_list(coverage_gaps.get("missing_roles")))
     evidence = _mapping(pulse_report.get("evidence"))
     status_counts = _mapping(evidence.get("status_counts"))
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -161,6 +166,8 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
         metric("relay.workflow.expected_layer_count", len(_mapping(quality.get("expected_layer_counts"))), "1", base_attrs),
         metric("relay.workflow.average_route_margin", _number(quality.get("average_route_margin")), "1", base_attrs),
         metric("relay.workflow.min_route_margin", _number(quality.get("min_route_margin")), "1", base_attrs),
+        metric("relay.workflow.weak_route_count", _number(workflow_focus.get("weak_route_count", quality.get("weak_route_count"))), "1", base_attrs),
+        metric("relay.workflow.coverage_gap_count", _number(coverage_gap_count), "1", base_attrs),
         metric("relay.gates.pass", _number(gate_status_counts.get("pass")), "1", base_attrs),
         metric("relay.gates.attention", _number(gate_status_counts.get("attention")), "1", base_attrs),
         metric("relay.gates.hold", _number(gate_status_counts.get("hold")), "1", base_attrs),
@@ -361,3 +368,7 @@ def _number(value: Any) -> int | float | None:
 
 def _mapping(value: Any) -> Mapping[str, Any]:
     return value if isinstance(value, Mapping) else {}
+
+
+def _list(value: Any) -> list[Any]:
+    return value if isinstance(value, list) else []

@@ -27,6 +27,8 @@ SCHEMA_VERSION = "relay-kit.workflow-eval.v1"
 DEFAULT_MIN_PASS_RATE = 1.0
 DEFAULT_MIN_ROUTE_MARGIN = 1
 DEFAULT_MIN_EVIDENCE_COVERAGE = 1.0
+WEAK_ROUTE_MARGIN_THRESHOLD = 3
+WEAK_ROUTE_LIMIT = 8
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -250,6 +252,14 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
         "average_route_margin": round(sum(route_margins) / len(route_margins), 4) if route_margins else 0.0,
         "max_route_margin": max(route_margins) if route_margins else 0,
         "mean_route_confidence": round(sum(confidences) / len(confidences), 4) if confidences else 0.0,
+        "weak_route_threshold": WEAK_ROUTE_MARGIN_THRESHOLD,
+        "weak_route_count": len(weak_routes(results)),
+        "weak_routes": weak_routes(results),
+        "coverage_gaps": coverage_gaps(
+            expected_skills=expected_skills,
+            expected_layers=expected_layers,
+            expected_roles=expected_roles,
+        ),
         "evidence_terms_count": expected_terms,
         "matched_terms_count": matched_terms,
         "evidence_term_coverage": round(matched_terms / expected_terms, 4) if expected_terms else 1.0,
@@ -265,6 +275,63 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
         "predicted_layer_counts": count_values(predicted_layers),
         "expected_role_counts": count_values(expected_roles),
         "predicted_role_counts": count_values(predicted_roles),
+    }
+
+
+def weak_routes(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    candidates = [
+        result
+        for result in results
+        if result.get("top_routes")
+        and (
+            not bool(result.get("passed", False))
+            or int(result.get("route_margin", 0) or 0) <= WEAK_ROUTE_MARGIN_THRESHOLD
+        )
+    ]
+    ranked = sorted(
+        candidates,
+        key=lambda result: (
+            int(result.get("route_margin", 0) or 0),
+            float(result.get("route_confidence", 0.0) or 0.0),
+            str(result.get("id", "")),
+        ),
+    )
+    return [
+        {
+            "id": str(result.get("id", "")),
+            "expected_skill": str(result.get("expected_skill", "")),
+            "predicted_skill": str(result.get("predicted_skill", "")),
+            "route_margin": int(result.get("route_margin", 0) or 0),
+            "route_confidence": float(result.get("route_confidence", 0.0) or 0.0),
+            "top_routes": result.get("top_routes", []),
+        }
+        for result in ranked[:WEAK_ROUTE_LIMIT]
+    ]
+
+
+def coverage_gaps(
+    *,
+    expected_skills: list[str],
+    expected_layers: list[str],
+    expected_roles: list[str],
+) -> dict[str, object]:
+    registry_skills = sorted(ALL_V3_SKILLS)
+    registry_layers = sorted(
+        {str(getattr(spec, "layer", "")) for spec in ALL_V3_SKILLS.values() if str(getattr(spec, "layer", ""))}
+    )
+    registry_roles = sorted(
+        {str(getattr(spec, "role", "")) for spec in ALL_V3_SKILLS.values() if str(getattr(spec, "role", ""))}
+    )
+    covered_skills = sorted(set(expected_skills))
+    covered_layers = sorted(set(expected_layers))
+    covered_roles = sorted(set(expected_roles))
+    return {
+        "registry_skill_count": len(registry_skills),
+        "covered_skill_count": len(covered_skills),
+        "covered_skill_ratio": round(len(covered_skills) / len(registry_skills), 4) if registry_skills else 1.0,
+        "missing_skills": sorted(set(registry_skills) - set(covered_skills)),
+        "missing_layers": sorted(set(registry_layers) - set(covered_layers)),
+        "missing_roles": sorted(set(registry_roles) - set(covered_roles)),
     }
 
 
@@ -442,8 +509,12 @@ def render_text(report: Mapping[str, object]) -> str:
                 f"- min route margin: {quality.get('min_route_margin', 0)}",
                 f"- avg route margin: {float(quality.get('average_route_margin', 0.0)):.2f}",
                 f"- evidence coverage: {float(quality.get('evidence_term_coverage', 0.0)):.2f}",
+                f"- weak routes: {quality.get('weak_route_count', 0)}",
             ]
         )
+        gaps = quality.get("coverage_gaps", {})
+        if isinstance(gaps, Mapping):
+            lines.append(f"- missing eval layers: {len(gaps.get('missing_layers', []))}")
     baseline = report.get("baseline")
     if isinstance(baseline, Mapping):
         lines.append(f"- baseline: {'loaded' if baseline.get('loaded') else 'not loaded'}")

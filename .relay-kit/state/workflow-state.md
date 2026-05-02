@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #35 so source-of-truth artifacts match the merged support operations soak lane.
+Implement workflow focus dashboard polish so eval, Pulse, and signal export expose weak routes and coverage gaps.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Refresh live workflow state after PR #35 so source-of-truth artifacts match the 
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: bootstrap
-- Active specialist: context-continuity
+- Layer-2 workflow hub: fix-hub
+- Active specialist: developer
 
 ## Active utility providers
 - Primary utility provider: memory-search
 - Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the support operations soak feature merged.
+- Skill: developer
+- Why selected: this is a bounded implementation slice over workflow eval, Pulse, signal export, docs, and tests.
 
 ## Complexity level
-- Level: L1
-- Reasoning: runtime code is already merged and main CI passed; this pass only updates live state/context.
+- Level: L2
+- Reasoning: the slice adds dashboard/eval JSON fields, HTML report rows, signal metrics, and focused regression tests.
 
 ## Chosen track
-- Track: quick-flow
-- Why this track fits: the slice removes state drift before the next feature lane.
+- Track: fix-flow
+- Why this track fits: dashboard/eval surfaces already exist; this slice hardens a specific observability gap.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Refresh live workflow state after PR #35 so source-of-truth artifacts match the 
 | none | none | none | none |
 
 ## Next skill
-workflow-router
+qa-governor
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25245871501, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25245943140, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -107,8 +107,11 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #33 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
 - PR #34 merged post-eval-expansion state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/34.
 - PR #35 merged support operations soak: https://github.com/b0ydeptraj/Relay-kit/pull/35.
-- Current main baseline: `baab1a7e576cf24eaa04534f8b7f879efe79ce5d`.
+- PR #36 merged post-support-soak state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/36.
+- Current main baseline: `a80a21298913aa8f0a4f58081ccf0b99be462222`.
+- Current branch: `codex/dashboard-eval-polish`.
+- Workflow focus branch verification: `python -m pytest tests/test_workflow_eval.py tests/test_pulse_report.py tests/test_signal_export.py -q`, `python scripts\eval_workflows.py . --strict --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise` passed locally.
 - Support operations soak branch verification: `python -m pytest tests/test_support_triage.py -q`, `python -m pytest tests/test_support_request.py tests/test_support_bundle.py tests/test_support_triage.py -q`, `python -m pytest tests/test_readiness_check.py tests/test_support_triage.py tests/test_support_bundle.py -q`, `python relay_kit_public_cli.py support bundle . --policy-pack enterprise`, `python relay_kit_public_cli.py support request . --severity P1 ... --strict`, `python relay_kit_public_cli.py support triage . --strict`, `python relay_kit_public_cli.py support soak . --strict`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py readiness check . --profile enterprise`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed locally.
 
 ## Recommended next lane
-Continue broader dashboard/eval polish plus external publication/legal/SLA work now that support operations soak is merged and CI is green.
+Merge workflow focus dashboard polish after review and CI. Next lane after merge is external publication/legal/SLA proof or optional dashboard polish.

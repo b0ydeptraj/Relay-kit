@@ -31,6 +31,7 @@ Default output:
 Pulse combines:
 
 - workflow eval status, pass rate, route margin, route confidence, evidence coverage, layer coverage, role coverage, and skill distribution
+- workflow focus signals for weak route candidates and eval coverage gaps
 - readiness status and verdict when `--include-readiness` or `--readiness-file` is used
 - publication plan status, channel, version, and finding count when `--include-publication` or `--publication-file` is used
 - support request status, severity, diagnostic count, and finding count when `--include-support-request` or `--support-request-file` is used
@@ -60,6 +61,19 @@ The HTML report renders the same gate summary as a table so dashboard reviews ca
 spot the blocking or degraded surface without reading raw JSON. It also renders
 Gate details so a reviewer can see the first failing scenario, release check,
 support diagnostic, or evidence event attached to each degraded gate.
+
+## Workflow Focus
+
+The JSON report includes `workflow_focus`:
+
+- `weak_route_count`: count of low-margin routing scenarios that still pass but are close to another route
+- `weak_routes`: scenario id, expected skill, predicted skill, route margin, confidence, and top routes
+- `coverage_gap_count`: count of missing eval layers and roles
+- `coverage_gaps`: missing layers, roles, skills, and covered-skill ratio from the registry
+- `next_actions`: concrete dashboard follow-ups for strengthening weak routes or adding missing scenario coverage
+
+The HTML report renders Workflow focus as a table before Gate summary so a
+reviewer can spot route fragility even when the full workflow eval suite passes.
 
 ## History
 
@@ -99,5 +113,6 @@ relay-kit signal export /path/to/project
 
 Signal export includes `relay.gates.pass`, `relay.gates.attention`,
 `relay.gates.hold`, `relay.gates.not_run`, `relay.gates.drilldown_items`,
+`relay.workflow.weak_route_count`, `relay.workflow.coverage_gap_count`,
 `relay.publication.ready`, and `relay.support_request.ready` when a Pulse report
 contains those surfaces.

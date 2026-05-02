@@ -75,6 +75,7 @@ def build_pulse_report(
     status = pulse_status(eval_report, readiness_report, publication_report, support_request, evidence)
     score = pulse_score(eval_report, readiness_report, publication_report, support_request, evidence)
     gate_summary = build_gate_summary(eval_report, readiness_report, publication_report, support_request, evidence)
+    workflow_focus = build_workflow_focus(eval_report)
     trend = build_trend(
         root,
         output_dir=output_dir,
@@ -101,6 +102,7 @@ def build_pulse_report(
         "readiness": readiness_report,
         "publication": publication_report,
         "support_request": support_request,
+        "workflow_focus": workflow_focus,
         "gate_summary": gate_summary,
         "evidence": evidence,
         "trend": trend,
@@ -138,6 +140,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     publication = _mapping(report.get("publication"))
     support_request = _mapping(report.get("support_request"))
     gate_summary = _mapping(report.get("gate_summary"))
+    workflow_focus = _mapping(report.get("workflow_focus"))
     evidence = _mapping(report.get("evidence"))
     trend = _mapping(report.get("trend"))
     status_counts = _mapping(evidence.get("recent_status_counts"))
@@ -151,6 +154,8 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Eval pass rate", _percent(workflow_eval.get("pass_rate"))),
         ("Evidence coverage", _percent(quality.get("evidence_term_coverage"))),
         ("Min route margin", str(quality.get("min_route_margin", "-"))),
+        ("Weak routes", str(workflow_focus.get("weak_route_count", 0))),
+        ("Coverage gaps", str(workflow_focus.get("coverage_gap_count", 0))),
         ("Layer coverage", str(len(_mapping(quality.get("expected_layer_counts"))))),
         ("Readiness", str(readiness.get("verdict", "not-run"))),
         ("Publication", str(publication.get("status", "not-run"))),
@@ -168,6 +173,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     if not rows:
         rows = '<tr><td colspan="4">No recent evidence events.</td></tr>'
     trend_rows = _trend_rows(trend)
+    workflow_focus_rows = _workflow_focus_rows(workflow_focus)
     gate_summary_rows = _gate_summary_rows(gate_summary)
     gate_drilldown_rows = _gate_drilldown_rows(gate_summary)
     publication_rows = _publication_rows(publication)
@@ -293,6 +299,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         <tr><td>Mean route confidence</td><td>{escape(str(quality.get("mean_route_confidence", "-")))}</td></tr>
         <tr><td>Expected layers</td><td>{escape(", ".join(_mapping(quality.get("expected_layer_counts")).keys()))}</td></tr>
         <tr><td>Expected skills</td><td>{escape(", ".join(_mapping(quality.get("expected_skill_counts")).keys()))}</td></tr>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>Workflow focus</h2>
+      <table>
+        <tr><th>Type</th><th>Item</th><th>Signal</th><th>Action</th></tr>
+        {workflow_focus_rows}
       </table>
     </section>
     <section class="panel">
@@ -427,6 +440,56 @@ def build_gate_summary(
         "drilldown_item_count": drilldown_item_count,
         "gates": gates,
         "next_actions": _gate_next_actions(gates),
+    }
+
+
+def build_workflow_focus(workflow_eval: Mapping[str, Any]) -> dict[str, Any]:
+    quality = _mapping(workflow_eval.get("quality"))
+    weak_routes = [
+        item
+        for item in _list(quality.get("weak_routes"))
+        if isinstance(item, Mapping)
+    ]
+    coverage_gaps = _mapping(quality.get("coverage_gaps"))
+    missing_layers = _list(coverage_gaps.get("missing_layers"))
+    missing_roles = _list(coverage_gaps.get("missing_roles"))
+    missing_skills = _list(coverage_gaps.get("missing_skills"))
+    coverage_gap_count = len(missing_layers) + len(missing_roles)
+    next_actions: list[dict[str, str]] = []
+    if weak_routes:
+        next_actions.append(
+            {
+                "kind": "weak-route",
+                "action": "Review low-margin route fixtures and strengthen trigger wording before they regress.",
+            }
+        )
+    if missing_layers:
+        next_actions.append(
+            {
+                "kind": "coverage-gap",
+                "action": "Add workflow eval scenarios for missing layers: " + ", ".join(str(item) for item in missing_layers[:5]),
+            }
+        )
+    if missing_roles:
+        next_actions.append(
+            {
+                "kind": "coverage-gap",
+                "action": "Add scenarios for uncovered roles, starting with: " + ", ".join(str(item) for item in missing_roles[:5]),
+            }
+        )
+    return {
+        "weak_route_count": len(weak_routes),
+        "coverage_gap_count": coverage_gap_count,
+        "weak_routes": weak_routes[:DRILLDOWN_LIMIT],
+        "coverage_gaps": {
+            "missing_layers": missing_layers,
+            "missing_roles": missing_roles,
+            "missing_skills": missing_skills[:DRILLDOWN_LIMIT],
+            "covered_skill_count": coverage_gaps.get("covered_skill_count", 0),
+            "registry_skill_count": coverage_gaps.get("registry_skill_count", 0),
+            "covered_skill_ratio": coverage_gaps.get("covered_skill_ratio", 0.0),
+        },
+        "next_actions": next_actions,
     }
 
 
@@ -977,6 +1040,59 @@ def _gate_summary_rows(gate_summary: Mapping[str, Any]) -> str:
         )
     if not rows:
         return '<tr><td colspan="3">No gate summary available.</td></tr>'
+    return "\n".join(rows)
+
+
+def _workflow_focus_rows(workflow_focus: Mapping[str, Any]) -> str:
+    rows: list[str] = []
+    for route in _list(workflow_focus.get("weak_routes")):
+        if not isinstance(route, Mapping):
+            continue
+        route_id = str(route.get("id", "weak-route"))
+        signal = f"margin {route.get('route_margin', '-')}, confidence {route.get('route_confidence', '-')}"
+        action = f"expected {route.get('expected_skill', '-')}, predicted {route.get('predicted_skill', '-')}"
+        rows.append(
+            "<tr>"
+            "<td>Weak route</td>"
+            f"<td>{escape(route_id)}</td>"
+            f"<td>{escape(signal)}</td>"
+            f"<td>{escape(action)}</td>"
+            "</tr>"
+        )
+    gaps = _mapping(workflow_focus.get("coverage_gaps"))
+    missing_layers = [str(item) for item in _list(gaps.get("missing_layers"))]
+    missing_roles = [str(item) for item in _list(gaps.get("missing_roles"))]
+    if missing_layers:
+        rows.append(
+            "<tr>"
+            "<td>Coverage gap</td>"
+            "<td>Layers</td>"
+            f"<td>{escape(str(len(missing_layers)))}</td>"
+            f"<td>{escape(', '.join(missing_layers[:6]))}</td>"
+            "</tr>"
+        )
+    if missing_roles:
+        rows.append(
+            "<tr>"
+            "<td>Coverage gap</td>"
+            "<td>Roles</td>"
+            f"<td>{escape(str(len(missing_roles)))}</td>"
+            f"<td>{escape(', '.join(missing_roles[:6]))}</td>"
+            "</tr>"
+        )
+    for action in _list(workflow_focus.get("next_actions")):
+        if not isinstance(action, Mapping):
+            continue
+        rows.append(
+            "<tr>"
+            "<td>Next action</td>"
+            f"<td>{escape(str(action.get('kind', '-')))}</td>"
+            "<td>-</td>"
+            f"<td>{escape(str(action.get('action', '-')))}</td>"
+            "</tr>"
+        )
+    if not rows:
+        return '<tr><td colspan="4">No workflow focus items.</td></tr>'
     return "\n".join(rows)
 
 
