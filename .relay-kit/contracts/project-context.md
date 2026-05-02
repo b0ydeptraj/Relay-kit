@@ -33,7 +33,7 @@
 ## Domain and compliance constraints
 
 - Relay-kit is positioned as an agent workflow governance kit, not a CrewAI/n8n-style full agent runtime.
-- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit support soak . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, and `relay-kit publish status . --json` when package upload evidence exists.
+- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit support soak . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, `relay-kit publish status . --json` when package upload evidence exists, and `relay-kit commercial dossier . --strict --json` when external CI/release/package/SLA/support owner proof exists.
 - Enterprise trust metadata is deterministic, not cryptographic. `relay-kit manifest verify . --trusted` is required before enterprise readiness claims.
 - Release/publication evidence must distinguish local readiness from external package upload, marketplace publication, and legal SLA commitments.
 
@@ -76,7 +76,8 @@
 - PR #35 merged support operations soak: https://github.com/b0ydeptraj/Relay-kit/pull/35, merge commit `baab1a7e576cf24eaa04534f8b7f879efe79ce5d`.
 - PR #36 merged post-support-soak state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/36, merge commit `a80a21298913aa8f0a4f58081ccf0b99be462222`.
 - PR #37 merged workflow focus dashboard polish: https://github.com/b0ydeptraj/Relay-kit/pull/37, merge commit `585029a04505e6200f4ae0eece2303271c4f8936`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25247371453, conclusion `success`.
+- PR #39 merged commercial proof dossier: https://github.com/b0ydeptraj/Relay-kit/pull/39, merge commit `8a1f32ed6275f6363b405d523061e827091be89a`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25248046721, conclusion `success`.
 
 ## Known sharp edges
 
@@ -87,6 +88,7 @@
 - Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
 - Workflow eval also reports weak route candidates and registry coverage gaps under `quality.weak_routes` and `quality.coverage_gaps`.
 - Support operations now include `relay-kit support soak`, which validates P0/P1/P2 paid-support handoff fixtures and fails degraded support bundle diagnostics.
+- Commercial proof now includes `relay-kit commercial dossier`, which writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof are present.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
 ## Files or modules to mirror
@@ -94,7 +96,7 @@
 - CLI patterns: `relay_kit_public_cli.py`
 - Version and upgrade logic: `relay_kit_v3/upgrade.py`, `.relay-kit/version.json`, `pyproject.toml`
 - Release readiness logic: `relay_kit_v3/release_lane.py`, `relay_kit_v3/readiness.py`, `scripts/release_readiness.py`
-- Publication planning and evidence logic: `relay_kit_v3/publication.py`
+- Publication planning and evidence logic: `relay_kit_v3/publication.py`, `relay_kit_v3/commercial_dossier.py`
 - Support diagnostics, request intake, and triage logic: `relay_kit_v3/support_bundle.py`, `relay_kit_v3/support_request.py`, `relay_kit_v3/support_triage.py`
 - Signal and observability logic: `relay_kit_v3/signal_export.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/evidence_ledger.py`
-- Tests to mirror for new CLI slices: `tests/test_publication_plan.py`, `tests/test_signal_export.py`, `tests/test_release_lane.py`, `tests/test_readiness_check.py`, `tests/test_public_cli_doctor.py`
+- Tests to mirror for new CLI slices: `tests/test_publication_plan.py`, `tests/test_commercial_dossier.py`, `tests/test_signal_export.py`, `tests/test_release_lane.py`, `tests/test_readiness_check.py`, `tests/test_public_cli_doctor.py`

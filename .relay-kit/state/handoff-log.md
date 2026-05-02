@@ -19,6 +19,7 @@
 | workflow-router | bootstrap | primary | state/context drift after PR #35 support operations soak merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #35, main CI `25245871501`, readiness `commercial-ready-candidate`, pytest 160 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | developer | primary | broader dashboard/eval polish after support soak | eval_workflows, Pulse, signal export, dashboard docs, backlog, state | focused eval/Pulse/signal tests pass; CLI eval, Pulse, and signal export pass locally | return through test-hub/qa-governor after full pytest, doctor, runtime doctor, readiness, and CI evidence |
 | workflow-router | bootstrap | primary | state/context drift after PR #37 workflow focus dashboard merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #37, main CI `25247371453`, readiness `commercial-ready-candidate`, pytest 160 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
+| workflow-router | bootstrap | primary | state/context drift after PR #39 commercial dossier merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #39, main CI `25248046721`, readiness `commercial-ready-candidate`, pytest 165 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 
 ## Rules
 - Every non-trivial handoff should update this log before the receiving skill starts work.
