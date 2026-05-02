@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Keep Relay-kit post-PR #37 state current and ready for the next single-lane implementation slice.
+Keep Relay-kit post-PR #39 state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Keep Relay-kit post-PR #37 state current and ready for the next single-lane impl
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after workflow focus dashboard polish merged. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after commercial proof dossier merged. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,7 +24,7 @@ Keep Relay-kit post-PR #37 state current and ready for the next single-lane impl
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #37 passed. Remote CI must pass after merge.
+Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #39 passed. Remote CI must pass after merge.
 
 ## Conflict risks
 Low. This slice edits state/context artifacts only.
@@ -46,3 +46,4 @@ Low. This slice edits state/context artifacts only.
 - 2026-05-02: Refresh state artifacts after PR #35 merged and main CI `25245871501` passed.
 - 2026-05-02: Start workflow focus dashboard polish on `codex/dashboard-eval-polish`; full local evidence passes and CLI output includes weak-route and coverage-gap metrics.
 - 2026-05-02: Refresh state artifacts after PR #37 merged and main CI `25247371453` passed.
+- 2026-05-02: Refresh state artifacts after PR #39 merged and main CI `25248046721` passed.
