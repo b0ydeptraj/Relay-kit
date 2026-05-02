@@ -8,7 +8,7 @@
 ## Active lanes
 | Lane | Owner skill | Source orchestrator | Target hub | Primary artifact | Lock scope | Merge prerequisite | Status |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | workflow-router | none | `.relay-kit/contracts/project-context.md` | none | CI after merge | ready-for-merge |
+| primary | developer | workflow-router | fix-hub | `relay_kit_v3/support_triage.py` | support operations soak | full readiness, doctor, runtime doctor, CI after merge | verifying |
 | lane-2 | unassigned | none | none | none | none | none | parked |
 | lane-3 | unassigned | none | none | none | none | none | parked |
 

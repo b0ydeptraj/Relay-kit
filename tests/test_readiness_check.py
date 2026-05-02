@@ -94,6 +94,19 @@ include = ["relay_kit_v3*", "scripts*"]
     )
 
 
+def healthy_support_bundle_payload() -> dict[str, object]:
+    return {
+        "schema_version": SUPPORT_SCHEMA_VERSION,
+        "diagnostics": {
+            "manifest": {"status": "valid"},
+            "policy": {"findings_count": 0},
+            "workflow_eval": {"status": "pass"},
+            "signal_export": {"status": "pass", "summary": {"signal_count": 3}},
+            "release_lane": {"status": "pass"},
+        },
+    }
+
+
 def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: Path) -> None:
     write_required_docs(tmp_path)
 
@@ -101,7 +114,7 @@ def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: P
         tmp_path,
         profile="enterprise",
         command_runner=passing_command_runner,
-        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
         upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
         contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
         contract_importer=lambda root, payload: {
@@ -145,7 +158,7 @@ def test_readiness_pytest_gate_uses_stable_basetemp(tmp_path: Path) -> None:
         tmp_path,
         profile="enterprise",
         command_runner=recording_runner,
-        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
         upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
         contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
         contract_importer=lambda root, payload: {
@@ -168,7 +181,7 @@ def test_readiness_report_holds_when_required_gate_fails(tmp_path: Path) -> None
         tmp_path,
         profile="enterprise",
         command_runner=failing_policy_runner,
-        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
         upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
         contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
         contract_importer=lambda root, payload: {
@@ -183,6 +196,35 @@ def test_readiness_report_holds_when_required_gate_fails(tmp_path: Path) -> None
     assert any(gate["id"] == "policy-enterprise" and gate["status"] == "fail" for gate in report["gates"])
 
 
+def test_readiness_report_holds_when_support_bundle_diagnostics_are_degraded(tmp_path: Path) -> None:
+    write_required_docs(tmp_path)
+    support_payload = healthy_support_bundle_payload()
+    diagnostics = support_payload["diagnostics"]
+    assert isinstance(diagnostics, dict)
+    diagnostics["workflow_eval"] = {"status": "fail"}
+
+    report = readiness.build_readiness_report(
+        tmp_path,
+        profile="enterprise",
+        command_runner=passing_command_runner,
+        support_builder=lambda root, policy_pack: support_payload,
+        upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
+        contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
+        contract_importer=lambda root, payload: {
+            "schema_version": CONTRACT_IMPORT_SCHEMA_VERSION,
+            "status": "pass",
+            "findings": [],
+        },
+    )
+
+    gate = next(gate for gate in report["gates"] if gate["id"] == "support-bundle")
+
+    assert report["status"] == "hold"
+    assert gate["status"] == "fail"
+    assert gate["details"]["findings_count"] == 1
+    assert "diagnostics" in gate["summary"]
+
+
 def test_readiness_report_is_limited_beta_when_tests_are_skipped(tmp_path: Path) -> None:
     write_required_docs(tmp_path)
 
@@ -191,7 +233,7 @@ def test_readiness_report_is_limited_beta_when_tests_are_skipped(tmp_path: Path)
         profile="enterprise",
         skip_tests=True,
         command_runner=passing_command_runner,
-        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
         upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
         contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
         contract_importer=lambda root, payload: {
@@ -215,7 +257,7 @@ def test_readiness_report_team_profile_uses_non_enterprise_manifest_gate(tmp_pat
         tmp_path,
         profile="team",
         command_runner=passing_command_runner,
-        support_builder=lambda root, policy_pack: {"schema_version": SUPPORT_SCHEMA_VERSION},
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
         upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
         contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
         contract_importer=lambda root, payload: {

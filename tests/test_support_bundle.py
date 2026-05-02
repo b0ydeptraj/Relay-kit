@@ -43,6 +43,7 @@ def test_support_bundle_contains_required_diagnostics(tmp_path: Path) -> None:
     assert "relay-kit doctor" in payload["support"]["required_commands"][0]
     assert any("relay-kit support request" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit support triage" in command for command in payload["support"]["required_commands"])
+    assert any("relay-kit support soak" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit pulse build" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit signal export" in command and "--otlp" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit publish trail" in command for command in payload["support"]["required_commands"])

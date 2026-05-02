@@ -41,7 +41,7 @@ Source audit status:
 - Fixed in governance reference pass: enterprise policy guard now fails required governance files that still contain unresolved `TBD` or template markers.
 - Fixed in contract import pass: `relay-kit contract import` can dry-run or apply Relay contract JSON back into PRD, story, tech-spec, and QA contracts without overwriting concrete sections unless `--force` is used.
 - Fixed in readiness gate pass: `relay-kit readiness check` aggregates pytest, doctor, trusted manifest, policy, workflow eval, support bundle, upgrade, contract sync, signal export, and commercial docs into one paid/team verdict.
-- Verified in local readiness pass: `relay-kit readiness check . --profile enterprise --json` returns `commercial-ready-candidate` with 154 tests passing and 0 findings.
+- Verified in local support-soak pass: `relay-kit support soak . --strict` passes P0/P1/P2 fixtures; `relay-kit readiness check . --profile enterprise` returns `commercial-ready-candidate`; `python -m pytest tests -q` passes with 160 tests.
 - Fixed in release publication pass: `v3.3.0` is published with PR #1, CI success, release-lane proof, package smoke, enterprise readiness, post-release readiness, and rollback evidence.
 - Fixed in Relay OTLP export pass: `relay-kit signal export --otlp` writes dependency-free OTLP-compatible `relay-signals-otlp.json` with `resourceMetrics` and `resourceLogs` for external observability pipelines.
 - Fixed in OTLP readiness/support pass: readiness and support diagnostics now generate and report the OTLP signal artifact, not only JSON and JSONL exports.
@@ -60,18 +60,19 @@ Source audit status:
 - Fixed in publication trail status pass: `relay-kit publish status` reads the publication trail and local evidence files, reporting complete, pending, failed, and not-observable publication steps without uploading packages.
 - Fixed in readiness pytest output hygiene pass: `relay-kit readiness check` runs pytest with a stable `.tmp/readiness-pytest` base temp directory so Windows temp-cleanup noise does not pollute captured evidence.
 - Fixed in pytest temp hardening pass: repo tests and runtime validators now use Relay-kit workspace temp paths and disable pytest cacheprovider, so `python -m pytest -q` passes on Windows without temp-root permission noise.
+- Fixed in support operations soak pass: `relay-kit support soak` runs P0/P1/P2 paid-support handoff fixtures, and triage/readiness now fail degraded support bundle diagnostics instead of accepting schema-only bundles.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
+- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
-Progress snapshot, updated 2026-05-01:
+Progress snapshot, updated 2026-05-02:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 95% for repo-owned work. Remaining work is support workflow soak, broader dashboard/eval polish, and external legal/SLA/package-index operations outside local repo gates.
-- Overall tracked progress in this file: 97%. This percentage excludes star/community/popularity and external customer commitments.
+- Commercial hardening roadmap: 97% for repo-owned work. Remaining repo-owned work is broader dashboard/eval polish; external legal/SLA/package-index operations remain outside local repo gates.
+- Overall tracked progress in this file: 98%. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
 
@@ -658,6 +659,7 @@ Acceptance criteria:
 | Publication trail status | Done | P2 | `relay-kit publish status` reads the trail and evidence files to show complete, pending, failed, and not-observable publication steps without uploading artifacts. |
 | Support operations dashboard signal | Done | P2 | Pulse shows support-request readiness and `relay-kit signal export` emits `relay.support_request.ready`. |
 | Support bundle request summary | Done | P2 | `relay-kit support bundle` includes a redacted `diagnostics.support_request` summary when the intake artifact exists. |
+| Support operations soak | Done | P2 | `relay-kit support soak`, support triage, and readiness run P0/P1/P2 paid-support handoff and degraded bundle diagnostic checks. |
 | Workflow eval layer coverage | Done | P2 | Eval reports layer/role coverage, Pulse shows layer coverage, and signal export emits `relay.workflow.expected_layer_count`. |
 | Pulse gate summary | Done | P2 | Pulse JSON/HTML shows workflow eval, readiness, publication, support request, and evidence gate status; signal export emits `relay.gates.*` counts. |
 | Pulse gate drilldowns | Done | P2 | Degraded Pulse gates now expose concrete scenario, finding, diagnostic, and evidence-event rows; signal export emits `relay.gates.drilldown_items`. |
@@ -743,6 +745,7 @@ Expected gain:
 - Done support operations signal slice: Pulse and signal export now surface support-request readiness for paid-support review.
 - Done support bundle polish slice: support bundles now summarize existing support request intake artifacts.
 - Done support triage polish slice: support request and support bundle artifacts now have one strict handoff gate.
+- Done support operations soak slice: `relay-kit support soak` validates P0/P1/P2 paid-support handoff fixtures against the current support bundle.
 - Done workflow eval coverage slice: dashboard inputs now include expected/predicted layer and role coverage from registry metadata.
 - Done Pulse gate summary slice: dashboard inputs now include per-gate pass, attention, hold, and not-run counts plus next actions.
 - Done Pulse gate drilldown slice: dashboard inputs now include concrete degraded gate rows for failed scenarios, readiness gates, publication findings, support diagnostics, and failed evidence events.
@@ -767,6 +770,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Paid support/upgrade path is documented.
 - `relay-kit support request --strict` reaches `ready` only when severity, environment, behavior details, recent changes, workaround, and diagnostic artifacts are present.
 - `relay-kit support triage --strict` reaches `ready` only when the support request and support bundle artifacts are locally valid.
+- `relay-kit support soak --strict` passes P0/P1/P2 handoff fixtures only when support bundle diagnostics are locally healthy.
 - `relay-kit readiness check --profile enterprise` returns `commercial-ready-candidate` for the release candidate.
 - `relay-kit readiness check` proves signal export artifacts can be generated locally.
 - `relay-kit release verify` passes for local release-lane prerequisites.
@@ -781,4 +785,4 @@ Relay-kit should not be called commercial-ready until all of these are true:
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with support operations soak, broader dashboard/eval polish, and external publication/legal/SLA work after the workflow eval scenario expansion lands.
+- Continue with broader dashboard/eval polish and external publication/legal/SLA work after the support operations soak lands.
