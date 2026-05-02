@@ -16,6 +16,7 @@ from relay_kit_v3.contract_import import import_contracts
 from relay_kit_v3.release_lane import build_release_lane_report
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_SCHEMA_VERSION
 from relay_kit_v3.support_bundle import build_support_bundle
+from relay_kit_v3.support_triage import support_bundle_findings
 from relay_kit_v3.temp_paths import temp_dir
 from relay_kit_v3.upgrade import build_upgrade_report
 
@@ -248,16 +249,27 @@ def _run_subprocess_gate(
 def _support_bundle_gate(root: Path, profile: str, support_builder: SupportBuilder) -> dict[str, Any]:
     try:
         payload = support_builder(root, profile)
-        ok = payload.get("schema_version") == SUPPORT_SCHEMA_VERSION
+        schema_ok = payload.get("schema_version") == SUPPORT_SCHEMA_VERSION
+        findings = support_bundle_findings(payload) if schema_ok else []
+        ok = schema_ok and not findings
         return {
             "id": "support-bundle",
             "label": "support bundle",
             "status": "pass" if ok else "fail",
             "required": True,
-            "summary": "support bundle schema ok" if ok else "support bundle schema mismatch",
+            "summary": _support_bundle_summary(schema_ok, findings),
+            "details": {"findings_count": len(findings), "findings": findings},
         }
     except Exception as exc:  # pragma: no cover - defensive gate summary
         return _exception_gate("support-bundle", "support bundle", exc)
+
+
+def _support_bundle_summary(schema_ok: bool, findings: Sequence[Mapping[str, str]]) -> str:
+    if not schema_ok:
+        return "support bundle schema mismatch"
+    if findings:
+        return f"support bundle diagnostics have {len(findings)} findings"
+    return "support bundle diagnostics ok"
 
 
 def _upgrade_gate(root: Path, upgrade_builder: UpgradeBuilder) -> dict[str, Any]:

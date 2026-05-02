@@ -2,7 +2,7 @@
 
 > Path: `.relay-kit/contracts/project-context.md`
 > Purpose: Current source-of-truth context for Relay-kit work after the `v3.3.0` release and `3.4.0.dev0` next-dev bump.
-> Last refreshed: 2026-05-01
+> Last refreshed: 2026-05-02
 
 ## Existing architecture
 
@@ -33,7 +33,7 @@
 ## Domain and compliance constraints
 
 - Relay-kit is positioned as an agent workflow governance kit, not a CrewAI/n8n-style full agent runtime.
-- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, and `relay-kit publish status . --json` when package upload evidence exists.
+- Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit support soak . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, and `relay-kit publish status . --json` when package upload evidence exists.
 - Enterprise trust metadata is deterministic, not cryptographic. `relay-kit manifest verify . --trusted` is required before enterprise readiness claims.
 - Release/publication evidence must distinguish local readiness from external package upload, marketplace publication, and legal SLA commitments.
 
@@ -81,6 +81,7 @@
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
 - Pulse now includes `gate_summary`, per-gate `drilldown` rows, and signal export emits `relay.gates.*`; future dashboard/eval work should preserve those schema keys.
 - Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
+- Support operations now include `relay-kit support soak`, which validates P0/P1/P2 paid-support handoff fixtures and fails degraded support bundle diagnostics.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
 ## Files or modules to mirror

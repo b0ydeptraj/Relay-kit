@@ -21,6 +21,8 @@ def write_ready_support_artifacts(root: Path, *, include_bundle: bool = True) ->
                         "manifest": {"status": "valid"},
                         "policy": {"findings_count": 0},
                         "workflow_eval": {"status": "pass"},
+                        "signal_export": {"status": "pass", "summary": {"signal_count": 3}},
+                        "release_lane": {"status": "pass"},
                     },
                 }
             )
@@ -76,6 +78,49 @@ def test_support_triage_holds_without_support_bundle(tmp_path: Path) -> None:
     assert report["status"] == "hold"
     assert any(finding["gate"] == "support-bundle" for finding in report["findings"])
     assert any("support bundle" in action for action in report["next_actions"])
+
+
+def test_support_triage_holds_when_bundle_diagnostics_are_degraded(tmp_path: Path) -> None:
+    write_ready_support_artifacts(tmp_path)
+    bundle_path = tmp_path / ".relay-kit" / "support" / "support-bundle.json"
+    payload = json.loads(bundle_path.read_text(encoding="utf-8"))
+    payload["diagnostics"]["policy"]["findings_count"] = 1
+    payload["diagnostics"]["workflow_eval"]["status"] = "fail"
+    bundle_path.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+
+    report = support_triage.build_support_triage(tmp_path)
+
+    assert report["status"] == "hold"
+    bundle_check = report["checks_by_id"]["support-bundle"]
+    assert bundle_check["status"] == "hold"
+    assert bundle_check["details"]["findings_count"] == 2
+    assert any("policy findings" in action for action in report["next_actions"])
+
+
+def test_support_soak_report_exercises_p0_p1_p2_cases(tmp_path: Path) -> None:
+    write_ready_support_artifacts(tmp_path)
+
+    report = support_triage.build_support_soak_report(tmp_path)
+
+    assert report["schema_version"] == "relay-kit.support-soak.v1"
+    assert report["status"] == "pass"
+    assert [case["severity"] for case in report["cases"]] == ["P0", "P1", "P2"]
+    assert {case["status"] for case in report["cases"]} == {"pass"}
+    assert all(case["request_check"]["status"] == "pass" for case in report["cases"])
+    assert all(case["bundle_check"]["status"] == "pass" for case in report["cases"])
+    assert all(case["sla"]["target"] for case in report["cases"])
+
+
+def test_public_cli_support_soak_json_and_strict(tmp_path: Path, capsys) -> None:
+    write_ready_support_artifacts(tmp_path)
+
+    exit_code = relay_kit_public_cli.main(["support", "soak", str(tmp_path), "--strict", "--json"])
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["schema_version"] == "relay-kit.support-soak.v1"
+    assert payload["status"] == "pass"
+    assert payload["case_count"] == 3
 
 
 def test_public_cli_support_triage_json_and_strict(tmp_path: Path, capsys) -> None:

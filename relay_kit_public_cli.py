@@ -11,6 +11,7 @@ This wrapper exposes a friendlier command surface:
   relay-kit support bundle <project_path>
   relay-kit support request <project_path>
   relay-kit support triage <project_path>
+  relay-kit support soak <project_path>
   relay-kit readiness check <project_path>
   relay-kit release verify <project_path>
   relay-kit publish plan <project_path>
@@ -60,7 +61,12 @@ from relay_kit_v3.contract_export import write_contract_export
 from relay_kit_v3.contract_import import import_contracts, render_contract_import_report
 from relay_kit_v3.support_bundle import build_support_bundle, write_support_bundle
 from relay_kit_v3.support_request import build_support_request, render_support_request, write_support_request
-from relay_kit_v3.support_triage import build_support_triage, render_support_triage
+from relay_kit_v3.support_triage import (
+    build_support_soak_report,
+    build_support_triage,
+    render_support_soak_report,
+    render_support_triage,
+)
 from relay_kit_v3.upgrade import build_upgrade_report, render_report, write_version_marker
 
 
@@ -382,6 +388,15 @@ def _parse_support_args(argv: list[str]) -> argparse.Namespace:
     )
     triage.add_argument("--strict", action="store_true", help="Return non-zero unless support triage is ready")
     triage.add_argument("--json", action="store_true", help="Emit machine-readable support triage")
+    soak = subparsers.add_parser("soak", help="Run P0/P1/P2 support handoff soak fixtures")
+    soak.add_argument("project_path", nargs="?", default=".", help="Project root to inspect")
+    soak.add_argument(
+        "--bundle-file",
+        default=None,
+        help="Support bundle JSON path (default: <project>/.relay-kit/support/support-bundle.json)",
+    )
+    soak.add_argument("--strict", action="store_true", help="Return non-zero unless support soak passes")
+    soak.add_argument("--json", action="store_true", help="Emit machine-readable support soak report")
     return parser.parse_args(argv)
 
 
@@ -951,6 +966,15 @@ def run_support(args: argparse.Namespace) -> int:
         else:
             print(render_support_triage(report))
         if args.strict and report["status"] != "ready":
+            return 2
+        return 0
+    if args.action == "soak":
+        report = build_support_soak_report(args.project_path, bundle_file=args.bundle_file)
+        if args.json:
+            print(json.dumps(report, ensure_ascii=True, indent=2))
+        else:
+            print(render_support_soak_report(report))
+        if args.strict and report["status"] != "pass":
             return 2
         return 0
     return 2
