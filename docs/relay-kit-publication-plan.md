@@ -17,6 +17,7 @@ relay-kit publish plan /path/to/project --output-file .relay-kit/release/publica
 relay-kit publish trail /path/to/project --channel pypi --strict --json
 relay-kit publish evidence /path/to/project --channel pypi --strict --json
 relay-kit publish status /path/to/project --strict --json
+relay-kit commercial dossier /path/to/project --channel pypi --strict --json
 ```
 
 Default checks:
@@ -95,3 +96,5 @@ The plan reaches `ready` only when local release gates pass, distribution artifa
 The evidence report writes `.relay-kit/release/publication-evidence.json` by default and reaches `published` only when the local artifacts, URL evidence, twine check output, and upload confirmation exist. It still does not upload a package itself.
 
 The status report is a read-only progress gate over the trail and evidence files. It reaches `complete` when all locally inspectable publication steps have proof; missing or incomplete local proof returns `in-progress` or `hold` under `--strict`.
+
+After publication status is `complete`, run `relay-kit commercial dossier` with the external CI, release, package, SLA, support URL, and owner fields. The dossier is the final commercial proof binder; publication commands remain focused on package evidence only.

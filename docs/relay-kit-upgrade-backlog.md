@@ -62,17 +62,18 @@ Source audit status:
 - Fixed in pytest temp hardening pass: repo tests and runtime validators now use Relay-kit workspace temp paths and disable pytest cacheprovider, so `python -m pytest -q` passes on Windows without temp-root permission noise.
 - Fixed in support operations soak pass: `relay-kit support soak` runs P0/P1/P2 paid-support handoff fixtures, and triage/readiness now fail degraded support bundle diagnostics instead of accepting schema-only bundles.
 - Fixed in workflow focus dashboard pass: eval reports weak route candidates and coverage gaps; Pulse renders Workflow focus; signal export emits weak-route and coverage-gap metrics.
+- Fixed in commercial dossier pass: `relay-kit commercial dossier` binds local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof into one strict JSON artifact.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, and `relay-kit publish status`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
+- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, `relay-kit publish status`, and `relay-kit commercial dossier`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
 Progress snapshot, updated 2026-05-02:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 99% for repo-owned work. Remaining repo-owned work is optional dashboard/eval polish; external legal/SLA/package-index operations remain outside local repo gates.
+- Commercial hardening roadmap: 100% for repo-owned proof tooling. Remaining work is external legal/SLA/package-index operation and optional dashboard/eval polish.
 - Overall tracked progress in this file: 99%. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
@@ -667,6 +668,7 @@ Acceptance criteria:
 | Workflow eval scenario expansion | Done | P2 | Default eval suite now covers 28 production/team scenarios, including bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor routing. |
 | Workflow focus dashboard | Done | P2 | Eval reports weak routes and coverage gaps; Pulse renders Workflow focus; signal export emits `relay.workflow.weak_route_count` and `relay.workflow.coverage_gap_count`. |
 | Pytest temp hardening | Done | P2 | `tests/conftest.py`, `relay_kit_v3/temp_paths.py`, readiness/support/validate helpers, and pytest config avoid Windows temp-root/cache permission failures. |
+| Commercial proof dossier | Done | P2 | `relay-kit commercial dossier` writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support ownership proof are present. |
 
 ## Benchmark Lessons to Import
 
@@ -754,6 +756,7 @@ Expected gain:
 - Done workflow eval scenario expansion slice: default scenario fixtures now cover 28 production/team routes, including bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor.
 - Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 - Done workflow focus dashboard slice: Pulse now shows low-margin route candidates and coverage gaps from workflow eval, and signal export exposes those counts.
+- Done commercial dossier slice: `relay-kit commercial dossier` strict-binds local runtime, publication, support, and external commercial proof into one JSON artifact.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
@@ -781,6 +784,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - `relay-kit publish trail --channel pypi --strict` reaches `ready` only after metadata, version/channel policy, release-lane status, shell support, and external CI/release/package URLs are present.
 - `relay-kit publish evidence --channel pypi --strict` reaches `published` only after wheel/sdist hashes, twine-check proof, upload confirmation, and external CI/release/package evidence are present.
 - `relay-kit publish status --strict` reaches `complete` only after the trail file, dist artifacts, twine-check log, upload log, publication plan, and publication evidence are locally inspectable.
+- `relay-kit commercial dossier --strict` reaches `ready` only after local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support ownership evidence are present.
 - Pulse and signal export surface support-request readiness so support operations can see whether the intake artifact is actionable.
 - Pulse and signal export surface per-gate pass, attention, hold, and not-run counts so dashboard review can target the exact degraded gate.
 - Pulse and signal export surface gate drilldown item counts and rows so a reviewer can inspect the first concrete failure without parsing raw reports.
@@ -789,4 +793,4 @@ Relay-kit should not be called commercial-ready until all of these are true:
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with optional dashboard/eval polish and external publication/legal/SLA work after the workflow focus dashboard slice lands.
+- Continue with optional dashboard/eval polish and external publication/legal/SLA operation after the commercial dossier slice lands.

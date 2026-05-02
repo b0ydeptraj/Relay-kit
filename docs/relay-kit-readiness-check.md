@@ -24,7 +24,7 @@ Use `--profile team` for non-enterprise projects. Use `--skip-tests` only after 
 - `contract-sync`: exports Relay contracts and dry-runs import validation.
 - `signal-export`: builds a local Pulse source and verifies Relay signal JSON, JSONL, and OTLP artifacts.
 - `release-lane`: verifies local package, CI workflow, docs, manifest/trust/version, and artifact-ignore prerequisites.
-- `commercial-docs`: checks SLA, enterprise bundle, contract sync, and support request docs.
+- `commercial-docs`: checks SLA, enterprise bundle, contract sync, commercial dossier, and support request docs.
 
 ## Verdicts
 
@@ -44,8 +44,9 @@ relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterpris
 relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
 relay-kit readiness check /path/to/project --profile enterprise
 relay-kit publish plan /path/to/project --channel pypi --json
+relay-kit commercial dossier /path/to/project --channel pypi --strict --json
 ```
 
-Do not call a package commercial-ready from local docs alone. The readiness report is the local proof artifact for that claim. `relay-kit publish plan` records package-index prerequisites, while remote CI status and package upload still need external execution evidence.
+Do not call a package commercial-ready from local docs alone. The readiness report is the local proof artifact for runtime readiness. `relay-kit publish plan` records package-index prerequisites, while `relay-kit commercial dossier` binds remote CI, release, package, SLA, support ownership, publication status, and support handoff evidence into the final proof artifact.
 
 The readiness `signal-export` gate writes `.relay-kit/signals/relay-signals.json`, `.relay-kit/signals/relay-signals.jsonl`, and `.relay-kit/signals/relay-signals-otlp.json`.

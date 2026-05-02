@@ -53,6 +53,9 @@ include = ["relay_kit_v3*", "scripts*"]
         "publication-evidence.json\npublication-trail.json\npublication-trail.md\n",
         encoding="utf-8",
     )
+    commercial = root / ".relay-kit" / "commercial"
+    commercial.mkdir(parents=True, exist_ok=True)
+    (commercial / ".gitignore").write_text("commercial-dossier.json\n", encoding="utf-8")
     if with_dist:
         dist = root / "dist"
         dist.mkdir()

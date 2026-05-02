@@ -49,6 +49,7 @@ def test_support_bundle_contains_required_diagnostics(tmp_path: Path) -> None:
     assert any("relay-kit publish trail" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit publish plan" in command for command in payload["support"]["required_commands"])
     assert any("relay-kit publish evidence" in command for command in payload["support"]["required_commands"])
+    assert any("relay-kit commercial dossier" in command for command in payload["support"]["required_commands"])
 
 
 def test_support_bundle_summarizes_existing_support_request(tmp_path: Path) -> None:
