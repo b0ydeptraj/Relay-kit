@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Implement support operations soak so paid-support handoff is validated with P0/P1/P2 fixtures, not only schema checks.
+Refresh live workflow state after PR #35 so source-of-truth artifacts match the merged support operations soak lane.
 
 ## Active lane
 - Lane id: primary
@@ -10,24 +10,24 @@ Implement support operations soak so paid-support handoff is validated with P0/P
 
 ## Active orchestration
 - Layer-1 orchestrator: workflow-router
-- Layer-2 workflow hub: fix-hub
-- Active specialist: developer
+- Layer-2 workflow hub: bootstrap
+- Active specialist: context-continuity
 
 ## Active utility providers
 - Primary utility provider: memory-search
 - Additional utilities in play: evidence-before-completion
 
 ## Active standalone/domain skill
-- Skill: developer
-- Why selected: this is a bounded implementation slice over support triage, support bundle required commands, support SLA docs, and support tests.
+- Skill: bootstrap
+- Why selected: this is a bounded state/context hygiene update after the support operations soak feature merged.
 
 ## Complexity level
-- Level: L2
-- Reasoning: the slice adds one public CLI subcommand and strengthens support triage behavior, with focused regression tests and local runtime evidence.
+- Level: L1
+- Reasoning: runtime code is already merged and main CI passed; this pass only updates live state/context.
 
 ## Chosen track
-- Track: fix-flow
-- Why this track fits: support workflow already exists; this slice hardens a specific gap found in the commercial roadmap.
+- Track: quick-flow
+- Why this track fits: the slice removes state drift before the next feature lane.
 
 ## Completed artifacts
 - [ ] product-brief
@@ -49,7 +49,7 @@ Implement support operations soak so paid-support handoff is validated with P0/P
 | none | none | none | none |
 
 ## Next skill
-qa-governor
+workflow-router
 
 ## Known blockers
 Package upload, marketplace publication, and legal SLA commitments remain external release actions outside the local repo gates.
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25227384662, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25245871501, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -106,9 +106,9 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Eval scenario expansion branch verification: `python -m pytest tests\test_workflow_eval.py -q --tb=short -p no:cacheprovider`, `python scripts\eval_workflows.py . --strict --json`, `python -m pytest -q`, `python scripts\validate_runtime.py`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, and `python relay_kit_public_cli.py signal export . --otlp --json` passed locally; signal export reports `relay.workflow.scenario_count=28`.
 - PR #33 main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
 - PR #34 merged post-eval-expansion state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/34.
-- Current main baseline: `785afcd`.
-- Current branch: `codex/support-operations-soak`.
+- PR #35 merged support operations soak: https://github.com/b0ydeptraj/Relay-kit/pull/35.
+- Current main baseline: `baab1a7e576cf24eaa04534f8b7f879efe79ce5d`.
 - Support operations soak branch verification: `python -m pytest tests/test_support_triage.py -q`, `python -m pytest tests/test_support_request.py tests/test_support_bundle.py tests/test_support_triage.py -q`, `python -m pytest tests/test_readiness_check.py tests/test_support_triage.py tests/test_support_bundle.py -q`, `python relay_kit_public_cli.py support bundle . --policy-pack enterprise`, `python relay_kit_public_cli.py support request . --severity P1 ... --strict`, `python relay_kit_public_cli.py support triage . --strict`, `python relay_kit_public_cli.py support soak . --strict`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py readiness check . --profile enterprise`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed locally.
 
 ## Recommended next lane
-Merge support operations soak after review and CI. Next feature lane after this branch is broader dashboard/eval polish plus external publication/legal/SLA work.
+Continue broader dashboard/eval polish plus external publication/legal/SLA work now that support operations soak is merged and CI is green.

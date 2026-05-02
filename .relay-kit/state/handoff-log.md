@@ -16,6 +16,7 @@
 | workflow-router | developer | primary | workflow eval scenario expansion after PR #32 state refresh | eval fixtures, workflow eval tests, workflow eval docs, upgrade backlog, live state | `python scripts\eval_workflows.py . --strict --json` reports 28/28 scenarios | return through qa-governor after pytest, doctor, runtime doctor, readiness, and CI evidence |
 | workflow-router | bootstrap | primary | state/context drift after PR #33 workflow eval expansion merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #33, main CI `25224916323`, readiness `commercial-ready-candidate`, pytest 156 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 | workflow-router | developer | primary | support operations soak after roadmap review | support_triage, support_bundle, public CLI, support SLA docs, support tests, upgrade backlog | `support triage --strict`, `support soak --strict`, readiness enterprise full, doctor, runtime doctor, and pytest 160 pass locally | return through test-hub/qa-governor after PR CI evidence |
+| workflow-router | bootstrap | primary | state/context drift after PR #35 support operations soak merge | project-context, workflow-state, team-board, lane-registry, handoff-log | PR #35, main CI `25245871501`, readiness `commercial-ready-candidate`, pytest 160 pass | refreshed artifacts pass live runtime doctor, enterprise doctor, pytest, readiness, and CI |
 
 ## Rules
 - Every non-trivial handoff should update this log before the receiving skill starts work.

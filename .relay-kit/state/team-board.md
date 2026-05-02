@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Harden Relay-kit paid-support operations with a support soak command and stricter support bundle diagnostics.
+Keep Relay-kit post-PR #35 state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Harden Relay-kit paid-support operations with a support soak command and stricte
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | developer | fix-hub | support_triage/support_bundle/support-sla/tests/state | support operations soak | ready for PR | verified | `support soak`, `support triage`, readiness full, doctor, runtime doctor live, and full pytest 160 pass locally. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after support operations soak merged. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,10 +24,10 @@ Harden Relay-kit paid-support operations with a support soak command and stricte
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Support triage and soak strict pass, root pytest passes, enterprise readiness passes, and remote CI must pass after merge.
+Runtime doctor live mode passed, enterprise doctor passed, root pytest passed, readiness passed, and main CI for PR #35 passed. Remote CI must pass after merge.
 
 ## Conflict risks
-Low to medium. This slice changes the public support CLI and support triage behavior; support and readiness tests cover the change.
+Low. This slice edits state/context artifacts only.
 
 ## Decision log
 - 2026-04-27: Refresh state artifacts instead of starting a new feature slice because project-context was empty and workflow-state still referenced completed branch work.
@@ -43,3 +43,4 @@ Low to medium. This slice changes the public support CLI and support triage beha
 - 2026-05-01: Verify eval scenario expansion locally with root pytest, eval, doctor, runtime doctor, readiness, Pulse, and signal export.
 - 2026-05-01: Refresh state artifacts after PR #33 merged and main CI `25224916323` passed.
 - 2026-05-02: Start support operations soak on `codex/support-operations-soak`; local evidence includes support triage/soak strict, readiness enterprise full, doctor enterprise, runtime doctor live, and full pytest `160 passed`.
+- 2026-05-02: Refresh state artifacts after PR #35 merged and main CI `25245871501` passed.

@@ -72,7 +72,9 @@
 - PR #31 merged Pulse gate drilldowns: https://github.com/b0ydeptraj/Relay-kit/pull/31, merge commit `535be14c95f8551d42b972db160a1a1c4b251217`.
 - PR #32 merged post-Pulse-drilldowns state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/32, merge commit `19f24493e300c42eefe8bc01e10aef8a8a755902`.
 - PR #33 merged workflow eval scenario expansion and pytest temp hardening: https://github.com/b0ydeptraj/Relay-kit/pull/33, merge commit `8b14b6e88bb26bc6d8c972d40ec80cd8c9ee6ad0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25224916323, conclusion `success`.
+- PR #34 merged post-eval-expansion state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/34, merge commit `785afcd200790bb78e08480530f2b594e2b81245`.
+- PR #35 merged support operations soak: https://github.com/b0ydeptraj/Relay-kit/pull/35, merge commit `baab1a7e576cf24eaa04534f8b7f879efe79ce5d`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25245871501, conclusion `success`.
 
 ## Known sharp edges
 
