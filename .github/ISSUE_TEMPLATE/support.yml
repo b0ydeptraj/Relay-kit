@@ -1,0 +1,87 @@
+name: Relay-kit support request
+description: Open a Relay-kit support request with the diagnostics required for triage.
+title: "[Support]: "
+labels:
+  - support
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting, run the Relay-kit support diagnostics and attach the generated artifacts where applicable.
+
+        Required commands:
+
+        ```bash
+        relay-kit support bundle /path/to/project --policy-pack enterprise
+        relay-kit doctor /path/to/project --policy-pack enterprise --json
+        relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --strict --json
+        relay-kit support triage /path/to/project --strict --json
+        ```
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: Choose the highest severity that matches the impact.
+      options:
+        - P0 - production-critical team blocked
+        - P1 - planned release blocked
+        - P2 - degraded with workaround
+        - P3 - question or enhancement
+    validations:
+      required: true
+  - type: input
+    id: package-version
+    attributes:
+      label: Relay-kit version
+      description: Output from the installed package or pyproject version.
+      placeholder: 3.4.0.dev0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, shell, adapter, bundle, and policy pack.
+      placeholder: Windows / PowerShell / codex / enterprise / enterprise policy pack
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should Relay-kit have done?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include the failing command output.
+    validations:
+      required: true
+  - type: textarea
+    id: recent-changes
+    attributes:
+      label: Recent changes
+      description: Recent Relay-kit, project, manifest, policy, package, or CI changes before the issue appeared.
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+      description: Any workaround currently in use. Write "None" if there is no workaround.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Attach or link support-bundle, support-request, signal export, readiness, release, publication, or commercial dossier artifacts.
+      placeholder: |
+        .relay-kit/support/support-bundle.json
+        .relay-kit/support/support-request.json
+        .relay-kit/signals/relay-signals.json
+        .relay-kit/commercial/commercial-dossier.json
+    validations:
+      required: true

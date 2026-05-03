@@ -4,6 +4,14 @@ This document defines the support workflow for paid/team Relay-kit usage.
 
 It is not a legal SLA by itself. It is the operational support contract that tells a team what evidence to collect and how issues are triaged.
 
+## Public Support Intake
+
+- Support intake: `https://github.com/b0ydeptraj/Relay-kit/issues/new?template=support.yml`
+- Support owner: `b0ydeptraj`
+- Commercial ownership statement: `docs/relay-kit-commercial-ownership.md`
+
+The public issue template is the default intake path for beta and public proof review. Private paid customers can use a separate contracted support channel when one exists, but the same diagnostic requirements still apply.
+
 ## Severity Levels
 
 | Severity | Meaning | Triage target |
