@@ -8,7 +8,7 @@
 
 - Relay-kit is a Python packaging/runtime-generation repo. Public package metadata lives in `pyproject.toml`; the installed console script is `relay-kit = "relay_kit_public_cli:main"`.
 - Active runtime package code lives under `relay_kit_v3/`. The historical v3 shim package remains only for compatibility and is not the active namespace.
-- Public CLI orchestration lives in `relay_kit_public_cli.py`; legacy generation compatibility remains in `relay_kit.py`, `relay_kit_legacy.py`, and `relay_kit_compat.py`.
+- Public CLI orchestration lives in `relay_kit_public_cli.py`; default runtime generation is the full enterprise bundle, while `--baseline` explicitly opts into the smaller install. Legacy generation compatibility remains in `relay_kit.py`, `relay_kit_legacy.py`, and `relay_kit_compat.py`.
 - Runtime skills are generated from registry data under `relay_kit_v3/registry/` and validated by `scripts/validate_runtime.py`, `scripts/runtime_doctor.py`, `scripts/migration_guard.py`, `scripts/skill_gauntlet.py`, `scripts/policy_guard.py`, and `scripts/eval_workflows.py`.
 - Current released tag: `v3.3.0` at commit `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`, set in `pyproject.toml` and `.relay-kit/version.json`.
@@ -80,8 +80,10 @@
 - PR #39 merged commercial proof dossier: https://github.com/b0ydeptraj/Relay-kit/pull/39, merge commit `8a1f32ed6275f6363b405d523061e827091be89a`.
 - PR #41 merged commercial dossier Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/41, merge commit `5dc9aaa3576a53d14cde18cebaa0891efe6ae69e`.
 - PR #43 merged public support proof: https://github.com/b0ydeptraj/Relay-kit/pull/43, merge commit `7a2b0a7`.
+- PR #45 merged default enterprise install behavior: https://github.com/b0ydeptraj/Relay-kit/pull/45, merge commit `0712966bb510625579237c737a66cbcb0f5ae5f4`.
 - GitHub release `v3.4.0.dev0` pre-release published with wheel and sdist assets: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.4.0.dev0.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25272387874, conclusion `success`.
+- GitHub release `v3.4.0.dev0` package assets were refreshed after PR #45; a fresh venv install from the wheel URL proved `relay-kit . --codex` generates the enterprise bundle by default.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25273209967, conclusion `success`.
 
 ## Known sharp edges
 
@@ -95,6 +97,7 @@
 - Commercial proof now includes `relay-kit commercial dossier`, which writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof are present.
 - Commercial dossier proof is visible in Pulse JSON/HTML and signal export when included from the generated dossier file.
 - Internal-channel commercial dossier is verified ready with GitHub release asset package URL, public support SLA, public issue intake, and owner `b0ydeptraj`.
+- Default package onboarding is now full by default: install the package, then run `relay-kit . --codex`; use `relay-kit . --codex --baseline` only for the smaller bundle.
 - PyPI remains unpublished because no PyPI token is configured in this environment. Do not claim PyPI publication until `pip index versions relay-kit` finds the package or a PyPI project URL exists.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 

@@ -5,7 +5,7 @@
 > Used by: qa-governor, developer, test-hub, review-hub
 
 ## Scope checked
-Post-external-proof state refresh after PR #43 and GitHub release package proof.
+Post-default-enterprise state refresh after PR #45 and refreshed GitHub release package proof.
 
 Changed surfaces:
 - `.relay-kit/contracts/project-context.md`
@@ -16,8 +16,8 @@ Changed surfaces:
 - `.relay-kit/state/handoff-log.md`
 
 ## Acceptance coverage
-- State artifacts reference PR #43 and latest main CI `25272387874`.
-- Project context records public support intake, owner proof, GitHub release package assets, and the internal-channel commercial dossier result.
+- State artifacts reference PR #45 and latest main CI `25273209967`.
+- Project context records default enterprise install behavior, refreshed GitHub release package assets, and the install proof that `relay-kit . --codex` generates enterprise by default.
 - Handoff log records the state refresh lane and expected return condition.
 - QA report records the feature evidence and the post-merge state-refresh evidence.
 
@@ -31,10 +31,11 @@ Changed surfaces:
 - Enterprise doctor and readiness gates that read current state, commercial docs, release docs, and support diagnostics.
 
 ## Evidence collected
-- PR #43 merged: https://github.com/b0ydeptraj/Relay-kit/pull/43.
-- Main CI after PR #43 passed: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25272387874.
-- External package proof: `v3.4.0.dev0` GitHub prerelease exists with wheel and sdist assets.
-- External package proof: fresh venv install from the `v3.4.0.dev0` wheel URL succeeded and `relay-kit --help` ran.
+- PR #45 merged: https://github.com/b0ydeptraj/Relay-kit/pull/45.
+- Main CI after PR #45 passed: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25273209967.
+- External package proof: `v3.4.0.dev0` GitHub prerelease exists with refreshed wheel and sdist assets.
+- External package proof: fresh venv install from the `v3.4.0.dev0` wheel URL succeeded; `relay-kit --help` showed `--bundle BUNDLE (default: enterprise)`.
+- External package proof: fresh installed `relay-kit <target> --codex` generated 87 v3 files including `.codex/skills/test-first-development/SKILL.md` and `.relay-kit/docs/enterprise-bundle.md`.
 - External support proof: support issue form exists at `https://github.com/b0ydeptraj/Relay-kit/issues/new?template=support.yml`.
 - External owner proof: `docs/relay-kit-commercial-ownership.md` records release, support, and legal/commercial owner `b0ydeptraj`.
 - Commercial dossier evidence: `relay-kit commercial dossier --channel internal ... --strict --json` returned `status: ready`.

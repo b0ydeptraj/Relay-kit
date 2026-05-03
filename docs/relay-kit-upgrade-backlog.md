@@ -65,11 +65,12 @@ Source audit status:
 - Fixed in commercial dossier pass: `relay-kit commercial dossier` binds local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof into one strict JSON artifact.
 - Fixed in commercial dossier Pulse/signal pass: Pulse can include commercial dossier JSON/HTML status and signal export emits `relay.commercial_dossier.ready`.
 - Completed external internal-channel proof pass: GitHub release package assets, public support intake, public SLA, owner statement, and `relay-kit commercial dossier --channel internal --strict` are verified ready.
+- Fixed in default enterprise install pass: `relay-kit . --codex` now installs the full enterprise bundle by default, `--baseline` is the explicit smaller path, and the refreshed `v3.4.0.dev0` wheel proves the package URL has this behavior.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: internal/GitHub release channel is verified by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, `relay-kit publish status`, and `relay-kit commercial dossier --channel internal --strict`. PyPI publication remains pending on PyPI credentials.
+- Commercial readiness: internal/GitHub release channel is verified by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, `relay-kit publish status`, and `relay-kit commercial dossier --channel internal --strict`. The package happy path is now `pip install relay-kit` after PyPI publication, then `relay-kit . --codex` for the full bundle. PyPI publication remains pending on PyPI credentials.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
@@ -763,6 +764,7 @@ Expected gain:
 - Done commercial dossier slice: `relay-kit commercial dossier` strict-binds local runtime, publication, support, and external commercial proof into one JSON artifact.
 - Done commercial dossier Pulse/signal slice: dashboard and telemetry outputs now surface commercial dossier status, findings, and readiness metric.
 - Done external internal-channel proof slice: GitHub release assets, public support intake, public SLA URL, owner statement, publication status, support triage/soak, and commercial dossier strict all pass.
+- Done default enterprise install slice: package users can run `relay-kit . --codex` for the full enterprise bundle; `--bundle enterprise` is no longer required in the happy path.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
@@ -778,6 +780,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Strict release/a11y gates fail without evidence files.
 - `relay-kit doctor` gives one supportable command for users and maintainers.
 - Default onboarding reaches first value in under 5 minutes.
+- Default package onboarding generates the full enterprise bundle without requiring `--bundle enterprise`; `--baseline` remains available for smaller installs.
 - Evidence ledger records gate runs and findings.
 - Paid support/upgrade path is documented.
 - `relay-kit support request --strict` reaches `ready` only when severity, environment, behavior details, recent changes, workaround, and diagnostic artifacts are present.
