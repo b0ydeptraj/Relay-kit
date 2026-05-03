@@ -98,6 +98,33 @@ def test_semantic_skill_gauntlet_routes_claim_proof_to_evidence_utility(tmp_path
     assert findings == []
 
 
+def test_semantic_skill_gauntlet_routes_skill_upgrade_to_skill_evolution(tmp_path: Path) -> None:
+    fixture_dir = tmp_path / "tests" / "fixtures" / "skill_gauntlet"
+    fixture_dir.mkdir(parents=True)
+    (fixture_dir / "scenarios.json").write_text(
+        """
+        [
+          {
+            "id": "skill-evolution-upgrade",
+            "prompt": "Create or upgrade a Relay-kit SKILL.md by auditing trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures.",
+            "expected_skill": "skill-evolution",
+            "expected_terms": ["trigger", "frontmatter", "scenario"]
+          }
+        ]
+        """,
+        encoding="utf-8",
+    )
+
+    findings, checked = collect_scenario_findings(
+        tmp_path,
+        ALL_V3_SKILLS,
+        Path("tests") / "fixtures" / "skill_gauntlet" / "scenarios.json",
+    )
+
+    assert checked == 1
+    assert findings == []
+
+
 def test_semantic_skill_gauntlet_flags_optional_alias_contract_drift(tmp_path: Path) -> None:
     skill_path = tmp_path / ".codex" / "skills" / "prove-it" / "SKILL.md"
     skill_path.parent.mkdir(parents=True)

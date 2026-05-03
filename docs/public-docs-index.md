@@ -16,6 +16,7 @@ Use this page as the public entrypoint for current runtime behavior.
 - `docs/relay-kit-pulse-report.md`
 - `docs/relay-kit-signal-export.md`
 - `docs/relay-kit-skill-gauntlet.md`
+- `docs/relay-kit-skill-evolution.md`
 - `docs/relay-kit-context-continuity.md`
 - `docs/relay-kit-context-continuity-design-note.md`
 - `docs/relay-kit-compatibility-cycle.md` (archived checklist with final decision)

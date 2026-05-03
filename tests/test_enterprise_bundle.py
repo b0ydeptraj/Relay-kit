@@ -8,9 +8,11 @@ from relay_kit_v3 import bundle_manifest
 from relay_kit_v3.generator import BUNDLES
 from relay_kit_v3.registry import (
     BUNDLE_DOC_NAMES,
+    ALL_V3_SKILLS,
     REFERENCE_NAMES_FOR_BUNDLE,
     SUPPORT_REFERENCES,
     contract_names_for_bundle,
+    render_skill,
     render_support_reference,
 )
 
@@ -23,9 +25,19 @@ def test_enterprise_bundle_extends_baseline_with_full_discipline_utilities() -> 
 
     assert set(BUNDLES["baseline"]).issubset(enterprise)
     assert "test-first-development" in enterprise
+    assert "skill-evolution" in enterprise
     assert "policy-guard" in enterprise
     assert "release-readiness" in enterprise
     assert len(enterprise) == len(set(enterprise))
+
+
+def test_skill_evolution_frontmatter_uses_claude_activation_patterns() -> None:
+    rendered = render_skill(ALL_V3_SKILLS["skill-evolution"])
+
+    assert 'paths: ["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"]' in rendered
+    assert "context: fork" in rendered
+    assert 'allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]' in rendered
+    assert "effort: high" in rendered
 
 
 def test_enterprise_bundle_emits_governance_docs_and_all_references() -> None:
@@ -76,6 +88,7 @@ def test_public_cli_generates_enterprise_bundle(tmp_path: Path) -> None:
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert (tmp_path / ".codex" / "skills" / "test-first-development" / "SKILL.md").exists()
+    assert (tmp_path / ".codex" / "skills" / "skill-evolution" / "SKILL.md").exists()
     assert (tmp_path / ".relay-kit" / "docs" / "enterprise-bundle.md").exists()
     assert (tmp_path / ".relay-kit" / "references" / "security-patterns.md").exists()
 

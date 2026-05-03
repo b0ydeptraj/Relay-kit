@@ -312,6 +312,7 @@ def validate_generated_bundle(bundle: str) -> None:
                     "root-cause-debugging",
                     "test-first-development",
                     "evidence-before-completion",
+                    "skill-evolution",
                 },
             )
 
