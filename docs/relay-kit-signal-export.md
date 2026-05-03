@@ -62,6 +62,7 @@ Metric signals include:
 - `relay.readiness.ready`
 - `relay.publication.ready`
 - `relay.support_request.ready`
+- `relay.commercial_dossier.ready`
 
 Event signals include recent evidence ledger events under:
 
@@ -79,7 +80,8 @@ Use this command after Pulse when a support bundle, release review, or future da
 relay-kit readiness check /path/to/project --profile enterprise
 relay-kit publish plan /path/to/project --channel pypi --json > publication-plan.json
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json > support-request.json
-relay-kit pulse build /path/to/project --include-readiness --publication-file publication-plan.json --support-request-file support-request.json
+relay-kit commercial dossier /path/to/project --channel pypi --strict --json > commercial-dossier.json
+relay-kit pulse build /path/to/project --include-readiness --publication-file publication-plan.json --support-request-file support-request.json --commercial-dossier-file commercial-dossier.json
 relay-kit signal export /path/to/project --otlp
 ```
 

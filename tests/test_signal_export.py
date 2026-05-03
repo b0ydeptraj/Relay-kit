@@ -61,14 +61,24 @@ def write_pulse_report(root: Path) -> Path:
                     "findings": [],
                     "diagnostics": [{"path": ".relay-kit/support/support-bundle.json", "status": "present"}],
                 },
+                "commercial_dossier": {
+                    "status": "ready",
+                    "channel": "pypi",
+                    "findings": [],
+                    "external_proof": {
+                        "ci_url": "https://github.com/b0ydeptraj/Relay-kit/actions/runs/1",
+                        "package_url": "https://pypi.org/project/relay-kit/3.3.0/",
+                    },
+                },
                 "gate_summary": {
-                    "status_counts": {"pass": 4, "attention": 1, "hold": 0, "not-run": 0},
+                    "status_counts": {"pass": 5, "attention": 1, "hold": 0, "not-run": 0},
                     "drilldown_item_count": 2,
                     "gates": [
                         {"id": "workflow-eval", "status": "pass", "drilldown": []},
                         {"id": "readiness", "status": "pass", "drilldown": []},
                         {"id": "publication", "status": "pass"},
                         {"id": "support-request", "status": "pass"},
+                        {"id": "commercial-dossier", "status": "pass"},
                         {
                             "id": "evidence",
                             "status": "attention",
@@ -112,6 +122,7 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.gates.drilldown_items" in metric_names
     assert "relay.publication.ready" in metric_names
     assert "relay.support_request.ready" in metric_names
+    assert "relay.commercial_dossier.ready" in metric_names
     assert "relay.evidence.event" in event_names
     assert payload["summary"]["signal_count"] == len(payload["signals"])
 

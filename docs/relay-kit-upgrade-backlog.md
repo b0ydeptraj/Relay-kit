@@ -63,6 +63,7 @@ Source audit status:
 - Fixed in support operations soak pass: `relay-kit support soak` runs P0/P1/P2 paid-support handoff fixtures, and triage/readiness now fail degraded support bundle diagnostics instead of accepting schema-only bundles.
 - Fixed in workflow focus dashboard pass: eval reports weak route candidates and coverage gaps; Pulse renders Workflow focus; signal export emits weak-route and coverage-gap metrics.
 - Fixed in commercial dossier pass: `relay-kit commercial dossier` binds local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof into one strict JSON artifact.
+- Fixed in commercial dossier Pulse/signal pass: Pulse can include commercial dossier JSON/HTML status and signal export emits `relay.commercial_dossier.ready`.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -669,6 +670,7 @@ Acceptance criteria:
 | Workflow focus dashboard | Done | P2 | Eval reports weak routes and coverage gaps; Pulse renders Workflow focus; signal export emits `relay.workflow.weak_route_count` and `relay.workflow.coverage_gap_count`. |
 | Pytest temp hardening | Done | P2 | `tests/conftest.py`, `relay_kit_v3/temp_paths.py`, readiness/support/validate helpers, and pytest config avoid Windows temp-root/cache permission failures. |
 | Commercial proof dossier | Done | P2 | `relay-kit commercial dossier` writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support ownership proof are present. |
+| Commercial dossier Pulse/signal | Done | P3 | `relay-kit pulse build` accepts commercial dossier artifacts and `relay-kit signal export` emits `relay.commercial_dossier.ready` for support/release dashboards. |
 
 ## Benchmark Lessons to Import
 
@@ -757,6 +759,7 @@ Expected gain:
 - Done publication trail status slice: local publish progress is now inspectable with `relay-kit publish status --strict --json` before or after package-index upload.
 - Done workflow focus dashboard slice: Pulse now shows low-margin route candidates and coverage gaps from workflow eval, and signal export exposes those counts.
 - Done commercial dossier slice: `relay-kit commercial dossier` strict-binds local runtime, publication, support, and external commercial proof into one JSON artifact.
+- Done commercial dossier Pulse/signal slice: dashboard and telemetry outputs now surface commercial dossier status, findings, and readiness metric.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
@@ -786,6 +789,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - `relay-kit publish status --strict` reaches `complete` only after the trail file, dist artifacts, twine-check log, upload log, publication plan, and publication evidence are locally inspectable.
 - `relay-kit commercial dossier --strict` reaches `ready` only after local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support ownership evidence are present.
 - Pulse and signal export surface support-request readiness so support operations can see whether the intake artifact is actionable.
+- Pulse and signal export surface commercial dossier readiness so support/release review can see whether the final commercial proof binder is ready.
 - Pulse and signal export surface per-gate pass, attention, hold, and not-run counts so dashboard review can target the exact degraded gate.
 - Pulse and signal export surface gate drilldown item counts and rows so a reviewer can inspect the first concrete failure without parsing raw reports.
 - Pulse and signal export surface weak route count and eval coverage gap count so dashboard review can catch route fragility before a scenario fails.

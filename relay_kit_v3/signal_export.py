@@ -142,6 +142,7 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
     readiness = _mapping(pulse_report.get("readiness"))
     publication = _mapping(pulse_report.get("publication"))
     support_request = _mapping(pulse_report.get("support_request"))
+    commercial_dossier = _mapping(pulse_report.get("commercial_dossier"))
     gate_summary = _mapping(pulse_report.get("gate_summary"))
     gate_status_counts = _mapping(gate_summary.get("status_counts"))
     workflow_focus = _mapping(pulse_report.get("workflow_focus"))
@@ -200,6 +201,16 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
                 **base_attrs,
                 "relay.support_request_status": str(support_request.get("status", "not-run")),
                 "relay.support_request_severity": str(support_request.get("severity", "")),
+            },
+        ),
+        metric(
+            "relay.commercial_dossier.ready",
+            1 if commercial_dossier.get("status") == "ready" else 0,
+            "1",
+            {
+                **base_attrs,
+                "relay.commercial_dossier_status": str(commercial_dossier.get("status", "not-run")),
+                "relay.commercial_dossier_channel": str(commercial_dossier.get("channel", "")),
             },
         ),
     ]

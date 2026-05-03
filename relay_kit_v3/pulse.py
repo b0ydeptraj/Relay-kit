@@ -8,6 +8,7 @@ from html import escape
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
+from relay_kit_v3.commercial_dossier import DEFAULT_OUTPUT as DEFAULT_COMMERCIAL_DOSSIER_OUTPUT
 from relay_kit_v3.evidence_ledger import LedgerSummary, summarize_events, utc_timestamp
 from relay_kit_v3.publication import build_publication_plan
 from relay_kit_v3.readiness import build_readiness_report
@@ -25,6 +26,7 @@ WorkflowEvalBuilder = Callable[[Path], Mapping[str, Any]]
 ReadinessBuilder = Callable[[Path, str, bool], Mapping[str, Any]]
 PublicationBuilder = Callable[[Path], Mapping[str, Any]]
 SupportRequestBuilder = Callable[[Path], Mapping[str, Any]]
+CommercialDossierBuilder = Callable[[Path], Mapping[str, Any]]
 EvidenceSummarizer = Callable[[Path, int], LedgerSummary]
 
 
@@ -39,14 +41,17 @@ def build_pulse_report(
     readiness_file: Path | str | None = None,
     publication_file: Path | str | None = None,
     support_request_file: Path | str | None = None,
+    commercial_dossier_file: Path | str | None = None,
     include_publication: bool = False,
     include_support_request: bool = False,
+    include_commercial_dossier: bool = False,
     output_dir: Path | str | None = None,
     history_limit: int = 20,
     workflow_eval_builder: WorkflowEvalBuilder | None = None,
     readiness_builder: ReadinessBuilder | None = None,
     publication_builder: PublicationBuilder | None = None,
     support_request_builder: SupportRequestBuilder | None = None,
+    commercial_dossier_builder: CommercialDossierBuilder | None = None,
     evidence_summarizer: EvidenceSummarizer | None = None,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
@@ -71,10 +76,16 @@ def build_pulse_report(
         support_request_file=support_request_file,
         support_request_builder=support_request_builder,
     )
+    commercial_dossier = _load_or_build_commercial_dossier(
+        root,
+        include_commercial_dossier=include_commercial_dossier,
+        commercial_dossier_file=commercial_dossier_file,
+        commercial_dossier_builder=commercial_dossier_builder,
+    )
     evidence = _evidence_payload(root, evidence_limit, evidence_summarizer)
-    status = pulse_status(eval_report, readiness_report, publication_report, support_request, evidence)
-    score = pulse_score(eval_report, readiness_report, publication_report, support_request, evidence)
-    gate_summary = build_gate_summary(eval_report, readiness_report, publication_report, support_request, evidence)
+    status = pulse_status(eval_report, readiness_report, publication_report, support_request, commercial_dossier, evidence)
+    score = pulse_score(eval_report, readiness_report, publication_report, support_request, commercial_dossier, evidence)
+    gate_summary = build_gate_summary(eval_report, readiness_report, publication_report, support_request, commercial_dossier, evidence)
     workflow_focus = build_workflow_focus(eval_report)
     trend = build_trend(
         root,
@@ -87,6 +98,7 @@ def build_pulse_report(
             readiness=readiness_report,
             publication=publication_report,
             support_request=support_request,
+            commercial_dossier=commercial_dossier,
             evidence=evidence,
         ),
         limit=history_limit,
@@ -102,6 +114,7 @@ def build_pulse_report(
         "readiness": readiness_report,
         "publication": publication_report,
         "support_request": support_request,
+        "commercial_dossier": commercial_dossier,
         "workflow_focus": workflow_focus,
         "gate_summary": gate_summary,
         "evidence": evidence,
@@ -139,6 +152,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     readiness = _mapping(report.get("readiness"))
     publication = _mapping(report.get("publication"))
     support_request = _mapping(report.get("support_request"))
+    commercial_dossier = _mapping(report.get("commercial_dossier"))
     gate_summary = _mapping(report.get("gate_summary"))
     workflow_focus = _mapping(report.get("workflow_focus"))
     evidence = _mapping(report.get("evidence"))
@@ -160,6 +174,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Readiness", str(readiness.get("verdict", "not-run"))),
         ("Publication", str(publication.get("status", "not-run"))),
         ("Support request", str(support_request.get("status", "not-run"))),
+        ("Commercial dossier", str(commercial_dossier.get("status", "not-run"))),
         ("Score delta", _signed(trend.get("pulse_score_delta"))),
         ("Ledger events", str(evidence.get("total_events", 0))),
         ("Recent failures", str(status_counts.get("fail", 0))),
@@ -178,6 +193,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     gate_drilldown_rows = _gate_drilldown_rows(gate_summary)
     publication_rows = _publication_rows(publication)
     support_request_rows = _support_request_rows(support_request)
+    commercial_dossier_rows = _commercial_dossier_rows(commercial_dossier)
 
     report_json = escape(json.dumps(report, ensure_ascii=True, indent=2))
     return f"""<!doctype html>
@@ -344,6 +360,13 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       </table>
     </section>
     <section class="panel">
+      <h2>Commercial dossier</h2>
+      <table>
+        <tr><th>Signal</th><th>Value</th></tr>
+        {commercial_dossier_rows}
+      </table>
+    </section>
+    <section class="panel">
       <h2>Recent evidence</h2>
       <table>
         <tr><th>Time</th><th>Gate</th><th>Status</th><th>Findings</th></tr>
@@ -365,6 +388,7 @@ def pulse_status(
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
     support_request: Mapping[str, Any] | None,
+    commercial_dossier: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> str:
     if workflow_eval.get("status") != "pass":
@@ -377,6 +401,8 @@ def pulse_status(
         return "attention"
     if support_request is not None and support_request.get("status") != "ready":
         return "attention"
+    if commercial_dossier is not None and commercial_dossier.get("status") != "ready":
+        return "attention"
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
     if int(recent_status_counts.get("fail", 0) or 0) > 0:
         return "attention"
@@ -388,6 +414,7 @@ def pulse_score(
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
     support_request: Mapping[str, Any] | None,
+    commercial_dossier: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> int:
     quality = _mapping(workflow_eval.get("quality"))
@@ -410,9 +437,12 @@ def pulse_score(
     support_penalty = 0
     if support_request is not None and support_request.get("status") != "ready":
         support_penalty = 5
+    commercial_penalty = 0
+    if commercial_dossier is not None and commercial_dossier.get("status") != "ready":
+        commercial_penalty = 5
     fail_count = int(_mapping(evidence.get("recent_status_counts")).get("fail", 0) or 0)
     evidence_score = max(0, 5 - (fail_count * 2))
-    score = round((pass_rate * 65) + (evidence_coverage * 10) + readiness_score + publication_score + evidence_score - support_penalty)
+    score = round((pass_rate * 65) + (evidence_coverage * 10) + readiness_score + publication_score + evidence_score - support_penalty - commercial_penalty)
     return max(0, min(100, int(score)))
 
 
@@ -421,6 +451,7 @@ def build_gate_summary(
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
     support_request: Mapping[str, Any] | None,
+    commercial_dossier: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> dict[str, Any]:
     gates = [
@@ -428,6 +459,7 @@ def build_gate_summary(
         _readiness_gate(readiness),
         _publication_gate(publication),
         _support_request_gate(support_request),
+        _commercial_dossier_gate(commercial_dossier),
         _evidence_gate(evidence),
     ]
     counts = {"pass": 0, "attention": 0, "hold": 0, "not-run": 0}
@@ -592,6 +624,31 @@ def _support_request_gate(support_request: Mapping[str, Any] | None) -> dict[str
     }
 
 
+def _commercial_dossier_gate(commercial_dossier: Mapping[str, Any] | None) -> dict[str, Any]:
+    if commercial_dossier is None:
+        return {
+            "id": "commercial-dossier",
+            "label": "Commercial dossier",
+            "status": "not-run",
+            "summary": "Commercial dossier was not included.",
+            "details": {},
+            "drilldown": [],
+        }
+    findings = commercial_dossier.get("findings", [])
+    status = "pass" if commercial_dossier.get("status") == "ready" else "attention"
+    return {
+        "id": "commercial-dossier",
+        "label": "Commercial dossier",
+        "status": status,
+        "summary": str(commercial_dossier.get("status", "-")),
+        "details": {
+            "channel": commercial_dossier.get("channel"),
+            "findings": len(findings) if isinstance(findings, list) else 0,
+        },
+        "drilldown": _commercial_dossier_drilldown(commercial_dossier),
+    }
+
+
 def _evidence_gate(evidence: Mapping[str, Any]) -> dict[str, Any]:
     recent_status_counts = _mapping(evidence.get("recent_status_counts"))
     fail_count = int(recent_status_counts.get("fail", 0) or 0)
@@ -616,6 +673,7 @@ def _gate_next_actions(gates: list[Mapping[str, Any]]) -> list[dict[str, str]]:
         "readiness": "Run or fix readiness check until the enterprise verdict is commercial-ready-candidate.",
         "publication": "Resolve publication findings or generate a fresh publication status before release.",
         "support-request": "Complete support request diagnostics and clear support findings before paid handoff.",
+        "commercial-dossier": "Complete commercial dossier proof before making a commercial-ready claim.",
         "evidence": "Inspect recent failing evidence events and rerun the affected gate.",
     }
     actions: list[dict[str, str]] = []
@@ -719,6 +777,26 @@ def _support_request_drilldown(support_request: Mapping[str, Any]) -> list[dict[
                 "id": path,
                 "status": status,
                 "summary": path,
+            }
+        )
+    return _dedupe_drilldown(items)[:DRILLDOWN_LIMIT]
+
+
+def _commercial_dossier_drilldown(commercial_dossier: Mapping[str, Any]) -> list[dict[str, str]]:
+    items = _finding_drilldown_items(commercial_dossier.get("findings"), default_id="commercial-dossier")
+    for check in _list(commercial_dossier.get("checks")):
+        if not isinstance(check, Mapping):
+            continue
+        status = str(check.get("status", "unknown"))
+        if status == "pass":
+            continue
+        check_id = str(check.get("id", check.get("gate", "commercial-dossier")))
+        items.append(
+            {
+                "kind": "check",
+                "id": check_id,
+                "status": status,
+                "summary": str(check.get("summary", check_id)),
             }
         )
     return _dedupe_drilldown(items)[:DRILLDOWN_LIMIT]
@@ -846,6 +924,7 @@ def pulse_history_snapshot(report: Mapping[str, Any]) -> dict[str, Any]:
     readiness = _mapping(report.get("readiness"))
     publication = _mapping(report.get("publication"))
     support_request = _mapping(report.get("support_request"))
+    commercial_dossier = _mapping(report.get("commercial_dossier"))
     evidence = _mapping(report.get("evidence"))
     return {
         "schema_version": HISTORY_SCHEMA_VERSION,
@@ -858,6 +937,7 @@ def pulse_history_snapshot(report: Mapping[str, Any]) -> dict[str, Any]:
             readiness=readiness if readiness else None,
             publication=publication if publication else None,
             support_request=support_request if support_request else None,
+            commercial_dossier=commercial_dossier if commercial_dossier else None,
             evidence=evidence,
         ),
     }
@@ -872,6 +952,7 @@ def snapshot_from_values(
     readiness: Mapping[str, Any] | None,
     publication: Mapping[str, Any] | None,
     support_request: Mapping[str, Any] | None,
+    commercial_dossier: Mapping[str, Any] | None,
     evidence: Mapping[str, Any],
 ) -> dict[str, Any]:
     quality = _mapping(workflow_eval.get("quality"))
@@ -893,6 +974,9 @@ def snapshot_from_values(
         "support_request_status": support_request.get("status") if support_request else None,
         "support_request_severity": support_request.get("severity") if support_request else None,
         "support_request_findings": len(support_request.get("findings", [])) if support_request else None,
+        "commercial_dossier_status": commercial_dossier.get("status") if commercial_dossier else None,
+        "commercial_dossier_channel": commercial_dossier.get("channel") if commercial_dossier else None,
+        "commercial_dossier_findings": len(commercial_dossier.get("findings", [])) if commercial_dossier else None,
         "recent_failures": int(recent_status_counts.get("fail", 0) or 0),
     }
 
@@ -958,6 +1042,21 @@ def _load_or_build_support_request(
     if not include_support_request:
         return None
     builder = support_request_builder or (lambda project_root: _read_json(project_root, DEFAULT_SUPPORT_REQUEST_OUTPUT))
+    return builder(root)
+
+
+def _load_or_build_commercial_dossier(
+    root: Path,
+    *,
+    include_commercial_dossier: bool,
+    commercial_dossier_file: Path | str | None,
+    commercial_dossier_builder: CommercialDossierBuilder | None,
+) -> Mapping[str, Any] | None:
+    if commercial_dossier_file is not None:
+        return _read_json(root, commercial_dossier_file)
+    if not include_commercial_dossier:
+        return None
+    builder = commercial_dossier_builder or (lambda project_root: _read_json(project_root, DEFAULT_COMMERCIAL_DOSSIER_OUTPUT))
     return builder(root)
 
 
@@ -1148,6 +1247,25 @@ def _support_request_rows(support_request: Mapping[str, Any]) -> str:
             ("Status", str(support_request.get("status", "-"))),
             ("Severity", str(support_request.get("severity", "-"))),
             ("Diagnostics", str(len(diagnostics) if isinstance(diagnostics, list) else 0)),
+            ("Findings", str(len(findings) if isinstance(findings, list) else 0)),
+        ]
+    return "\n".join(
+        f"<tr><td>{escape(label)}</td><td>{escape(value)}</td></tr>"
+        for label, value in rows
+    )
+
+
+def _commercial_dossier_rows(commercial_dossier: Mapping[str, Any]) -> str:
+    if not commercial_dossier:
+        rows = [("Status", "not-run")]
+    else:
+        findings = commercial_dossier.get("findings", [])
+        external_proof = _mapping(commercial_dossier.get("external_proof"))
+        present_external = sum(1 for value in external_proof.values() if str(value or "").strip())
+        rows = [
+            ("Status", str(commercial_dossier.get("status", "-"))),
+            ("Channel", str(commercial_dossier.get("channel", "-"))),
+            ("External proof fields", str(present_external)),
             ("Findings", str(len(findings) if isinstance(findings, list) else 0)),
         ]
     return "\n".join(
