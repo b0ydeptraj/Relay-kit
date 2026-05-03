@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Keep Relay-kit post-PR #41 state current and ready for the next single-lane implementation slice.
+Keep Relay-kit post-external-proof state current and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Keep Relay-kit post-PR #41 state current and ready for the next single-lane impl
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after commercial dossier Pulse/signal visibility merged. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after public support proof and GitHub release package assets were verified. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,7 +24,7 @@ Keep Relay-kit post-PR #41 state current and ready for the next single-lane impl
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode passed, enterprise doctor passed, focused pytest passed, and main CI for PR #41 passed. Remote CI must pass after merge.
+Runtime doctor live mode passed, focused pytest passed, commercial dossier strict passed, and main CI for PR #43 passed. Remote CI must pass after merge.
 
 ## Conflict risks
 Low. This slice edits state/context artifacts only.
@@ -48,3 +48,4 @@ Low. This slice edits state/context artifacts only.
 - 2026-05-02: Refresh state artifacts after PR #37 merged and main CI `25247371453` passed.
 - 2026-05-02: Refresh state artifacts after PR #39 merged and main CI `25248046721` passed.
 - 2026-05-03: Refresh state artifacts after PR #41 merged and main CI `25270978879` passed.
+- 2026-05-03: Refresh state artifacts after PR #43, GitHub release package assets, and internal-channel commercial dossier `ready`.

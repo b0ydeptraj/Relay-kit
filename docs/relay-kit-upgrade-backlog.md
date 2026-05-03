@@ -64,18 +64,19 @@ Source audit status:
 - Fixed in workflow focus dashboard pass: eval reports weak route candidates and coverage gaps; Pulse renders Workflow focus; signal export emits weak-route and coverage-gap metrics.
 - Fixed in commercial dossier pass: `relay-kit commercial dossier` binds local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof into one strict JSON artifact.
 - Fixed in commercial dossier Pulse/signal pass: Pulse can include commercial dossier JSON/HTML status and signal export emits `relay.commercial_dossier.ready`.
+- Completed external internal-channel proof pass: GitHub release package assets, public support intake, public SLA, owner statement, and `relay-kit commercial dossier --channel internal --strict` are verified ready.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
 - Current readiness: published `v3.3.0` with local commercial-ready candidate evidence; `main` has moved to `3.4.0.dev0` for post-release development.
-- Commercial readiness: locally gated by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, `relay-kit publish status`, and `relay-kit commercial dossier`; remote CI is green for the release commit, while legal SLA commitments still remain external operational work.
+- Commercial readiness: internal/GitHub release channel is verified by `relay-kit readiness check`, `relay-kit release verify`, `relay-kit support request`, `relay-kit support triage`, `relay-kit support soak`, `relay-kit publish trail`, `relay-kit publish plan`, `relay-kit publish evidence`, `relay-kit publish status`, and `relay-kit commercial dossier --channel internal --strict`. PyPI publication remains pending on PyPI credentials.
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
 Progress snapshot, updated 2026-05-03:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 100% for repo-owned proof tooling and visibility surfaces. Remaining work is external legal/SLA/package-index operation plus optional polish that is no longer a blocker.
-- Overall tracked progress in this file: 100% for repo-owned backlog. This percentage excludes star/community/popularity and external customer commitments.
+- Commercial hardening roadmap: 100% for repo-owned proof tooling, visibility surfaces, and internal-channel external proof. PyPI publication is the only remaining package-index variant and requires PyPI credentials.
+- Overall tracked progress in this file: 100% for repo-owned backlog and GitHub/internal commercial proof. This percentage excludes star/community/popularity and external customer contracts.
 
 ## Priority Backlog
 
@@ -760,6 +761,7 @@ Expected gain:
 - Done workflow focus dashboard slice: Pulse now shows low-margin route candidates and coverage gaps from workflow eval, and signal export exposes those counts.
 - Done commercial dossier slice: `relay-kit commercial dossier` strict-binds local runtime, publication, support, and external commercial proof into one JSON artifact.
 - Done commercial dossier Pulse/signal slice: dashboard and telemetry outputs now surface commercial dossier status, findings, and readiness metric.
+- Done external internal-channel proof slice: GitHub release assets, public support intake, public SLA URL, owner statement, publication status, support triage/soak, and commercial dossier strict all pass.
 
 Expected gain:
 - Relay-kit becomes sellable as a governance layer with measurable quality signals.
@@ -797,4 +799,4 @@ Relay-kit should not be called commercial-ready until all of these are true:
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.
-- Continue with optional dashboard/eval polish and external publication/legal/SLA operation after the commercial dossier slice lands.
+- Internal/GitHub release commercial proof is ready. Continue with PyPI publication only after PyPI credentials are available.
