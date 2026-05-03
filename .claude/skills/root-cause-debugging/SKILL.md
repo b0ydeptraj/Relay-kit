@@ -1,6 +1,7 @@
 ---
 name: root-cause-debugging
 description: Use when a hub needs a disciplined investigation before proposing fixes. Structured root-cause debugging utility.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

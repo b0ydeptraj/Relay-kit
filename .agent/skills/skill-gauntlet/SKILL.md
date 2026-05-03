@@ -1,6 +1,7 @@
 ---
 name: skill-gauntlet
 description: Use when runtime skill behavior may have drifted and you need a regression gate before trusting routing or completion claims.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

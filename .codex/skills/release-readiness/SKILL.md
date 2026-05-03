@@ -1,6 +1,7 @@
 ---
 name: release-readiness
 description: Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

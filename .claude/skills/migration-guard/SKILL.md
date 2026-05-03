@@ -1,6 +1,7 @@
 ---
 name: migration-guard
 description: Use when a migration or naming cutover might leave stale compatibility tokens behind. Enforce token-level cutover policy with an explicit allowlist gate.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission
