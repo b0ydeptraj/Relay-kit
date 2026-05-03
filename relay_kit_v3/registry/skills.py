@@ -16,6 +16,10 @@ class SkillSpec:
     references: List[str]
     next_steps: List[str]
     body: str
+    paths: List[str] | None = None
+    context: str | None = None
+    allowed_tools: List[str] | None = None
+    effort: str | None = None
 
 
 LEGACY_ROLE_MAP = {
@@ -927,6 +931,10 @@ def utility_provider_spec(
     rules: list[str],
     boundary: list[str] | None = None,
     evidence_contract: list[str] | None = None,
+    paths: list[str] | None = None,
+    context: str | None = None,
+    allowed_tools: list[str] | None = None,
+    effort: str | None = None,
 ) -> SkillSpec:
     body_lines = [
         "# Mission",
@@ -967,6 +975,10 @@ def utility_provider_spec(
         references=references,
         next_steps=next_steps,
         body="\n".join(body_lines).strip(),
+        paths=paths,
+        context=context,
+        allowed_tools=allowed_tools,
+        effort=effort,
     )
 
 
@@ -1494,6 +1506,51 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
             "If a code-change claim has zero file delta and zero verification output, mark it invalid unless the lane explicitly recorded a no-code outcome.",
         ],
     ),
+    "skill-evolution": utility_provider_spec(
+        name="skill-evolution",
+        description="Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior.",
+        outputs=[
+            "skill delta notes appended to tech-spec, qa-report, or the active artifact",
+            "frontmatter and trigger audit for every changed skill",
+            "scenario fixture or gauntlet evidence proving routing behavior",
+        ],
+        references=[
+            "Treat SKILL.md as a progressively disclosed command surface, not generic documentation.",
+            "Prefer path-scoped activation, forked context, and tight tool profiles for specialized or high-risk skills.",
+            "Do not copy external skill names or prompts; translate proven patterns into Relay-kit-owned names and contracts.",
+        ],
+        next_steps=["skill-gauntlet", "workflow-router", "review-hub"],
+        mission="Evolve Relay-kit skills as versioned runtime capabilities with explicit trigger, frontmatter, handoff, and regression evidence.",
+        boundary=[
+            "Use for changes to generated skills, skill registry entries, skill docs, or skill routing fixtures.",
+            "Do not own broad product planning; return to plan-hub when the skill change implies a new product surface.",
+            "Do not ship a skill change without a route or gauntlet proof unless the change is docs-only and clearly marked.",
+        ],
+        evidence_contract=[
+            "Input must include the skill names or skill folders under review and the reason behavior should change.",
+            "Output must classify each skill delta as add, update, merge, prune, or leave unchanged.",
+            "Every changed trigger must name the scenario, prompt shape, expected skill, and evidence command.",
+            "Every high-risk skill must name its allowed tool profile or explain why tool scoping is not supported by the adapter.",
+        ],
+        tasks=[
+            "Read the current SKILL.md, registry spec, and generated adapter copy before proposing edits.",
+            "Check trigger specificity, duplicate trigger noise, likely next-step validity, inputs, outputs, and handoff ownership.",
+            "Add or update path-scoped frontmatter when a skill only makes sense for certain files.",
+            "Use forked context guidance for exploratory, review-heavy, or report-heavy skill work that should not pollute the main lane.",
+            "Update semantic fixtures or focused tests so routing drift is caught before release.",
+        ],
+        rules=[
+            "Keep skill names Relay-kit-owned and distinct from external projects even when a pattern was inspired elsewhere.",
+            "Short frontmatter beats long body text for activation quality.",
+            "A thin skill should be merged, aliased, or given a concrete evidence contract instead of staying vague.",
+            "A skill that can invoke shell, file edits, or external tools needs an explicit permission or allowed-tools stance.",
+            "Record source patterns as evidence, but write new Relay-kit instructions in Relay-kit terminology.",
+        ],
+        paths=["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"],
+        context="fork",
+        allowed_tools=["Read", "Write", "Edit", "Grep", "Glob", "Bash"],
+        effort="high",
+    ),
 }
 
 BASELINE_NEXT_DISCIPLINE_SKILLS: Dict[str, SkillSpec] = {
@@ -1530,6 +1587,16 @@ def render_skill(spec: SkillSpec) -> str:
         "---",
         f"name: {spec.name}",
         f"description: {spec.description}",
+    ]
+    if spec.paths:
+        parts.append(f"paths: {_render_yaml_inline_list(spec.paths)}")
+    if spec.context:
+        parts.append(f"context: {spec.context}")
+    if spec.allowed_tools:
+        parts.append(f"allowed-tools: {_render_yaml_inline_list(spec.allowed_tools)}")
+    if spec.effort:
+        parts.append(f"effort: {spec.effort}")
+    parts.extend([
         "---",
         "",
         spec.body.strip(),
@@ -1541,7 +1608,7 @@ def render_skill(spec: SkillSpec) -> str:
         f"- {spec.layer}",
         "",
         "## Inputs",
-    ]
+    ])
     parts.extend(f"- {item}" for item in spec.inputs)
     parts.extend([
         "",
@@ -1559,3 +1626,8 @@ def render_skill(spec: SkillSpec) -> str:
     ])
     parts.extend(f"- {item}" for item in spec.next_steps)
     return "\n".join(parts).rstrip() + "\n"
+
+
+def _render_yaml_inline_list(items: List[str]) -> str:
+    quoted = [f'"{item.replace(chr(34), chr(92) + chr(34))}"' for item in items]
+    return "[" + ", ".join(quoted) + "]"
