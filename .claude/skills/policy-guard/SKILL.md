@@ -1,6 +1,7 @@
 ---
 name: policy-guard
 description: Use when high-risk agent operations need deterministic policy checks before trusting shell, path, secret, prompt, or allowlist changes.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

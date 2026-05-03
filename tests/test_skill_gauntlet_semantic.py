@@ -5,7 +5,13 @@ import sys
 from pathlib import Path
 
 from relay_kit_v3.registry.skills import ALL_V3_SKILLS, render_skill
-from scripts.skill_gauntlet import check_semantic_skill_file, collect_optional_alias_findings, collect_scenario_findings
+from scripts.skill_gauntlet import (
+    REQUIRED_TOOL_PROFILE_SKILLS,
+    check_semantic_skill_file,
+    collect_optional_alias_findings,
+    collect_scenario_findings,
+    collect_tool_profile_findings,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +48,47 @@ def test_semantic_skill_gauntlet_flags_unknown_next_step(tmp_path: Path) -> None
     findings = check_semantic_skill_file(skill_path, tmp_path, spec, set(ALL_V3_SKILLS))
 
     assert any(finding.check == "unknown-next-step" for finding in findings)
+
+
+def test_semantic_skill_gauntlet_flags_missing_high_risk_tool_profile(tmp_path: Path) -> None:
+    spec = ALL_V3_SKILLS["policy-guard"]
+    skill_path = tmp_path / ".codex" / "skills" / "policy-guard" / "SKILL.md"
+    skill_path.parent.mkdir(parents=True)
+    rendered = "\n".join(
+        line for line in render_skill(spec).splitlines() if not line.startswith("allowed-tools:")
+    )
+    skill_path.write_text(rendered + "\n", encoding="utf-8")
+
+    findings = collect_tool_profile_findings(tmp_path, [skill_path], ALL_V3_SKILLS)
+
+    assert any(finding.check == "missing-tool-profile" for finding in findings)
+
+
+def test_semantic_skill_gauntlet_flags_tool_profile_drift(tmp_path: Path) -> None:
+    spec = ALL_V3_SKILLS["developer"]
+    skill_path = tmp_path / ".codex" / "skills" / "developer" / "SKILL.md"
+    skill_path.parent.mkdir(parents=True)
+    skill_path.write_text(
+        render_skill(spec).replace(
+            'allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]',
+            'allowed-tools: ["Read", "Grep"]',
+        ),
+        encoding="utf-8",
+    )
+
+    findings = collect_tool_profile_findings(tmp_path, [skill_path], ALL_V3_SKILLS)
+
+    assert any(finding.check == "tool-profile-drift" for finding in findings)
+
+
+def test_high_risk_skills_have_registry_tool_profiles() -> None:
+    missing = [
+        skill_name
+        for skill_name in sorted(REQUIRED_TOOL_PROFILE_SKILLS)
+        if not ALL_V3_SKILLS[skill_name].allowed_tools
+    ]
+
+    assert missing == []
 
 
 def test_semantic_skill_gauntlet_flags_bad_scenario_route(tmp_path: Path) -> None:

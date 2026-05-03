@@ -66,6 +66,20 @@ OPTIONAL_ALIAS_CONTRACTS = {
         "not a claim-to-evidence pass",
     ],
 }
+REQUIRED_TOOL_PROFILE_SKILLS = {
+    "accessibility-review",
+    "developer",
+    "execution-loop",
+    "migration-guard",
+    "policy-guard",
+    "release-readiness",
+    "root-cause-debugging",
+    "runtime-doctor",
+    "skill-evolution",
+    "skill-gauntlet",
+    "test-first-development",
+}
+VALID_TOOL_NAMES = {"Read", "Write", "Edit", "Grep", "Glob", "Bash"}
 
 
 @dataclass(frozen=True)
@@ -184,6 +198,24 @@ def parse_frontmatter(content: str) -> Dict[str, str] | None:
     return data
 
 
+def parse_inline_list(value: str) -> List[str]:
+    value = value.strip()
+    if not value:
+        return []
+    if not (value.startswith("[") and value.endswith("]")):
+        return []
+    inner = value[1:-1].strip()
+    if not inner:
+        return []
+    items: List[str] = []
+    for item in inner.split(","):
+        stripped = item.strip()
+        if len(stripped) >= 2 and stripped[0] == stripped[-1] == '"':
+            stripped = stripped[1:-1]
+        items.append(stripped)
+    return items
+
+
 def section_bullets(content: str, section_name: str) -> List[str]:
     lines = content.splitlines()
     header = f"## {section_name}"
@@ -258,6 +290,88 @@ def check_semantic_skill_file(path: Path, base: Path, spec, known_skill_names: s
         findings.append(Finding(rel_path, "empty-input-contract", "Inputs section has no bullet contract"))
     if not section_bullets(content, "Outputs"):
         findings.append(Finding(rel_path, "empty-output-contract", "Outputs section has no bullet contract"))
+
+    return findings
+
+
+def collect_tool_profile_findings(
+    base: Path,
+    skill_files: Sequence[Path],
+    registry: Mapping[str, object],
+) -> List[Finding]:
+    findings: List[Finding] = []
+    seen_skill_names: set[str] = set()
+
+    for path in skill_files:
+        if not path.exists():
+            continue
+        skill_name = path.parent.name
+        spec = registry.get(skill_name)
+        if spec is None:
+            continue
+        seen_skill_names.add(skill_name)
+        rel_path = path.relative_to(base).as_posix()
+        content = path.read_text(encoding="utf-8")
+        frontmatter = parse_frontmatter(content)
+        if frontmatter is None:
+            continue
+
+        raw_profile = frontmatter.get("allowed-tools", "").strip()
+        actual_profile = parse_inline_list(raw_profile)
+        expected_profile = list(getattr(spec, "allowed_tools", None) or [])
+
+        if skill_name in REQUIRED_TOOL_PROFILE_SKILLS and not raw_profile:
+            findings.append(
+                Finding(
+                    rel_path,
+                    "missing-tool-profile",
+                    "High-risk skill must declare allowed-tools frontmatter",
+                )
+            )
+        if raw_profile and not actual_profile:
+            findings.append(
+                Finding(
+                    rel_path,
+                    "invalid-tool-profile",
+                    "allowed-tools must be an inline YAML list",
+                )
+            )
+        invalid_tools = [tool for tool in actual_profile if tool not in VALID_TOOL_NAMES]
+        if invalid_tools:
+            findings.append(
+                Finding(
+                    rel_path,
+                    "invalid-tool-profile",
+                    f"Unknown allowed tool names: {', '.join(invalid_tools)}",
+                )
+            )
+        if expected_profile and actual_profile and actual_profile != expected_profile:
+            findings.append(
+                Finding(
+                    rel_path,
+                    "tool-profile-drift",
+                    f"allowed-tools drift: expected={expected_profile!r} actual={actual_profile!r}",
+                )
+            )
+
+    for skill_name in sorted(REQUIRED_TOOL_PROFILE_SKILLS & set(registry)):
+        spec = registry[skill_name]
+        if not list(getattr(spec, "allowed_tools", None) or []):
+            findings.append(
+                Finding(
+                    f"registry:{skill_name}",
+                    "missing-registry-tool-profile",
+                    "High-risk skill registry spec must define allowed_tools",
+                )
+            )
+        elif skill_name not in seen_skill_names:
+            findings.append(
+                Finding(
+                    f"registry:{skill_name}",
+                    "missing-tool-profile-surface",
+                    "High-risk skill was not present in generated runtime surfaces",
+                )
+            )
 
     return findings
 
@@ -553,6 +667,7 @@ def main() -> int:
         findings.extend(check_skill_file(path, base))
     if args.semantic:
         findings.extend(collect_semantic_findings(base, skill_files))
+        findings.extend(collect_tool_profile_findings(base, skill_files, ALL_V3_SKILLS))
         findings.extend(collect_optional_alias_findings(base))
         scenario_findings, scenario_count = collect_scenario_findings(
             base,

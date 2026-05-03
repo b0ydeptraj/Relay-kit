@@ -47,3 +47,20 @@ Required output:
 - `tests/test_enterprise_bundle.py::test_skill_evolution_frontmatter_uses_claude_activation_patterns`
 - `tests/test_skill_gauntlet_semantic.py::test_semantic_skill_gauntlet_routes_skill_upgrade_to_skill_evolution`
 - `scripts/validate_runtime.py` discipline-utilities parity includes `skill-evolution`
+
+## Permission/Profile Audit Slice
+
+The second adoption slice turns the `skill-evolution` rule for high-risk skills into a semantic gauntlet check.
+
+What changed:
+
+- high-risk skills must declare `allowed-tools` frontmatter in generated adapter copies
+- registry specs must carry the same tool profile used by generated `SKILL.md`
+- `skill_gauntlet --semantic --strict` fails when a high-risk skill is missing a tool profile, has malformed tool names, or drifts from registry metadata
+
+Initial high-risk profile set:
+
+- edit/test profile: `developer`, `execution-loop`, `test-first-development`, `skill-evolution`
+- read/analyze gate profile: `accessibility-review`, `release-readiness`, `skill-gauntlet`, `runtime-doctor`, `migration-guard`, `policy-guard`, `root-cause-debugging`
+
+This is not OS-level sandboxing. It is a machine-checked skill contract that prevents permission stance from silently disappearing during registry or generated-skill changes.

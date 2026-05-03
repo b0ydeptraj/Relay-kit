@@ -1,6 +1,7 @@
 ---
 name: execution-loop
 description: Use when building or fixing code iteratively and require evidence before claiming completion. Self-correcting development loop for implementation work.
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

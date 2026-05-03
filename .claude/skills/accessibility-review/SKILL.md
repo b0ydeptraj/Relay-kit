@@ -1,6 +1,7 @@
 ---
 name: accessibility-review
 description: Use when frontend work needs an explicit accessibility gate before merge, release, or completion claims.
+allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
 # Mission

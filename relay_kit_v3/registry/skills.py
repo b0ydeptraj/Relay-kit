@@ -22,6 +22,10 @@ class SkillSpec:
     effort: str | None = None
 
 
+READ_ANALYZE_TOOLS = ["Read", "Grep", "Glob", "Bash"]
+EDIT_AND_TEST_TOOLS = ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+
+
 LEGACY_ROLE_MAP = {
     "analyst": [
         "research-expert",
@@ -634,6 +638,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "If tasks are truly independent and the platform supports collaboration, follow `.relay-kit/docs/parallel-execution.md` before using subagent-style execution.",
         ],
         next_steps=["execution-loop", "test-hub", "qa-governor", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
             # Mission
@@ -717,6 +722,7 @@ CLEANUP_SKILLS: Dict[str, SkillSpec] = {
             "State the slice objective and expected files before each cycle so context does not rot across long loops.",
         ],
         next_steps=["test-hub", "qa-governor"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
             # Mission
@@ -1190,6 +1196,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "If evidence is incomplete, return hold by default and list the exact missing signals.",
             "Document rollback trigger thresholds before calling a deploy safe.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "accessibility-review": utility_provider_spec(
         name="accessibility-review",
@@ -1216,6 +1223,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Keep findings actionable: component, behavior, impact, and expected fix.",
             "If manual verification is needed, say exactly what to test and why.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "skill-gauntlet": utility_provider_spec(
         name="skill-gauntlet",
@@ -1242,6 +1250,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Fail fast when trigger wording or core sections drift from required structure.",
             "Keep the gauntlet report small and path-specific so fixes are easy to apply.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "impact-radar": utility_provider_spec(
         name="impact-radar",
@@ -1294,6 +1303,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Do not auto-fix runtime drift; hand actionable findings back to fix-hub.",
             "Return hold when strict checks fail on parity or required artifacts.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "migration-guard": utility_provider_spec(
         name="migration-guard",
@@ -1320,6 +1330,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Run migration-guard before merge on every cutover batch touching runtime names or paths.",
             "Keep findings deterministic so repeated runs produce stable verdicts.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "policy-guard": utility_provider_spec(
         name="policy-guard",
@@ -1344,6 +1355,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Prefer fixing the risky surface over allowlisting it.",
             "Escalate to review-hub when a finding is intentional but operationally sensitive.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "context-continuity": utility_provider_spec(
         name="context-continuity",
@@ -1465,6 +1477,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
         mission="Force a root-cause-first debugging pass so the lane stops guessing and starts proving.",
         tasks=["Read the failure carefully and restate the symptom.", "Trace the issue through the narrowest useful chain of evidence.", "Record likely cause, non-causes, and the smallest validating next move."],
         rules=["Do not recommend fixes before the evidence is good enough to reject obvious alternatives.", "Prefer one hypothesis at a time.", "Escalate back to planning when the issue is really a requirements or architecture mismatch."],
+        allowed_tools=READ_ANALYZE_TOOLS,
     ),
     "test-first-development": utility_provider_spec(
         name="test-first-development",
@@ -1475,6 +1488,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
         mission="Drive implementation through the smallest useful red-green-refactor loop.",
         tasks=["Name the behavior that should fail first.", "Capture the failing test or reproduction evidence.", "Implement only enough to turn the signal green before cleanup."],
         rules=["If the behavior cannot be tested first, say why instead of pretending the loop happened.", "Keep one behavior per cycle.", "Keep tests, fixtures, and sample payloads plain ASCII unless the behavior explicitly depends on non-ASCII content.", "Do not widen scope during the green phase."],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
     ),
     "evidence-before-completion": utility_provider_spec(
         name="evidence-before-completion",
@@ -1548,7 +1562,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
         ],
         paths=["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"],
         context="fork",
-        allowed_tools=["Read", "Write", "Edit", "Grep", "Glob", "Bash"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         effort="high",
     ),
 }
