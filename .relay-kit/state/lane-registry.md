@@ -20,6 +20,7 @@
 | primary | `.github/ISSUE_TEMPLATE/support.yml`, `docs/relay-kit-commercial-ownership.md`, `docs/relay-kit-support-sla.md`, GitHub release assets | external commercial proof | PR #43 merged, CI passed, and commercial dossier internal channel returned ready |
 | primary | `relay_kit_public_cli.py`, README/install docs, enterprise/readiness/upgrade docs, CLI/package tests, GitHub release assets | default enterprise install | PR #45 merged, CI passed, and refreshed `v3.4.0.dev0` wheel install generated enterprise bundle by default |
 | primary | `relay_kit_v3/registry/skills.py`, generated `skill-evolution` adapter skills, skill-evolution docs/tests | skill evolution utility | PR #47 merged and CI passed |
+| primary | `scripts/skill_gauntlet.py`, high-risk generated skills, registry tool profiles, skill-evolution docs/tests | skill permission profile gate | PR #49 merged and CI passed |
 | primary | `pyproject.toml`, `.relay-kit/version.json` | next-dev version bump | PR #3 merged and CI passed |
 | primary | `scripts/eval_workflows.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | workflow focus dashboard | PR #37 merged and CI passed |
 | primary | `relay_kit_v3/support_triage.py`, `relay_kit_v3/readiness.py`, `relay_kit_public_cli.py`, support docs/tests | support operations soak | PR #35 merged and CI passed |
