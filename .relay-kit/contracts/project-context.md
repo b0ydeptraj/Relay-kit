@@ -2,7 +2,7 @@
 
 > Path: `.relay-kit/contracts/project-context.md`
 > Purpose: Current source-of-truth context for Relay-kit work after the `v3.3.0` release and `3.4.0.dev0` next-dev bump.
-> Last refreshed: 2026-05-02
+> Last refreshed: 2026-05-03
 
 ## Existing architecture
 
@@ -34,6 +34,7 @@
 
 - Relay-kit is positioned as an agent workflow governance kit, not a CrewAI/n8n-style full agent runtime.
 - Commercial readiness is gated by `relay-kit readiness check . --profile enterprise --json`, `relay-kit release verify . --json`, `relay-kit support request . --json`, `relay-kit support triage . --json`, `relay-kit support soak . --json`, `relay-kit publish trail . --channel pypi --json`, `relay-kit publish plan . --channel pypi --json`, `relay-kit publish evidence . --channel pypi --json`, `relay-kit publish status . --json` when package upload evidence exists, and `relay-kit commercial dossier . --strict --json` when external CI/release/package/SLA/support owner proof exists.
+- Pulse can include the commercial dossier through `relay-kit pulse build . --commercial-dossier-file <path>`, and signal export emits `relay.commercial_dossier.ready` for dashboard or OTLP consumers.
 - Enterprise trust metadata is deterministic, not cryptographic. `relay-kit manifest verify . --trusted` is required before enterprise readiness claims.
 - Release/publication evidence must distinguish local readiness from external package upload, marketplace publication, and legal SLA commitments.
 
@@ -77,18 +78,20 @@
 - PR #36 merged post-support-soak state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/36, merge commit `a80a21298913aa8f0a4f58081ccf0b99be462222`.
 - PR #37 merged workflow focus dashboard polish: https://github.com/b0ydeptraj/Relay-kit/pull/37, merge commit `585029a04505e6200f4ae0eece2303271c4f8936`.
 - PR #39 merged commercial proof dossier: https://github.com/b0ydeptraj/Relay-kit/pull/39, merge commit `8a1f32ed6275f6363b405d523061e827091be89a`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25248046721, conclusion `success`.
+- PR #41 merged commercial dossier Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/41, merge commit `5dc9aaa3576a53d14cde18cebaa0891efe6ae69e`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25270978879, conclusion `success`.
 
 ## Known sharp edges
 
 - `v3.3.0` remains the published release tag, while `main` is now `3.4.0.dev0`. Do not publish or package from `main` as `3.3.0`.
 - `.relay-kit/manifest/bundles.json` and `.relay-kit/manifest/trust.json` are ignored generated artifacts. Regenerate and verify them locally when version, skill hashes, or trust metadata changes.
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
-- Pulse now includes `gate_summary`, per-gate `drilldown` rows, and `workflow_focus`; signal export emits `relay.gates.*`, `relay.workflow.weak_route_count`, and `relay.workflow.coverage_gap_count`; future dashboard/eval work should preserve those schema keys.
+- Pulse now includes `gate_summary`, per-gate `drilldown` rows, `workflow_focus`, and optional `commercial_dossier`; signal export emits `relay.gates.*`, `relay.workflow.weak_route_count`, `relay.workflow.coverage_gap_count`, and `relay.commercial_dossier.ready`; future dashboard/eval work should preserve those schema keys.
 - Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
 - Workflow eval also reports weak route candidates and registry coverage gaps under `quality.weak_routes` and `quality.coverage_gaps`.
 - Support operations now include `relay-kit support soak`, which validates P0/P1/P2 paid-support handoff fixtures and fails degraded support bundle diagnostics.
 - Commercial proof now includes `relay-kit commercial dossier`, which writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof are present.
+- Commercial dossier proof is visible in Pulse JSON/HTML and signal export when included from the generated dossier file.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
 ## Files or modules to mirror

@@ -16,6 +16,7 @@
 | Lane | Artifact | Previous scope | Released because |
 |---|---|---|---|
 | primary | `relay_kit_v3/commercial_dossier.py`, `relay_kit_public_cli.py`, `relay_kit_v3/release_lane.py`, readiness/support/publication docs/tests | commercial proof dossier | PR #39 merged and CI passed |
+| primary | `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, `relay_kit_public_cli.py`, Pulse/signal docs/tests | commercial dossier Pulse/signal visibility | PR #41 merged and CI passed |
 | primary | `pyproject.toml`, `.relay-kit/version.json` | next-dev version bump | PR #3 merged and CI passed |
 | primary | `scripts/eval_workflows.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/signal_export.py`, Pulse/signal docs/tests | workflow focus dashboard | PR #37 merged and CI passed |
 | primary | `relay_kit_v3/support_triage.py`, `relay_kit_v3/readiness.py`, `relay_kit_public_cli.py`, support docs/tests | support operations soak | PR #35 merged and CI passed |
