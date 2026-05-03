@@ -10,6 +10,7 @@
 - Active runtime package code lives under `relay_kit_v3/`. The historical v3 shim package remains only for compatibility and is not the active namespace.
 - Public CLI orchestration lives in `relay_kit_public_cli.py`; default runtime generation is the full enterprise bundle, while `--baseline` explicitly opts into the smaller install. Legacy generation compatibility remains in `relay_kit.py`, `relay_kit_legacy.py`, and `relay_kit_compat.py`.
 - Runtime skills are generated from registry data under `relay_kit_v3/registry/` and validated by `scripts/validate_runtime.py`, `scripts/runtime_doctor.py`, `scripts/migration_guard.py`, `scripts/skill_gauntlet.py`, `scripts/policy_guard.py`, and `scripts/eval_workflows.py`.
+- The discipline utility bundle includes `skill-evolution`, a Relay-kit-owned skill for creating, upgrading, reviewing, and pruning skills with path-scoped activation, fork context, allowed-tool stance, and semantic route proof.
 - Current released tag: `v3.3.0` at commit `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`, set in `pyproject.toml` and `.relay-kit/version.json`.
 
@@ -81,9 +82,10 @@
 - PR #41 merged commercial dossier Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/41, merge commit `5dc9aaa3576a53d14cde18cebaa0891efe6ae69e`.
 - PR #43 merged public support proof: https://github.com/b0ydeptraj/Relay-kit/pull/43, merge commit `7a2b0a7`.
 - PR #45 merged default enterprise install behavior: https://github.com/b0ydeptraj/Relay-kit/pull/45, merge commit `0712966bb510625579237c737a66cbcb0f5ae5f4`.
+- PR #47 merged skill evolution utility: https://github.com/b0ydeptraj/Relay-kit/pull/47, merge commit `12ed3e9799a1f4a526db6b4b0817cb946d7defc9`.
 - GitHub release `v3.4.0.dev0` pre-release published with wheel and sdist assets: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.4.0.dev0.
 - GitHub release `v3.4.0.dev0` package assets were refreshed after PR #45; a fresh venv install from the wheel URL proved `relay-kit . --codex` generates the enterprise bundle by default.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25273209967, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25276702012, conclusion `success`.
 
 ## Known sharp edges
 
@@ -98,6 +100,7 @@
 - Commercial dossier proof is visible in Pulse JSON/HTML and signal export when included from the generated dossier file.
 - Internal-channel commercial dossier is verified ready with GitHub release asset package URL, public support SLA, public issue intake, and owner `b0ydeptraj`.
 - Default package onboarding is now full by default: install the package, then run `relay-kit . --codex`; use `relay-kit . --codex --baseline` only for the smaller bundle.
+- Skill changes should use `skill-evolution` and include trigger/frontmatter/allowed-tool review plus semantic gauntlet or route proof before claiming behavior changed.
 - PyPI remains unpublished because no PyPI token is configured in this environment. Do not claim PyPI publication until `pip index versions relay-kit` finds the package or a PyPI project URL exists.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 
@@ -110,3 +113,4 @@
 - Support diagnostics, request intake, and triage logic: `relay_kit_v3/support_bundle.py`, `relay_kit_v3/support_request.py`, `relay_kit_v3/support_triage.py`
 - Signal and observability logic: `relay_kit_v3/signal_export.py`, `relay_kit_v3/pulse.py`, `relay_kit_v3/evidence_ledger.py`
 - Tests to mirror for new CLI slices: `tests/test_publication_plan.py`, `tests/test_commercial_dossier.py`, `tests/test_signal_export.py`, `tests/test_release_lane.py`, `tests/test_readiness_check.py`, `tests/test_public_cli_doctor.py`
+- Skill-system slices should mirror `tests/test_enterprise_bundle.py` and `tests/test_skill_gauntlet_semantic.py`.
