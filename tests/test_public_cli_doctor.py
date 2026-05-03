@@ -106,6 +106,29 @@ def test_public_cli_forwards_srs_policy_flags() -> None:
     assert relay_argv[relay_argv.index("--srs-scope") + 1] == "all"
 
 
+def test_public_cli_init_alias_defaults_to_enterprise_bundle(monkeypatch) -> None:
+    captured_argv: list[str] = []
+
+    def fake_main(invoked_as=None):  # noqa: ANN001
+        captured_argv.extend(sys.argv)
+        assert invoked_as == "relay-kit"
+        return 0
+
+    monkeypatch.setattr(relay_kit_public_cli.relay_core, "main", fake_main)
+
+    exit_code = relay_kit_public_cli.main(["init", "C:/tmp/project", "--codex"])
+
+    assert exit_code == 0
+    assert captured_argv[:6] == [
+        "relay-kit-core",
+        "C:/tmp/project",
+        "--ai",
+        "codex",
+        "--bundle",
+        "enterprise",
+    ]
+
+
 def test_public_cli_init_alias_generates_baseline_bundle(monkeypatch) -> None:
     captured_argv: list[str] = []
 

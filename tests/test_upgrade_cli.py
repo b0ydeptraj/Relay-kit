@@ -73,3 +73,4 @@ def test_public_cli_upgrade_check_and_mark_current(capsys, tmp_path: Path) -> No
     assert "Wrote" in output
     assert payload["status"] == "pass"
     assert payload["upgrade_status"] == "current"
+    assert payload["runtime"]["bundle"] == "enterprise"

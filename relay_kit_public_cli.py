@@ -2,7 +2,7 @@
 """Public Relay-kit installer CLI.
 
 This wrapper exposes a friendlier command surface:
-  relay-kit init <project_path> --codex|--claude|--antigravity --baseline
+  relay-kit init <project_path> --codex|--claude|--antigravity
   relay-kit <project_path> --codex|--claude|--antigravity
   relay-kit doctor <project_path>
   relay-kit eval run <project_path>
@@ -82,7 +82,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 def _parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="relay-kit",
-        description="Public Relay-kit installer for baseline runtime generation.",
+        description="Public Relay-kit installer for full runtime generation.",
     )
     parser.add_argument("project_path", nargs="?", default=".", help="Target project path")
 
@@ -97,13 +97,13 @@ def _parse_args(argv: list[str]) -> argparse.Namespace:
     adapter.add_argument("--all", action="store_true", help="Install all active runtime adapters")
     adapter.add_argument("--generic", action="store_true", help="Generate generic prompts output")
 
-    parser.add_argument("--bundle", default="baseline", help="Bundle name (default: baseline)")
+    parser.add_argument("--bundle", default="enterprise", help="Bundle name (default: enterprise)")
     parser.add_argument(
         "--baseline",
         dest="bundle",
         action="store_const",
         const="baseline",
-        help="Generate the baseline bundle (default)",
+        help="Generate the smaller baseline bundle instead of the default enterprise bundle",
     )
     parser.add_argument("--no-bundle", action="store_true", help="Skip v3 bundle generation")
 
@@ -309,7 +309,7 @@ def _parse_upgrade_args(argv: list[str]) -> argparse.Namespace:
 
     mark = subparsers.add_parser("mark-current", help="Write the current Relay-kit runtime version marker")
     mark.add_argument("project_path", nargs="?", default=".", help="Project root to update")
-    mark.add_argument("--bundle", default="baseline", help="Runtime bundle installed in the project")
+    mark.add_argument("--bundle", default="enterprise", help="Runtime bundle installed in the project (default: enterprise)")
     mark.add_argument(
         "--adapter",
         action="append",

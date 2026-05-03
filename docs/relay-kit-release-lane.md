@@ -36,7 +36,7 @@ Run this after readiness evidence exists:
 ```bash
 relay-kit manifest write /path/to/project
 relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
-relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
+relay-kit upgrade mark-current /path/to/project --adapter all
 relay-kit readiness check /path/to/project --profile enterprise
 relay-kit release verify /path/to/project --json
 relay-kit publish trail /path/to/project --channel pypi --json

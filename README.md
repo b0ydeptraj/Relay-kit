@@ -21,17 +21,18 @@ For users who just want to install Relay-kit and generate one runtime:
 
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
-relay-kit init "C:\\path\\to\\my-app" --codex --baseline
+relay-kit init "C:\\path\\to\\my-app" --codex
 relay-kit doctor "C:\\path\\to\\my-app"
 ```
 
 Use one adapter flag per run. Replace `--codex` with `--claude` or `--antigravity` when that is the target agent.
+The default install is the full enterprise governance bundle. Use `--baseline` only when you want the smaller first-install surface.
 
 For a local repo checkout:
 
 ```bash
 pipx install .
-relay-kit init /path/to/project --codex --baseline
+relay-kit init /path/to/project --codex
 relay-kit doctor /path/to/project
 ```
 
@@ -93,17 +94,17 @@ relay-kit --list-skills --show-legacy
 Generate all active adapters:
 
 ```bash
-relay-kit init /path/to/project --all --baseline
+relay-kit init /path/to/project --all
 ```
 
-Generate the enterprise governance bundle:
+Run the enterprise governance gates after the default full install:
 
 ```bash
-relay-kit init /path/to/project --all --bundle enterprise
+relay-kit init /path/to/project --all
 relay-kit manifest write /path/to/project
 relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
 relay-kit doctor /path/to/project --policy-pack enterprise
-relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
+relay-kit upgrade mark-current /path/to/project --adapter all
 relay-kit readiness check /path/to/project --profile enterprise
 ```
 

@@ -41,7 +41,7 @@ For an enterprise release candidate, run this sequence:
 ```bash
 relay-kit manifest write /path/to/project
 relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
-relay-kit upgrade mark-current /path/to/project --bundle enterprise --adapter all
+relay-kit upgrade mark-current /path/to/project --adapter all
 relay-kit readiness check /path/to/project --profile enterprise
 relay-kit publish plan /path/to/project --channel pypi --json
 relay-kit commercial dossier /path/to/project --channel pypi --strict --json

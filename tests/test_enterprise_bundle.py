@@ -67,8 +67,6 @@ def test_public_cli_generates_enterprise_bundle(tmp_path: Path) -> None:
             "init",
             str(tmp_path),
             "--codex",
-            "--bundle",
-            "enterprise",
         ],
         cwd=ROOT,
         text=True,
