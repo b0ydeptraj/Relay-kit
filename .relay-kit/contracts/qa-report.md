@@ -5,7 +5,7 @@
 > Used by: qa-governor, developer, test-hub, review-hub
 
 ## Scope checked
-Post-commercial-dossier state refresh after PR #39 merged into `main`.
+Post-commercial-dossier Pulse/signal state refresh after PR #41 merged into `main`.
 
 Changed surfaces:
 - `.relay-kit/contracts/project-context.md`
@@ -16,8 +16,8 @@ Changed surfaces:
 - `.relay-kit/state/handoff-log.md`
 
 ## Acceptance coverage
-- State artifacts reference PR #39 and latest main CI `25248046721`.
-- Project context records `relay-kit commercial dossier` as the final local/external commercial proof binder.
+- State artifacts reference PR #41 and latest main CI `25270978879`.
+- Project context records commercial dossier Pulse/signal visibility as the final repo-owned commercial proof surface.
 - Handoff log records the state refresh lane and expected return condition.
 - QA report records the feature evidence and the post-merge state-refresh evidence.
 
@@ -31,16 +31,20 @@ Changed surfaces:
 - Enterprise doctor and readiness gates that read current state, commercial docs, release docs, and support diagnostics.
 
 ## Evidence collected
-- PR #39 merged: https://github.com/b0ydeptraj/Relay-kit/pull/39.
-- Main CI after PR #39 passed: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25248046721.
-- Feature branch evidence before merge: `python -m pytest tests -q` passed with 165 tests.
+- PR #41 merged: https://github.com/b0ydeptraj/Relay-kit/pull/41.
+- Main CI after PR #41 passed: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25270978879.
+- Feature branch evidence before merge: `python -m pytest tests/test_pulse_report.py tests/test_signal_export.py -q` passed with 21 tests.
+- Feature branch evidence before merge: `python -m pytest tests -q` passed with 168 tests.
 - Feature branch evidence before merge: `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise` passed.
 - Feature branch evidence before merge: `python relay_kit_public_cli.py release verify . --json` passed.
 - Feature branch evidence before merge: `python relay_kit_public_cli.py readiness check . --profile enterprise --json` passed with verdict `commercial-ready-candidate`.
 - Feature branch evidence before merge: `python scripts/package_smoke.py .` passed.
+- Feature branch evidence before merge: `python scripts/runtime_doctor.py . --strict --state-mode live` passed with findings 0.
+- Feature branch evidence before merge: `python scripts/migration_guard.py . --strict` passed.
+- Feature branch evidence before merge: Pulse accepted a commercial dossier file and signal export emitted `relay.commercial_dossier.ready`.
 - State refresh evidence: `python scripts/runtime_doctor.py . --strict --state-mode live` passed with findings 0.
 - State refresh evidence: `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise` passed.
-- State refresh evidence: `python -m pytest tests/test_commercial_dossier.py tests/test_readiness_check.py tests/test_release_lane.py -q` passed with 17 tests.
+- State refresh evidence: `python -m pytest tests/test_pulse_report.py tests/test_signal_export.py tests/test_commercial_dossier.py -q` passed.
 
 ## Go / no-go recommendation
 Go for state-refresh PR after local runtime doctor, enterprise doctor, and focused state/docs checks pass.

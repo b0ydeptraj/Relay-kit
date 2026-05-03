@@ -72,10 +72,10 @@ Current verdict:
 - Working score: 6.2/10.
 - Target product position after fixes: agent workflow governance kit for teams using Codex, Claude, Cursor/Roo/OpenCode-style agents, not a full replacement for CrewAI or n8n.
 
-Progress snapshot, updated 2026-05-02:
+Progress snapshot, updated 2026-05-03:
 - Repo-executable repair backlog: 100% for the original P0/P1/P2/P3 audit items, 7-day quick wins, and Skill and Rule Gap Matrix first production slices.
-- Commercial hardening roadmap: 100% for repo-owned proof tooling. Remaining work is external legal/SLA/package-index operation and optional dashboard/eval polish.
-- Overall tracked progress in this file: 99%. This percentage excludes star/community/popularity and external customer commitments.
+- Commercial hardening roadmap: 100% for repo-owned proof tooling and visibility surfaces. Remaining work is external legal/SLA/package-index operation plus optional polish that is no longer a blocker.
+- Overall tracked progress in this file: 100% for repo-owned backlog. This percentage excludes star/community/popularity and external customer commitments.
 
 ## Priority Backlog
 

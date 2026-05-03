@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #39 so source-of-truth artifacts match the merged commercial dossier lane.
+Refresh live workflow state after PR #41 so source-of-truth artifacts match the merged commercial dossier Pulse/signal lane.
 
 ## Active lane
 - Lane id: primary
@@ -19,7 +19,7 @@ Refresh live workflow state after PR #39 so source-of-truth artifacts match the 
 
 ## Active standalone/domain skill
 - Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the commercial proof dossier feature merged.
+- Why selected: this is a bounded state/context hygiene update after the commercial dossier Pulse/signal feature merged.
 
 ## Complexity level
 - Level: L1
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25248046721, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25270978879, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -110,10 +110,12 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #36 merged post-support-soak state refresh: https://github.com/b0ydeptraj/Relay-kit/pull/36.
 - PR #37 merged workflow focus dashboard polish: https://github.com/b0ydeptraj/Relay-kit/pull/37.
 - PR #39 merged commercial proof dossier: https://github.com/b0ydeptraj/Relay-kit/pull/39.
-- Current main baseline: `8a1f32ed6275f6363b405d523061e827091be89a`.
+- PR #41 merged commercial dossier Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/41.
+- Current main baseline: `5dc9aaa3576a53d14cde18cebaa0891efe6ae69e`.
 - Workflow focus branch verification: `python -m pytest tests/test_workflow_eval.py tests/test_pulse_report.py tests/test_signal_export.py -q`, `python scripts\eval_workflows.py . --strict --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise` passed locally.
 - Support operations soak branch verification: `python -m pytest tests/test_support_triage.py -q`, `python -m pytest tests/test_support_request.py tests/test_support_bundle.py tests/test_support_triage.py -q`, `python -m pytest tests/test_readiness_check.py tests/test_support_triage.py tests/test_support_bundle.py -q`, `python relay_kit_public_cli.py support bundle . --policy-pack enterprise`, `python relay_kit_public_cli.py support request . --severity P1 ... --strict`, `python relay_kit_public_cli.py support triage . --strict`, `python relay_kit_public_cli.py support soak . --strict`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py readiness check . --profile enterprise`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed locally.
 - Commercial dossier branch verification: `python -m pytest tests/test_commercial_dossier.py tests/test_readiness_check.py tests/test_release_lane.py tests/test_publication_plan.py tests/test_support_bundle.py -q`, `python -m pytest tests -q` with 165 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python relay_kit_public_cli.py release verify . --json`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, `python scripts/package_smoke.py .`, and `python relay_kit_public_cli.py commercial dossier . --channel pypi ... --skip-readiness-tests --strict --json` returned `hold` for missing final publication-status proof as intended.
+- Commercial dossier Pulse/signal branch verification: `python -m pytest tests/test_pulse_report.py tests/test_signal_export.py -q` passed with 21 tests, `python -m pytest tests -q` passed with 168 tests, `python relay_kit_public_cli.py readiness check . --profile enterprise --json` returned `commercial-ready-candidate`, `python scripts/package_smoke.py .` passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise` passed, `python scripts/runtime_doctor.py . --strict --state-mode live` passed with findings 0, `python relay_kit_public_cli.py release verify . --json` passed, `python scripts/migration_guard.py . --strict` passed, Pulse reported commercial dossier `attention` for an intentionally held smoke dossier, and signal export emitted `relay.commercial_dossier.ready`.
 
 ## Recommended next lane
-Continue external publication/legal/SLA operation or optional dashboard/eval polish now that commercial proof dossier tooling is merged and CI is green.
+Continue external publication/legal/SLA operation or optional dashboard/eval polish now that commercial dossier tooling and Pulse/signal visibility are merged and CI is green.
