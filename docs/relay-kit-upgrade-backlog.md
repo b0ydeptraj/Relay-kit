@@ -68,6 +68,7 @@ Source audit status:
 - Fixed in default enterprise install pass: `relay-kit . --codex` now installs the full enterprise bundle by default, `--baseline` is the explicit smaller path, and the refreshed `v3.4.0.dev0` wheel proves the package URL has this behavior.
 - Fixed in Claude reports skill-evolution pass: `skill-evolution` now captures path-scoped skill activation, forked context, allowed-tool profiles, trigger audits, and scenario proof as a Relay-kit-owned discipline utility.
 - Fixed in skill permission profile pass: semantic skill gauntlet now strict-fails high-risk skills that lack `allowed-tools` frontmatter or drift from registry tool profiles.
+- Fixed in risk-sensitive skill profile expansion pass: API, data, dependency, media, browser, and multimodal support skills now carry machine-checked tool profiles across registry and generated adapters.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:

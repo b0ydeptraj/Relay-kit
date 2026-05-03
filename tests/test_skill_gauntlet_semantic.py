@@ -91,6 +91,25 @@ def test_high_risk_skills_have_registry_tool_profiles() -> None:
     assert missing == []
 
 
+def test_risk_sensitive_skill_profiles_cover_browser_media_api_dependency() -> None:
+    expected = {
+        "api-integration",
+        "browser-inspector",
+        "data-persistence",
+        "dependency-management",
+        "media-tooling",
+        "multimodal-evidence",
+    }
+
+    assert expected.issubset(REQUIRED_TOOL_PROFILE_SKILLS)
+    assert ALL_V3_SKILLS["api-integration"].allowed_tools == ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+    assert ALL_V3_SKILLS["data-persistence"].allowed_tools == ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+    assert ALL_V3_SKILLS["dependency-management"].allowed_tools == ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+    assert ALL_V3_SKILLS["media-tooling"].allowed_tools == ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+    assert ALL_V3_SKILLS["browser-inspector"].allowed_tools == ["Read", "Grep", "Glob", "Bash"]
+    assert ALL_V3_SKILLS["multimodal-evidence"].allowed_tools == ["Read", "Grep", "Glob", "Bash"]
+
+
 def test_semantic_skill_gauntlet_flags_bad_scenario_route(tmp_path: Path) -> None:
     fixture_dir = tmp_path / "tests" / "fixtures" / "skill_gauntlet"
     fixture_dir.mkdir(parents=True)

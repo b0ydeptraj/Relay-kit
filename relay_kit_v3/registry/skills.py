@@ -799,6 +799,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
             "Make transitive risk and pinning policy explicit.",
         ],
         next_steps=["architect", "developer", "qa-governor", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
             # Mission
@@ -833,6 +834,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
             "Make retries, timeouts, idempotency, and error translation explicit.",
         ],
         next_steps=["architect", "developer", "qa-governor", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
             # Mission
@@ -867,6 +869,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
             "Document rollback and migration risks, not only happy-path structure.",
         ],
         next_steps=["architect", "developer", "qa-governor", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
             # Mission
@@ -1093,6 +1096,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Output must list visible observations, confidence, affected acceptance criteria, and follow-up checks.",
             "Reference any helper used, such as `templates/skills/multimodal-evidence/scripts/document_converter.py` or `media_optimizer.py`.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
         tasks=["Inspect screenshots, diagrams, or logs embedded as images.", "Summarize what changed between before/after artifacts.", "Call out ambiguous areas that need manual confirmation."],
         rules=["Do not over-interpret weak signals.", "Tie observations to UI states, logs, or acceptance criteria.", "Keep the output compact and actionable."],
     ),
@@ -1113,6 +1117,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Output must include observed console/network/DOM/performance facts, reproduction confidence, and captured artifacts.",
             "Reference the helper used when available, such as `templates/skills/browser-inspector/scripts/console.js`, `network.js`, `snapshot.js`, or `performance.js`.",
         ],
+        allowed_tools=READ_ANALYZE_TOOLS,
         tasks=["Inspect console, network, layout, and performance clues.", "Note the exact page state and reproduction path.", "Return the evidence to the owning hub."],
         rules=["Prefer reproducible steps and specific requests over general browsing notes.", "Link evidence to the failing acceptance criterion or symptom.", "Do not claim the fix; supply the evidence."],
     ),
@@ -1461,6 +1466,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=["Useful for evidence packaging and asset-heavy workflows.", "Should stay stateless and task-scoped."],
         next_steps=["test-hub", "review-hub", "ux-structure"],
         mission="Handle media-specific steps that support the current lane without creating a parallel project.",
+        allowed_tools=EDIT_AND_TEST_TOOLS,
         tasks=["Prepare screenshots or assets for evidence.", "Describe required transforms or formats.", "Hand back what the next skill needs to continue."],
         rules=["Keep transformations reversible when possible.", "Name exact asset sources and outputs.", "Route any broader UX or product decisions back to the owning hub."],
     ),
