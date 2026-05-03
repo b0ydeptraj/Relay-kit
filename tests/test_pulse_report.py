@@ -110,6 +110,31 @@ def sample_support_request(*, status: str = "ready") -> dict[str, object]:
     }
 
 
+def sample_commercial_dossier(*, status: str = "ready") -> dict[str, object]:
+    findings = [] if status == "ready" else [{"gate": "publication-status", "status": "hold", "summary": "publication trail status=hold"}]
+    return {
+        "schema_version": "relay-kit.commercial-dossier.v1",
+        "status": status,
+        "channel": "pypi",
+        "external_proof": {
+            "ci_url": "https://github.com/b0ydeptraj/Relay-kit/actions/runs/1",
+            "release_url": "https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0",
+            "package_url": "https://pypi.org/project/relay-kit/3.3.0/",
+            "sla_url": "https://example.com/sla",
+            "support_url": "https://example.com/support",
+            "legal_owner": "ops@example.com",
+            "support_owner": "support@example.com",
+        },
+        "findings": findings,
+        "checks": [
+            {"id": "readiness", "status": "pass"},
+            {"id": "publication-status", "status": "pass" if status == "ready" else "hold", "summary": "publication trail status=hold"},
+            {"id": "support-triage", "status": "pass"},
+            {"id": "support-soak", "status": "pass"},
+        ],
+    }
+
+
 def test_pulse_report_summarizes_eval_readiness_and_evidence(tmp_path: Path) -> None:
     append_event(tmp_path, {"command": "doctor", "gate": "policy guard", "status": "pass"})
     append_event(tmp_path, {"command": "doctor", "gate": "workflow eval", "status": "fail"})
@@ -158,6 +183,20 @@ def test_pulse_report_includes_support_request_when_requested(tmp_path: Path) ->
     assert report["status"] == "pass"
 
 
+def test_pulse_report_includes_commercial_dossier_when_requested(tmp_path: Path) -> None:
+    report = pulse.build_pulse_report(
+        tmp_path,
+        workflow_eval_builder=lambda root: sample_eval_report(),
+        commercial_dossier_builder=lambda root: sample_commercial_dossier(status="ready"),
+        include_commercial_dossier=True,
+    )
+
+    assert report["commercial_dossier"]["schema_version"] == "relay-kit.commercial-dossier.v1"
+    assert report["commercial_dossier"]["status"] == "ready"
+    assert report["gate_summary"]["gates"][4]["id"] == "commercial-dossier"
+    assert report["status"] == "pass"
+
+
 def test_pulse_report_marks_support_request_hold_as_attention(tmp_path: Path) -> None:
     report = pulse.build_pulse_report(
         tmp_path,
@@ -182,6 +221,21 @@ def test_pulse_report_marks_publication_hold_as_attention(tmp_path: Path) -> Non
     assert report["publication"]["findings"][0]["gate"] == "distribution-artifacts"
 
 
+def test_pulse_report_marks_commercial_dossier_hold_as_attention(tmp_path: Path) -> None:
+    report = pulse.build_pulse_report(
+        tmp_path,
+        workflow_eval_builder=lambda root: sample_eval_report(),
+        commercial_dossier_builder=lambda root: sample_commercial_dossier(status="hold"),
+        include_commercial_dossier=True,
+    )
+
+    assert report["status"] == "attention"
+    assert report["commercial_dossier"]["findings"][0]["gate"] == "publication-status"
+    gate = next(item for item in report["gate_summary"]["gates"] if item["id"] == "commercial-dossier")
+    assert gate["status"] == "attention"
+    assert gate["drilldown"][0]["id"] == "publication-status"
+
+
 def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     report = pulse.build_pulse_report(
         tmp_path,
@@ -202,6 +256,7 @@ def test_pulse_report_writes_json_and_html(tmp_path: Path) -> None:
     assert "developer-implementation-ready" in html
     assert "Publication readiness" in html
     assert "Support request" in html
+    assert "Commercial dossier" in html
     assert "Trend" in html
 
 
@@ -270,11 +325,12 @@ def test_pulse_report_includes_gate_summary_and_next_actions(tmp_path: Path) -> 
     gate_statuses = {gate["id"]: gate["status"] for gate in summary["gates"]}
     next_action_gates = {action["gate"] for action in summary["next_actions"]}
 
-    assert summary["status_counts"] == {"pass": 1, "attention": 4, "hold": 0, "not-run": 0}
+    assert summary["status_counts"] == {"pass": 1, "attention": 4, "hold": 0, "not-run": 1}
     assert gate_statuses["workflow-eval"] == "pass"
     assert gate_statuses["readiness"] == "attention"
     assert gate_statuses["publication"] == "attention"
     assert gate_statuses["support-request"] == "attention"
+    assert gate_statuses["commercial-dossier"] == "not-run"
     assert gate_statuses["evidence"] == "attention"
     assert {"readiness", "publication", "support-request", "evidence"} <= next_action_gates
 
@@ -390,3 +446,24 @@ def test_public_cli_pulse_build_accepts_support_request_file(tmp_path: Path, cap
 
     assert exit_code == 0
     assert payload["report"]["support_request"]["status"] == "ready"
+
+
+def test_public_cli_pulse_build_accepts_commercial_dossier_file(tmp_path: Path, capsys) -> None:
+    dossier_file = tmp_path / "commercial-dossier.json"
+    dossier_file.write_text(json.dumps(sample_commercial_dossier(status="ready")), encoding="utf-8")
+
+    exit_code = relay_kit_public_cli.main(
+        [
+            "pulse",
+            "build",
+            str(tmp_path),
+            "--commercial-dossier-file",
+            str(dossier_file),
+            "--json",
+            "--no-history",
+        ]
+    )
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["report"]["commercial_dossier"]["status"] == "ready"

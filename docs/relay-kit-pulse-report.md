@@ -14,6 +14,8 @@ relay-kit pulse build /path/to/project --include-publication
 relay-kit pulse build /path/to/project --publication-file publication-plan.json
 relay-kit pulse build /path/to/project --include-support-request
 relay-kit pulse build /path/to/project --support-request-file .relay-kit/support/support-request.json
+relay-kit pulse build /path/to/project --include-commercial-dossier
+relay-kit pulse build /path/to/project --commercial-dossier-file .relay-kit/commercial/commercial-dossier.json
 relay-kit pulse build /path/to/project --history-limit 50
 relay-kit pulse build /path/to/project --no-history
 ```
@@ -35,14 +37,15 @@ Pulse combines:
 - readiness status and verdict when `--include-readiness` or `--readiness-file` is used
 - publication plan status, channel, version, and finding count when `--include-publication` or `--publication-file` is used
 - support request status, severity, diagnostic count, and finding count when `--include-support-request` or `--support-request-file` is used
-- gate summary status for workflow eval, readiness, publication, support request, and evidence ledger
+- commercial dossier status, channel, external proof field count, and finding count when `--include-commercial-dossier` or `--commercial-dossier-file` is used
+- gate summary status for workflow eval, readiness, publication, support request, commercial dossier, and evidence ledger
 - evidence ledger event counts, gate counts, and recent events
 - Pulse history snapshots from previous report builds
 
 ## Status
 
 - `pass`: workflow eval passed, readiness passed when included, and no recent failed evidence events are present
-- `attention`: core quality gates passed, but recent evidence contains failed events, included readiness is only `limited-beta`, included publication plan is not `ready`, or included support request is not `ready`
+- `attention`: core quality gates passed, but recent evidence contains failed events, included readiness is only `limited-beta`, included publication plan is not `ready`, included support request is not `ready`, or included commercial dossier is not `ready`
 - `hold`: workflow eval or readiness is failing
 
 `pulse_score` is a local summary score built from pass rate, evidence coverage, readiness status, and recent evidence failures. Treat it as a triage signal, not a release attestation.
@@ -52,7 +55,7 @@ Pulse combines:
 The JSON report includes `gate_summary`:
 
 - `status_counts`: count of gates in `pass`, `attention`, `hold`, and `not-run`
-- `gates`: per-gate status and short summary for workflow eval, readiness, publication, support request, and evidence
+- `gates`: per-gate status and short summary for workflow eval, readiness, publication, support request, commercial dossier, and evidence
 - `gates[].drilldown`: degraded scenarios, gates, findings, diagnostics, or recent failed evidence events for that gate
 - `drilldown_item_count`: total number of drilldown rows across the gate summary
 - `next_actions`: concrete follow-up items for `attention` or `hold` gates
@@ -100,7 +103,8 @@ relay-kit eval run /path/to/project --strict --json --output-file workflow-eval.
 relay-kit readiness check /path/to/project --profile enterprise --json > readiness.json
 relay-kit publish plan /path/to/project --channel pypi --json > publication-plan.json
 relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json > support-request.json
-relay-kit pulse build /path/to/project --workflow-eval-file workflow-eval.json --readiness-file readiness.json --publication-file publication-plan.json --support-request-file support-request.json
+relay-kit commercial dossier /path/to/project --channel pypi --strict --json > commercial-dossier.json
+relay-kit pulse build /path/to/project --workflow-eval-file workflow-eval.json --readiness-file readiness.json --publication-file publication-plan.json --support-request-file support-request.json --commercial-dossier-file commercial-dossier.json
 ```
 
 Use the HTML file for human review and the JSON file for support bundles or future dashboards.
@@ -114,5 +118,5 @@ relay-kit signal export /path/to/project
 Signal export includes `relay.gates.pass`, `relay.gates.attention`,
 `relay.gates.hold`, `relay.gates.not_run`, `relay.gates.drilldown_items`,
 `relay.workflow.weak_route_count`, `relay.workflow.coverage_gap_count`,
-`relay.publication.ready`, and `relay.support_request.ready` when a Pulse report
-contains those surfaces.
+`relay.publication.ready`, `relay.support_request.ready`, and
+`relay.commercial_dossier.ready` when a Pulse report contains those surfaces.
