@@ -68,9 +68,15 @@ OPTIONAL_ALIAS_CONTRACTS = {
 }
 REQUIRED_TOOL_PROFILE_SKILLS = {
     "accessibility-review",
+    "api-integration",
+    "browser-inspector",
+    "data-persistence",
+    "dependency-management",
     "developer",
     "execution-loop",
+    "media-tooling",
     "migration-guard",
+    "multimodal-evidence",
     "policy-guard",
     "release-readiness",
     "root-cause-debugging",
@@ -325,7 +331,7 @@ def collect_tool_profile_findings(
                 Finding(
                     rel_path,
                     "missing-tool-profile",
-                    "High-risk skill must declare allowed-tools frontmatter",
+                    "Profiled risk-sensitive skill must declare allowed-tools frontmatter",
                 )
             )
         if raw_profile and not actual_profile:
@@ -361,7 +367,7 @@ def collect_tool_profile_findings(
                 Finding(
                     f"registry:{skill_name}",
                     "missing-registry-tool-profile",
-                    "High-risk skill registry spec must define allowed_tools",
+                    "Profiled risk-sensitive skill registry spec must define allowed_tools",
                 )
             )
         elif skill_name not in seen_skill_names:
@@ -369,7 +375,7 @@ def collect_tool_profile_findings(
                 Finding(
                     f"registry:{skill_name}",
                     "missing-tool-profile-surface",
-                    "High-risk skill was not present in generated runtime surfaces",
+                    "Profiled risk-sensitive skill was not present in generated runtime surfaces",
                 )
             )
 

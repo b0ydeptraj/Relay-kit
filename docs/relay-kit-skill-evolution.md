@@ -64,3 +64,20 @@ Initial high-risk profile set:
 - read/analyze gate profile: `accessibility-review`, `release-readiness`, `skill-gauntlet`, `runtime-doctor`, `migration-guard`, `policy-guard`, `root-cause-debugging`
 
 This is not OS-level sandboxing. It is a machine-checked skill contract that prevents permission stance from silently disappearing during registry or generated-skill changes.
+
+## Risk-Sensitive Profile Expansion Slice
+
+The third adoption slice extends machine-checked tool profiles beyond the initial implementation and gate skills.
+
+New profiled skills:
+
+- edit/test profile: `api-integration`, `data-persistence`, `dependency-management`, `media-tooling`
+- read/analyze profile: `browser-inspector`, `multimodal-evidence`
+
+Why these are included:
+
+- API, data, and dependency support skills often touch production-facing code, configuration, secrets, migrations, or lockfiles.
+- Media tooling can write transformed evidence or asset files and needs an explicit edit/test stance.
+- Browser and multimodal evidence utilities should stay analysis-scoped unless the owning hub routes to an implementation skill.
+
+`skill_gauntlet --semantic --strict` now treats these as profiled risk-sensitive skills and fails if registry metadata, generated frontmatter, or adapter surfaces drift.
