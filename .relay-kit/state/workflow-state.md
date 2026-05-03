@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #45 and the `v3.4.0.dev0` release-asset refresh so source-of-truth artifacts match the new default full-install CLI behavior.
+Refresh live workflow state after PR #47 so source-of-truth artifacts reflect the new `skill-evolution` discipline utility.
 
 ## Active lane
 - Lane id: primary
@@ -19,7 +19,7 @@ Refresh live workflow state after PR #45 and the `v3.4.0.dev0` release-asset ref
 
 ## Active standalone/domain skill
 - Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after the public CLI default changed from baseline to enterprise and GitHub prerelease assets were refreshed.
+- Why selected: this is a bounded state/context hygiene update after `skill-evolution` merged and main CI passed.
 
 ## Complexity level
 - Level: L1
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25273209967, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25276702012, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -113,7 +113,8 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #41 merged commercial dossier Pulse/signal visibility: https://github.com/b0ydeptraj/Relay-kit/pull/41.
 - PR #43 merged public support proof: https://github.com/b0ydeptraj/Relay-kit/pull/43.
 - PR #45 merged default enterprise install behavior: https://github.com/b0ydeptraj/Relay-kit/pull/45.
-- Current main baseline: `0712966bb510625579237c737a66cbcb0f5ae5f4`.
+- PR #47 merged skill evolution utility: https://github.com/b0ydeptraj/Relay-kit/pull/47.
+- Current main baseline: `12ed3e9799a1f4a526db6b4b0817cb946d7defc9`.
 - Workflow focus branch verification: `python -m pytest tests/test_workflow_eval.py tests/test_pulse_report.py tests/test_signal_export.py -q`, `python scripts\eval_workflows.py . --strict --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise` passed locally.
 - Support operations soak branch verification: `python -m pytest tests/test_support_triage.py -q`, `python -m pytest tests/test_support_request.py tests/test_support_bundle.py tests/test_support_triage.py -q`, `python -m pytest tests/test_readiness_check.py tests/test_support_triage.py tests/test_support_bundle.py -q`, `python relay_kit_public_cli.py support bundle . --policy-pack enterprise`, `python relay_kit_public_cli.py support request . --severity P1 ... --strict`, `python relay_kit_public_cli.py support triage . --strict`, `python relay_kit_public_cli.py support soak . --strict`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py readiness check . --profile enterprise`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed locally.
 - Commercial dossier branch verification: `python -m pytest tests/test_commercial_dossier.py tests/test_readiness_check.py tests/test_release_lane.py tests/test_publication_plan.py tests/test_support_bundle.py -q`, `python -m pytest tests -q` with 165 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python relay_kit_public_cli.py release verify . --json`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, `python scripts/package_smoke.py .`, and `python relay_kit_public_cli.py commercial dossier . --channel pypi ... --skip-readiness-tests --strict --json` returned `hold` for missing final publication-status proof as intended.
@@ -121,6 +122,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - External proof verification: `gh release view v3.3.0 --json assets` shows wheel and sdist assets; `gh release view v3.4.0.dev0 --json assets,isPrerelease` shows prerelease wheel and sdist assets; installing `https://github.com/b0ydeptraj/Relay-kit/releases/download/v3.4.0.dev0/relay_kit-3.4.0.dev0-py3-none-any.whl` into a fresh venv succeeded and `relay-kit --help` ran.
 - Commercial dossier strict verification: `python relay_kit_public_cli.py commercial dossier . --channel internal --ci-url https://github.com/b0ydeptraj/Relay-kit/actions/runs/25272387874 --release-url https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.4.0.dev0 --package-url https://github.com/b0ydeptraj/Relay-kit/releases/download/v3.4.0.dev0/relay_kit-3.4.0.dev0-py3-none-any.whl --sla-url https://github.com/b0ydeptraj/Relay-kit/blob/main/docs/relay-kit-support-sla.md --support-url https://github.com/b0ydeptraj/Relay-kit/issues/new?template=support.yml --legal-owner b0ydeptraj --support-owner b0ydeptraj --strict --json` returned `status: ready`.
 - Default enterprise install verification: PR #45 changed `relay-kit . --codex` to generate the full enterprise bundle by default while `--baseline` remains the smaller explicit path; refreshed `v3.4.0.dev0` wheel install from GitHub release URL generated 87 v3 files including `.codex/skills/test-first-development/SKILL.md` and `.relay-kit/docs/enterprise-bundle.md`.
+- Skill evolution verification: PR #47 added `skill-evolution` to the discipline utility bundle, generated Codex/Claude/Agent adapter skills, documented the local Claude report adoption slice, passed `python -m pytest tests -q` with 171 tests, enterprise doctor, runtime doctor live, semantic gauntlet, readiness enterprise, PR CI, and main CI.
 
 ## Recommended next lane
-Continue PyPI publication only after PyPI credentials are available. Internal/GitHub release channel commercial proof is ready, and the package happy path is now `pip install <package>` followed by `relay-kit . --codex`.
+Next useful feature lane: continue skill-system hardening by adding more semantic fixtures or a permission/profile audit for high-risk skills. Continue PyPI publication only after PyPI credentials are available.
