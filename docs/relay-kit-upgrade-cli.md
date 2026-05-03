@@ -50,7 +50,7 @@ For an existing project:
 
 ```bash
 relay-kit upgrade plan /path/to/project
-relay-kit init /path/to/project --all --baseline
+relay-kit init /path/to/project --all
 relay-kit manifest write /path/to/project
 relay-kit doctor /path/to/project
 relay-kit upgrade mark-current /path/to/project --bundle baseline --adapter all

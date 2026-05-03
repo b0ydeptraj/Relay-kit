@@ -342,7 +342,8 @@ Status:
 - Fixed on 2026-04-24.
 - Done: `relay-kit doctor <project>` exists and README shows it in the install path.
 - Done: default `--list-skills` hides preserved legacy kits.
-- Done: `relay-kit init <project> --codex --baseline` is supported as the first-run happy path.
+- Done: `relay-kit init <project> --codex` is supported as the first-run full governance happy path.
+- Done: `--baseline` remains available for a smaller first-install surface.
 - Verification: `python -m pytest tests/test_public_cli_doctor.py -q` covers the `init` alias and doctor command mapping.
 
 Problem:
@@ -355,7 +356,7 @@ Evidence:
 
 Fix:
 - Add one preferred happy path:
-  - `relay-kit init --codex --baseline`
+  - `relay-kit init --codex`
   - `relay-kit doctor`
   - `relay-kit route "..."` or equivalent first value command
 - Hide legacy kits from default `--list-skills`; show them only with `--legacy`.
@@ -456,22 +457,22 @@ Acceptance criteria:
 
 Status:
 - Fixed on 2026-04-24 for the first enterprise packaging slice.
-- Done: `relay-kit init <project> --bundle enterprise` installs baseline plus the full discipline utility set, including `test-first-development`.
+- Done: `relay-kit init <project> --codex` now installs the default enterprise bundle, including `test-first-development`, without requiring `--bundle enterprise`.
 - Done: enterprise generation emits baseline contracts, all support references, round4 docs, discipline docs, and `.relay-kit/docs/enterprise-bundle.md`.
 - Done: bundle manifest includes `enterprise` and verifies hashes.
 - Verification: `python -m pytest tests/test_enterprise_bundle.py -q` passes.
 
 Problem:
-- Paid/team users need a named governance profile that is stricter than baseline without changing onboarding defaults.
+- Paid/team users need full governance by default, while baseline remains an explicit lightweight option.
 
 Fix:
 - Add `enterprise` to `BUNDLES`.
 - Add enterprise bundle contract/doc/reference gating.
 - Document install and operating sequence:
-  - `relay-kit init --bundle enterprise`
+  - `relay-kit init --codex`
   - `relay-kit doctor`
   - `relay-kit manifest write`
-  - `relay-kit upgrade mark-current --bundle enterprise`
+  - `relay-kit upgrade mark-current`
 
 Acceptance criteria:
 - Enterprise bundle appears in `--list-skills`.
