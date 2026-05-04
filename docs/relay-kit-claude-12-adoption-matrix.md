@@ -41,6 +41,7 @@ Already implemented:
 - Semantic skill gauntlet checks for profile drift and skill routing scenarios.
 - Risk-sensitive support skill profiles for API, data, dependency, media, browser, and multimodal evidence utilities.
 - Bundled workflow scenarios covering all profiled support skills, including browser, media, and multimodal evidence routes.
+- Workflow eval support-route review for duplicate/noisy nearby support-skill triggers.
 
 Latest verified implementation evidence:
 
@@ -80,12 +81,13 @@ Already done:
 - semantic route to `skill-evolution`
 - generated `allowed-tools`
 - risk-sensitive support profiles
+- support-route noise review in workflow eval
 
 Next:
 
 - Done: add semantic fixtures proving API/data/dependency/media/browser/multimodal prompts route to the right skill.
+- Done: add duplicate/noisy-trigger detection across nearby support skills.
 - Add evidence-contract checks for these fixtures, not only predicted-skill checks.
-- Add duplicate/noisy-trigger detection across nearby support skills.
 
 Candidate files:
 
@@ -202,16 +204,13 @@ These ideas are deliberately not adopted as-is:
 
 Recommended next slice:
 
-Add duplicate/noisy-trigger detection and route-margin review for nearby support skills.
+Add evidence-contract checks for profiled support-skill scenarios, not only predicted-skill checks.
 
 Acceptance criteria:
 
-- API client/webhook prompt routes to `api-integration`.
-- schema/migration/cache prompt routes to `data-persistence`.
-- package/lockfile/toolchain prompt routes to `dependency-management`.
-- static screenshot/media artifact prompt routes to `multimodal-evidence`.
-- evidence asset transformation prompt routes to `media-tooling`.
-- live DOM/console/network prompt routes to `browser-inspector`.
+- API/data/dependency/media/browser/multimodal support scenarios require contract terms that prove handoff, evidence, and allowed-tool stance.
+- `workflow eval` reports missing evidence terms for any profiled support skill.
+- `support_route_review` remains clean for nearby support-skill collisions.
 - `skill_gauntlet --semantic --strict` passes.
 - `python -m pytest tests/test_skill_gauntlet_semantic.py tests/test_enterprise_bundle.py -q` passes.
 - `python relay_kit_public_cli.py readiness check . --profile enterprise --json` remains `commercial-ready-candidate`.

@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 import relay_kit_public_cli
+from scripts.eval_workflows import SUPPORT_ROUTE_MARGIN_THRESHOLD, support_route_review
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +43,11 @@ def test_workflow_eval_reports_pass_rate_and_top_routes() -> None:
     assert payload["quality"]["weak_route_threshold"] == 3
     assert payload["quality"]["weak_route_count"] >= 1
     assert payload["quality"]["weak_routes"][0]["route_margin"] <= 3
+    support_review = payload["quality"]["support_route_review"]
+    assert support_review["support_route_margin_threshold"] == SUPPORT_ROUTE_MARGIN_THRESHOLD
+    assert support_review["missing_profiled_support_skills"] == []
+    assert support_review["nearby_support_route_count"] == 0
+    assert support_review["weak_profiled_support_route_count"] == 0
     assert payload["quality"]["coverage_gaps"]["missing_layers"] == []
     assert payload["quality"]["coverage_gaps"]["covered_skill_count"] == len(payload["quality"]["unique_expected_skills"])
     assert payload["results"][0]["top_routes"][0]["skill"] == payload["results"][0]["expected_skill"]
@@ -84,6 +90,54 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
         "runtime-doctor",
     }:
         assert skill in expected_skills
+
+    support_review = payload["quality"]["support_route_review"]
+    assert set(support_review["profiled_support_skills"]).issubset(expected_skills)
+    assert set(support_review["covered_profiled_support_skills"]) == set(support_review["profiled_support_skills"])
+    assert support_review["missing_profiled_support_skills"] == []
+
+
+def test_support_route_review_detects_nearby_profiled_support_noise() -> None:
+    review = support_route_review(
+        [
+            {
+                "id": "media-static-proof",
+                "expected_skill": "media-tooling",
+                "predicted_skill": "media-tooling",
+                "route_margin": 1,
+                "route_confidence": 0.5128,
+                "top_routes": [
+                    {"skill": "media-tooling", "score": 20},
+                    {"skill": "multimodal-evidence", "score": 19},
+                    {"skill": "browser-inspector", "score": 4},
+                ],
+            },
+            {
+                "id": "external-api-client",
+                "expected_skill": "api-integration",
+                "predicted_skill": "api-integration",
+                "route_margin": 12,
+                "route_confidence": 0.8,
+                "top_routes": [
+                    {"skill": "api-integration", "score": 18},
+                    {"skill": "dependency-management", "score": 6},
+                ],
+            },
+        ]
+    )
+
+    assert review["missing_profiled_support_skills"] == [
+        "browser-inspector",
+        "data-persistence",
+        "dependency-management",
+        "multimodal-evidence",
+    ]
+    assert review["weak_profiled_support_route_count"] == 1
+    assert review["nearby_support_route_count"] == 1
+    assert review["nearby_support_routes"][0]["id"] == "media-static-proof"
+    assert review["nearby_support_routes"][0]["support_competitors"] == [
+        {"skill": "multimodal-evidence", "score": 19}
+    ]
 
 
 def test_workflow_eval_strict_fails_bad_route_fixture(tmp_path: Path) -> None:

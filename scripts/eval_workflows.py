@@ -28,7 +28,16 @@ DEFAULT_MIN_PASS_RATE = 1.0
 DEFAULT_MIN_ROUTE_MARGIN = 1
 DEFAULT_MIN_EVIDENCE_COVERAGE = 1.0
 WEAK_ROUTE_MARGIN_THRESHOLD = 3
+SUPPORT_ROUTE_MARGIN_THRESHOLD = 3
 WEAK_ROUTE_LIMIT = 8
+PROFILED_SUPPORT_SKILLS = {
+    "api-integration",
+    "browser-inspector",
+    "data-persistence",
+    "dependency-management",
+    "media-tooling",
+    "multimodal-evidence",
+}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -255,6 +264,7 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
         "weak_route_threshold": WEAK_ROUTE_MARGIN_THRESHOLD,
         "weak_route_count": len(weak_routes(results)),
         "weak_routes": weak_routes(results),
+        "support_route_review": support_route_review(results),
         "coverage_gaps": coverage_gaps(
             expected_skills=expected_skills,
             expected_layers=expected_layers,
@@ -275,6 +285,94 @@ def quality_metrics(results: list[dict[str, object]]) -> dict[str, object]:
         "predicted_layer_counts": count_values(predicted_layers),
         "expected_role_counts": count_values(expected_roles),
         "predicted_role_counts": count_values(predicted_roles),
+    }
+
+
+def support_route_review(results: list[dict[str, object]]) -> dict[str, object]:
+    profiled = sorted(PROFILED_SUPPORT_SKILLS)
+    covered = sorted(
+        {
+            str(result.get("expected_skill", ""))
+            for result in results
+            if str(result.get("expected_skill", "")) in PROFILED_SUPPORT_SKILLS
+        }
+    )
+    missing = sorted(PROFILED_SUPPORT_SKILLS - set(covered))
+    profiled_routes: list[dict[str, object]] = []
+    weak_profiled: list[dict[str, object]] = []
+    nearby_support: list[dict[str, object]] = []
+
+    for result in results:
+        expected_skill = str(result.get("expected_skill", ""))
+        if expected_skill not in PROFILED_SUPPORT_SKILLS:
+            continue
+
+        top_routes = result.get("top_routes", [])
+        support_competitors: list[dict[str, object]] = []
+        if isinstance(top_routes, list):
+            top_score = 0
+            if top_routes and isinstance(top_routes[0], Mapping):
+                top_score = _int_value(top_routes[0].get("score"))
+            for route in top_routes[1:]:
+                if not isinstance(route, Mapping):
+                    continue
+                route_skill = str(route.get("skill", ""))
+                route_score = _int_value(route.get("score"))
+                if (
+                    route_skill in PROFILED_SUPPORT_SKILLS
+                    and top_score - route_score <= SUPPORT_ROUTE_MARGIN_THRESHOLD
+                ):
+                    support_competitors.append(
+                        {
+                            "skill": route_skill,
+                            "score": route_score,
+                        }
+                    )
+
+        route_margin = _int_value(result.get("route_margin"))
+        row = {
+            "id": str(result.get("id", "")),
+            "expected_skill": expected_skill,
+            "predicted_skill": str(result.get("predicted_skill", "")),
+            "route_margin": route_margin,
+            "route_confidence": _float_value(result.get("route_confidence")),
+            "top_routes": top_routes if isinstance(top_routes, list) else [],
+            "support_competitors": support_competitors,
+        }
+        profiled_routes.append(row)
+
+        if route_margin <= SUPPORT_ROUTE_MARGIN_THRESHOLD:
+            weak_profiled.append(row)
+            if support_competitors:
+                nearby_support.append(row)
+
+    weak_profiled = sorted(
+        weak_profiled,
+        key=lambda item: (
+            _int_value(item.get("route_margin")),
+            _float_value(item.get("route_confidence")),
+            str(item.get("id", "")),
+        ),
+    )
+    nearby_support = sorted(
+        nearby_support,
+        key=lambda item: (
+            _int_value(item.get("route_margin")),
+            _float_value(item.get("route_confidence")),
+            str(item.get("id", "")),
+        ),
+    )
+    return {
+        "profiled_support_skills": profiled,
+        "covered_profiled_support_skills": covered,
+        "missing_profiled_support_skills": missing,
+        "support_route_margin_threshold": SUPPORT_ROUTE_MARGIN_THRESHOLD,
+        "profiled_support_route_count": len(profiled_routes),
+        "profiled_support_routes": profiled_routes,
+        "weak_profiled_support_route_count": len(weak_profiled),
+        "weak_profiled_support_routes": weak_profiled[:WEAK_ROUTE_LIMIT],
+        "nearby_support_route_count": len(nearby_support),
+        "nearby_support_routes": nearby_support[:WEAK_ROUTE_LIMIT],
     }
 
 
@@ -380,6 +478,19 @@ def threshold_findings(
                 "detail": f"scenario_count {scenario_count} is below min_scenarios {min_scenarios}",
             }
         )
+    support_review = quality.get("support_route_review", {})
+    if isinstance(support_review, Mapping):
+        missing_support_skills = support_review.get("missing_profiled_support_skills", [])
+        if isinstance(missing_support_skills, list) and missing_support_skills:
+            findings.append(
+                {
+                    "check": "support-route-coverage",
+                    "detail": (
+                        "profiled support skills missing workflow scenarios: "
+                        + ", ".join(str(skill) for skill in missing_support_skills)
+                    ),
+                }
+            )
     return findings
 
 
