@@ -28,8 +28,8 @@ def test_workflow_eval_reports_pass_rate_and_top_routes() -> None:
     payload = json.loads(result.stdout)
     assert payload["schema_version"] == "relay-kit.workflow-eval.v1"
     assert payload["status"] == "pass"
-    assert payload["scenario_count"] == 28
-    assert payload["passed"] == 28
+    assert payload["scenario_count"] == 31
+    assert payload["passed"] == 31
     assert payload["failed"] == 0
     assert payload["pass_rate"] == 1.0
     assert payload["quality"]["min_route_margin"] >= 1
@@ -64,8 +64,11 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
     assert "layer-4-specialists-and-standalones" in expected_layers
     for skill in {
         "api-integration",
+        "browser-inspector",
         "data-persistence",
         "dependency-management",
+        "media-tooling",
+        "multimodal-evidence",
         "accessibility-review",
         "policy-guard",
         "impact-radar",

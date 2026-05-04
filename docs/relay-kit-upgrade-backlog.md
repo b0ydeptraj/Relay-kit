@@ -69,6 +69,7 @@ Source audit status:
 - Fixed in Claude reports skill-evolution pass: `skill-evolution` now captures path-scoped skill activation, forked context, allowed-tool profiles, trigger audits, and scenario proof as a Relay-kit-owned discipline utility.
 - Fixed in skill permission profile pass: semantic skill gauntlet now strict-fails high-risk skills that lack `allowed-tools` frontmatter or drift from registry tool profiles.
 - Fixed in risk-sensitive skill profile expansion pass: API, data, dependency, media, browser, and multimodal support skills now carry machine-checked tool profiles across registry and generated adapters.
+- Fixed in support skill semantic fixture pass: bundled workflow scenarios now cover all profiled support skills, including browser, media, and multimodal evidence routing, not only API/data/dependency.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -414,9 +415,9 @@ Status:
 - Fixed on 2026-04-24 for the first measurable routing suite.
 - Done: `relay-kit eval run <project> --strict` reports pass rate, top routes, predicted skill, and per-scenario findings.
 - Done: default fixtures are bundled under `relay_kit_v3/eval_fixtures/workflow_scenarios.json`, so installed CLI runs do not depend on repo test files.
-- Done: default fixture coverage expanded to 28 scenarios, including production support lanes for API integration, data persistence, dependency management, accessibility, policy, impact, project architecture, UX structure, bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor.
+- Done: default fixture coverage expanded to 31 scenarios, including production support lanes for API integration, data persistence, dependency management, browser inspection, media tooling, multimodal evidence, accessibility, policy, impact, project architecture, UX structure, bootstrap, debug/fix/review hubs, PM, architect, scrum-master, and runtime-doctor.
 - Done: `relay-kit doctor` and CI run `scripts/eval_workflows.py . --strict`.
-- Verification: `python scripts/eval_workflows.py . --strict --json` reports 28/28 scenarios; `python -m pytest tests/test_workflow_eval.py -q` passes in CI-compatible temp environments.
+- Verification: `python scripts/eval_workflows.py . --strict --json` reports 31/31 scenarios; `python -m pytest tests/test_workflow_eval.py -q` passes in CI-compatible temp environments.
 
 Problem:
 - Semantic gauntlet proved static contract drift, but commercial quality needs a reportable scenario pass-rate signal.

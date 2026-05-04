@@ -90,6 +90,24 @@
     "expected_terms": ["lockfiles", "version pinning", "dependency risks"]
   },
   {
+    "id": "multimodal-evidence-static-screenshot",
+    "prompt": "Use multimodal-evidence for a static screenshot artifact. Inspect the image, describe visible observations, confidence, affected acceptance criteria, and follow-up checks without a live browser session.",
+    "expected_skill": "multimodal-evidence",
+    "expected_terms": ["visible observations", "confidence", "follow-up checks"]
+  },
+  {
+    "id": "browser-inspector-live-dom-network",
+    "prompt": "Use browser-inspector because the active hub needs live browser state from a repro route. Collect console, network, DOM, layout, performance facts, reproduction confidence, and captured artifacts.",
+    "expected_skill": "browser-inspector",
+    "expected_terms": ["console", "network", "reproduction confidence"]
+  },
+  {
+    "id": "media-tooling-evidence-assets",
+    "prompt": "Use media-tooling when screenshots, assets, or content files need transformation, reversible processing, exact asset sources, output paths, and evidence packaging for the current lane.",
+    "expected_skill": "media-tooling",
+    "expected_terms": ["transformations", "asset sources", "outputs"]
+  },
+  {
     "id": "accessibility-review-before-ready",
     "prompt": "Use accessibility-review before completion claims for frontend work. Check keyboard navigation, visible focus, semantic structure, labels, contrast, and hold verdict evidence.",
     "expected_skill": "accessibility-review",

@@ -40,6 +40,7 @@ Already implemented:
 - Machine-checked `allowed-tools` frontmatter for profiled risk-sensitive skills.
 - Semantic skill gauntlet checks for profile drift and skill routing scenarios.
 - Risk-sensitive support skill profiles for API, data, dependency, media, browser, and multimodal evidence utilities.
+- Bundled workflow scenarios covering all profiled support skills, including browser, media, and multimodal evidence routes.
 
 Latest verified implementation evidence:
 
@@ -82,7 +83,7 @@ Already done:
 
 Next:
 
-- Add semantic fixtures proving API/data/dependency/media/browser/multimodal prompts route to the right skill.
+- Done: add semantic fixtures proving API/data/dependency/media/browser/multimodal prompts route to the right skill.
 - Add evidence-contract checks for these fixtures, not only predicted-skill checks.
 - Add duplicate/noisy-trigger detection across nearby support skills.
 
@@ -201,14 +202,15 @@ These ideas are deliberately not adopted as-is:
 
 Recommended next slice:
 
-Add semantic fixtures for profiled support-skill routing and evidence behavior.
+Add duplicate/noisy-trigger detection and route-margin review for nearby support skills.
 
 Acceptance criteria:
 
 - API client/webhook prompt routes to `api-integration`.
 - schema/migration/cache prompt routes to `data-persistence`.
 - package/lockfile/toolchain prompt routes to `dependency-management`.
-- static screenshot/media artifact prompt routes to `multimodal-evidence` or `media-tooling`.
+- static screenshot/media artifact prompt routes to `multimodal-evidence`.
+- evidence asset transformation prompt routes to `media-tooling`.
 - live DOM/console/network prompt routes to `browser-inspector`.
 - `skill_gauntlet --semantic --strict` passes.
 - `python -m pytest tests/test_skill_gauntlet_semantic.py tests/test_enterprise_bundle.py -q` passes.
