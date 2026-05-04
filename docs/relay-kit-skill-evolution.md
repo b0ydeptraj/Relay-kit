@@ -1,6 +1,7 @@
 # relay-kit-skill-evolution
 
 This note records the first Relay-kit-owned adoption slice from the local Claude Code reports export.
+For the full Relay-kit-specific 12-report translation matrix, see `docs/relay-kit-claude-12-adoption-matrix.md`.
 
 Source used:
 
