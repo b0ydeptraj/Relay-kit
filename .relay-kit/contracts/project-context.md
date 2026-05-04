@@ -86,9 +86,11 @@
 - PR #47 merged skill evolution utility: https://github.com/b0ydeptraj/Relay-kit/pull/47, merge commit `12ed3e9799a1f4a526db6b4b0817cb946d7defc9`.
 - PR #49 merged high-risk skill tool profile gate: https://github.com/b0ydeptraj/Relay-kit/pull/49, merge commit `bd4fa1aceaebdecdce10e865aedf90d8a3e96ba1`.
 - PR #51 merged risk-sensitive skill profile expansion: https://github.com/b0ydeptraj/Relay-kit/pull/51, merge commit `be367cbec5ea0f570108d25c9749329c4b622300`.
+- PR #53 merged Relay-kit Claude 12 adoption matrix: https://github.com/b0ydeptraj/Relay-kit/pull/53, merge commit `5eb2065f124369958e08ddb1df704ca524431a12`.
+- PR #54 merged profiled support routing scenarios: https://github.com/b0ydeptraj/Relay-kit/pull/54, merge commit `158e3ecd777e85d34717b056e3f1a77f887e9966`.
 - GitHub release `v3.4.0.dev0` pre-release published with wheel and sdist assets: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.4.0.dev0.
 - GitHub release `v3.4.0.dev0` package assets were refreshed after PR #45; a fresh venv install from the wheel URL proved `relay-kit . --codex` generates the enterprise bundle by default.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25280359277, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25311526666, conclusion `success`.
 
 ## Known sharp edges
 
@@ -96,7 +98,7 @@
 - `.relay-kit/manifest/bundles.json` and `.relay-kit/manifest/trust.json` are ignored generated artifacts. Regenerate and verify them locally when version, skill hashes, or trust metadata changes.
 - Package smoke on Windows may emit a harmless virtualenv path casing or 8.3-name warning after successful JSON output.
 - Pulse now includes `gate_summary`, per-gate `drilldown` rows, `workflow_focus`, and optional `commercial_dossier`; signal export emits `relay.gates.*`, `relay.workflow.weak_route_count`, `relay.workflow.coverage_gap_count`, and `relay.commercial_dossier.ready`; future dashboard/eval work should preserve those schema keys.
-- Workflow eval default fixtures now cover 28 production/team scenarios and signal export should report `relay.workflow.scenario_count=28` after a fresh Pulse build.
+- Workflow eval default fixtures now cover 31 production/team scenarios and signal export should report `relay.workflow.scenario_count=31` after a fresh Pulse build.
 - Workflow eval also reports weak route candidates and registry coverage gaps under `quality.weak_routes` and `quality.coverage_gaps`.
 - Support operations now include `relay-kit support soak`, which validates P0/P1/P2 paid-support handoff fixtures and fails degraded support bundle diagnostics.
 - Commercial proof now includes `relay-kit commercial dossier`, which writes `.relay-kit/commercial/commercial-dossier.json` and strict-fails unless local readiness, publication status, support triage/soak, and external CI/release/package/SLA/support owner proof are present.

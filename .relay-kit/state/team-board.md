@@ -1,7 +1,7 @@
 # team-board
 
 ## Shared objective
-Keep Relay-kit skill-system state current after the risk-sensitive `allowed-tools` profile expansion and ready for the next single-lane implementation slice.
+Keep Relay-kit skill-system state current after profiled support skill semantic fixtures landed and ready for the next single-lane implementation slice.
 
 ## Active orchestrator
 - workflow-router
@@ -9,7 +9,7 @@ Keep Relay-kit skill-system state current after the risk-sensitive `allowed-tool
 ## Lanes
 | Lane | Owner skill | Current hub | Current artifact | Lock scope | Status | Handoff status | Notes |
 |---|---|---|---|---|---|---|---|
-| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after PR #51 expanded risk-sensitive tool-profile enforcement and main CI passed. |
+| primary | bootstrap | none | project-context/workflow-state/team-board/lane-registry/handoff-log | none | ready for merge | verified | Source-of-truth refreshed after PR #54 expanded profiled support skill routing scenarios and main CI passed. |
 | lane-2 | unassigned | none | none | none | parked | none | No parallel work active. |
 | lane-3 | unassigned | none | none | none | parked | none | No parallel work active. |
 
@@ -24,7 +24,7 @@ Keep Relay-kit skill-system state current after the risk-sensitive `allowed-tool
 Primary lane only. Parallel lanes are parked until explicitly routed.
 
 ## Merge prerequisites
-Runtime doctor live mode passed, focused pytest passed, enterprise doctor passed, readiness enterprise passed, and main CI for PR #51 passed. Remote CI must pass after merge.
+Runtime doctor live mode passed, focused pytest passed, enterprise doctor passed, readiness enterprise passed, and main CI for PR #54 passed. Remote CI must pass after merge.
 
 ## Conflict risks
 Low. This slice edits state/context artifacts only.
@@ -53,3 +53,4 @@ Low. This slice edits state/context artifacts only.
 - 2026-05-03: Refresh state artifacts after PR #47 added `skill-evolution`, main CI `25276702012` passed, and local readiness returned `commercial-ready-candidate`.
 - 2026-05-03: Refresh state artifacts after PR #49 added high-risk skill `allowed-tools` enforcement, main CI `25277117107` passed, and local readiness returned `commercial-ready-candidate`.
 - 2026-05-04: Refresh state artifacts after PR #51 added risk-sensitive support skill `allowed-tools` profiles, main CI `25280359277` passed, and local readiness returned `commercial-ready-candidate`.
+- 2026-05-04: Refresh state artifacts after PR #54 added profiled support skill semantic fixtures, main CI `25311526666` passed, and local readiness returned `commercial-ready-candidate`.
