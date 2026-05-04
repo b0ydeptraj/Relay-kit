@@ -2,7 +2,7 @@
 
 > Path: `.relay-kit/contracts/project-context.md`
 > Purpose: Current source-of-truth context for Relay-kit work after the `v3.3.0` release and `3.4.0.dev0` next-dev bump.
-> Last refreshed: 2026-05-03
+> Last refreshed: 2026-05-04
 
 ## Existing architecture
 
@@ -11,7 +11,7 @@
 - Public CLI orchestration lives in `relay_kit_public_cli.py`; default runtime generation is the full enterprise bundle, while `--baseline` explicitly opts into the smaller install. Legacy generation compatibility remains in `relay_kit.py`, `relay_kit_legacy.py`, and `relay_kit_compat.py`.
 - Runtime skills are generated from registry data under `relay_kit_v3/registry/` and validated by `scripts/validate_runtime.py`, `scripts/runtime_doctor.py`, `scripts/migration_guard.py`, `scripts/skill_gauntlet.py`, `scripts/policy_guard.py`, and `scripts/eval_workflows.py`.
 - The discipline utility bundle includes `skill-evolution`, a Relay-kit-owned skill for creating, upgrading, reviewing, and pruning skills with path-scoped activation, fork context, allowed-tool stance, and semantic route proof.
-- Semantic skill gauntlet now enforces `allowed-tools` frontmatter for configured high-risk skills and fails drift against registry tool profiles.
+- Semantic skill gauntlet now enforces `allowed-tools` frontmatter for configured profiled risk-sensitive skills and fails drift against registry tool profiles. Current profiled support skills include API, data, dependency, media, browser, and multimodal evidence utilities.
 - Current released tag: `v3.3.0` at commit `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`, set in `pyproject.toml` and `.relay-kit/version.json`.
 
@@ -85,9 +85,10 @@
 - PR #45 merged default enterprise install behavior: https://github.com/b0ydeptraj/Relay-kit/pull/45, merge commit `0712966bb510625579237c737a66cbcb0f5ae5f4`.
 - PR #47 merged skill evolution utility: https://github.com/b0ydeptraj/Relay-kit/pull/47, merge commit `12ed3e9799a1f4a526db6b4b0817cb946d7defc9`.
 - PR #49 merged high-risk skill tool profile gate: https://github.com/b0ydeptraj/Relay-kit/pull/49, merge commit `bd4fa1aceaebdecdce10e865aedf90d8a3e96ba1`.
+- PR #51 merged risk-sensitive skill profile expansion: https://github.com/b0ydeptraj/Relay-kit/pull/51, merge commit `be367cbec5ea0f570108d25c9749329c4b622300`.
 - GitHub release `v3.4.0.dev0` pre-release published with wheel and sdist assets: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.4.0.dev0.
 - GitHub release `v3.4.0.dev0` package assets were refreshed after PR #45; a fresh venv install from the wheel URL proved `relay-kit . --codex` generates the enterprise bundle by default.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25277117107, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25280359277, conclusion `success`.
 
 ## Known sharp edges
 
@@ -102,7 +103,7 @@
 - Commercial dossier proof is visible in Pulse JSON/HTML and signal export when included from the generated dossier file.
 - Internal-channel commercial dossier is verified ready with GitHub release asset package URL, public support SLA, public issue intake, and owner `b0ydeptraj`.
 - Default package onboarding is now full by default: install the package, then run `relay-kit . --codex`; use `relay-kit . --codex --baseline` only for the smaller bundle.
-- Skill changes should use `skill-evolution` and include trigger/frontmatter/allowed-tool review plus semantic gauntlet or route proof before claiming behavior changed. High-risk skills must keep registry `allowed_tools` and generated `allowed-tools` frontmatter in sync.
+- Skill changes should use `skill-evolution` and include trigger/frontmatter/allowed-tool review plus semantic gauntlet or route proof before claiming behavior changed. Profiled risk-sensitive skills must keep registry `allowed_tools` and generated `allowed-tools` frontmatter in sync.
 - PyPI remains unpublished because no PyPI token is configured in this environment. Do not claim PyPI publication until `pip index versions relay-kit` finds the package or a PyPI project URL exists.
 - `.relay-kit/contracts/project-context.md`, `.relay-kit/state/workflow-state.md`, `.relay-kit/state/team-board.md`, `.relay-kit/state/lane-registry.md`, and `.relay-kit/state/handoff-log.md` should stay synchronized after release or branch merges.
 

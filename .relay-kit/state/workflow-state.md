@@ -1,7 +1,7 @@
 # workflow-state
 
 ## Current request
-Refresh live workflow state after PR #49 so source-of-truth artifacts reflect the high-risk skill permission/profile gauntlet.
+Refresh live workflow state after PR #51 so source-of-truth artifacts reflect the risk-sensitive skill profile expansion.
 
 ## Active lane
 - Lane id: primary
@@ -19,7 +19,7 @@ Refresh live workflow state after PR #49 so source-of-truth artifacts reflect th
 
 ## Active standalone/domain skill
 - Skill: bootstrap
-- Why selected: this is a bounded state/context hygiene update after high-risk skill tool profiles merged and main CI passed.
+- Why selected: this is a bounded state/context hygiene update after risk-sensitive support skill tool profiles merged and main CI passed.
 
 ## Complexity level
 - Level: L1
@@ -61,7 +61,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Published release: https://github.com/b0ydeptraj/Relay-kit/releases/tag/v3.3.0.
 - Published tag commit: `d46f9c934805010cbf64fca00c28c6bc9dc233a9`.
 - Current mainline package version: `3.4.0.dev0`.
-- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25277117107, conclusion `success`.
+- Latest confirmed main CI: https://github.com/b0ydeptraj/Relay-kit/actions/runs/25280359277, conclusion `success`.
 - PR #1 merged release readiness and package smoke gates: https://github.com/b0ydeptraj/Relay-kit/pull/1.
 - PR #2 merged Relay OTLP signal export: https://github.com/b0ydeptraj/Relay-kit/pull/2.
 - PR #3 merged next-dev version hygiene: https://github.com/b0ydeptraj/Relay-kit/pull/3.
@@ -115,7 +115,8 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - PR #45 merged default enterprise install behavior: https://github.com/b0ydeptraj/Relay-kit/pull/45.
 - PR #47 merged skill evolution utility: https://github.com/b0ydeptraj/Relay-kit/pull/47.
 - PR #49 merged high-risk skill tool profile gate: https://github.com/b0ydeptraj/Relay-kit/pull/49.
-- Current main baseline: `bd4fa1aceaebdecdce10e865aedf90d8a3e96ba1`.
+- PR #51 merged risk-sensitive skill profile expansion: https://github.com/b0ydeptraj/Relay-kit/pull/51.
+- Current main baseline: `be367cbec5ea0f570108d25c9749329c4b622300`.
 - Workflow focus branch verification: `python -m pytest tests/test_workflow_eval.py tests/test_pulse_report.py tests/test_signal_export.py -q`, `python scripts\eval_workflows.py . --strict --json`, `python relay_kit_public_cli.py pulse build . --include-readiness --include-publication --include-support-request --no-history`, `python relay_kit_public_cli.py signal export . --otlp --json`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python scripts\runtime_doctor.py . --strict --state-mode live`, and `python relay_kit_public_cli.py readiness check . --profile enterprise` passed locally.
 - Support operations soak branch verification: `python -m pytest tests/test_support_triage.py -q`, `python -m pytest tests/test_support_request.py tests/test_support_bundle.py tests/test_support_triage.py -q`, `python -m pytest tests/test_readiness_check.py tests/test_support_triage.py tests/test_support_bundle.py -q`, `python relay_kit_public_cli.py support bundle . --policy-pack enterprise`, `python relay_kit_public_cli.py support request . --severity P1 ... --strict`, `python relay_kit_public_cli.py support triage . --strict`, `python relay_kit_public_cli.py support soak . --strict`, `python -m pytest tests -q` with 160 passed, `python relay_kit_public_cli.py readiness check . --profile enterprise`, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, and `python scripts\runtime_doctor.py . --strict --state-mode live` passed locally.
 - Commercial dossier branch verification: `python -m pytest tests/test_commercial_dossier.py tests/test_readiness_check.py tests/test_release_lane.py tests/test_publication_plan.py tests/test_support_bundle.py -q`, `python -m pytest tests -q` with 165 passed, `python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise`, `python relay_kit_public_cli.py release verify . --json`, `python relay_kit_public_cli.py readiness check . --profile enterprise --json`, `python scripts/package_smoke.py .`, and `python relay_kit_public_cli.py commercial dossier . --channel pypi ... --skip-readiness-tests --strict --json` returned `hold` for missing final publication-status proof as intended.
@@ -125,6 +126,7 @@ Future work that changes package metadata, release artifacts, trusted manifest d
 - Default enterprise install verification: PR #45 changed `relay-kit . --codex` to generate the full enterprise bundle by default while `--baseline` remains the smaller explicit path; refreshed `v3.4.0.dev0` wheel install from GitHub release URL generated 87 v3 files including `.codex/skills/test-first-development/SKILL.md` and `.relay-kit/docs/enterprise-bundle.md`.
 - Skill evolution verification: PR #47 added `skill-evolution` to the discipline utility bundle, generated Codex/Claude/Agent adapter skills, documented the local Claude report adoption slice, passed `python -m pytest tests -q` with 171 tests, enterprise doctor, runtime doctor live, semantic gauntlet, readiness enterprise, PR CI, and main CI.
 - Skill permission profile verification: PR #49 added semantic `allowed-tools` checks for high-risk skills, generated Codex/Claude/Agent frontmatter for 10 high-risk skills, passed `python -m pytest tests -q` with 174 tests, enterprise doctor, runtime doctor live, semantic gauntlet, readiness enterprise, PR CI, and main CI.
+- Risk-sensitive profile expansion verification: PR #51 added machine-checked tool profiles for API, data, dependency, media, browser, and multimodal support skills, generated Codex/Claude/Agent frontmatter, passed `python -m pytest tests -q` with 175 tests, enterprise doctor, runtime doctor live, semantic gauntlet, readiness enterprise, PR CI, and main CI.
 
 ## Recommended next lane
-Next useful feature lane: expand skill-system hardening to browser/media/API/dependency risk profiles or add more semantic fixtures for skill routing. Continue PyPI publication only after PyPI credentials are available.
+Next useful feature lane: add more semantic fixtures for profiled support-skill routing and evidence behavior, or continue PyPI publication only after PyPI credentials are available.
