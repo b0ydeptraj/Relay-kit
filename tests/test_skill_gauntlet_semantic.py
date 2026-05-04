@@ -6,11 +6,13 @@ from pathlib import Path
 
 from relay_kit_v3.registry.skills import ALL_V3_SKILLS, render_skill
 from scripts.skill_gauntlet import (
+    DEFAULT_SCENARIO_FIXTURE,
     REQUIRED_TOOL_PROFILE_SKILLS,
     check_semantic_skill_file,
     collect_optional_alias_findings,
     collect_scenario_findings,
     collect_tool_profile_findings,
+    load_scenario_fixtures,
 )
 
 
@@ -32,7 +34,7 @@ def test_semantic_skill_gauntlet_passes_current_runtime() -> None:
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "Semantic checks: on" in result.stdout
-    assert "Scenario fixtures: 28" in result.stdout
+    assert "Scenario fixtures: 31" in result.stdout
     assert "Findings: 0" in result.stdout
 
 
@@ -108,6 +110,20 @@ def test_risk_sensitive_skill_profiles_cover_browser_media_api_dependency() -> N
     assert ALL_V3_SKILLS["media-tooling"].allowed_tools == ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
     assert ALL_V3_SKILLS["browser-inspector"].allowed_tools == ["Read", "Grep", "Glob", "Bash"]
     assert ALL_V3_SKILLS["multimodal-evidence"].allowed_tools == ["Read", "Grep", "Glob", "Bash"]
+
+
+def test_default_scenarios_cover_profiled_support_skills() -> None:
+    scenarios = load_scenario_fixtures(ROOT, DEFAULT_SCENARIO_FIXTURE)
+    covered = {str(item.get("expected_skill", "")) for item in scenarios}
+
+    assert {
+        "api-integration",
+        "browser-inspector",
+        "data-persistence",
+        "dependency-management",
+        "media-tooling",
+        "multimodal-evidence",
+    }.issubset(covered)
 
 
 def test_semantic_skill_gauntlet_flags_bad_scenario_route(tmp_path: Path) -> None:
