@@ -70,6 +70,7 @@ Source audit status:
 - Fixed in skill permission profile pass: semantic skill gauntlet now strict-fails high-risk skills that lack `allowed-tools` frontmatter or drift from registry tool profiles.
 - Fixed in risk-sensitive skill profile expansion pass: API, data, dependency, media, browser, and multimodal support skills now carry machine-checked tool profiles across registry and generated adapters.
 - Fixed in support skill semantic fixture pass: bundled workflow scenarios now cover all profiled support skills, including browser, media, and multimodal evidence routing, not only API/data/dependency.
+- Fixed in support route noise review pass: `relay-kit eval run` now reports profiled support-skill coverage, weak profiled support routes, and nearby support-skill competitors within the route-margin threshold.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:

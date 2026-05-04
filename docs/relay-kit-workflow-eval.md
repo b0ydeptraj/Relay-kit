@@ -7,6 +7,7 @@ It is intentionally separate from `skill-gauntlet`:
 - `skill-gauntlet --semantic` protects the runtime skill files from drift.
 - `workflow eval` reports scenario pass rate, predicted skill, top routes, layer/role coverage, and missing evidence terms.
 - The bundled default suite covers 31 scenarios across routing, implementation, QA, release, policy, architecture, UX, dependency, API, data, media, browser evidence, multimodal evidence, bootstrap, debug/fix/review hubs, PM, scrum, and runtime diagnostics workflows.
+- The quality block also reviews profiled support-skill routing noise across API, data, dependency, media, browser, and multimodal evidence utilities.
 
 ## Commands
 
@@ -55,6 +56,20 @@ The `quality` block includes:
 - `predicted_layer_counts`
 - `expected_role_counts`
 - `predicted_role_counts`
+- `support_route_review`
+
+The `support_route_review` block includes:
+
+- `profiled_support_skills`
+- `covered_profiled_support_skills`
+- `missing_profiled_support_skills`
+- `profiled_support_route_count`
+- `weak_profiled_support_route_count`
+- `weak_profiled_support_routes`
+- `nearby_support_route_count`
+- `nearby_support_routes`
+
+`nearby_support_routes` only reports profiled support-skill competitors that are within the support route margin threshold. This is meant to expose duplicate/noisy triggers without treating every distant top-route neighbor as a real collision.
 
 Default thresholds are:
 
