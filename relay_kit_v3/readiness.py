@@ -32,6 +32,8 @@ COMMERCIAL_DOCS = [
     ".relay-kit/contracts/support-request.md",
 ]
 READINESS_PYTEST_BASETEMP = Path(".tmp") / "readiness-pytest"
+READINESS_MAX_WORKFLOW_WEAK_ROUTES = 0
+READINESS_MIN_WORKFLOW_ROUTE_MARGIN = 4
 
 CommandRunner = Callable[[list[str], Path], subprocess.CompletedProcess[str]]
 SupportBuilder = Callable[[Path, str], Mapping[str, Any]]
@@ -220,7 +222,10 @@ def _run_command_gates(root: Path, profile: str, skip_tests: bool, runner: Comma
     else:
         command_specs.insert(1, ("bundle-manifest", "bundle manifest", manifest_command))
     for gate_id, label, command in command_specs:
-        gates.append(_run_subprocess_gate(gate_id, label, command, REPO_ROOT, runner))
+        if gate_id == "workflow-eval":
+            gates.append(_run_workflow_eval_gate(command, REPO_ROOT, runner))
+        else:
+            gates.append(_run_subprocess_gate(gate_id, label, command, REPO_ROOT, runner))
     return gates
 
 
@@ -245,6 +250,94 @@ def _run_subprocess_gate(
         "summary": _summarize_output(result.stdout, result.stderr),
         "command": _command_text(command),
     }
+
+
+def _run_workflow_eval_gate(
+    command: list[str],
+    cwd: Path,
+    runner: CommandRunner,
+) -> dict[str, Any]:
+    started = time.perf_counter()
+    result = runner(command, cwd)
+    elapsed_ms = int((time.perf_counter() - started) * 1000)
+    summary = _summarize_output(result.stdout, result.stderr)
+    gate: dict[str, Any] = {
+        "id": "workflow-eval",
+        "label": "workflow eval",
+        "status": "pass" if result.returncode == 0 else "fail",
+        "required": True,
+        "exit_code": result.returncode,
+        "elapsed_ms": elapsed_ms,
+        "summary": summary,
+        "command": _command_text(command),
+    }
+    if result.returncode != 0:
+        return gate
+
+    details, findings = _workflow_eval_quality_details(result.stdout)
+    gate["details"] = details
+    if findings:
+        gate["status"] = "fail"
+        gate["summary"] = "; ".join(findings)
+    else:
+        gate["summary"] = (
+            f"workflow eval route quality ok; scenarios: {details.get('scenario_count', 0)}; "
+            f"min route margin: {details.get('min_route_margin', 0)}; "
+            f"weak routes: {details.get('weak_route_count', 0)}"
+        )
+    return gate
+
+
+def _workflow_eval_quality_details(stdout: str) -> tuple[dict[str, Any], list[str]]:
+    findings: list[str] = []
+    details: dict[str, Any] = {
+        "scenario_count": 0,
+        "min_route_margin": 0,
+        "weak_route_count": 0,
+        "weak_routes": [],
+        "min_route_margin_required": READINESS_MIN_WORKFLOW_ROUTE_MARGIN,
+        "max_weak_routes_allowed": READINESS_MAX_WORKFLOW_WEAK_ROUTES,
+    }
+    try:
+        payload = json.loads(stdout.strip())
+    except json.JSONDecodeError as exc:
+        findings.append(f"workflow eval JSON parse failed: {exc.msg}")
+        return details, findings
+    if not isinstance(payload, Mapping):
+        findings.append("workflow eval output is not a JSON object")
+        return details, findings
+
+    quality = payload.get("quality", {})
+    if not isinstance(quality, Mapping):
+        findings.append("workflow eval quality block missing")
+        return details, findings
+
+    scenario_count = _int_value(payload.get("scenario_count"))
+    min_route_margin = _int_value(quality.get("min_route_margin"))
+    weak_route_count = _int_value(quality.get("weak_route_count"))
+    weak_routes = quality.get("weak_routes", [])
+    if not isinstance(weak_routes, list):
+        weak_routes = []
+
+    details.update(
+        {
+            "scenario_count": scenario_count,
+            "min_route_margin": min_route_margin,
+            "weak_route_count": weak_route_count,
+            "weak_routes": weak_routes[:8],
+        }
+    )
+    if weak_route_count > READINESS_MAX_WORKFLOW_WEAK_ROUTES:
+        findings.append(
+            f"workflow eval weak routes: {weak_route_count} "
+            f"(allowed: {READINESS_MAX_WORKFLOW_WEAK_ROUTES})"
+        )
+    if min_route_margin < READINESS_MIN_WORKFLOW_ROUTE_MARGIN:
+        findings.append(
+            f"workflow eval min route margin: {min_route_margin} "
+            f"(required: {READINESS_MIN_WORKFLOW_ROUTE_MARGIN})"
+        )
+    return details, findings
 
 
 def _support_bundle_gate(root: Path, profile: str, support_builder: SupportBuilder) -> dict[str, Any]:
@@ -439,6 +532,13 @@ def _summarize_output(stdout: str, stderr: str) -> str:
         return ""
     lines = combined.splitlines()
     return "\n".join(lines[:12])
+
+
+def _int_value(value: object) -> int:
+    try:
+        return int(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return 0
 
 
 def _command_text(command: Sequence[str]) -> str:

@@ -12,6 +12,9 @@ from relay_kit_v3.contract_import import IMPORT_SCHEMA_VERSION as CONTRACT_IMPOR
 
 
 def passing_command_runner(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+    text = " ".join(command)
+    if "eval_workflows.py" in text:
+        return subprocess.CompletedProcess(command, 0, stdout=json.dumps(healthy_workflow_eval_payload()) + "\n", stderr="")
     return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
 
 
@@ -19,7 +22,45 @@ def failing_policy_runner(command: list[str], cwd: Path) -> subprocess.Completed
     text = " ".join(command)
     if "policy_guard.py" in text:
         return subprocess.CompletedProcess(command, 2, stdout="Policy guard report\n- findings: 1\n", stderr="")
+    if "eval_workflows.py" in text:
+        return subprocess.CompletedProcess(command, 0, stdout=json.dumps(healthy_workflow_eval_payload()) + "\n", stderr="")
     return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
+
+
+def weak_workflow_eval_runner(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+    text = " ".join(command)
+    if "eval_workflows.py" in text:
+        payload = healthy_workflow_eval_payload()
+        quality = payload["quality"]
+        assert isinstance(quality, dict)
+        quality["min_route_margin"] = 2
+        quality["weak_route_count"] = 1
+        quality["weak_routes"] = [
+            {
+                "id": "developer-implementation-ready",
+                "expected_skill": "developer",
+                "predicted_skill": "developer",
+                "route_margin": 2,
+            }
+        ]
+        return subprocess.CompletedProcess(command, 0, stdout=json.dumps(payload) + "\n", stderr="")
+    return subprocess.CompletedProcess(command, 0, stdout="ok\n", stderr="")
+
+
+def healthy_workflow_eval_payload() -> dict[str, object]:
+    return {
+        "schema_version": "relay-kit.workflow-eval.v1",
+        "status": "pass",
+        "scenario_count": 55,
+        "passed": 55,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "quality": {
+            "min_route_margin": 5,
+            "weak_route_count": 0,
+            "weak_routes": [],
+        },
+    }
 
 
 def write_required_docs(root: Path) -> None:
@@ -198,6 +239,33 @@ def test_readiness_report_holds_when_required_gate_fails(tmp_path: Path) -> None
     assert report["status"] == "hold"
     assert report["verdict"] == "hold"
     assert any(gate["id"] == "policy-enterprise" and gate["status"] == "fail" for gate in report["gates"])
+
+
+def test_readiness_report_holds_when_workflow_eval_has_weak_routes(tmp_path: Path) -> None:
+    write_required_docs(tmp_path)
+
+    report = readiness.build_readiness_report(
+        tmp_path,
+        profile="enterprise",
+        command_runner=weak_workflow_eval_runner,
+        support_builder=lambda root, policy_pack: healthy_support_bundle_payload(),
+        upgrade_builder=lambda root: {"status": "pass", "findings_count": 0},
+        contract_exporter=lambda root: {"schema_version": CONTRACT_EXPORT_SCHEMA_VERSION},
+        contract_importer=lambda root, payload: {
+            "schema_version": CONTRACT_IMPORT_SCHEMA_VERSION,
+            "status": "pass",
+            "findings": [],
+        },
+    )
+
+    workflow_gate = next(gate for gate in report["gates"] if gate["id"] == "workflow-eval")
+
+    assert report["status"] == "hold"
+    assert report["verdict"] == "hold"
+    assert workflow_gate["status"] == "fail"
+    assert "weak routes: 1" in workflow_gate["summary"]
+    assert workflow_gate["details"]["weak_route_count"] == 1
+    assert workflow_gate["details"]["min_route_margin"] == 2
 
 
 def test_readiness_report_holds_when_support_bundle_diagnostics_are_degraded(tmp_path: Path) -> None:

@@ -75,6 +75,7 @@ Source audit status:
 - Fixed in workflow eval role coverage pass: bundled workflow scenarios increased from 37 to 43, covering all registry roles and adding analyst, brainstorm-hub, scout-hub, team, execution-loop, and testing-patterns routes.
 - Fixed in workflow eval utility coverage pass: bundled workflow scenarios increased from 43 to 55, covering all 47 current registry skills and adding doc-pointers, handoff-context, memory-search, mermaid-diagrams, problem-solving, repo-map, research, root-cause-debugging, sequential-thinking, skill-evolution, skill-gauntlet, and test-first-development routes.
 - Fixed in workflow route-quality tightening pass: the default 55-scenario workflow eval suite now reports `weak_route_count=0` and `min_route_margin=5` by clarifying the developer and test-hub routing fixtures.
+- Fixed in readiness route-quality gate pass: `relay-kit readiness check` now fails enterprise readiness when `workflow-eval` JSON reports weak routes or `min_route_margin < 4`, even if the eval command exits `0`.
 - External runtime suites for benchmark projects were not fully executed. Their code/docs/scripts were cloned and inspected directly, but full runtime is not verified.
 
 Current verdict:
@@ -812,6 +813,7 @@ Relay-kit should not be called commercial-ready until all of these are true:
 - Pulse and signal export surface gate drilldown item counts and rows so a reviewer can inspect the first concrete failure without parsing raw reports.
 - Pulse and signal export surface weak route count, eval coverage gap count, support evidence gap count, and support fixture depth gap count so dashboard review can catch route fragility before a scenario fails.
 - Workflow eval default suite covers 55 production/team scenarios across orchestration, hubs, utility providers, specialists, runtime diagnostics, all registry roles, all 47 current registry skills, and profiled support evidence routes.
+- Enterprise readiness fails on weak workflow routes or route margins below `4`, so route-quality regressions cannot pass as commercial-ready dashboard noise.
 
 Review-hub verdict for this backlog:
 - P0/P1/P2/P3 audit backlog items are implemented as first production-ready slices.

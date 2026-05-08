@@ -18,7 +18,7 @@ Use `--profile team` for non-enterprise projects. Use `--skip-tests` only after 
 - `trusted-manifest`: verifies bundle checksums and trust metadata for `--profile enterprise`.
 - `bundle-manifest`: verifies bundle checksums for `--profile team`.
 - `policy-enterprise` or `policy-team`: runs the strict policy guard pack for the selected profile.
-- `workflow-eval`: runs bundled routing and evidence scenarios.
+- `workflow-eval`: runs bundled routing and evidence scenarios, parses the route-quality JSON, and fails readiness when weak routes are present or the minimum route margin is below `4`.
 - `support-bundle`: builds the redacted support diagnostic payload.
 - `upgrade-check`: verifies the installed runtime version marker and bundle manifest.
 - `contract-sync`: exports Relay contracts and dry-runs import validation.
@@ -33,6 +33,10 @@ Use `--profile team` for non-enterprise projects. Use `--skip-tests` only after 
 - `hold`: at least one required gate failed.
 
 The command returns exit code `0` for pass status and `2` for hold status.
+
+## Workflow Route-Quality Policy
+
+Enterprise readiness treats workflow routing quality as a release gate, not a dashboard-only signal. A `workflow-eval` command that exits `0` can still fail readiness if its JSON report contains any weak routes or reports `min_route_margin < 4`.
 
 ## Release Use
 
