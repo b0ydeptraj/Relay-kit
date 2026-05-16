@@ -406,12 +406,16 @@
   {
     "id": "mmo-reup-automation-real-world-contract",
     "skill": "mmo-reup-automation",
-    "task": "Use mmo-reup-automation for a production-shaped Relay-kit lane: Use when controlled MMO reup workflows need scheduling, deduplication, attribution tracking, and policy-safe publishing controls. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+    "task": "Use mmo-reup-automation for a production-shaped Relay-kit lane: design an operator-run reup console with source inventory, bulk action review, publish queue, reject drawer, evidence timeline, scheduling windows, dedupe, attribution tracking, and policy-safe publishing controls.",
     "required_artifacts": [
-      "reup workflow design with dedupe, rate controls, and rollback plan"
+      "reup operator console design with dedupe ledger, run queue, rate controls, and rollback plan"
     ],
     "required_evidence": [
-      "reup workflow design with dedupe, rate controls, and rollback plan"
+      "source inventory",
+      "bulk action",
+      "publish queue",
+      "reject drawer",
+      "evidence timeline"
     ],
     "pass_rubric": [
       "Require explicit rights and attribution constraints before any automated repost flow.",
@@ -422,12 +426,16 @@
   {
     "id": "mmo-account-operations-real-world-contract",
     "skill": "mmo-account-operations",
-    "task": "Use mmo-account-operations for a production-shaped Relay-kit lane: Use when MMO account operations need lifecycle automation for onboarding, health checks, risk segmentation, and recovery runbooks. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+    "task": "Use mmo-account-operations for a production-shaped Relay-kit lane: design an account operations console with profile table, folder/tag filters, owner columns, proxy binding, health score, cooldown, quarantine, bulk action review, and recovery runbooks.",
     "required_artifacts": [
-      "account operations workflow with risk controls, observability, and recovery plan"
+      "account operations console contract with profile table, health scoring, risk controls, observability, and recovery plan"
     ],
     "required_evidence": [
-      "account operations workflow with risk controls, observability, and recovery plan"
+      "profile table",
+      "proxy binding",
+      "health score",
+      "cooldown",
+      "quarantine"
     ],
     "pass_rubric": [
       "Account automation must use authorized credentials, clear ownership, and auditable actions.",
@@ -438,31 +446,37 @@
   {
     "id": "mmo-browser-fleet-session-reliability",
     "skill": "mmo-browser-fleet-automation",
-    "task": "Run a policy-safe browser fleet workflow with profile isolation, session lease strategy, explicit waits, selector drift diagnostics, and one controlled failure path.",
+    "task": "Run a policy-safe browser fleet workflow with profile inventory, profile-to-proxy affinity, session lease strategy, live debug evidence, screenshot trace, console logs, selector drift diagnostics, and one controlled failure path.",
     "required_artifacts": [
-      "browser fleet automation design",
+      "browser fleet operator design with profile/session lease table, stable selectors, run queue, and debug evidence",
       "run traces"
     ],
     "required_evidence": [
-      "profile isolation",
-      "selector drift",
-      "rate-limit guard"
+      "profile-to-proxy affinity",
+      "session lease",
+      "live debug",
+      "screenshot",
+      "console logs"
     ],
     "pass_rubric": [
-      "session lease",
-      "deterministic retry",
-      "controlled failure"
+      "Use explicit waits, resilient locators, and deterministic retry policy instead of blind sleeps.",
+      "Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy.",
+      "browser-inspector"
     ]
   },
   {
     "id": "mmo-social-marketing-automation-real-world-contract",
     "skill": "mmo-social-marketing-automation",
-    "task": "Use mmo-social-marketing-automation for a production-shaped Relay-kit lane: Use when MMO social media or marketing automation needs official API routing, campaign scheduling, moderation safeguards, and quota-aware execution. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+    "task": "Use mmo-social-marketing-automation for a production-shaped Relay-kit lane: design a campaign workspace with content calendar, asset library, approval lane, reject reason taxonomy, quota meter, per-channel status, official API routing, and moderation safeguards.",
     "required_artifacts": [
-      "social automation plan with quota controls, content QA, and policy-safe execution"
+      "social automation operator workflow with campaign queue, content QA, quota controls, and policy-safe execution"
     ],
     "required_evidence": [
-      "social automation plan with quota controls, content QA, and policy-safe execution"
+      "campaign workspace",
+      "content calendar",
+      "approval lane",
+      "quota meter",
+      "reject reason"
     ],
     "pass_rubric": [
       "Use official platform APIs and published quota/automation rules as the default path.",
@@ -473,12 +487,16 @@
   {
     "id": "mmo-lowcode-automation-real-world-contract",
     "skill": "mmo-lowcode-automation",
-    "task": "Use mmo-lowcode-automation for a production-shaped Relay-kit lane: Use when MMO operations rely on no-code or low-code orchestration stacks and need modular flows, error handlers, and safe deployment controls. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+    "task": "Use mmo-lowcode-automation for a production-shaped Relay-kit lane: design a low-code operations surface with node graph, execution list, manual execution, production execution, error workflow, redacted execution data, queue controls, and safe deployment controls.",
     "required_artifacts": [
-      "low-code automation blueprint with module contracts, retries, and observability hooks"
+      "low-code operations design with node graph, execution list, module contracts, retries, redaction, and observability hooks"
     ],
     "required_evidence": [
-      "low-code automation blueprint with module contracts, retries, and observability hooks"
+      "node graph",
+      "execution list",
+      "manual execution",
+      "production execution",
+      "redacted execution"
     ],
     "pass_rubric": [
       "Treat visual workflow nodes as production logic: define contracts and failure semantics explicitly.",
@@ -489,12 +507,16 @@
   {
     "id": "mmo-mobile-app-automation-real-world-contract",
     "skill": "mmo-mobile-app-automation",
-    "task": "Use mmo-mobile-app-automation for a production-shaped Relay-kit lane: Use when MMO mobile workflows need emulator or device automation with stable selectors, app-state control, and repeatable run evidence. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+    "task": "Use mmo-mobile-app-automation for a production-shaped Relay-kit lane: design a mobile automation operations plan with device inventory, hub/provider split, lease owner, app version, logcat/crash/ANR evidence, remote-control link, stable selectors, app-state control, and repeatable run evidence.",
     "required_artifacts": [
-      "mobile automation plan with environment matrix, reliability controls, and evidence artifacts"
+      "mobile automation operations plan with device farm inventory, session lease, environment matrix, reliability controls, and evidence artifacts"
     ],
     "required_evidence": [
-      "mobile automation plan with environment matrix, reliability controls, and evidence artifacts"
+      "device inventory",
+      "hub",
+      "provider",
+      "lease owner",
+      "logcat"
     ],
     "pass_rubric": [
       "Prefer supported frameworks and official automation drivers for device control.",
@@ -505,39 +527,43 @@
   {
     "id": "mmo-cloud-queue-cost-guard",
     "skill": "mmo-cloud-operations-automation",
-    "task": "Operate cloud MMO automation with scheduler and queue boundaries, retry jitter, idempotent jobs, dead-letter handling, cost ceilings, and SLO signal mapping.",
+    "task": "Operate cloud MMO automation with worker pool, scheduler, queue dashboard, retry jitter, idempotent jobs, stalled job handling, dead-letter inspection, cost ceilings, pause/resume/retry controls, and SLO signal mapping.",
     "required_artifacts": [
-      "cloud MMO automation architecture",
+      "cloud MMO operations architecture with worker pool, queue dashboard, idempotent jobs, backoff policies, and observability",
       "alerts"
     ],
     "required_evidence": [
-      "retry/backoff test evidence",
-      "idempotency",
-      "cost ceiling"
+      "worker pool",
+      "queue dashboard",
+      "stalled",
+      "dead-letter",
+      "pause"
     ],
     "pass_rubric": [
-      "scheduler",
-      "queue",
-      "emergency scale-down"
+      "Use idempotent job contracts, idempotency keys, and dead-letter handling for failure isolation.",
+      "Use exponential backoff with jitter for transient failures and throttling events.",
+      "policy-guard"
     ]
   },
   {
     "id": "mmo-api-quota-replay-safe",
     "skill": "mmo-http-api-automation",
-    "task": "Build HTTP/API automation with official endpoint contracts, quota handling, 429 retry-backoff behavior, idempotency keys, and replay-safe evidence.",
+    "task": "Build HTTP/API automation with endpoint catalog, request ledger, status code filters, retry count, duration/cost fields, official endpoint contracts, quota handling, 429 retry-backoff behavior, idempotency keys, and replay-safe evidence.",
     "required_artifacts": [
-      "HTTP automation plan",
+      "HTTP/API operator design with endpoint catalog, request ledger, contract validation, idempotent retry logic, and audit-ready logs",
       "audit-ready logs"
     ],
     "required_evidence": [
-      "request/response samples",
-      "idempotency key replay proof",
-      "contract drift checks"
+      "endpoint catalog",
+      "request ledger",
+      "status code",
+      "retry count",
+      "idempotency key"
     ],
     "pass_rubric": [
-      "rate-limit",
-      "retry-backoff",
-      "replay-safety"
+      "Define request contracts from official API documentation before implementation.",
+      "Handle 429 and transient 5xx paths with bounded retries and reset-aware backoff.",
+      "api-integration"
     ]
   },
   {

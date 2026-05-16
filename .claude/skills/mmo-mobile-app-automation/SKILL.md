@@ -1,13 +1,14 @@
 ---
 name: mmo-mobile-app-automation
-description: Use when MMO mobile workflows need emulator or device automation with stable selectors, app-state control, and repeatable run evidence.
+description: Use when MMO mobile workflows need device inventory, emulator or device automation, stable selectors, app-state control, and repeatable run evidence.
 ---
 
 # Mission
 Deliver stable mobile MMO automation for repetitive app workflows with measurable reliability.
 
 ## Mandatory scope checks
-- define emulator or device matrix and startup method
+- define emulator or device matrix, provider, hub, and startup method
+- define device inventory fields: device id, OS, app version, provider, health, lease owner, battery, network, last run
 - define app-state preconditions for each critical user journey
 - define selector strategy and wait/retry policy
 - define failure triage for crash, ANR, and timeout signals
@@ -15,7 +16,7 @@ Deliver stable mobile MMO automation for repetitive app workflows with measurabl
 ## Evidence contract
 - include one full green run on target matrix
 - include one failure-path reproduction with root-cause notes
-- include run artifacts (logs, screenshots, or trace pointers)
+- include run artifacts: logcat, screenshots, video or trace pointers, crash/ANR markers
 
 ## Role
 - mmo-mobile-automation
@@ -29,11 +30,12 @@ Deliver stable mobile MMO automation for repetitive app workflows with measurabl
 - toolchain constraints and policy rules
 
 ## Outputs
-- mobile automation plan with environment matrix, reliability controls, and evidence artifacts
+- mobile automation operations plan with device farm inventory, session lease, environment matrix, reliability controls, and evidence artifacts
 
 ## Reference skills and rules
 - Prefer supported frameworks and official automation drivers for device control.
 - Define deterministic app-state setup and teardown to reduce flake.
+- Model the device farm like a real ops tool: hub/provider split, device status, lease owner, app version, logcat/crash/ANR evidence, and remote-control link.
 - Do not design rooted, tampered, or policy-evasion mobile automation paths.
 
 ## Likely next step

@@ -1,20 +1,22 @@
 ---
 name: mmo-lowcode-automation
-description: Use when MMO operations rely on no-code or low-code orchestration stacks and need modular flows, error handlers, and safe deployment controls.
+description: Use when MMO operations rely on no-code or low-code orchestration stacks and need execution history, modular flows, error handlers, and safe deployment controls.
 ---
 
 # Mission
-Build robust MMO low-code automation that stays debuggable, recoverable, and cost-aware under load.
+Build MMO low-code automation that stays debuggable, recoverable, and cost-aware under load.
 
 ## Mandatory scope checks
-- define trigger, schedule, and dependency graph ownership
+- define trigger, schedule, manual execution, production execution, and dependency graph ownership
+- define execution list columns: workflow, node, status, duration, retries, operator, environment
 - define error handler and retry/backoff strategy per critical module
 - define rate-limit controls and queue behavior
 - define publish, rollback, and incident-response procedure
+- define redaction rules for credentials, tokens, cookies, payload samples, and account identifiers
 
 ## Evidence contract
 - include module-level success and failure traces
-- include throttling and queue-pressure evidence
+- include throttling, queue-pressure, and redacted execution evidence
 - include publish-versus-draft workflow control proof
 
 ## Role
@@ -29,11 +31,12 @@ Build robust MMO low-code automation that stays debuggable, recoverable, and cos
 - operational SLA and rollback constraints
 
 ## Outputs
-- low-code automation blueprint with module contracts, retries, and observability hooks
+- low-code operations design with node graph, execution list, module contracts, retries, redaction, and observability hooks
 
 ## Reference skills and rules
 - Treat visual workflow nodes as production logic: define contracts and failure semantics explicitly.
 - Enforce per-scenario run limits and queue controls to prevent request storms.
+- Mirror real automation tools: manual vs production execution, active/inactive state, node-level output, error workflow, redacted execution data, and execution search.
 - Separate draft/test workflows from published production workflows.
 
 ## Likely next step

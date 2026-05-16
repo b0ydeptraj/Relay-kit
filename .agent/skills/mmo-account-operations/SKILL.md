@@ -1,6 +1,6 @@
 ---
 name: mmo-account-operations
-description: Use when MMO account operations need lifecycle automation for onboarding, health checks, risk segmentation, and recovery runbooks.
+description: Use when MMO account operations need profile inventory, lifecycle automation, health checks, risk segmentation, and recovery runbooks.
 ---
 
 # Mission
@@ -8,14 +8,16 @@ Operate MMO account fleets with deterministic controls, safety gates, and clear 
 
 ## Mandatory scope checks
 - classify account states: onboarding, active, limited, suspended, retired
+- define account inventory fields: owner, folder, tags, proxy binding, session status, health score, last action, cooldown until
 - enforce credential storage and rotation controls
 - define per-account and per-platform action budgets
+- define bulk action review and dry-run approval before changes touch more than one account
 - define incident response and suspension recovery path
 
 ## Evidence contract
 - include account-state transition logs
 - include budget and limit guard outputs
-- include escalation checklist for enforcement events
+- include quarantine, cooldown, and escalation checklist for enforcement events
 
 ## Role
 - mmo-account-ops
@@ -29,11 +31,12 @@ Operate MMO account fleets with deterministic controls, safety gates, and clear 
 - platform limits and escalation paths
 
 ## Outputs
-- account operations workflow with risk controls, observability, and recovery plan
+- account operations console contract with profile table, health scoring, risk controls, observability, and recovery plan
 
 ## Reference skills and rules
 - Account automation must use authorized credentials, clear ownership, and auditable actions.
 - Never design flows for CAPTCHA bypass, identity spoofing, or policy circumvention.
+- Mirror real account tools: folder/tag filters, owner columns, proxy binding, account health, cooldown, quarantine, and bulk action review.
 - Separate routine lifecycle automation from high-risk actions that require manual approval.
 
 ## Likely next step

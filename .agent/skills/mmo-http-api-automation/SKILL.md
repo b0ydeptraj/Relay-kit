@@ -1,6 +1,6 @@
 ---
 name: mmo-http-api-automation
-description: Use when MMO workloads are primarily HTTP/API-driven and need contract-safe request orchestration, quota handling, and replay-safe execution.
+description: Use when MMO workloads are primarily HTTP/API-driven and need endpoint catalog, contract-safe request orchestration, quota handling, redacted logs, and replay-safe execution.
 ---
 
 # Mission
@@ -9,6 +9,7 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 ## Mandatory scope checks
 - define endpoint groups by risk and side-effect level
 - define authentication scope and token lifecycle
+- define request ledger fields: request id, endpoint, method, status code, duration, retry count, origin, cost, idempotency key
 - propagate request id or correlation id through logs
 - define rate-limit parsing and retry-backoff behavior
 - define idempotency key, dedupe, redacted logging, and replay-safety policy
@@ -16,7 +17,7 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 ## Evidence contract
 - include redacted request/response samples for success and 429 throttled paths
 - include idempotency key replay proof for write endpoints
-- include contract drift checks against API schema or docs
+- include contract drift checks against API schema or docs plus status-code filter evidence
 
 ## Role
 - mmo-api-automation
@@ -30,12 +31,13 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 - rate-limit and retry constraints
 
 ## Outputs
-- HTTP automation plan with contract validation, idempotent retry logic, and audit-ready logs
+- HTTP/API operator design with endpoint catalog, request ledger, contract validation, idempotent retry logic, and audit-ready logs
 
 ## Reference skills and rules
 - Define request contracts from official API documentation before implementation.
 - Handle 429 and transient 5xx paths with bounded retries and reset-aware backoff.
 - Use idempotency key, request id, redacted raw request/response evidence, and replay checks for write operations.
+- Mirror real API dashboards: endpoint groups, status-code filters, origin filters, retry count, duration, cost, and replay-safe request detail.
 
 ## Likely next step
 - api-integration

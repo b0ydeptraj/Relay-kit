@@ -192,6 +192,8 @@ relay-kit proof audit /path/to/project --strict --json
 
 `eval real-world` requires practical fixture coverage for every registered skill. It is not a field-tested deployment claim; `proof audit` keeps `field-tested` at zero until explicit field evidence is recorded.
 
+MMO/API skills are guarded by public ecosystem realism checks. They must model dense operator workflows such as profile inventories, bulk actions, session/proxy affinity, run queues, redacted request ledgers, queue health, live debug evidence, and manual review gates; see `docs/relay-kit-mmo-api-realism-research.md`.
+
 Audit lane coordination before trusting parallel work:
 
 ```bash
