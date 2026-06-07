@@ -8,7 +8,7 @@
 
 ## Route Contract
 
-`workflow-router -> scout-hub -> plan-hub -> fix-hub -> developer -> test-hub -> review-hub -> qa-governor -> release-readiness`
+`workflow-router -> scout-hub -> plan-hub -> fix-hub -> developer -> test-hub -> review-hub -> qa-governor -> release-readiness -> delegation-control`
 
 ## Required Skills
 
@@ -16,7 +16,7 @@
 
 ## Optional Skills
 
-`context-continuity`, `policy-guard`, `evidence-before-completion`
+`context-continuity`, `policy-guard`, `evidence-before-completion`, `token-economy`
 
 ## Expected Evidence
 

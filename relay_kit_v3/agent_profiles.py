@@ -60,6 +60,7 @@ AGENT_PROFILES: tuple[AgentProfileSpec, ...] = (
             "review-hub",
             "qa-governor",
             "release-readiness",
+            "delegation-control",
         ),
         required_skills=(
             "workflow-router",
@@ -76,6 +77,7 @@ AGENT_PROFILES: tuple[AgentProfileSpec, ...] = (
             "context-continuity",
             "policy-guard",
             "evidence-before-completion",
+            "token-economy",
         ),
         expected_evidence=(
             "scoped implementation diff with tests or verification output",

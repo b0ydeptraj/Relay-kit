@@ -538,9 +538,13 @@ def render_parallel_execution() -> str:
         "- Park blocked lanes instead of letting them guess in parallel.",
         "",
         "## Subagent mode",
+        "- Route through `delegation-control` before creating a subagent.",
+        "- Medium reasoning is the default; low requires a proven mechanical, low-risk task with known verification.",
+        "- Every approved subagent receives its own token-economy context pack and quota.",
         "- Only use subagent-style execution when tasks are already sliced and independent.",
         "- Use one subagent per bounded task, not one subagent for the whole feature.",
         "- Return every result through the lane owner before calling the work complete.",
+        "- Close completed subagents after handoff evidence is recorded; preserve the ledger and raw evidence.",
         "",
     ]
     return "\n".join(lines).rstrip() + "\n"

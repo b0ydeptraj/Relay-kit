@@ -219,6 +219,25 @@ def sample_token_audit(*, budget_violations: int = 0, signal_retention: float = 
     }
 
 
+def sample_delegation_audit(*, budget_violations: int = 0) -> dict[str, object]:
+    return {
+        "schema_version": "relay-kit.delegation-audit.v1",
+        "status": "pass" if budget_violations == 0 else "hold",
+        "summary": {
+            "active_agents": 1,
+            "closed_agents": 2,
+            "estimated_tokens": 4800,
+            "actual_tokens": 4100,
+            "budget_violations": budget_violations,
+            "high_reasoning_agents": 0,
+            "low_reasoning_agents": 0,
+            "unnecessary_spawns": 0,
+            "findings": budget_violations,
+        },
+        "findings": [] if budget_violations == 0 else [{"id": "delegation-budget-violation"}],
+    }
+
+
 def sample_signal_calibration(*, blocked_claims: int = 0) -> dict[str, object]:
     return {
         "schema_version": "relay-kit.signal-calibration.v1",
@@ -289,12 +308,14 @@ def test_pulse_report_includes_governance_health_sections(tmp_path: Path) -> Non
         include_lane_audit=True,
         include_adapter_diagnostics=True,
         include_token_audit=True,
+        include_delegation_audit=True,
         include_query_search=True,
         include_service_boundaries=True,
         context_audit_builder=lambda root: sample_context_audit(stale_sources=0),
         lane_audit_builder=lambda root: sample_lane_audit(conflicts=0),
         adapter_diagnostics_builder=lambda root: sample_adapter_diagnostics(metadata_drift=0),
         token_audit_builder=lambda root: sample_token_audit(budget_violations=0, signal_retention=1.0),
+        delegation_audit_builder=lambda root: sample_delegation_audit(budget_violations=0),
         signal_calibration_builder=lambda root: sample_signal_calibration(blocked_claims=0),
         query_search_builder=lambda root, query: sample_query_search(authoritative_hits=2),
         service_boundaries_builder=lambda root: sample_service_boundaries(findings=0),
@@ -305,6 +326,8 @@ def test_pulse_report_includes_governance_health_sections(tmp_path: Path) -> Non
     assert report["adapter_health"]["metadata_drift"] == 0
     assert report["token_health"]["budget_violations"] == 0
     assert report["token_health"]["signal_retention"] == 1.0
+    assert report["delegation_health"]["active_agents"] == 1
+    assert report["delegation_health"]["budget_violations"] == 0
     assert report["calibration_health"]["blocked_claims"] == 0
     assert report["query_health"]["authoritative_hits"] == 2
     assert report["service_boundary_health"]["findings"] == 0

@@ -73,6 +73,17 @@ def write_pulse_report(root: Path) -> Path:
                     "raw_required_blocks": 2,
                     "budget_violations": 0,
                 },
+                "delegation_health": {
+                    "status": "pass",
+                    "active_agents": 1,
+                    "closed_agents": 2,
+                    "estimated_tokens": 4800,
+                    "actual_tokens": 4100,
+                    "budget_violations": 0,
+                    "high_reasoning_agents": 0,
+                    "low_reasoning_agents": 0,
+                    "unnecessary_spawns": 0,
+                },
                 "calibration_health": {
                     "status": "pass",
                     "claim_count": 3,
@@ -182,6 +193,14 @@ def test_signal_export_builds_metrics_and_events(tmp_path: Path) -> None:
     assert "relay.context.signal_retention" in metric_names
     assert "relay.context.raw_required_blocks" in metric_names
     assert "relay.token.budget_violations" in metric_names
+    assert "relay.delegation.active_agents" in metric_names
+    assert "relay.delegation.closed_agents" in metric_names
+    assert "relay.delegation.estimated_tokens" in metric_names
+    assert "relay.delegation.actual_tokens" in metric_names
+    assert "relay.delegation.budget_violations" in metric_names
+    assert "relay.delegation.high_reasoning_agents" in metric_names
+    assert "relay.delegation.low_reasoning_agents" in metric_names
+    assert "relay.delegation.unnecessary_spawns" in metric_names
     assert "relay.calibration.unsupported_claims" in metric_names
     assert "relay.calibration.overclaim_flags" in metric_names
     assert "relay.calibration.proven_claims" in metric_names

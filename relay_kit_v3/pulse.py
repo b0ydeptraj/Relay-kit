@@ -20,6 +20,7 @@ from relay_kit_v3.service_boundaries import build_service_boundary_report
 from relay_kit_v3.signal_calibration import build_report as build_signal_calibration_report
 from relay_kit_v3.support_request import DEFAULT_OUTPUT as DEFAULT_SUPPORT_REQUEST_OUTPUT
 from relay_kit_v3.token_economy import build_token_audit
+from relay_kit_v3.delegation_control import build_delegation_audit
 from scripts import eval_workflows
 
 
@@ -41,6 +42,7 @@ AdapterDiagnosticsBuilder = Callable[[Path], Mapping[str, Any]]
 QuerySearchBuilder = Callable[[Path, str], Mapping[str, Any]]
 ServiceBoundariesBuilder = Callable[[Path], Mapping[str, Any]]
 TokenAuditBuilder = Callable[[Path], Mapping[str, Any]]
+DelegationAuditBuilder = Callable[[Path], Mapping[str, Any]]
 SignalCalibrationBuilder = Callable[[Path], Mapping[str, Any]]
 EvidenceSummarizer = Callable[[Path, int], LedgerSummary]
 
@@ -64,6 +66,7 @@ def build_pulse_report(
     query_search_file: Path | str | None = None,
     service_boundaries_file: Path | str | None = None,
     token_audit_file: Path | str | None = None,
+    delegation_audit_file: Path | str | None = None,
     signal_calibration_file: Path | str | None = None,
     include_publication: bool = False,
     include_package_index: bool = False,
@@ -73,6 +76,7 @@ def build_pulse_report(
     include_lane_audit: bool = False,
     include_adapter_diagnostics: bool = False,
     include_token_audit: bool = False,
+    include_delegation_audit: bool = False,
     include_signal_calibration: bool = True,
     include_query_search: bool = False,
     include_service_boundaries: bool = False,
@@ -91,6 +95,7 @@ def build_pulse_report(
     query_search_builder: QuerySearchBuilder | None = None,
     service_boundaries_builder: ServiceBoundariesBuilder | None = None,
     token_audit_builder: TokenAuditBuilder | None = None,
+    delegation_audit_builder: DelegationAuditBuilder | None = None,
     signal_calibration_builder: SignalCalibrationBuilder | None = None,
     evidence_summarizer: EvidenceSummarizer | None = None,
 ) -> dict[str, Any]:
@@ -165,6 +170,12 @@ def build_pulse_report(
         token_audit_file=token_audit_file,
         token_audit_builder=token_audit_builder,
     )
+    delegation_audit = _load_or_build_delegation_audit(
+        root,
+        include_delegation_audit=include_delegation_audit,
+        delegation_audit_file=delegation_audit_file,
+        delegation_audit_builder=delegation_audit_builder,
+    )
     signal_calibration = _load_or_build_signal_calibration(
         root,
         include_signal_calibration=include_signal_calibration,
@@ -175,6 +186,7 @@ def build_pulse_report(
     lane_health = build_lane_health(lane_audit)
     adapter_health = build_adapter_health(adapter_diagnostics)
     token_health = build_token_health(token_audit)
+    delegation_health = build_delegation_health(delegation_audit)
     calibration_health = build_calibration_health(signal_calibration)
     query_health = build_query_health(query_search)
     service_boundary_health = build_service_boundary_health(service_boundaries)
@@ -183,6 +195,7 @@ def build_pulse_report(
         lane_health,
         adapter_health,
         token_health,
+        delegation_health,
         calibration_health,
         query_health,
         service_boundary_health,
@@ -226,6 +239,7 @@ def build_pulse_report(
         "lane_audit": lane_audit,
         "adapter_diagnostics": adapter_diagnostics,
         "token_audit": token_audit,
+        "delegation_audit": delegation_audit,
         "signal_calibration": signal_calibration,
         "query_search": query_search,
         "service_boundaries": service_boundaries,
@@ -233,6 +247,7 @@ def build_pulse_report(
         "lane_health": lane_health,
         "adapter_health": adapter_health,
         "token_health": token_health,
+        "delegation_health": delegation_health,
         "calibration_health": calibration_health,
         "query_health": query_health,
         "service_boundary_health": service_boundary_health,
@@ -280,6 +295,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     lane_health = _mapping(report.get("lane_health"))
     adapter_health = _mapping(report.get("adapter_health"))
     token_health = _mapping(report.get("token_health"))
+    delegation_health = _mapping(report.get("delegation_health"))
     calibration_health = _mapping(report.get("calibration_health"))
     query_health = _mapping(report.get("query_health"))
     service_boundary_health = _mapping(report.get("service_boundary_health"))
@@ -312,6 +328,8 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
         ("Adapter drift", str(adapter_health.get("metadata_drift", 0))),
         ("Token budget violations", str(token_health.get("budget_violations", 0))),
         ("Token retention", _percent(token_health.get("signal_retention"))),
+        ("Active delegated agents", str(delegation_health.get("active_agents", 0))),
+        ("Delegation budget violations", str(delegation_health.get("budget_violations", 0))),
         ("Blocked claims", str(calibration_health.get("blocked_claims", 0))),
         ("Overclaim flags", str(calibration_health.get("overclaim_flags", 0))),
         ("Boundary findings", str(service_boundary_health.get("findings", 0))),
@@ -350,6 +368,10 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     token_health_rows = _health_rows(
         token_health,
         ("status", "estimated_tokens", "compressed_tokens", "signal_retention", "raw_required_blocks", "budget_violations"),
+    )
+    delegation_health_rows = _health_rows(
+        delegation_health,
+        ("status", "active_agents", "closed_agents", "estimated_tokens", "actual_tokens", "budget_violations", "high_reasoning_agents", "low_reasoning_agents", "unnecessary_spawns"),
     )
     calibration_health_rows = _health_rows(
         calibration_health,
@@ -568,6 +590,7 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       <table>
         <tr><th>Signal</th><th>Value</th></tr>
         {token_health_rows}
+        {delegation_health_rows}
       </table>
     </section>
     <section class="panel">
@@ -860,6 +883,33 @@ def build_token_health(token_audit: Mapping[str, Any] | None) -> dict[str, Any]:
         "raw_required_blocks": int(metrics.get("raw_required_blocks", 0) or 0),
         "budget_violations": int(metrics.get("budget_violations", 0) or 0),
         "findings": int(summary.get("findings", len(_list(token_audit.get("findings")))) or 0),
+    }
+
+
+def build_delegation_health(delegation_audit: Mapping[str, Any] | None) -> dict[str, Any]:
+    if delegation_audit is None:
+        return {
+            "status": "not-run",
+            "active_agents": 0,
+            "closed_agents": 0,
+            "estimated_tokens": 0,
+            "actual_tokens": None,
+            "budget_violations": 0,
+            "high_reasoning_agents": 0,
+            "low_reasoning_agents": 0,
+            "unnecessary_spawns": 0,
+        }
+    summary = _mapping(delegation_audit.get("summary"))
+    return {
+        "status": str(delegation_audit.get("status", "not-run")),
+        "active_agents": int(summary.get("active_agents", 0) or 0),
+        "closed_agents": int(summary.get("closed_agents", 0) or 0),
+        "estimated_tokens": int(summary.get("estimated_tokens", 0) or 0),
+        "actual_tokens": summary.get("actual_tokens"),
+        "budget_violations": int(summary.get("budget_violations", 0) or 0),
+        "high_reasoning_agents": int(summary.get("high_reasoning_agents", 0) or 0),
+        "low_reasoning_agents": int(summary.get("low_reasoning_agents", 0) or 0),
+        "unnecessary_spawns": int(summary.get("unnecessary_spawns", 0) or 0),
     }
 
 
@@ -1601,6 +1651,21 @@ def _load_or_build_token_audit(
     if not include_token_audit:
         return None
     builder = token_audit_builder or (lambda project_root: build_token_audit(project_root))
+    return builder(root)
+
+
+def _load_or_build_delegation_audit(
+    root: Path,
+    *,
+    include_delegation_audit: bool,
+    delegation_audit_file: Path | str | None,
+    delegation_audit_builder: DelegationAuditBuilder | None,
+) -> Mapping[str, Any] | None:
+    if delegation_audit_file is not None:
+        return _read_json(root, delegation_audit_file)
+    if not include_delegation_audit:
+        return None
+    builder = delegation_audit_builder or (lambda project_root: build_delegation_audit(project_root))
     return builder(root)
 
 

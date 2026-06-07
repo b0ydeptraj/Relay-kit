@@ -35,6 +35,7 @@ from .registry import (
 )
 from .runtime_locale import ensure_runtime_locale, load_runtime_locale
 from .srs_policy import ensure_srs_policy
+from .delegation_control import ensure_policy as ensure_delegation_policy
 from relay_kit_compat import (
     CANONICAL_ARTIFACT_ROOT,
     mirrored_generic_paths,
@@ -179,6 +180,8 @@ def emit_contracts(project_path: Path, bundle: str) -> List[Path]:
     written.append(policy_path)
     locale_path = ensure_runtime_locale(project_path)
     written.append(locale_path)
+    delegation_policy_path = ensure_delegation_policy(project_path)
+    written.append(delegation_policy_path)
     return written
 
 

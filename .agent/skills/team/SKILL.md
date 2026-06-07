@@ -15,6 +15,7 @@ Coordinate parallel work while preserving one authoritative source of truth for 
 6. Record lock scope and handoff status whenever a lane changes ownership or pauses.
 7. For each lane, record `depends_on`, `wave_id`, and `resume_condition`, then only advance to the next wave after current-wave verification gates pass.
 8. Run `relay-kit lane audit <project> --strict --json` before claiming multi-lane state is safe.
+9. Route through `delegation-control` before creating subagents; medium reasoning is the default and low reasoning requires a proven mechanical task.
 
 ## Do not do this
 - Do not let two lanes silently diverge on the same acceptance criteria.
@@ -51,6 +52,7 @@ Coordinate parallel work while preserving one authoritative source of truth for 
 - Use `competencies/team-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
+- delegation-control
 - cook
 - plan-hub
 - scout-hub

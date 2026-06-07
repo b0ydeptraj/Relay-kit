@@ -898,5 +898,16 @@
       "encrypted",
       "human-review"
     ]
+  },
+  {
+    "id": "delegation-control-quota-reasoning-lifecycle",
+    "prompt": "Use delegation-control before spawning subagents to choose medium reasoning by default, prove independent bounded lanes, enforce token quota and lock scope, create per-agent context packs, and close completed agents only after handoff evidence.",
+    "expected_skill": "delegation-control",
+    "expected_terms": [
+      "medium reasoning",
+      "quota",
+      "context pack",
+      "handoff"
+    ]
   }
 ]

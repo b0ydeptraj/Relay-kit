@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
+from relay_kit_v3.delegation_control import build_delegation_audit
+
 
 SCHEMA_VERSION = "relay-kit.lane-audit.v1"
 
@@ -259,6 +261,17 @@ def build_lane_audit(root: Path | str) -> dict[str, Any]:
                     }
                 )
 
+    delegation_report = build_delegation_audit(project)
+    for delegation_finding in delegation_report.get("findings", []):
+        findings.append(
+            {
+                "id": f"delegation-{delegation_finding.get('id', 'finding')}",
+                "status": "hold",
+                "path": ".relay-kit/state/delegation-ledger.jsonl",
+                "summary": delegation_finding.get("summary", "delegation audit finding"),
+            }
+        )
+
     status = "hold" if findings else "pass"
     return {
         "schema_version": SCHEMA_VERSION,
@@ -272,6 +285,7 @@ def build_lane_audit(root: Path | str) -> dict[str, Any]:
             "broad_locks": sum(1 for finding in findings if finding["id"] == "broad-lock-scope"),
             "missing_resume_conditions": sum(1 for finding in findings if finding["id"] == "missing-resume-condition"),
             "incomplete_handoffs": sum(1 for finding in findings if finding["id"] == "missing-handoff-return-condition"),
+            "delegation_active_agents": delegation_report.get("summary", {}).get("active_agents", 0),
         },
         "findings": findings,
     }

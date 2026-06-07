@@ -12,7 +12,8 @@
     "test-hub",
     "review-hub",
     "qa-governor",
-    "release-readiness"
+    "release-readiness",
+    "delegation-control"
   ],
   "required_skills": [
     "workflow-router",
@@ -28,7 +29,8 @@
   "optional_skills": [
     "context-continuity",
     "policy-guard",
-    "evidence-before-completion"
+    "evidence-before-completion",
+    "token-economy"
   ],
   "expected_evidence": [
     "scoped implementation diff with tests or verification output",
