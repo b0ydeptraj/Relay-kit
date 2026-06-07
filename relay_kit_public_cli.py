@@ -40,6 +40,8 @@ This wrapper exposes a friendlier command surface:
   relay-kit locale show <project_path>
   relay-kit locale set <project_path> --locale <code>
   relay-kit lane audit <project_path>
+  relay-kit delegation plan <project_path> --task "..."
+  relay-kit delegation audit <project_path>
   relay-kit adapter diagnose <project_path>
   relay-kit command list <project_path>
   relay-kit command diagnose <project_path>
@@ -171,6 +173,14 @@ from relay_kit_v3.context_index import (
     write_context_index,
 )
 from relay_kit_v3.lane_audit import build_lane_audit, render_lane_audit, write_lane_audit
+from relay_kit_v3.delegation_control import (
+    adapter_capabilities,
+    build_delegation_audit,
+    build_delegation_plan,
+    close_completed,
+    record_usage,
+    render_delegation_report,
+)
 from relay_kit_v3.adapter_diagnostics import (
     build_adapter_diagnostics,
     render_adapter_diagnostics,
@@ -474,6 +484,50 @@ def _parse_lane_args(argv: list[str]) -> argparse.Namespace:
     audit.add_argument("--output-file", default=None, help="Optional lane audit JSON output path")
     audit.add_argument("--strict", action="store_true", help="Return non-zero unless lane audit passes")
     audit.add_argument("--json", action="store_true", help="Emit machine-readable lane audit")
+    return parser.parse_args(argv)
+
+
+def _parse_delegation_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="relay-kit delegation",
+        description="Plan and audit quota-aware subagent delegation.",
+    )
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    plan = subparsers.add_parser("plan", help="Plan bounded delegation with reasoning and quota controls")
+    plan.add_argument("project_path", nargs="?", default=".")
+    plan.add_argument("--task", required=True)
+    plan.add_argument("--budget", type=int, default=None)
+    plan.add_argument("--complexity", choices=["L0", "L1", "L2", "L3", "L4"], default=None)
+    plan.add_argument("--adapter", choices=["codex", "claude", "agent", "antigravity", "all"], default="all")
+    plan.add_argument("--artifact", default=None)
+    plan.add_argument("--lock-scope", default=None)
+    plan.add_argument("--expected-return-condition", default=None)
+    plan.add_argument("--verification-command", default=None)
+    plan.add_argument("--independent", action="store_true")
+    plan.add_argument("--apply", action="store_true")
+    plan.add_argument("--strict", action="store_true")
+    plan.add_argument("--json", action="store_true")
+
+    audit = subparsers.add_parser("audit", help="Audit delegation quota and lifecycle state")
+    audit.add_argument("project_path", nargs="?", default=".")
+    audit.add_argument("--strict", action="store_true")
+    audit.add_argument("--json", action="store_true")
+
+    close = subparsers.add_parser("close-completed", help="Close agents with recorded handoff evidence")
+    close.add_argument("project_path", nargs="?", default=".")
+    close.add_argument("--json", action="store_true")
+
+    usage = subparsers.add_parser("record-usage", help="Record adapter-reported token usage")
+    usage.add_argument("project_path", nargs="?", default=".")
+    usage.add_argument("--agent-id", required=True)
+    usage.add_argument("--input-tokens", required=True, type=int)
+    usage.add_argument("--output-tokens", required=True, type=int)
+    usage.add_argument("--json", action="store_true")
+
+    capabilities = subparsers.add_parser("capabilities", help="Report adapter delegation capability enforcement")
+    capabilities.add_argument("project_path", nargs="?", default=".")
+    capabilities.add_argument("--adapter", choices=["codex", "claude", "agent", "antigravity", "all"], default="all")
+    capabilities.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -1263,6 +1317,7 @@ def _parse_pulse_args(argv: list[str]) -> argparse.Namespace:
     build.add_argument("--include-lane-audit", action="store_true", help="Run lane audit and include lane health")
     build.add_argument("--include-adapter-diagnostics", action="store_true", help="Run adapter diagnostics and include adapter health")
     build.add_argument("--include-token-audit", action="store_true", help="Run token audit and include token health")
+    build.add_argument("--include-delegation-audit", action="store_true", help="Run delegation audit and include delegation health")
     build.add_argument("--include-query-search", action="store_true", help="Run query search and include query health")
     build.add_argument("--include-service-boundaries", action="store_true", help="Run service-boundary checks and include service health")
     build.add_argument("--readiness-file", default=None, help="Existing readiness JSON report to include")
@@ -1274,6 +1329,7 @@ def _parse_pulse_args(argv: list[str]) -> argparse.Namespace:
     build.add_argument("--lane-audit-file", default=None, help="Existing lane audit JSON report to include")
     build.add_argument("--adapter-diagnostics-file", default=None, help="Existing adapter diagnostics JSON report to include")
     build.add_argument("--token-audit-file", default=None, help="Existing token audit JSON report to include")
+    build.add_argument("--delegation-audit-file", default=None, help="Existing delegation audit JSON report to include")
     build.add_argument("--signal-calibration-file", default=None, help="Existing signal calibration JSON report to include")
     build.add_argument("--skip-signal-calibration", action="store_true", help="Do not build the default signal calibration summary")
     build.add_argument("--query-search-file", default=None, help="Existing query search JSON report to include")
@@ -1749,6 +1805,45 @@ def run_lane(args: argparse.Namespace) -> int:
         if args.output_file:
             print(f"Wrote {args.output_file}")
     if args.strict and report["status"] != "pass":
+        return 1
+    return 0
+
+
+def run_delegation(args: argparse.Namespace) -> int:
+    if args.action == "plan":
+        report = build_delegation_plan(
+            args.project_path,
+            task=args.task,
+            budget=args.budget,
+            complexity=args.complexity,
+            adapter=args.adapter,
+            artifact=args.artifact,
+            lock_scope=args.lock_scope,
+            expected_return_condition=args.expected_return_condition,
+            verification_command=args.verification_command,
+            independent=args.independent,
+            apply=args.apply,
+        )
+    elif args.action == "audit":
+        report = build_delegation_audit(args.project_path)
+    elif args.action == "close-completed":
+        report = close_completed(args.project_path)
+    elif args.action == "record-usage":
+        report = record_usage(
+            args.project_path,
+            agent_id=args.agent_id,
+            input_tokens=args.input_tokens,
+            output_tokens=args.output_tokens,
+        )
+    elif args.action == "capabilities":
+        report = adapter_capabilities(args.adapter)
+    else:
+        return 2
+    if args.json:
+        print(json.dumps(report, ensure_ascii=True, indent=2))
+    else:
+        print(render_delegation_report(report))
+    if getattr(args, "strict", False) and report.get("status") != "pass":
         return 1
     return 0
 
@@ -2654,6 +2749,7 @@ def run_pulse(args: argparse.Namespace) -> int:
         include_lane_audit=args.include_lane_audit,
         include_adapter_diagnostics=args.include_adapter_diagnostics,
         include_token_audit=args.include_token_audit,
+        include_delegation_audit=args.include_delegation_audit,
         include_query_search=args.include_query_search,
         include_service_boundaries=args.include_service_boundaries,
         workflow_eval_file=args.workflow_eval_file,
@@ -2666,6 +2762,7 @@ def run_pulse(args: argparse.Namespace) -> int:
         lane_audit_file=args.lane_audit_file,
         adapter_diagnostics_file=args.adapter_diagnostics_file,
         token_audit_file=args.token_audit_file,
+        delegation_audit_file=args.delegation_audit_file,
         signal_calibration_file=args.signal_calibration_file,
         include_signal_calibration=not args.skip_signal_calibration,
         query_search_file=args.query_search_file,
@@ -2736,6 +2833,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_context(_parse_context_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "lane":
         return run_lane(_parse_lane_args(raw_argv[1:]))
+    if raw_argv and raw_argv[0] == "delegation":
+        return run_delegation(_parse_delegation_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "locale":
         return run_locale(_parse_locale_args(raw_argv[1:]))
     if raw_argv and raw_argv[0] == "token":

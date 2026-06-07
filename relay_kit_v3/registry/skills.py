@@ -207,7 +207,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "Prefer wave-based execution: parallel inside a wave, strict dependency gate between waves.",
             "Run `relay-kit lane audit <project> --strict --json` before trusting a multi-lane handoff.",
         ],
-        next_steps=["cook", "plan-hub", "scout-hub", "debug-hub", "review-hub", "context-continuity"],
+        next_steps=["delegation-control", "cook", "plan-hub", "scout-hub", "debug-hub", "review-hub", "context-continuity"],
         body=dedent(
             """\
             # Mission
@@ -222,6 +222,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             6. Record lock scope and handoff status whenever a lane changes ownership or pauses.
             7. For each lane, record `depends_on`, `wave_id`, and `resume_condition`, then only advance to the next wave after current-wave verification gates pass.
             8. Run `relay-kit lane audit <project> --strict --json` before claiming multi-lane state is safe.
+            9. Route through `delegation-control` before creating subagents; medium reasoning is the default and low reasoning requires a proven mechanical task.
 
             ## Do not do this
             - Do not let two lanes silently diverge on the same acceptance criteria.
@@ -2559,6 +2560,38 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Signal retention must remain 1.0 in strict mode.",
             "If uncertain, keep the block raw-required and mark why.",
             "Record both selected and dropped context sources so downstream lanes can rehydrate if needed.",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+    ),
+    "delegation-control": utility_provider_spec(
+        name="delegation-control",
+        description="Use when creating subagents or parallel agent lanes is being considered. Decide whether delegation is worth its quota cost, assign reasoning tiers, require bounded context packs, and close completed agents after evidence handoff.",
+        outputs=[
+            "delegation plan and quota decision under .relay-kit/delegation",
+            "append-only delegation lifecycle events under .relay-kit/state/delegation-ledger.jsonl",
+            "adapter capability and enforcement status",
+        ],
+        references=[
+            "Medium reasoning is the normal default; low is allowed only for proven mechanical, low-risk work.",
+            "Prefer no subagent when the main agent can complete the bounded task safely.",
+            "Use token-economy to create a separate context pack for every approved subagent.",
+            "Close completed agents only after handoff evidence is recorded; preserve ledger and raw evidence.",
+        ],
+        next_steps=["team", "token-economy", "context-continuity", "review-hub", "qa-governor"],
+        mission="Control subagent cost and lifecycle without pretending every adapter exposes the same spawn, reasoning, usage, or close controls.",
+        tasks=[
+            "Record the reasoning tier decision and use medium default unless evidence justifies low or high.",
+            "Reject unnecessary spawn requests and approve only bounded delegation with an artifact, quota and lock scope, return condition, and verification.",
+            "Create and retain the context pack path for each approved subagent.",
+            "Keep concurrent and high-reasoning subagents within policy limits.",
+            "Record advisory versus enforced adapter capabilities and actual token usage only when reported.",
+            "Close completed agents only with handoff evidence and close reason, then perform evidence-preserving close of temporary context packs.",
+        ],
+        rules=[
+            "Enforce no unnecessary spawn: do not create subagents merely because a task is large.",
+            "Do not lower reasoning solely because quota is nearly exhausted.",
+            "Do not call an adapter control enforced unless runtime capability evidence exists.",
+            "Do not delete lifecycle ledger or handoff evidence during cleanup.",
         ],
         allowed_tools=READ_ANALYZE_TOOLS,
     ),

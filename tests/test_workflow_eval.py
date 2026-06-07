@@ -21,7 +21,7 @@ from scripts.eval_workflows import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_DEFAULT_SCENARIOS = 89
+EXPECTED_DEFAULT_SCENARIOS = 90
 EXPECTED_PROFILED_SUPPORT_SCENARIOS = len(PROFILED_SUPPORT_EVIDENCE_TERMS) * 2
 
 
@@ -142,6 +142,7 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
         "ui-styling",
         "aesthetic",
         "token-economy",
+        "delegation-control",
         "accessibility-review",
         "policy-guard",
         "impact-radar",

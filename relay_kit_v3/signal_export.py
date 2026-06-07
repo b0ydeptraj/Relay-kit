@@ -151,6 +151,7 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
     lane_health = _mapping(pulse_report.get("lane_health"))
     adapter_health = _mapping(pulse_report.get("adapter_health"))
     token_health = _mapping(pulse_report.get("token_health"))
+    delegation_health = _mapping(pulse_report.get("delegation_health"))
     calibration_health = _mapping(pulse_report.get("calibration_health"))
     query_health = _mapping(pulse_report.get("query_health"))
     service_boundary_health = _mapping(pulse_report.get("service_boundary_health"))
@@ -196,6 +197,14 @@ def metric_signals(pulse_report: Mapping[str, Any]) -> list[dict[str, Any]]:
         metric("relay.context.signal_retention", _number(token_health.get("signal_retention")), "1", base_attrs),
         metric("relay.context.raw_required_blocks", _number(token_health.get("raw_required_blocks")), "1", base_attrs),
         metric("relay.token.budget_violations", _number(token_health.get("budget_violations")), "1", base_attrs),
+        metric("relay.delegation.active_agents", _number(delegation_health.get("active_agents")), "1", base_attrs),
+        metric("relay.delegation.closed_agents", _number(delegation_health.get("closed_agents")), "1", base_attrs),
+        metric("relay.delegation.estimated_tokens", _number(delegation_health.get("estimated_tokens")), "1", base_attrs),
+        metric("relay.delegation.actual_tokens", _number(delegation_health.get("actual_tokens")), "1", base_attrs),
+        metric("relay.delegation.budget_violations", _number(delegation_health.get("budget_violations")), "1", base_attrs),
+        metric("relay.delegation.high_reasoning_agents", _number(delegation_health.get("high_reasoning_agents")), "1", base_attrs),
+        metric("relay.delegation.low_reasoning_agents", _number(delegation_health.get("low_reasoning_agents")), "1", base_attrs),
+        metric("relay.delegation.unnecessary_spawns", _number(delegation_health.get("unnecessary_spawns")), "1", base_attrs),
         metric("relay.calibration.unsupported_claims", _number(calibration_health.get("unsupported_claims")), "1", base_attrs),
         metric("relay.calibration.overclaim_flags", _number(calibration_health.get("overclaim_flags")), "1", base_attrs),
         metric("relay.calibration.proven_claims", _number(calibration_health.get("proven_claims")), "1", base_attrs),

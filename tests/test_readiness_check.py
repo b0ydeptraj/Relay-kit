@@ -197,6 +197,7 @@ def test_readiness_report_returns_candidate_when_required_gates_pass(tmp_path: P
         "agent-profiles",
         "runtime-locale",
         "token-economy",
+        "delegation-control",
         "signal-calibration",
         "real-world-skill-eval",
         "skill-proof-audit",

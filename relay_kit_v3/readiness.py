@@ -20,6 +20,7 @@ from relay_kit_v3.runtime_locale import inspect_runtime_locale
 from relay_kit_v3.real_world_eval import build_report as build_real_world_eval_report
 from relay_kit_v3.signal_calibration import build_report as build_signal_calibration_report
 from relay_kit_v3.skill_proof import build_report as build_skill_proof_report
+from relay_kit_v3.delegation_control import build_delegation_audit
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_SCHEMA_VERSION
 from relay_kit_v3.support_bundle import build_support_bundle
 from relay_kit_v3.support_triage import support_bundle_findings
@@ -80,6 +81,7 @@ def build_readiness_report(
     gates.append(_agent_profiles_gate(root))
     gates.append(_runtime_locale_gate(root))
     gates.append(_token_economy_gate(root))
+    gates.append(_delegation_control_gate(root))
     gates.append(_signal_calibration_gate(root))
     gates.append(_real_world_skill_eval_gate(root))
     gates.append(_skill_proof_audit_gate(root))
@@ -544,6 +546,27 @@ def _token_economy_gate(root: Path) -> dict[str, Any]:
         }
     except Exception as exc:  # pragma: no cover - defensive gate summary
         return _exception_gate("token-economy", "token economy", exc)
+
+
+def _delegation_control_gate(root: Path) -> dict[str, Any]:
+    try:
+        report = build_delegation_audit(root)
+        findings = report.get("findings", [])
+        ok = report.get("status") == "pass"
+        return {
+            "id": "delegation-control",
+            "label": "delegation control",
+            "status": "pass" if ok else "fail",
+            "required": True,
+            "summary": "delegation control audit ok" if ok else f"delegation findings: {len(findings)}",
+            "details": {
+                "summary": report.get("summary", {}),
+                "findings_count": len(findings),
+                "findings": findings[:12],
+            },
+        }
+    except Exception as exc:  # pragma: no cover
+        return _exception_gate("delegation-control", "delegation control", exc)
 
 
 def _signal_calibration_gate(root: Path) -> dict[str, Any]:

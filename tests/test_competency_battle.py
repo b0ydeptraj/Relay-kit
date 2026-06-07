@@ -21,6 +21,7 @@ EXPECTED_HIGH_RISK_CATEGORIES = {
     "bootstrap": "context-continuity",
     "cook": "context-continuity",
     "debug-hub": "debugging",
+    "delegation-control": "context-continuity",
     "dependency-management": "dependency-management",
     "fix-hub": "implementation",
     "go-service-engineering": "go-service-engineering",

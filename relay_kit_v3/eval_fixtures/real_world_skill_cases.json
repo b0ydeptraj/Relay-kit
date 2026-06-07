@@ -1301,5 +1301,27 @@
       "encrypted storage",
       "segmentation"
     ]
+  },
+  {
+    "id": "delegation-control-real-world-contract",
+    "skill": "delegation-control",
+    "task": "Use delegation-control for a production-shaped Relay-kit lane before creating subagents. The operator must classify complexity, keep medium as the normal reasoning tier, prove that delegated work is independent and bounded, enforce quota and lock scope, create a task-specific context pack, and close the subagent only after handoff evidence is recorded.",
+    "required_artifacts": [
+      ".relay-kit/state/delegation-policy.json",
+      ".relay-kit/state/delegation-ledger.jsonl",
+      ".relay-kit/delegation/plans"
+    ],
+    "required_evidence": [
+      "reasoning tier decision",
+      "quota and lock scope",
+      "context pack path",
+      "handoff evidence and close reason"
+    ],
+    "pass_rubric": [
+      "medium default",
+      "no unnecessary spawn",
+      "bounded delegation",
+      "evidence-preserving close"
+    ]
   }
 ]

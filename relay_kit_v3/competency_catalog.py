@@ -287,6 +287,7 @@ SKILL_CATEGORY_OVERRIDES: dict[str, str] = {
     "memory-search": "context-continuity",
     "handoff-context": "context-continuity",
     "token-economy": "context-continuity",
+    "delegation-control": "context-continuity",
     "analyst": "research-product",
     "growth-marketing": "research-product",
     "market-research": "research-product",
