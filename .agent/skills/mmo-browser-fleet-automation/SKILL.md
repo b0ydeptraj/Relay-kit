@@ -39,7 +39,7 @@ Run browser MMO operations with high reliability, clear limits, and policy-safe 
 - Use explicit waits, resilient locators, and deterministic retry policy instead of blind sleeps.
 - Keep profile-to-proxy affinity explicit; validate proxy health before launch and preserve profile folders/tags for operator filtering.
 - Design dense operator screens: live session list, lease owner, selector drift, screenshot trace, console/network tabs, retry button, and stop button.
-- Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy.
+- Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy inside the fleet scope. If antibot challenges (Cloudflare, Datadome, CAPTCHA) are encountered, delegate immediately to `antibot-challenge-solving` outside the fleet.
 - Open `references/mmo-browser-fleet-automation-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/mmo-browser-fleet-automation-good-output.md` and `examples/mmo-browser-fleet-automation-bad-output.md` to calibrate output quality.
 - Use `evals/mmo-browser-fleet-automation-cases.json` as the minimum scenario set for behavior regression checks.
@@ -50,3 +50,4 @@ Run browser MMO operations with high reliability, clear limits, and policy-safe 
 - browser-inspector
 - policy-guard
 - qa-governor
+- antibot-challenge-solving

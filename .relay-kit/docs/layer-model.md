@@ -45,6 +45,8 @@ Stateless capabilities and analysis helpers. These should be called by hubs or o
 - mermaid-diagrams
 - ux-structure
 - media-tooling
+- offensive-security-engagement
+- attack-chain-orchestration
 
 ## layer-4-specialists-and-standalones
 Role specialists, native support skills, and domain standalones that actually produce architecture, stories, code, and quality evidence.
@@ -75,3 +77,32 @@ Role specialists, native support skills, and domain standalones that actually pr
 - api-integration
 - data-persistence
 - testing-patterns
+- cpp-systems-engineering
+- windows-native-internals
+- advanced-python-engineering
+- binary-stealth-obfuscation
+- edr-evasion-tactics
+- telemetry-blinding
+- process-injection-techniques
+- network-stealth-c2
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- antibot-challenge-solving
+- frontend-crypto-reverse
+- desktop-imgui-development
+- desktop-python-ui
+- terminal-operator-ui
+- malware-analysis-workflows
+- binary-reverse-methodology
+- mmo-onchain-security-audit
+- mmo-llm-automation
+- mobile-app-reverse
+
+## optional-discipline-overlays
+Additive discipline utilities installed on top of any bundle. These do not own lanes but add cross-cutting capability.
+
+- root-cause-debugging
+- test-first-development
+- evidence-before-completion
+- skill-evolution
+- field-journal-evolution

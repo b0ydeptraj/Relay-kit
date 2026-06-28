@@ -51,3 +51,4 @@ Collect, enrich, and structure targeting data for MMO campaigns using authorized
 - mmo-nick-warmup-engine
 - mmo-reup-automation
 - policy-guard
+- frontend-crypto-reverse

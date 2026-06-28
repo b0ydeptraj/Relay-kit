@@ -50,3 +50,4 @@ Operate a multi-wallet crypto farming program with strict identity isolation and
 - mmo-http-api-automation
 - policy-guard
 - qa-governor
+- mmo-onchain-security-audit

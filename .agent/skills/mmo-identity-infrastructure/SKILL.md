@@ -51,3 +51,4 @@ Build airtight per-account digital identities that survive platform behavioral a
 - mmo-nick-warmup-engine
 - mmo-proxy-network-ops
 - policy-guard
+- browser-fingerprint-engineering

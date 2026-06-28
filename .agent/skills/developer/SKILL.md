@@ -66,3 +66,16 @@ If implementation reveals missing architecture, unclear acceptance criteria, a b
 - test-hub
 - qa-governor
 - review-hub
+- cpp-systems-engineering
+- windows-native-internals
+- advanced-python-engineering
+- binary-stealth-obfuscation
+- edr-evasion-tactics
+- process-injection-techniques
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- frontend-crypto-reverse
+- desktop-imgui-development
+- desktop-python-ui
+- terminal-operator-ui
+- field-journal-evolution

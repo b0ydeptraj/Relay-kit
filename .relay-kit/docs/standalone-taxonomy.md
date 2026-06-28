@@ -58,4 +58,36 @@ Examples or likely members:
 - content pipelines
 - asset-heavy workflows
 
+## security-and-systems
+Examples or likely members:
+- offensive-security-engagement
+- cpp-systems-engineering
+- windows-native-internals
+- advanced-python-engineering
+- binary-stealth-obfuscation
+- edr-evasion-tactics
+- telemetry-blinding
+- process-injection-techniques
+- network-stealth-c2
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- antibot-challenge-solving
+- frontend-crypto-reverse
+- binary-reverse-methodology
+- malware-analysis-workflows
+- mobile-app-reverse
+- attack-chain-orchestration
+
+## desktop-and-tooling
+Examples or likely members:
+- desktop-imgui-development
+- desktop-python-ui
+- terminal-operator-ui
+
+## mmo-intelligence
+Examples or likely members:
+- mmo-onchain-security-audit
+- mmo-llm-automation
+- field-journal-evolution
+
 Treat the taxonomy as a classification guide, not as a requirement to ship every standalone in one release.

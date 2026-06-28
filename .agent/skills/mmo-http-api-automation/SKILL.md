@@ -49,3 +49,4 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 - automation-ops
 - policy-guard
 - qa-governor
+- frontend-crypto-reverse

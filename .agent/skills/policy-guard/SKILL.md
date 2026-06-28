@@ -21,6 +21,7 @@ Fail closed on deterministic high-risk agent operation patterns before they reac
 - Do not treat policy findings as cosmetic lint.
 - Prefer fixing the risky surface over allowlisting it.
 - Escalate to review-hub when a finding is intentional but operationally sensitive.
+- Cooperation contract with offensive-security-engagement: policy-guard is fail-closed for secrets, shell, and path risk. offensive-security-engagement is fail-open-for-authorized for offensive techniques. When both are active in the same lane, policy-guard runs LAST as a post-execution gate, not as a pre-execution block on authorized offensive actions. Do not block offensive actions that have a valid engagement_proof in workflow-state.
 
 ## Role
 - utility-provider
@@ -49,3 +50,4 @@ Fail closed on deterministic high-risk agent operation patterns before they reac
 - qa-governor
 - review-hub
 - fix-hub
+- offensive-security-engagement

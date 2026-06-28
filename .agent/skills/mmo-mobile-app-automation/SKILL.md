@@ -54,3 +54,4 @@ Hold when the design has no device lease model, no app-state reset, no selector 
 - testing-patterns
 - qa-governor
 - review-hub
+- mobile-app-reverse

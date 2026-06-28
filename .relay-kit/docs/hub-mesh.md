@@ -63,6 +63,9 @@ Can hand off to:
 - growth-marketing
 - mmo-social-marketing-automation
 - mmo-reup-automation
+- mmo-onchain-security-audit
+- mmo-llm-automation
+- attack-chain-orchestration
 - ux-structure
 
 ### scout-hub
@@ -79,6 +82,13 @@ Can hand off to:
 - token-economy
 - context-continuity
 - handoff-context
+- cpp-systems-engineering
+- windows-native-internals
+- binary-reverse-methodology
+- malware-analysis-workflows
+- mobile-app-reverse
+- browser-fingerprint-engineering
+- protocol-fingerprint-spoofing
 
 ### plan-hub
 - analyst
@@ -94,6 +104,12 @@ Can hand off to:
 - mmo-lowcode-automation
 - mmo-cloud-operations-automation
 - mmo-http-api-automation
+- cpp-systems-engineering
+- advanced-python-engineering
+- attack-chain-orchestration
+- mmo-onchain-security-audit
+- mmo-llm-automation
+- mobile-app-reverse
 - impact-radar
 - token-economy
 - context-continuity
@@ -109,6 +125,15 @@ Can hand off to:
 - multimodal-evidence
 - memory-search
 - runtime-doctor
+- edr-evasion-tactics
+- telemetry-blinding
+- process-injection-techniques
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- frontend-crypto-reverse
+- binary-reverse-methodology
+- malware-analysis-workflows
+- antibot-challenge-solving
 
 ### fix-hub
 - developer
@@ -125,6 +150,20 @@ Can hand off to:
 - accessibility-review
 - token-economy
 - handoff-context
+- cpp-systems-engineering
+- windows-native-internals
+- advanced-python-engineering
+- binary-stealth-obfuscation
+- edr-evasion-tactics
+- telemetry-blinding
+- process-injection-techniques
+- network-stealth-c2
+- protocol-fingerprint-spoofing
+- antibot-challenge-solving
+- frontend-crypto-reverse
+- desktop-imgui-development
+- desktop-python-ui
+- terminal-operator-ui
 
 ### test-hub
 - qa-governor
@@ -151,6 +190,13 @@ Can hand off to:
 - token-economy
 - context-continuity
 - media-tooling
+- binary-stealth-obfuscation
+- edr-evasion-tactics
+- telemetry-blinding
+- process-injection-techniques
+- network-stealth-c2
+- protocol-fingerprint-spoofing
+- mmo-onchain-security-audit
 
 ### review-hub
 - qa-governor
@@ -178,3 +224,10 @@ Can hand off to:
 - token-economy
 - context-continuity
 - mermaid-diagrams
+- cpp-systems-engineering
+- advanced-python-engineering
+- binary-stealth-obfuscation
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- frontend-crypto-reverse
+- desktop-imgui-development

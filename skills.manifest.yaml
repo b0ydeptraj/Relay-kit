@@ -1,4 +1,4 @@
-﻿version: 0.2
+version: 0.2
 philosophy: hub-and-spoke-runtime
 objective: >-
   Keep the active relay-kit runtime adapter-neutral at the skill layer with Relay-kit-only
@@ -61,11 +61,14 @@ layers:
     - mermaid-diagrams
     - ux-structure
     - media-tooling
+    - offensive-security-engagement
+    - attack-chain-orchestration
   optional_discipline_overlays:
     - root-cause-debugging
     - test-first-development
     - evidence-before-completion
     - skill-evolution
+    - field-journal-evolution
   layer_4_specialists_and_standalones:
     - analyst
     - pm
@@ -79,6 +82,26 @@ layers:
     - api-integration
     - data-persistence
     - testing-patterns
+    - cpp-systems-engineering
+    - windows-native-internals
+    - advanced-python-engineering
+    - binary-stealth-obfuscation
+    - edr-evasion-tactics
+    - telemetry-blinding
+    - process-injection-techniques
+    - network-stealth-c2
+    - protocol-fingerprint-spoofing
+    - browser-fingerprint-engineering
+    - antibot-challenge-solving
+    - frontend-crypto-reverse
+    - desktop-imgui-development
+    - desktop-python-ui
+    - terminal-operator-ui
+    - malware-analysis-workflows
+    - binary-reverse-methodology
+    - mmo-onchain-security-audit
+    - mmo-llm-automation
+    - mobile-app-reverse
 
 bundles:
   active_baselines:

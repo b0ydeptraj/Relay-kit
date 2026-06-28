@@ -17,7 +17,7 @@ If `.relay-kit/context/index.json` exists, treat graph hits as candidate files t
 
 ## Mandatory routing procedure
 1. Read `.relay-kit/contracts/project-context.md` and `.relay-kit/state/workflow-state.md` if they exist.
-2. Score the request on five axes: ambiguity, breadth of change, architecture risk, operational risk, and coordination cost.
+2. Score the request on six axes: ambiguity, breadth of change, architecture risk, operational risk, coordination cost, and authorization_risk (presence of offensive/red-team/evasion/injection/stealth/C2 keywords or explicit red-team scope).
 3. Classify complexity:
    - `L0`: single bug or tiny refactor
    - `L1`: small feature or bug cluster
@@ -28,6 +28,7 @@ If `.relay-kit/context/index.json` exists, treat graph hits as candidate files t
    - `L0-L1` -> quick-flow
    - `L2-L3` -> product-flow
    - `L4` -> enterprise-flow
+   - `authorization_risk >= medium` -> offensive-flow (call `offensive-security-engagement` as first L3 utility before picking specialist)
 5. Choose the layer-1 entrypoint:
    - use `bootstrap` if state, context, or artifacts are missing
    - use `cook` for one active request in one lane
@@ -36,7 +37,7 @@ If `.relay-kit/context/index.json` exists, treat graph hits as candidate files t
    - `scout-hub` when the codebase area is unclear
    - `plan-hub` when planning artifacts are missing or stale
    - `debug-hub` when the request starts from a failure or regression
-7. Mark the lane mode explicitly as one of: discovery, planning, implementation, or verification.
+7. Mark the lane mode explicitly as one of: discovery, planning, implementation, verification, or offensive.
 8. When parallel or parked lanes exist, record `depends_on`, `wave_id`, and `resume_condition` in team-board and lane-registry.
 9. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
 
@@ -92,3 +93,4 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - plan-hub
 - debug-hub
 - token-economy
+- offensive-security-engagement

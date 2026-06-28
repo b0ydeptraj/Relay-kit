@@ -49,3 +49,4 @@ Run MMO cloud automation at scale with resilient retries, safe concurrency, and 
 - release-readiness
 - policy-guard
 - qa-governor
+- mmo-llm-automation

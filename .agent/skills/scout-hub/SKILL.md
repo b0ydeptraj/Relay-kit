@@ -12,6 +12,13 @@ Gather the minimum reliable context the next lane needs so nobody plans or fixes
 3. Use `memory-search` for prior decisions, handoff breadcrumbs, or stale state checks.
 4. Use `project-architecture` when module boundaries or architecture drift matter.
 5. Use `dependency-management` when tooling, lockfiles, or dependency risk affects the lane.
+6. Offensive recon routing: when the codebase is binary, native, or mobile-focused, pull the matching analysis skill before planning:
+   - Binary / PE / ELF / Mach-O -> `binary-reverse-methodology`
+   - Malware samples / suspicious code -> `malware-analysis-workflows`
+   - APK / IPA / mobile native -> `mobile-app-reverse`
+   - C++ / Win32 / driver code -> `cpp-systems-engineering`, `windows-native-internals`
+   - Web JS / WASM crypto -> `frontend-crypto-reverse`, `browser-fingerprint-engineering`
+   - Network protocol unknown -> `protocol-fingerprint-spoofing`
 
 ## Evidence contract
 - cite concrete paths, commands, modules, or docs instead of broad summaries
@@ -61,3 +68,11 @@ Name what became clearer, what is still unknown, which sources may be stale, and
 - debug-hub
 - review-hub
 - workflow-router
+- binary-reverse-methodology
+- malware-analysis-workflows
+- mobile-app-reverse
+- cpp-systems-engineering
+- windows-native-internals
+- frontend-crypto-reverse
+- browser-fingerprint-engineering
+- protocol-fingerprint-spoofing
