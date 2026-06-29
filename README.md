@@ -1,559 +1,249 @@
-[English](README.md) | [Tiếng Việt](README.vi.md)
+<div align="center">
 
-# Relay-kit
+# ⚡ Relay-kit
 
-![Relay-kit runtime skill system](docs/site/assets/relay-kit-hero.svg)
+**A structured skill system for coding agents.**  
+Install once. Your agent stops guessing and starts working like an engineer.
 
-Relay-kit is a runtime skill system for teams that build with coding agents.
+[![PyPI](https://img.shields.io/pypi/v/relay-kit?color=4f46e5&label=relay-kit&logo=pypi&logoColor=white)](https://pypi.org/project/relay-kit/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org)
+[![Skills](https://img.shields.io/badge/skills-73%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
+[![Adapters](https://img.shields.io/badge/adapters-Claude%20·%20Codex%20·%20Antigravity-8b5cf6)](https://github.com/b0ydeptraj/Relay-kit)
+[![License](https://img.shields.io/badge/license-Proprietary-gray)](LICENSE)
 
-It does not try to make the model magically smarter. It makes the work more disciplined.
+[English](README.md) · [Tiếng Việt](README.vi.md) · [Docs](docs/public-docs-index.md)
 
-With Relay-kit, an agent gets:
+</div>
 
-- a clearer starting point
-- better reusable skills
-- a stricter way to plan, build, debug, and review
-- shared artifacts so work does not live only in chat memory
+---
 
-The result is simple: agents work with more structure, fewer random moves, and stronger proof before anything is called done.
+## The problem
 
-GitHub docs site: [`docs/site/index.md`](docs/site/index.md)
+You're using Claude, Codex, or Cursor to build things. But the agent:
 
-## Install in 60 seconds
+- starts coding before understanding the problem
+- drifts from what you actually approved
+- patches bugs without finding root cause
+- says "done" when nothing is proven
 
-Pick your agent and copy one block. The default install is the full Relay-kit runtime: skills, slash commands, agent profiles, shared `.relay-kit` artifacts, and local doctor checks. You do not need `--bundle enterprise`.
+Relay-kit solves this. It installs a structured workflow system into your project — 73 skills that agents actually follow, with built-in proof gates before anything is called done.
 
-### Codex
+---
 
+## Quick install
+
+**Claude Code:**
 ```bash
-pip install relay-kit
-relay-kit . --codex
-relay-kit doctor .
+pip install relay-kit && relay-kit . --claude && relay-kit doctor .
 ```
 
-### Claude
-
+**Codex:**
 ```bash
-pip install relay-kit
-relay-kit . --claude
-relay-kit doctor .
+pip install relay-kit && relay-kit . --codex && relay-kit doctor .
 ```
 
-### Antigravity / Agent
-
+**Antigravity / custom agent:**
 ```bash
-pip install relay-kit
-relay-kit . --antigravity
-relay-kit doctor .
+pip install relay-kit && relay-kit . --antigravity && relay-kit doctor .
 ```
 
-Use `.` when you are already inside the project you want to install into. Replace `.` with a path when installing into another folder.
-
-For Vietnamese metadata in generated skill pickers:
-
-```bash
-relay-kit locale set "C:\\path\\to\\my-app" --locale vi
-```
-
-Use one adapter flag per run: `--codex`, `--claude`, or `--antigravity`. Use `--all` only when you intentionally want to generate Codex, Claude, and Agent surfaces together.
-
-## Install from GitHub source
-
-If PyPI is unavailable or you want the latest `main` build:
-
+**From GitHub (latest build):**
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
-relay-kit . --codex
-relay-kit doctor .
+relay-kit . --claude && relay-kit doctor .
 ```
 
-## Local development install
+> `relay-kit doctor .` verifies the install is healthy. Run it after every update.
 
-From a cloned Relay-kit checkout:
+---
 
-```bash
-pipx install .
-relay-kit /path/to/project --codex
-relay-kit doctor /path/to/project
+## How agents use it
+
+Eight short names. That's all you need to remember.
+
+| Type this | What happens |
+|---|---|
+| `start-here` | Agent finds the right path for your request |
+| `brainstorm` | Shapes a rough idea before any code is written |
+| `write-steps` | Slices approved work into verifiable steps |
+| `build-it` | Implements with scope control and evidence |
+| `debug-systematically` | Root-cause debugging — no random patches |
+| `review-pr` | Deliberate PR review before merge |
+| `ready-check` | Real go/no-go verdict with a QA report |
+| `prove-it` | Final evidence check before calling work done |
+
+**For new work:** `start-here` → `brainstorm` → `write-steps` → `build-it` → `ready-check`
+
+**For bugs:** `start-here` → `debug-systematically` → `build-it` → `ready-check`
+
+**For PRs:** `review-pr` → `ready-check`
+
+---
+
+## What's installed
+
+Running `relay-kit . --claude` writes structured skills into `.claude/skills/`. Same for `.codex/` and `.agent/`.
+
+```
+your-project/
+├── .claude/skills/          ← 73 SKILL.md files Claude reads
+├── .codex/skills/           ← same for Codex
+├── .agent/skills/           ← same for Antigravity
+└── .relay-kit/
+    ├── contracts/           ← planning and QA contracts
+    ├── state/               ← workflow state across sessions
+    ├── references/          ← skill reference docs
+    └── evidence/            ← gate run history
 ```
 
-## Why use Relay-kit
+Everything lives in your project. No cloud. No API keys required.
 
-Most agent workflows break in the same places:
+---
 
-- work starts before the problem is clear
-- implementation drifts away from the approved direction
-- bugs get patched without finding the root cause
-- "done" gets claimed before there is enough proof
-
-Relay-kit exists to stop that.
-
-It is for:
-
-- solo builders using coding agents seriously
-- product and engineering teams that want repeatable output
-- people using Claude, Codex, or Antigravity-style agent workflows who need more than prompt packs
-
-Relay-kit gives them a clear operating flow for:
-
-- new work
-- bug fixing
-- review
-- completion
-
-It makes agents behave less like improvising interns and more like engineers working inside a defined system.
-
-## Core Skill System
-
-The public surface focuses on the skills that make Relay-kit useful in real coding work:
-
-| Runtime layer | Flagship skills | What they do |
-| --- | --- | --- |
-| Intent routing | `workflow-router`, `repo-map`, `prompt enhance` | turn vague requests into a clear ask / scout / act path with files to read first |
-| Codebase context | `context index`, `context search`, `context related`, `context explain-symbol` | find relevant paths, symbols, tests, docs, configs, call hints, and active context locally |
-| Implementation flow | `developer`, `fix-hub`, `execution-loop`, `test-first-development` | keep code changes bounded, testable, and tied to the current repo shape |
-| Debug and review | `debug-hub`, `root-cause-debugging`, `review-hub`, `qa-governor` | move from symptoms to evidence, then from evidence to a defensible verdict |
-| Engineering specialists | `api-integration`, `data-persistence`, `dependency-management`, `testing-patterns`, `go-service-engineering`, `next-product-frontend` | apply battle-tested competency patterns for common backend, frontend, dependency, and test problems |
-| Proof gates | `policy-guard`, `runtime-doctor`, `skill-gauntlet`, `signal-calibration`, `readiness check`, `skill-battle`, `competency-battle` | verify generated adapters, skill behavior, local governance, and claim boundaries |
-
-Specialized extension packs exist, but they are not the front-door story. The catalog keeps them separate from the core runtime surface so the public README highlights Relay-kit's strongest value: routing, context, battle proof, and adapter governance.
-
-## Global Locale Switch
-
-Relay-kit now supports one global runtime locale switch for all adapters:
-
-- default locale profile: `en`
-- set once per project: `relay-kit locale set <project> --locale <code>`
-- locale packs v1: `en`, `vi` only
-- runtime policy accepts only `en` or `vi`; unsupported values are rejected by `relay-kit locale set`
-- applies metadata localization only (skill descriptions, command/agent surface intent/evidence) after normal generation flow
-- canonical routing IDs/contracts stay in English and stable
-- `relay-kit command list` and `relay-kit agent list` stay English by default for stable machine parsing
-
-Examples:
-
-```bash
-relay-kit locale show /path/to/project --json
-relay-kit locale set /path/to/project --locale vi --json
-relay-kit init /path/to/project --codex --locale vi
-```
-
-## What you get
-
-- a small public skill surface that is easy to remember
-- reusable runtime skills for `.claude`, `.agent`, and `.codex`
-- shared workflow artifacts in `.relay-kit/`
-- a read-only `memory-search` utility for retrieving prior decisions and handoffs
-- a `context audit` gate for checking source authority, freshness, and missing handoff context
-- a `lane audit` gate for checking lock conflicts, parked-lane resume conditions, and handoff return contracts
-- an `adapter diagnose` gate for checking generated Codex, Claude, and Agent skill parity plus frontmatter drift
-- a lifecycle command registry with deterministic command surfaces for `.claude`, `.codex`, and `.agent`
-- a `command diagnose` gate for strict command parity across adapters
-- explicit `relay-engineer` and `relay-growth` agent profiles with deterministic surfaces for `.relay-kit`, `.claude`, `.codex`, and `.agent`
-- an `agent diagnose` gate for strict profile parity and profile-contract drift
-- a `query search` utility for ranked lookup across state, contracts, docs, evidence, and registry sources
-- a local `context index/search/related/explain-symbol` engine for file, symbol, import, docs, config, nearby-test, active-context, and SQLite FTS hints without API keys
-- hybrid local context hints for chunks, call graph hints, git history hints, and MCP-style local tools, with optional local embedding and tree-sitter support via `relay-kit[context]`
-- a `prompt enhance` utility that turns short or vague user requests into skill-aware working guidance and uses the local context graph when it exists
-- `battle-audit`, `battle-benchmark`, `skill-battle`, and `competency-battle` gates for finding generic skill resources, testing read-only public repo retrieval quality, and scoring each skill by competency evidence
-- a `signal-calibration` gate that downgrades unsupported production-ready, commercial-ready, field-tested, backend realism, MMO/API realism, and benchmark claims before they become confident output
-- a local `repo-profile` classifier that maps a repo to archetypes such as backend API, frontend app, CLI tool, automation worker, database-heavy, security/policy, docs/product, library core, or test runner
-- a `service boundaries` gate for checking module ownership and static dependency rules
-- a `release-readiness` utility for pre/post deploy smoke gates and rollback signals
-- an `accessibility-review` gate so frontend quality is not only visual
-- a `skill-gauntlet` regression gate to keep skill routing behavior stable
-- a `context-continuity` utility for checkpoint, rehydrate, handoff, and diff flows
-- a `readiness check` gate that combines tests, doctor, policy, manifest trust, upgrade, support, contract sync, and signal export proof
-- local Pulse reports and signal exports for quality review and support diagnostics
-- an active baseline that is validated instead of loosely assembled
-- a way to make work more consistent without forcing everything through raw chat memory
-
-## Daily commands
-
-Most users only need these after installation:
-
-```bash
-relay-kit doctor .
-relay-kit adapter diagnose . --adapter all --strict
-relay-kit readiness check . --profile enterprise
-```
-
-Everything below is the deeper operator reference.
+## Skill catalog
 
 <details>
-<summary>Advanced command reference</summary>
+<summary><strong>Core engineering skills (always installed)</strong></summary>
 
-## Advanced commands
-
-List active runtime bundles:
-
-```bash
-relay-kit --list-skills
-```
-
-Generate all active adapters:
-
-```bash
-relay-kit init /path/to/project --all
-```
-
-Run the enterprise governance gates after the default full install:
-
-```bash
-relay-kit init /path/to/project --all
-relay-kit manifest write /path/to/project
-relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
-relay-kit doctor /path/to/project --policy-pack enterprise
-relay-kit upgrade mark-current /path/to/project --adapter all
-relay-kit readiness check /path/to/project --profile enterprise
-```
-
-The readiness verdict for a clean local run is `local-governance-ready-candidate`. Attach remote CI, release, support, and user-validation evidence to the readiness output when those proofs exist.
-
-Run the support gate:
-
-```bash
-relay-kit doctor /path/to/project
-relay-kit manifest verify /path/to/project --trusted
-relay-kit doctor /path/to/project --policy-pack enterprise
-```
-
-Show recent gate evidence:
-
-```bash
-relay-kit evidence summary /path/to/project
-relay-kit doctor /path/to/project --json
-```
-
-Doctor writes local JSONL events to `.relay-kit/evidence/events.jsonl`.
-
-Audit context freshness before continuing a long-running lane:
-
-```bash
-relay-kit context audit /path/to/project --strict --json
-relay-kit context budget /path/to/project --max-tokens 8000 --strict --json
-relay-kit context pack /path/to/project --task "ship release safely" --max-tokens 8000 --strict --json
-relay-kit token audit /path/to/project --max-tokens 8000 --strict --json
-relay-kit shell compact /path/to/project --json -- python -m pytest tests -q
-```
-
-Prove skill behavior beyond routing claims:
-
-```bash
-relay-kit eval real-world /path/to/project --strict --json
-relay-kit proof audit /path/to/project --strict --json
-relay-kit eval battle-audit /path/to/project --strict --json
-relay-kit eval battle-benchmark /path/to/project --suite deep --cleanup --json
-relay-kit eval skill-battle /path/to/project --skill all --suite deep --cleanup --json
-relay-kit eval competency-battle /path/to/project --skill all --suite core --json
-relay-kit eval repo-profile /path/to/project --json
-relay-kit eval domain-pack list /path/to/project --json
-relay-kit eval skill-weakness-report /path/to/project --json
-relay-kit calibrate readiness /path/to/project --strict --json
-relay-kit calibrate claims /path/to/project --claim "This skill is field-tested" --strict --json
-```
-
-`eval real-world`, `battle-benchmark`, `skill-battle`, `competency-battle`, and `calibrate` are evidence gates, not marketing badges. They check whether Relay-kit can find the right files, symbols, tests, evidence terms, competency patterns, and overclaim traps in the current suite. `calibrate` is also the strict guard that keeps fixture-only proof from being called `field-tested`.
-
-The clean local readiness verdict is `local-governance-ready-candidate`. External release evidence stays separate in machine-readable readiness output, so the README can stay focused on what Relay-kit actually ships: local routing, context, skills, adapters, and proof gates.
-
-Audit lane coordination before trusting parallel work:
-
-```bash
-relay-kit lane audit /path/to/project --strict --json
-```
-
-Audit adapter runtime surfaces before trusting editor handoff:
-
-```bash
-relay-kit adapter diagnose /path/to/project --adapter all --strict --json
-```
-
-Inspect lifecycle command routing and parity:
-
-```bash
-relay-kit command list /path/to/project --json
-relay-kit command diagnose /path/to/project --adapter all --strict --json
-```
-
-Inspect agent profile routing contracts and parity:
-
-```bash
-relay-kit agent list /path/to/project --json
-relay-kit agent diagnose /path/to/project --adapter all --strict --json
-```
-
-Search Relay-kit sources without broad context dumping:
-
-```bash
-relay-kit query search /path/to/project --query "support handoff" --json
-```
-
-Enhance a short user request into skill-aware working guidance:
-
-```bash
-relay-kit prompt enhance /path/to/project --prompt "fix CI"
-relay-kit prompt enhance /path/to/project --prompt "sửa login" --json
-```
-
-Check service-boundary drift:
-
-```bash
-relay-kit service boundaries /path/to/project --strict --json
-```
-
-Export planning and QA contracts as machine-readable JSON:
-
-```bash
-relay-kit contract export /path/to/project
-relay-kit contract import /path/to/project --contract-file /path/to/relay-contract.json
-relay-kit contract import /path/to/project --contract-file /path/to/relay-contract.json --apply
-```
-
-Write and verify the bundle checksum manifest:
-
-```bash
-relay-kit manifest write /path/to/project
-relay-kit manifest verify /path/to/project
-relay-kit manifest stamp /path/to/project --issuer relay-kit --channel enterprise
-relay-kit manifest verify /path/to/project --trusted
-```
-
-Run policy guard packs:
-
-```bash
-relay-kit policy list
-relay-kit policy check /path/to/project --pack enterprise --strict
-```
-
-Prepare a support diagnostics bundle:
-
-```bash
-relay-kit support bundle /path/to/project --policy-pack enterprise
-relay-kit support request /path/to/project --severity P1 --policy-pack enterprise --json
-relay-kit support triage /path/to/project --strict --json
-```
-
-When the support request artifact already exists, the support bundle includes a
-redacted support-request summary for triage. `support triage` reads the request
-and bundle artifacts together before the case is handed to paid support.
-
-Build a local Pulse quality report:
-
-```bash
-relay-kit pulse build /path/to/project
-relay-kit pulse build /path/to/project --include-readiness --json
-relay-kit pulse build /path/to/project --include-package-index --json
-relay-kit pulse build /path/to/project --support-request-file .relay-kit/support/support-request.json
-relay-kit pulse build /path/to/project --include-context-audit --include-lane-audit --include-adapter-diagnostics --include-token-audit --include-query-search --include-service-boundaries --json
-relay-kit pulse build /path/to/project --history-limit 50
-```
-
-Pulse includes a gate summary for workflow eval, readiness, publication,
-package-index, support request, and evidence ledger status so dashboard review
-can see which gate is pass, attention, hold, or not-run. The report also includes gate
-details for degraded scenarios, findings, diagnostics, and failed evidence
-events. Governance health sections can also surface stale context sources, lane
-conflicts, adapter metadata drift, token budget violations, authoritative query hits, and
-service-boundary findings.
-
-Export Pulse and evidence ledger signals:
-
-```bash
-relay-kit signal export /path/to/project
-relay-kit signal export /path/to/project --json
-```
-
-Run the local governance readiness gate:
-
-```bash
-relay-kit readiness check /path/to/project --profile enterprise
-relay-kit readiness check /path/to/project --profile enterprise --json
-```
-
-Verify local release-lane prerequisites:
-
-```bash
-relay-kit release verify /path/to/project
-relay-kit release verify /path/to/project --json
-```
-
-Plan and record package publication evidence:
-
-```bash
-relay-kit publish trail /path/to/project --channel pypi --json
-relay-kit publish plan /path/to/project --channel pypi --json
-relay-kit publish evidence /path/to/project --channel pypi --twine-check-file .tmp/twine-check.txt --upload-log-file .tmp/upload-log.txt --publication-plan-file .relay-kit/release/publication-plan.json --json
-relay-kit publish status /path/to/project --strict --json
-relay-kit publish index-check /path/to/project --channel pypi --target-version X.Y.Z --package-url https://pypi.org/project/relay-kit/X.Y.Z/ --strict --json
-```
-
-Measure workflow routing quality with bundled scenarios:
-
-```bash
-relay-kit eval run /path/to/project --strict
-relay-kit eval run /path/to/project --json --output-file workflow-eval.json
-relay-kit eval run /path/to/project --strict --baseline-file previous-workflow-eval.json
-```
-
-The bundled default eval suite covers 78 production/team scenarios across
-orchestration, hubs, utility providers, specialists, runtime diagnostics,
-context governance, lane audit, adapter diagnostics, query lookup, and
-service-boundary review.
-
-Track installed runtime version and print upgrade actions:
-
-```bash
-relay-kit manifest write /path/to/project
-relay-kit upgrade mark-current /path/to/project --bundle baseline --adapter codex
-relay-kit upgrade check /path/to/project --strict
-relay-kit upgrade plan /path/to/project
-```
-
-Maintainer-only core entrypoint:
-
-```bash
-python relay_kit.py /path/to/project --bundle baseline --ai codex --emit-contracts --emit-docs --emit-reference-templates
-```
+`developer` · `architect` · `pm` · `scrum-master` · `qa-governor`  
+`api-integration` · `data-persistence` · `dependency-management`  
+`testing-patterns` · `go-service-engineering` · `next-product-frontend`  
+`accessibility-review` · `ux-structure` · `frontend-design`
 
 </details>
 
-## Start flow
+<details>
+<summary><strong>Workflow hubs (routing backbone)</strong></summary>
 
-If you only remember a few names, remember these:
+`plan-hub` · `fix-hub` · `debug-hub` · `test-hub`  
+`review-hub` · `scout-hub` · `brainstorm-hub`
 
-| Goal | Public name | Behind the scenes |
+</details>
+
+<details>
+<summary><strong>Context & memory utilities</strong></summary>
+
+`context-continuity` · `memory-search` · `repo-map`  
+`doc-pointers` · `handoff-context` · `token-economy` · `sequential-thinking`
+
+</details>
+
+<details>
+<summary><strong>Proof & safety gates</strong></summary>
+
+`policy-guard` · `signal-calibration` · `runtime-doctor`  
+`skill-gauntlet` · `evidence-before-completion` · `impact-radar`  
+`migration-guard` · `release-readiness`
+
+</details>
+
+<details>
+<summary><strong>MMO / Multi-account pack (15 skills)</strong></summary>
+
+Built for multi-account automation, social marketing, and ecommerce at scale.
+
+| Skill | For |
+|---|---|
+| `mmo-identity-infrastructure` | Fingerprint profiles + proxy-to-account binding |
+| `mmo-proxy-network-ops` | Proxy pool management, health checks, sticky sessions |
+| `mmo-nick-warmup-engine` | Account warmup — 7 to 14 day behavioral program |
+| `mmo-account-operations` | Account lifecycle, health scoring, recovery |
+| `mmo-browser-fleet-automation` | Browser fleet with anti-flake session controls |
+| `mmo-social-marketing-automation` | Social API campaigns, quota-aware scheduling |
+| `mmo-content-factory` | AI bulk content generation and cross-platform scheduling |
+| `mmo-reup-automation` | Content reup with dedup and rights controls |
+| `mmo-data-harvesting` | UID targeting lists and AI seeding content |
+| `mmo-ecommerce-multichannel` | Shopee / TikTok Shop / Lazada multi-store sync |
+| `mmo-http-api-automation` | Contract-safe API automation with replay-safe logs |
+| `mmo-lowcode-automation` | n8n / Make / no-code workflow operations |
+| `mmo-mobile-app-automation` | Mobile device and emulator automation |
+| `mmo-cloud-operations-automation` | Cloud worker pools, queue, retry, cost guards |
+| `mmo-crypto-wallet-farming` | Multi-wallet DeFi with Sybil-avoidance strategy |
+
+</details>
+
+---
+
+## Adapter support
+
+| Flag | Output | Works with |
 |---|---|---|
-| find the right path | `start-here` | `workflow-router` |
-| shape a rough idea | `brainstorm` | `brainstorm-hub` |
-| turn approved work into buildable steps | `write-steps` | `scrum-master` |
-| implement the approved slice | `build-it` | `developer` |
-| review a branch or PR before merge or sign-off | `review-pr` | `review-hub` |
-| debug without guessing | `debug-systematically` | `debug-hub` + `root-cause-debugging` |
-| decide if work is actually ready | `ready-check` | `review-hub` + `qa-governor` |
-| force a final proof pass | `prove-it` | `evidence-before-completion` |
+| `--claude` | `.claude/skills/` | Claude Code |
+| `--codex` | `.codex/skills/` | OpenAI Codex |
+| `--antigravity` | `.agent/skills/` | Antigravity, custom agents |
+| `--all` | All three | Generate everything at once |
 
-Default path for new work:
-
-1. `start-here`
-2. `brainstorm`
-3. `write-steps`
-4. `build-it`
-5. `ready-check`
-
-Default path for bugs:
-
-1. `start-here`
-2. `debug-systematically`
-3. `build-it`
-4. `ready-check`
-
-Default path for branch or PR review:
-
-1. `review-pr`
-2. `ready-check` if you need a real readiness or shipability verdict
-3. `prove-it` if the completion claim still sounds stronger than the proof
-
-Use `prove-it` for a narrow claim-to-evidence pass. Use `ready-check` when you need a go / no-go readiness verdict and `qa-report.md`.
-
-More detail:
-- [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
-- [`docs/relay-kit-review-flow.md`](docs/relay-kit-review-flow.md)
-- [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
-- [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
-- [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
-- [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
-- [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
-
-## How it works
-
-Relay-kit separates the work into a small number of reliable stages:
-
-1. route the request
-2. clarify or investigate
-3. slice the work into safe steps
-4. implement with evidence
-5. review before calling it done
-
-Under the hood, the system uses runtime skills plus shared state, contracts, references, and docs in `.relay-kit/`.
-
-## Configuration
-
-Main entrypoints:
-
-- `relay_kit.py`
-
-Current active baseline:
-
-- `baseline`
-- runtime family: `core`, `orchestration`, `runtime`
-
-Generated output includes:
-
-- `.codex/skills/`
-- `.claude/skills/`
-- `.agent/skills/`
-- `.relay-kit/contracts/`
-- `.relay-kit/state/`
-- `.relay-kit/references/`
-- `.relay-kit/docs/`
-
-Generate all active adapter runtimes together with `--ai all`:
+All adapters stay in sync. Check parity anytime:
 
 ```bash
-python relay_kit.py . --bundle baseline --ai all
+relay-kit adapter diagnose . --adapter all --strict
 ```
 
-## Naming status
+---
 
-Relay-kit v4 uses Relay-kit-only naming across runtime bundles and guards.
+## Useful commands
 
-Canonical runtime paths:
+```bash
+# After install — verify everything is healthy
+relay-kit doctor .
 
-- `relay_kit.py`
-- `.relay-kit/`
-- `.relay-kit-prompts/`
+# Check all adapter surfaces match
+relay-kit adapter diagnose . --adapter all --strict
 
-## Public docs index
+# Full readiness gate
+relay-kit readiness check . --profile enterprise
 
-- [docs/public-docs-index.md](docs/public-docs-index.md)
+# Turn a vague request into skill-aware guidance
+relay-kit prompt enhance . --prompt "fix the auth bug"
 
-## Deeper docs
+# Find relevant files without dumping your whole codebase
+relay-kit context search . --query "payment middleware"
 
-- Start flow:
-  - [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
-- Review flow:
-  - [`docs/relay-kit-review-flow.md`](docs/relay-kit-review-flow.md)
-- Memory retrieval utility:
-  - [`docs/relay-kit-memory-search.md`](docs/relay-kit-memory-search.md)
-- Release readiness and deploy smoke:
-  - [`docs/relay-kit-release-readiness.md`](docs/relay-kit-release-readiness.md)
-- Release lane verification:
-  - [`docs/relay-kit-release-lane.md`](docs/relay-kit-release-lane.md)
-- Publication planning and evidence:
-  - [`docs/relay-kit-publication-plan.md`](docs/relay-kit-publication-plan.md)
-- Accessibility gate:
-  - [`docs/relay-kit-accessibility-review.md`](docs/relay-kit-accessibility-review.md)
-- Commercial readiness gate:
-  - [`docs/relay-kit-readiness-check.md`](docs/relay-kit-readiness-check.md)
-- Pulse quality report:
-  - [`docs/relay-kit-pulse-report.md`](docs/relay-kit-pulse-report.md)
-- Signal export:
-  - [`docs/relay-kit-signal-export.md`](docs/relay-kit-signal-export.md)
-- Skill behavior gauntlet:
-  - [`docs/relay-kit-skill-gauntlet.md`](docs/relay-kit-skill-gauntlet.md)
-- Context continuity:
-  - [`docs/relay-kit-context-continuity.md`](docs/relay-kit-context-continuity.md)
-  - [`docs/relay-kit-context-continuity-design-note.md`](docs/relay-kit-context-continuity-design-note.md)
-- Skill authoring:
-  - [`docs/how-to-write-skills.md`](docs/how-to-write-skills.md)
-- Contributing:
-  - [`CONTRIBUTING.md`](CONTRIBUTING.md)
-- Folder structure:
-  - [`.relay-kit/docs/folder-structure.md`](.relay-kit/docs/folder-structure.md)
-- Bundle gating:
-  - [`.relay-kit/docs/bundle-gating.md`](.relay-kit/docs/bundle-gating.md)
+# Check for stale context before resuming a long task
+relay-kit context audit . --strict
+```
 
-## Legacy note
+---
 
-Legacy kits still exist for migration and compatibility work. They are not the main Relay-kit runtime story.
+## Vietnamese locale
+
+```bash
+relay-kit locale set . --locale vi
+```
+
+Applies Vietnamese metadata to skill pickers and command surfaces. Routing contracts stay in English.
+
+---
+
+## Requirements
+
+- Python 3.10 or higher
+- Works with Claude Code, OpenAI Codex, Antigravity, Cursor, any agent that reads skill files
+
+Optional — local context indexing without API keys:
+
+```bash
+pip install relay-kit[context]
+```
+
+Adds local embedding and tree-sitter symbol lookup.
+
+---
+
+## More docs
+
+- [Start flow walkthrough](docs/relay-kit-start-flow.md)
+- [Debug and review flow](docs/relay-kit-review-flow.md)
+- [Context continuity across sessions](docs/relay-kit-context-continuity.md)
+- [Writing custom skills](docs/how-to-write-skills.md)
+- [Release readiness gate](docs/relay-kit-release-readiness.md)
+- [Full docs index](docs/public-docs-index.md)
+- [Contributing](CONTRIBUTING.md)
+
+---
+
+<div align="center">
+
+**Relay-kit v4 · 73 skills · Claude · Codex · Antigravity**
+
+</div>
