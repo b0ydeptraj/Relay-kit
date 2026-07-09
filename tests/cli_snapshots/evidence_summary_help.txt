@@ -1,0 +1,9 @@
+usage: relay-kit evidence summary [-h] [--limit LIMIT] [--json] [project_path]
+
+positional arguments:
+  project_path   Project root to inspect
+
+options:
+  -h, --help     show this help message and exit
+  --limit LIMIT  Recent event count to show
+  --json         Emit JSON summary

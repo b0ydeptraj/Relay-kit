@@ -1,0 +1,18 @@
+﻿usage: relay-kit calibrate claims [-h] [--claim CLAIM]
+                                  [--claim-file CLAIM_FILE]
+                                  [--output-file OUTPUT_FILE] [--strict]
+                                  [--json]
+                                  [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --claim CLAIM         Exact claim text to calibrate
+  --claim-file CLAIM_FILE
+                        JSON, markdown, or text file with claims
+  --output-file OUTPUT_FILE
+                        Optional signal calibration JSON output path
+  --strict              Return non-zero when a claim is blocked
+  --json                Emit machine-readable signal calibration report

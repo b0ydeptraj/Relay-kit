@@ -1,0 +1,102 @@
+[
+  {
+    "query": "xu ly loi network timeout",
+    "expected_top_3": ["api-integration", "mmo-http-api-automation", "protocol-fingerprint-spoofing"],
+    "tier": "all"
+  },
+  {
+    "query": "debug memory leak",
+    "expected_top_3": ["debug-hub", "root-cause-debugging", "windows-native-internals"],
+    "tier": "all"
+  },
+  {
+    "query": "lam sao de by pass cloudflare",
+    "expected_top_3": ["browser-fingerprint-engineering", "protocol-fingerprint-spoofing", "mmo-identity-infrastructure"],
+    "tier": "all"
+  },
+  {
+    "query": "tao kien truc he thong",
+    "expected_top_3": ["architect", "project-architecture", "plan-hub"],
+    "tier": "all"
+  },
+  {
+    "query": "viet unit test",
+    "expected_top_3": ["test-first-development", "testing-patterns", "test-hub"],
+    "tier": "all"
+  },
+  {
+    "query": "kiem tra chat luong truoc release",
+    "expected_top_3": ["qa-governor", "ready-check", "release-readiness"],
+    "tier": "all"
+  },
+  {
+    "query": "ban hang tren shopee tiktok lazada",
+    "expected_top_3": ["mmo-ecommerce-multichannel", "mmo-social-marketing-automation", "growth-marketing"],
+    "tier": "all"
+  },
+  {
+    "query": "xu ly captcha và fingerprint webgl",
+    "expected_top_3": ["browser-fingerprint-engineering", "antibot-challenge-solving", "mmo-browser-fleet-automation"],
+    "tier": "all"
+  },
+  {
+    "query": "quan ly database schema cache",
+    "expected_top_3": ["data-persistence", "go-service-engineering", "architect"],
+    "tier": "all"
+  },
+  {
+    "query": "phong chong bi khoa nick MMO",
+    "expected_top_3": ["mmo-identity-infrastructure", "mmo-proxy-network-ops", "mmo-nick-warmup-engine"],
+    "tier": "all"
+  },
+  {
+    "query": "thiet ke frontend UI dep",
+    "expected_top_3": ["frontend-design", "ui-styling", "aesthetic"],
+    "tier": "all"
+  },
+  {
+    "query": "viet tool go backend",
+    "expected_top_3": ["go-service-engineering", "architect", "api-integration"],
+    "tier": "all"
+  },
+  {
+    "query": "kiem tra ma doc c2",
+    "expected_top_3": ["network-stealth-c2", "binary-stealth-obfuscation", "offensive-security-engagement"],
+    "tier": "all"
+  },
+  {
+    "query": "sua loi crash khong ro nguyen nhan",
+    "expected_top_3": ["root-cause-debugging", "debug-hub", "debug-systematically"],
+    "tier": "all"
+  },
+  {
+    "query": "muon clone game mmo",
+    "expected_top_3": ["mmo-browser-fleet-automation", "mmo-cloud-operations-automation", "mmo-account-operations"],
+    "tier": "all"
+  },
+  {
+    "query": "tao dia hinh mermaid",
+    "expected_top_3": ["mermaid-diagrams", "multimodal-evidence", "architect"],
+    "tier": "all"
+  },
+  {
+    "query": "chuyen resource cho lan ke tiep",
+    "expected_top_3": ["handoff-context", "context-continuity", "workflow-router"],
+    "tier": "all"
+  },
+  {
+    "query": "su dung multi agent chay song song",
+    "expected_top_3": ["team", "delegation-control", "automation-ops"],
+    "tier": "all"
+  },
+  {
+    "query": "crypto wallet airdrop tool",
+    "expected_top_3": ["mmo-crypto-wallet-farming", "mmo-onchain-security-audit", "api-integration"],
+    "tier": "all"
+  },
+  {
+    "query": "dich thuat sang tieng viet",
+    "expected_top_3": ["vietnamese-product-localization", "growth-marketing", "mmo-content-factory"],
+    "tier": "all"
+  }
+]

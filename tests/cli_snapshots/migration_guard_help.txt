@@ -1,0 +1,9 @@
+﻿usage: relay-kit migration guard [-h] [--strict] [--json] [project_path]
+
+positional arguments:
+  project_path  Target project root
+
+options:
+  -h, --help    show this help message and exit
+  --strict      Return non-zero when findings exist
+  --json        Emit JSON report

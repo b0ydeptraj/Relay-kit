@@ -1,0 +1,13 @@
+﻿usage: relay-kit context active set [-h] --file FILE [--selection SELECTION]
+                                    [--json]
+                                    [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --file FILE           Active file path
+  --selection SELECTION
+                        Optional active selection text
+  --json                Emit machine-readable active context

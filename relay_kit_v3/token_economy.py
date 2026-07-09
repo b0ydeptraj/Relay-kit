@@ -1,4 +1,5 @@
 from __future__ import annotations
+DEFAULT_MAX_TOKENS = 60000
 
 import json
 import math
@@ -14,10 +15,31 @@ CONTEXT_BUDGET_SCHEMA_VERSION = "relay-kit.context-budget.v1"
 CONTEXT_PACK_SCHEMA_VERSION = "relay-kit.context-pack.v1"
 TOKEN_AUDIT_SCHEMA_VERSION = "relay-kit.token-audit.v1"
 
-DEFAULT_MAX_TOKENS = 8000
 DEFAULT_STALE_DAYS = 30
 DEFAULT_QUERY_LIMIT = 160
 MAX_FILE_BYTES = 256 * 1024
+
+def calculate_dynamic_budget(project_root: Path) -> int:
+    """Calculate token budget based on project size (file count)."""
+    try:
+        # Fast file count ignoring .git, .venv, etc. could be better, but rglob works
+        file_count = 0
+        for p in project_root.rglob("*"):
+            if p.is_file() and not any(part.startswith(".") and part != "." for part in p.parts):
+                file_count += 1
+            if file_count > 550:
+                break
+    except Exception:
+        file_count = 100
+        
+    if file_count < 50:
+        return 30000
+    elif file_count <= 200:
+        return 60000
+    elif file_count <= 500:
+        return 90000
+    else:
+        return 120000
 
 CRITICAL_MARKERS = ("fail", "error", "traceback", "exception", "assert", "exit code")
 STRICT_FAILURE_MARKERS = (
@@ -40,12 +62,13 @@ def estimate_tokens(text: str) -> int:
 def build_context_budget(
     project_root: Path | str,
     *,
-    max_tokens: int = DEFAULT_MAX_TOKENS,
+    max_tokens: int | None = None,
     query: str | None = None,
     scopes: Iterable[str] | None = None,
     stale_days: int = DEFAULT_STALE_DAYS,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
+    actual_max_tokens = max_tokens if max_tokens is not None else calculate_dynamic_budget(root)
     selected_scopes = _normalize_scopes(scopes)
     sources = _collect_sources(
         root,
@@ -54,9 +77,9 @@ def build_context_budget(
         stale_days=stale_days,
     )
     analyzed = _analyze_sources(sources)
-    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=max_tokens)
-    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=max_tokens)
-    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=max_tokens)
+    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=actual_max_tokens)
+    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=actual_max_tokens)
+    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=actual_max_tokens)
     status = _report_status(findings)
     return {
         "schema_version": CONTEXT_BUDGET_SCHEMA_VERSION,
@@ -83,11 +106,12 @@ def build_context_pack(
     project_root: Path | str,
     *,
     task: str,
-    max_tokens: int = DEFAULT_MAX_TOKENS,
+    max_tokens: int | None = None,
     scopes: Iterable[str] | None = None,
     stale_days: int = DEFAULT_STALE_DAYS,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
+    actual_max_tokens = max_tokens if max_tokens is not None else calculate_dynamic_budget(root)
     selected_scopes = _normalize_scopes(scopes)
     task_query = task.strip()
     sources = _collect_sources(
@@ -97,9 +121,9 @@ def build_context_pack(
         stale_days=stale_days,
     )
     analyzed = _analyze_sources(sources)
-    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=max_tokens)
-    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=max_tokens)
-    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=max_tokens)
+    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=actual_max_tokens)
+    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=actual_max_tokens)
+    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=actual_max_tokens)
     status = _report_status(findings)
     return {
         "schema_version": CONTEXT_PACK_SCHEMA_VERSION,
@@ -125,11 +149,12 @@ def build_context_pack(
 def build_token_audit(
     project_root: Path | str,
     *,
-    max_tokens: int = DEFAULT_MAX_TOKENS,
+    max_tokens: int | None = None,
     scopes: Iterable[str] | None = None,
     stale_days: int = DEFAULT_STALE_DAYS,
 ) -> dict[str, Any]:
     root = Path(project_root).resolve()
+    actual_max_tokens = max_tokens if max_tokens is not None else calculate_dynamic_budget(root)
     selected_scopes = _normalize_scopes(scopes)
     sources = _collect_sources(
         root,
@@ -138,9 +163,9 @@ def build_token_audit(
         stale_days=stale_days,
     )
     analyzed = _analyze_sources(sources)
-    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=max_tokens)
-    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=max_tokens)
-    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=max_tokens)
+    selected, dropped, selected_tokens = _select_with_budget(analyzed, max_tokens=actual_max_tokens)
+    metrics = _metrics(analyzed, selected_tokens=selected_tokens, max_tokens=actual_max_tokens)
+    findings = _budget_findings(selected, dropped, metrics=metrics, max_tokens=actual_max_tokens)
     status = _report_status(findings)
     return {
         "schema_version": TOKEN_AUDIT_SCHEMA_VERSION,

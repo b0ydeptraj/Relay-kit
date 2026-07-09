@@ -1,0 +1,15 @@
+﻿usage: relay-kit calibrate skill [-h] [--skill SKILL]
+                                 [--output-file OUTPUT_FILE] [--strict]
+                                 [--json]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --skill SKILL         Skill name or all
+  --output-file OUTPUT_FILE
+                        Optional signal calibration JSON output path
+  --strict              Return non-zero when a claim is blocked
+  --json                Emit machine-readable signal calibration report

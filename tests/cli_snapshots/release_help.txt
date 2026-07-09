@@ -1,0 +1,11 @@
+﻿usage: relay-kit release [-h] {verify,readiness} ...
+
+Verify local release-lane prerequisites for Relay-kit.
+
+positional arguments:
+  {verify,readiness}
+    verify            Verify local release-lane prerequisites
+    readiness         Generate release readiness checklists and deploy signals
+
+options:
+  -h, --help          show this help message and exit

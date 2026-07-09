@@ -1,0 +1,18 @@
+﻿usage: relay-kit proof audit [-h] [--workflow-fixture WORKFLOW_FIXTURE]
+                             [--real-world-cases-file REAL_WORLD_CASES_FILE]
+                             [--output-file OUTPUT_FILE] [--strict] [--json]
+                             [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --workflow-fixture WORKFLOW_FIXTURE
+                        Optional workflow scenario fixture JSON
+  --real-world-cases-file REAL_WORLD_CASES_FILE
+                        Optional real-world skill case fixture JSON
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --strict              Return non-zero if any skill is theoretical
+  --json                Emit JSON report

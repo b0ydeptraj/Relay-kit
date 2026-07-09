@@ -1,0 +1,27 @@
+﻿usage: relay-kit delegation plan [-h] --task TASK [--budget BUDGET]
+                                 [--complexity {L0,L1,L2,L3,L4}]
+                                 [--adapter {codex,claude,agent,antigravity,all}]
+                                 [--artifact ARTIFACT]
+                                 [--lock-scope LOCK_SCOPE]
+                                 [--expected-return-condition EXPECTED_RETURN_CONDITION]
+                                 [--verification-command VERIFICATION_COMMAND]
+                                 [--independent] [--apply] [--strict] [--json]
+                                 [project_path]
+
+positional arguments:
+  project_path
+
+options:
+  -h, --help            show this help message and exit
+  --task TASK
+  --budget BUDGET
+  --complexity {L0,L1,L2,L3,L4}
+  --adapter {codex,claude,agent,antigravity,all}
+  --artifact ARTIFACT
+  --lock-scope LOCK_SCOPE
+  --expected-return-condition EXPECTED_RETURN_CONDITION
+  --verification-command VERIFICATION_COMMAND
+  --independent
+  --apply
+  --strict
+  --json

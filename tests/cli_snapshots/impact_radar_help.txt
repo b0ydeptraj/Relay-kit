@@ -1,0 +1,11 @@
+﻿usage: relay-kit impact radar [-h] [--base BASE] [--head HEAD] [--json]
+                              [project_path]
+
+positional arguments:
+  project_path  Project root to inspect
+
+options:
+  -h, --help    show this help message and exit
+  --base BASE   Optional base ref for git diff
+  --head HEAD   Head ref for git diff
+  --json        Emit JSON output

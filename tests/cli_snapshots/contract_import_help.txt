@@ -1,0 +1,17 @@
+usage: relay-kit contract import [-h] [--contract-file CONTRACT_FILE]
+                                 [--apply] [--force] [--strict] [--json]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to update
+
+options:
+  -h, --help            show this help message and exit
+  --contract-file CONTRACT_FILE
+                        Input contract JSON path (default: <project>/.relay-
+                        kit/contract-sync/relay-contract.json)
+  --apply               Write contract updates instead of dry-running
+  --force               Overwrite concrete existing contract sections
+  --strict              Return non-zero on invalid contract JSON or skipped
+                        conflicts
+  --json                Emit machine-readable import report

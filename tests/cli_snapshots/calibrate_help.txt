@@ -1,0 +1,12 @@
+﻿usage: relay-kit calibrate [-h] {claims,skill,readiness} ...
+
+Calibrate overclaim-prone Relay-kit claims against proof evidence.
+
+positional arguments:
+  {claims,skill,readiness}
+    claims              Calibrate explicit claim text
+    skill               Calibrate skill quality claims
+    readiness           Calibrate readiness and public proof claims
+
+options:
+  -h, --help            show this help message and exit

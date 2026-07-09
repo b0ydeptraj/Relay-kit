@@ -1,0 +1,25 @@
+Relay-kit evidence summary
+- ledger: C:\Users\b0ydeptrai\Documents\relay-kit\.relay-kit\evidence\events.jsonl
+- total events: 2782
+- statuses: fail=41, pass=2741
+- recent:
+  - 2026-07-07T10:14:00Z workflow eval: pass
+  - 2026-07-07T10:14:00Z pytest: fail
+  - 2026-07-07T10:14:13Z validate runtime: fail
+  - 2026-07-07T10:14:14Z runtime doctor template: fail
+  - 2026-07-07T10:14:14Z runtime doctor live: fail
+  - 2026-07-07T10:14:15Z naming guard: pass
+  - 2026-07-07T10:14:17Z policy guard: pass
+  - 2026-07-07T10:14:17Z srs guard: pass
+  - 2026-07-07T10:14:17Z skill gauntlet: fail
+  - 2026-07-07T10:14:18Z workflow eval: pass
+  - 2026-07-07T10:14:18Z pytest: fail
+  - 2026-07-07T10:17:15Z validate runtime: fail
+  - 2026-07-07T10:17:16Z runtime doctor template: fail
+  - 2026-07-07T10:17:16Z runtime doctor live: fail
+  - 2026-07-07T10:17:17Z naming guard: pass
+  - 2026-07-07T10:17:19Z policy guard: pass
+  - 2026-07-07T10:17:19Z srs guard: pass
+  - 2026-07-07T10:17:19Z skill gauntlet: fail
+  - 2026-07-07T10:17:20Z workflow eval: pass
+  - 2026-07-07T10:17:20Z pytest: fail

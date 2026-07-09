@@ -1,0 +1,10 @@
+﻿usage: relay-kit service [-h] {boundaries} ...
+
+Inspect Relay-kit service-boundary map and static dependency rules.
+
+positional arguments:
+  {boundaries}
+    boundaries  Check service-boundary map and static import rules
+
+options:
+  -h, --help    show this help message and exit

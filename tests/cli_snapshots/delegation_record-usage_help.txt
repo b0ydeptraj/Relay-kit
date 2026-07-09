@@ -1,0 +1,15 @@
+﻿usage: relay-kit delegation record-usage [-h] --agent-id AGENT_ID
+                                         --input-tokens INPUT_TOKENS
+                                         --output-tokens OUTPUT_TOKENS
+                                         [--json]
+                                         [project_path]
+
+positional arguments:
+  project_path
+
+options:
+  -h, --help            show this help message and exit
+  --agent-id AGENT_ID
+  --input-tokens INPUT_TOKENS
+  --output-tokens OUTPUT_TOKENS
+  --json

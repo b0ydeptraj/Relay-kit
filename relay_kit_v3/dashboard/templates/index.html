@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relay-Kit Live Dashboard</title>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1a1b1f;
+      --border: #e1e3e8;
+      --brand: #2563eb;
+      --brand-light: #eff6ff;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: var(--panel);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .badge {
+      background: var(--brand-light);
+      color: var(--brand);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    .panel h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.125rem;
+      font-weight: 500;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-weight: 500;
+      color: #64748b;
+      white-space: nowrap;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Relay-Kit Live Dashboard</h1>
+    <div class="badge">Live 🟢</div>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>Lane Status</h2>
+      <table>
+        <tr><th>Lane ID</th><th>Status</th><th>Started At</th></tr>
+        <tbody hx-get="/api/lane-status" hx-trigger="every 2s" hx-swap="innerHTML">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="panel">
+      <h2>Lock Status</h2>
+      <table>
+        <tr><th>File Path</th><th>Locked By</th><th>Acquired At</th></tr>
+        <tbody hx-get="/api/lock-status" hx-trigger="every 2s" hx-swap="innerHTML">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="panel">
+      <h2>Event Timeline</h2>
+      <table>
+        <tr><th>Time</th><th>Gate/Command</th><th>Status</th><th>Findings</th></tr>
+        <tbody hx-get="/api/event-timeline" hx-trigger="every 2s" hx-swap="innerHTML">
+          <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

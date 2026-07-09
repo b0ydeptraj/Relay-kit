@@ -1,0 +1,10 @@
+﻿usage: relay-kit prompt [-h] {enhance} ...
+
+Enhance short or ambiguous user prompts with Relay-kit skill context.
+
+positional arguments:
+  {enhance}
+    enhance   Turn a short request into a skill-aware working prompt
+
+options:
+  -h, --help  show this help message and exit

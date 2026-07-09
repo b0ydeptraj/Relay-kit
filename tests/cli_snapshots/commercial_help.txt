@@ -1,0 +1,11 @@
+﻿usage: relay-kit commercial [-h] {dossier} ...
+
+Assemble commercial proof dossiers from local gates and external evidence
+pointers.
+
+positional arguments:
+  {dossier}
+    dossier   Write a commercial readiness proof dossier
+
+options:
+  -h, --help  show this help message and exit

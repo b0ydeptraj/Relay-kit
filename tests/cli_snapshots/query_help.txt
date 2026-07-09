@@ -1,0 +1,10 @@
+﻿usage: relay-kit query [-h] {search} ...
+
+Search Relay-kit state, contracts, docs, evidence, and registry sources.
+
+positional arguments:
+  {search}
+    search    Rank local Relay-kit sources for a query
+
+options:
+  -h, --help  show this help message and exit

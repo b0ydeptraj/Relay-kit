@@ -1,0 +1,10 @@
+﻿usage: relay-kit adapter [-h] {diagnose} ...
+
+Diagnose Relay-kit adapter skill surfaces.
+
+positional arguments:
+  {diagnose}
+    diagnose  Check adapter skill parity and metadata drift
+
+options:
+  -h, --help  show this help message and exit

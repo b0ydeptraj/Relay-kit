@@ -1,0 +1,16 @@
+﻿usage: relay-kit publish [-h] {plan,evidence,trail,index-check,status} ...
+
+Plan and record package publication evidence without uploading artifacts.
+
+positional arguments:
+  {plan,evidence,trail,index-check,status}
+    plan                Check package publication prerequisites
+    evidence            Record package publication execution evidence
+    trail               Write a publication execution trail with capture
+                        commands
+    index-check         Verify package-index metadata for the published
+                        version
+    status              Inspect local publication trail and execution evidence
+
+options:
+  -h, --help            show this help message and exit

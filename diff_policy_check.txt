@@ -1,0 +1,20 @@
+--- expected
++++ actual
+@@ -1,12 +1,11 @@
+-usage: relay-kit policy check [-h] [--pack {baseline,enterprise,team}]
+-                              [--strict] [--json]
++usage: relay-kit policy check [-h] [--pack PACK] [--strict] [--json]
+                               [project_path]
+ 
+ positional arguments:
+-  project_path          Project root to inspect
++  project_path  Project root to inspect
+ 
+ options:
+-  -h, --help            show this help message and exit
+-  --pack {baseline,enterprise,team}
+-  --strict              Return non-zero when findings exist
+-  --json                Emit JSON report+  -h, --help    show this help message and exit
++  --pack PACK
++  --strict      Return non-zero when findings exist
++  --json        Emit JSON report

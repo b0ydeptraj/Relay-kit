@@ -1,0 +1,32 @@
+[
+    {
+        "description": "Redact Bearer tokens",
+        "input": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "expected": "Authorization: Bearer [REDACTED]"
+    },
+    {
+        "description": "Redact emails",
+        "input": "Contact us at support@example.com for help.",
+        "expected": "Contact us at [REDACTED_EMAIL] for help."
+    },
+    {
+        "description": "Redact AWS keys",
+        "input": "My access key is AKIAIOSFODNN7EXAMPLE.",
+        "expected": "My access key is [REDACTED_AWS_KEY]."
+    },
+    {
+        "description": "Redact generic API keys",
+        "input": "api_key=12345abcdefGHIJKLMNOP",
+        "expected": "api_key=[REDACTED_API_KEY]"
+    },
+    {
+        "description": "Redact Private Keys",
+        "input": "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA\n-----END RSA PRIVATE KEY-----",
+        "expected": "[REDACTED_PRIVATE_KEY]"
+    },
+    {
+        "description": "Leave normal text alone",
+        "input": "This is a normal log line with an ID 12345.",
+        "expected": "This is a normal log line with an ID 12345."
+    }
+]

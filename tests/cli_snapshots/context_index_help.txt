@@ -1,0 +1,12 @@
+﻿usage: relay-kit context index [-h] [--output-file OUTPUT_FILE] [--json]
+                               [project_path]
+
+positional arguments:
+  project_path          Project root to index
+
+options:
+  -h, --help            show this help message and exit
+  --output-file OUTPUT_FILE
+                        Optional index JSON output path (default:
+                        <project>/.relay-kit/context/index.json)
+  --json                Emit machine-readable context index summary

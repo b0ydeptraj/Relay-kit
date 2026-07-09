@@ -1,0 +1,11 @@
+﻿usage: relay-kit pulse [-h] {build} ...
+
+Build a static Relay-kit Pulse report from quality, readiness, and evidence
+signals.
+
+positional arguments:
+  {build}
+    build     Write Pulse JSON and HTML reports
+
+options:
+  -h, --help  show this help message and exit

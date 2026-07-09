@@ -1,0 +1,12 @@
+﻿usage: relay-kit manifest [-h] {write,stamp,verify} ...
+
+Write or verify checksummed Relay-kit bundle manifests.
+
+positional arguments:
+  {write,stamp,verify}
+    write               Write a checksummed bundle manifest
+    stamp               Write deterministic trust metadata for a manifest
+    verify              Verify a checksummed bundle manifest
+
+options:
+  -h, --help            show this help message and exit

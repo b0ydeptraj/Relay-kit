@@ -1,0 +1,21 @@
+﻿usage: relay-kit eval skill-battle [-h] [--skill SKILL] [--suite {deep}]
+                                   [--cleanup] [--min-score MIN_SCORE]
+                                   [--output-file OUTPUT_FILE] [--json]
+                                   [--strict]
+                                   [project_path]
+
+positional arguments:
+  project_path          Project root that owns temporary battle fixtures
+
+options:
+  -h, --help            show this help message and exit
+  --skill SKILL         Skill name or `all`
+  --suite {deep}        Skill battle suite to run
+  --cleanup             Delete temporary skill battle fixtures after the run
+  --min-score MIN_SCORE
+                        Minimum accepted per-skill score
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero unless all selected skills meet min
+                        score

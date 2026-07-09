@@ -242,6 +242,7 @@ def build_context_search(
     query: str,
     limit: int = 10,
     index_file: Path | str | None = None,
+    embedding_model: str | None = None,
 ) -> dict[str, Any]:
     project = Path(root).resolve()
     index = load_context_index(project, index_file=index_file)
@@ -252,6 +253,30 @@ def build_context_search(
         return _empty_search(project, query, "empty-query", indexed=index)
     fts_matches = _sqlite_fts_matches(project, query)
     results = [_score_file(item, terms, query, fts_matches=fts_matches) for item in index.get("files", [])]
+    
+    # V5.2.4 Tiered Search Router integration
+    try:
+        from relay_kit_v3.search_router import SearchRouter
+        router = SearchRouter(project, embedding_model=embedding_model)
+        router_results = router.search(query, top_k=limit)
+        router_map = {}
+        for r in router_results:
+            try:
+                rel = Path(r["doc_id"]).relative_to(project).as_posix()
+                router_map[rel] = r["score"]
+            except ValueError:
+                pass
+        
+        for item in results:
+            if item["path"] in router_map:
+                score_val = router_map[item["path"]]
+                boost = int(score_val * 100) if embedding_model else int(score_val * 10)
+                item["score"] += boost
+                if "tiered-router-match" not in item["reasons"]:
+                    item["reasons"].append("tiered-router-match")
+    except Exception:
+        pass
+        
     results = [item for item in results if item["score"] > 0]
     results.sort(key=lambda item: (-item["score"], item["path"]))
     limited = results[: max(limit, 0)]
@@ -1165,3 +1190,171 @@ def _ast_status() -> dict[str, Any]:
         "fallback": not (tree_sitter_available and language_pack_available),
         "note": "tree-sitter is optional; Relay-kit keeps regex AST fallback when the extra is not installed.",
     }
+"""
+relay_kit_v3/context/bm25_scorer.py
+
+V5.2.2 — Lexical Scorer Upgrade: BM25 (Okapi BM25)
+Replaces simple keyword match with proper TF-IDF weighting.
+Pure Python — zero external dependencies.
+
+BM25 formula:
+    score(q, d) = sum_t [ IDF(t) * (tf(t,d) * (k1+1)) / (tf(t,d) + k1*(1-b+b*|d|/avgdl)) ]
+where:
+    k1 = term saturation factor (1.5 default)
+    b  = length normalization factor (0.75 default)
+"""
+
+import math
+import re
+from pathlib import Path
+from typing import Any
+
+
+# ── BM25 hyperparameters ──────────────────────────────────────────────
+_K1 = 1.5   # term saturation — larger = more weight on repeated terms
+_B  = 0.75  # length normalization — 1.0 = full normalization, 0 = none
+
+# markdown noise to strip before tokenizing
+_MD_NOISE = re.compile(r"[`*#>\[\]()!\-_]+")
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Tokenization
+# ─────────────────────────────────────────────────────────────────────
+
+def _tokenize(text: str) -> list[str]:
+    """Lower-case, strip markdown syntax, split on whitespace/punctuation."""
+    text = _MD_NOISE.sub(" ", text.lower())
+    tokens = re.findall(r"[a-z0-9_\-]{2,}", text)
+    return tokens
+
+
+def _unique(tokens: list[str]) -> set[str]:
+    return set(tokens)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# BM25 corpus builder
+# ─────────────────────────────────────────────────────────────────────
+
+class BM25Corpus:
+    """
+    Offline index built from a list of (doc_id, text) pairs.
+    Call BM25Corpus.from_files() to index markdown files from disk.
+    """
+
+    def __init__(self, documents: list[tuple[str, str]]) -> None:
+        """
+        Args:
+            documents: list of (doc_id, raw_text) pairs.
+        """
+        self.doc_ids: list[str] = []
+        self._tf: list[dict[str, int]] = []          # per-doc term frequency
+        self._doc_lengths: list[int] = []
+        self._df: dict[str, int] = {}                # document frequency per term
+        self._n: int = 0
+        self._avgdl: float = 0.0
+
+        self._build(documents)
+
+    # ── construction ────────────────────────────────────────────────
+
+    def _build(self, documents: list[tuple[str, str]]) -> None:
+        for doc_id, text in documents:
+            tokens = _tokenize(text)
+            tf: dict[str, int] = {}
+            for tok in tokens:
+                tf[tok] = tf.get(tok, 0) + 1
+            self.doc_ids.append(doc_id)
+            self._tf.append(tf)
+            self._doc_lengths.append(len(tokens))
+            for term in _unique(tokens):
+                self._df[term] = self._df.get(term, 0) + 1
+
+        self._n = len(documents)
+        self._avgdl = (
+            sum(self._doc_lengths) / self._n if self._n else 1.0
+        )
+
+    # ── scoring ─────────────────────────────────────────────────────
+
+    def _idf(self, term: str) -> float:
+        """Okapi IDF with smoothing."""
+        df = self._df.get(term, 0)
+        return math.log((self._n - df + 0.5) / (df + 0.5) + 1.0)
+
+    def score(self, doc_idx: int, query_terms: list[str]) -> float:
+        """BM25 score for a single document against query terms."""
+        tf_map = self._tf[doc_idx]
+        dl = self._doc_lengths[doc_idx]
+        score = 0.0
+        for term in query_terms:
+            tf = tf_map.get(term, 0)
+            if tf == 0:
+                continue
+            idf = self._idf(term)
+            numerator   = tf * (_K1 + 1)
+            denominator = tf + _K1 * (1 - _B + _B * dl / self._avgdl)
+            score += idf * (numerator / denominator)
+        return score
+
+    # ── search ──────────────────────────────────────────────────────
+
+    def search(
+        self,
+        query: str,
+        top_k: int = 10,
+        min_score: float = 0.01,
+    ) -> list[dict[str, Any]]:
+        """
+        Return ranked results for a free-text query.
+
+        Returns:
+            list of dicts: [{doc_id, score, matched_terms}, …] sorted by score desc.
+        """
+        query_terms = _tokenize(query)
+        if not query_terms:
+            return []
+
+        results: list[dict[str, Any]] = []
+        for idx, doc_id in enumerate(self.doc_ids):
+            s = self.score(idx, query_terms)
+            if s >= min_score:
+                matched = [t for t in _unique(query_terms) if t in self._tf[idx]]
+                results.append(
+                    {"doc_id": doc_id, "score": round(s, 4), "matched_terms": matched}
+                )
+
+        results.sort(key=lambda r: -r["score"])
+        return results[:top_k]
+
+    # ── factory ─────────────────────────────────────────────────────
+
+    @classmethod
+    def from_files(
+        cls,
+        paths: list[Path],
+        max_chars: int = 80_000,
+    ) -> "BM25Corpus":
+        """Build corpus from a list of markdown/text files."""
+        docs: list[tuple[str, str]] = []
+        for p in paths:
+            try:
+                text = p.read_text(encoding="utf-8", errors="ignore")[:max_chars]
+                docs.append((str(p), text))
+            except OSError:
+                pass
+        return cls(docs)
+
+    @classmethod
+    def from_directory(
+        cls,
+        root: Path,
+        extensions: set[str] | None = None,
+        max_chars: int = 80_000,
+    ) -> "BM25Corpus":
+        """Recursively index all files under root matching extensions."""
+        if extensions is None:
+            extensions = {".md", ".py", ".js", ".ts", ".go", ".yaml", ".json"}
+        paths = [p for p in root.rglob("*") if p.suffix in extensions and p.is_file()]
+        return cls.from_files(paths, max_chars=max_chars)

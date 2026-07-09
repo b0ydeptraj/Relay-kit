@@ -1,0 +1,10 @@
+﻿usage: relay-kit readiness [-h] {check} ...
+
+Run the local governance readiness gate suite.
+
+positional arguments:
+  {check}
+    check     Check whether Relay-kit is ready for paid/team use
+
+options:
+  -h, --help  show this help message and exit

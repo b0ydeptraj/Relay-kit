@@ -1,0 +1,11 @@
+﻿usage: relay-kit proof [-h] {audit} ...
+
+Audit skill proof status across theoretical, validated, and field-tested
+levels.
+
+positional arguments:
+  {audit}
+    audit     Classify canonical skills by proof level
+
+options:
+  -h, --help  show this help message and exit

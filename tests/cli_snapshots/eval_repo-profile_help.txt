@@ -1,0 +1,15 @@
+﻿usage: relay-kit eval repo-profile [-h] [--write-index]
+                                   [--output-file OUTPUT_FILE] [--json]
+                                   [--strict]
+                                   [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --write-index         Persist a context index while profiling
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero when domain coverage is unknown

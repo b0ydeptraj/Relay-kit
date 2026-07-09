@@ -1,0 +1,18 @@
+﻿usage: relay-kit manifest stamp [-h] [--manifest-file MANIFEST_FILE]
+                                [--trust-file TRUST_FILE] [--issuer ISSUER]
+                                [--channel CHANNEL]
+                                [project_path]
+
+positional arguments:
+  project_path          Project root for default manifest/trust paths
+
+options:
+  -h, --help            show this help message and exit
+  --manifest-file MANIFEST_FILE
+                        Manifest path (default: <project>/.relay-
+                        kit/manifest/bundles.json)
+  --trust-file TRUST_FILE
+                        Trust metadata path (default: <project>/.relay-
+                        kit/manifest/trust.json)
+  --issuer ISSUER       Trust stamp issuer label
+  --channel CHANNEL     Release channel label

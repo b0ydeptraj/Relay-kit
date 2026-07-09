@@ -1,0 +1,13 @@
+﻿usage: relay-kit runtime doctor [-h] [--state-mode {template,live}]
+                                [--adapters {all,claude,agent,codex} [{all,claude,agent,codex} ...]]
+                                [--strict]
+                                [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --state-mode {template,live}
+  --adapters {all,claude,agent,codex} [{all,claude,agent,codex} ...]
+  --strict              Return non-zero when findings exist

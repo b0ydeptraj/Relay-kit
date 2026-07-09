@@ -1,0 +1,10 @@
+﻿usage: relay-kit accessibility [-h] {review} ...
+
+Run Relay-kit accessibility gates through portable public commands.
+
+positional arguments:
+  {review}
+    review    Generate or evaluate an accessibility checklist
+
+options:
+  -h, --help  show this help message and exit

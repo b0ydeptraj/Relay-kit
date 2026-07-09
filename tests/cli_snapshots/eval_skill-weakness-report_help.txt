@@ -1,0 +1,16 @@
+﻿usage: relay-kit eval skill-weakness-report [-h] [--battle-file BATTLE_FILE]
+                                            [--output-file OUTPUT_FILE]
+                                            [--json] [--strict]
+                                            [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --battle-file BATTLE_FILE
+                        Optional skill battle JSON report to summarize
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero when weaknesses exist

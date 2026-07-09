@@ -1,0 +1,13 @@
+﻿usage: relay-kit upgrade plan [-h] [--manifest-file MANIFEST_FILE] [--json]
+                              [--strict]
+                              [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --manifest-file MANIFEST_FILE
+                        Optional bundle manifest path
+  --json                Emit JSON report
+  --strict              Return non-zero when action is required

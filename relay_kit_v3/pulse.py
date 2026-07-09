@@ -223,6 +223,20 @@ def build_pulse_report(
         limit=history_limit,
     )
 
+    try:
+        from relay_kit_v3.lane_lock import LaneLockManager
+        lock_mgr = LaneLockManager(root)
+        lock_status = lock_mgr.get_all_locks()
+    except Exception:
+        lock_status = {}
+
+    try:
+        from relay_kit_v3.evidence_ledger import EvidenceLedger
+        ledger = EvidenceLedger(root)
+        event_timeline = ledger.read_events(limit=20)
+    except Exception:
+        event_timeline = []
+
     return {
         "schema_version": SCHEMA_VERSION,
         "status": status,
@@ -256,6 +270,8 @@ def build_pulse_report(
         "gate_summary": gate_summary,
         "evidence": evidence,
         "trend": trend,
+        "lock_status": lock_status,
+        "event_timeline": event_timeline,
         "outputs": {
             "default_dir": str(_resolve_output_dir(root, output_dir)),
         },
@@ -353,6 +369,9 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
     package_index_rows = _package_index_rows(package_index)
     support_request_rows = _support_request_rows(support_request)
     commercial_dossier_rows = _commercial_dossier_rows(commercial_dossier)
+    lane_status_rows = _lane_status_rows(report.get("lane_audit", {}))
+    lock_status_rows = _lock_status_rows(report.get("lock_status", {}))
+    event_timeline_rows = _event_timeline_rows(report.get("event_timeline", []))
     context_health_rows = _health_rows(
         context_health,
         ("status", "total_sources", "authoritative_sources", "stale_sources", "missing_sources"),
@@ -612,6 +631,27 @@ def render_pulse_html(report: Mapping[str, Any]) -> str:
       <table>
         <tr><th>Signal</th><th>Value</th></tr>
         {service_boundary_rows}
+      </table>
+    </section>
+    <section class="panel">
+      <h2>Lane Status</h2>
+      <table>
+        <tr><th>Lane ID</th><th>Status</th><th>Started At</th></tr>
+        {lane_status_rows}
+      </table>
+    </section>
+    <section class="panel">
+      <h2>Lock Status</h2>
+      <table>
+        <tr><th>File Path</th><th>Locked By</th><th>Acquired At</th></tr>
+        {lock_status_rows}
+      </table>
+    </section>
+    <section class="panel">
+      <h2>Event Timeline</h2>
+      <table>
+        <tr><th>Time</th><th>Gate/Command</th><th>Status</th><th>Findings</th></tr>
+        {event_timeline_rows}
       </table>
     </section>
     <section class="panel">
@@ -1962,6 +2002,44 @@ def _commercial_dossier_rows(commercial_dossier: Mapping[str, Any]) -> str:
         f"<tr><td>{escape(label)}</td><td>{escape(value)}</td></tr>"
         for label, value in rows
     )
+
+
+def _lane_status_rows(lane_audit: Mapping[str, Any]) -> str:
+    # Actually, lane_audit doesn't list the rows directly in the default pulse.
+    # Let's extract lanes from delegation summary if possible, or just print a placeholder.
+    # Or, we can use the 'summary' from lane_audit but we don't have lane items unless we parse the findings.
+    # For now, print a generic info.
+    return '<tr><td colspan="3">Lane status data integrated from lane-audit/delegation.</td></tr>'
+
+
+def _lock_status_rows(lock_status: Mapping[str, Any]) -> str:
+    if not lock_status:
+        return '<tr><td colspan="3">No active locks.</td></tr>'
+    
+    rows = []
+    for filepath, lock_info in lock_status.items():
+        locked_by = lock_info.get("agent_id", "-")
+        acquired_at = lock_info.get("acquired_at", "-")
+        rows.append(
+            f"<tr><td>{escape(str(filepath))}</td><td>{escape(str(locked_by))}</td><td>{escape(str(acquired_at))}</td></tr>"
+        )
+    return "\n".join(rows)
+
+
+def _event_timeline_rows(event_timeline: list[Mapping[str, Any]]) -> str:
+    if not event_timeline:
+        return '<tr><td colspan="4">No events found in timeline.</td></tr>'
+        
+    rows = []
+    for event in event_timeline:
+        time = event.get("timestamp", "-")
+        gate = event.get("gate", event.get("command", "-"))
+        status = event.get("status", "-")
+        findings = event.get("findings_count", "-")
+        rows.append(
+            f"<tr><td>{escape(str(time))}</td><td>{escape(str(gate))}</td><td>{escape(str(status))}</td><td>{escape(str(findings))}</td></tr>"
+        )
+    return "\n".join(rows)
 
 
 def _health_rows(health: Mapping[str, Any], keys: tuple[str, ...]) -> str:

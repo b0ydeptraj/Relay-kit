@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from relay_kit_v3.token_economy import build_context_pack
+from relay_kit_v3.lane_lock import LaneLockManager
+from relay_kit_v3.event_ledger import EventLedger
 
 
 PLAN_SCHEMA_VERSION = "relay-kit.delegation-plan.v1"
@@ -143,6 +145,26 @@ def build_delegation_plan(
         decision = "blocked" if tier == "high" else "serial"
         planned_agents = 0
         findings.append({"id": "delegation-budget-violation", "status": "hold", "summary": "planned agents exceed delegation budget"})
+        
+    # V5.4.3: Check lane locks before delegation
+    acquired_locks = []
+    lane_id = f"{_slug(task)}-lane"
+    lock_mgr = LaneLockManager(root)
+    if should_delegate and lock_scope:
+        files_to_lock = [f.strip() for f in lock_scope.split(",") if f.strip()]
+        for f in files_to_lock:
+            if lock_mgr.acquire(lane_id, f, agent_id="delegator"):
+                acquired_locks.append(f)
+            else:
+                # Rollback locks
+                for acq in acquired_locks:
+                    lock_mgr.release(lane_id, acq)
+                acquired_locks = []
+                decision = "blocked"
+                planned_agents = 0
+                findings.append({"id": "lock-conflict", "status": "hold", "summary": f"File {f} is currently locked by another lane"})
+                break
+                
     context_pack_path = None
     if planned_agents:
         pack = build_context_pack(root, task=task, max_tokens=per_agent)
@@ -150,6 +172,7 @@ def build_delegation_plan(
         context_target.parent.mkdir(parents=True, exist_ok=True)
         context_target.write_text(json.dumps(pack, indent=2) + "\n", encoding="utf-8")
         context_pack_path = context_target.relative_to(root).as_posix()
+        
     status = "hold" if decision == "blocked" else "pass"
     report = {
         "schema_version": PLAN_SCHEMA_VERSION,
@@ -167,8 +190,14 @@ def build_delegation_plan(
         "summary": {"planned_agents": planned_agents, "estimated_tokens": planned_agents * per_agent, "budget": max_total, "findings": len(findings)},
         "findings": findings,
     }
-    if apply:
+    if apply and decision == "delegate":
         write_plan(root, report)
+        ledger = EventLedger(root)
+        ledger.log_event("lane_started", lane_id, {"task": task, "agents": planned_agents})
+        for f in acquired_locks:
+            ledger.log_event("file_locked", lane_id, {"file": f})
+        ledger.close()
+        
         for index in range(planned_agents):
             append_ledger_event(root, {
                 "agent_id": f"{_slug(task)}-{index + 1}",
@@ -187,6 +216,8 @@ def build_delegation_plan(
                 "actual_tokens": None,
                 "context_pack_path": context_pack_path,
             })
+    
+    lock_mgr.close()
     return report
 
 
@@ -261,6 +292,10 @@ def build_delegation_audit(project_root: Path | str) -> dict[str, Any]:
 def close_completed(project_root: Path | str) -> dict[str, Any]:
     root = Path(project_root).resolve()
     closed: list[str] = []
+    
+    lock_mgr = LaneLockManager(root)
+    ledger = EventLedger(root)
+    
     for agent_id, state in latest_agent_states(read_ledger(root)).items():
         if state.get("status") != "handoff-received" or not state.get("handoff_evidence"):
             continue
@@ -271,8 +306,22 @@ def close_completed(project_root: Path | str) -> dict[str, Any]:
                 target.unlink()
             elif target.is_dir():
                 shutil.rmtree(target)
+                
+        # V5.4.3: Release lock and log event
+        lane_id = f"{_slug(state.get('task', 'delegation'))}-lane"
+        lock_scope = state.get("lock_scope")
+        if lock_scope:
+            files_to_unlock = [f.strip() for f in lock_scope.split(",") if f.strip()]
+            for f in files_to_unlock:
+                lock_mgr.release(lane_id, f)
+                ledger.log_event("file_unlocked", lane_id, {"file": f, "agent_id": agent_id})
+                
+        ledger.log_event("task_completed", lane_id, {"agent_id": agent_id})
         append_ledger_event(root, {**state, "event": "closed", "status": "closed", "close_reason": "handoff evidence received"})
         closed.append(agent_id)
+        
+    lock_mgr.close()
+    ledger.close()
     return {"schema_version": AUDIT_SCHEMA_VERSION, "status": "pass", "closed_agents": closed, "closed_count": len(closed)}
 
 

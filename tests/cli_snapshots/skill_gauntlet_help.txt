@@ -1,0 +1,14 @@
+﻿usage: relay-kit skill gauntlet [-h] [--json] [--strict] [--semantic]
+                                [--scenario-fixtures SCENARIO_FIXTURES]
+                                [project_path]
+
+positional arguments:
+  project_path          Target project root
+
+options:
+  -h, --help            show this help message and exit
+  --json                Emit JSON report
+  --strict              Return non-zero when findings exist
+  --semantic            Also check registry parity and routing scenarios
+  --scenario-fixtures SCENARIO_FIXTURES
+                        Optional scenario fixture JSON path

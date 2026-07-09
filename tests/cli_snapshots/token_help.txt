@@ -1,0 +1,10 @@
+﻿usage: relay-kit token [-h] {audit} ...
+
+Audit token-economy metrics for context budget and compression safety.
+
+positional arguments:
+  {audit}
+    audit     Run token-economy audit
+
+options:
+  -h, --help  show this help message and exit

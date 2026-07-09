@@ -1,0 +1,8 @@
+﻿usage: relay-kit locale show [-h] [--json] [project_path]
+
+positional arguments:
+  project_path  Project root to inspect
+
+options:
+  -h, --help    show this help message and exit
+  --json        Emit machine-readable locale policy

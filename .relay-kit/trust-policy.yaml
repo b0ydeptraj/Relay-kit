@@ -1,0 +1,26 @@
+# Relay-Kit V5 — Trust Policy Configuration
+# Governs how extensions are evaluated before activation.
+# Possible trust levels: verified | reviewed | untrusted
+
+default_trust_level: untrusted
+
+rules:
+  # Extensions with a valid GPG signature are automatically promoted to 'verified'.
+  verified:
+    requires_signature: true
+    allows_shell: true
+    allows_network: true
+
+  # Extensions manually reviewed and approved by the user.
+  reviewed:
+    requires_signature: false
+    allows_shell: false
+    allows_network: false
+    requires_human_review: true
+
+  # Untrusted extensions are BLOCKED from activating under any circumstance.
+  untrusted:
+    blocked: true
+
+# Override per-pack if needed (pack name must match pack.yaml `name` field)
+overrides: {}

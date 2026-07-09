@@ -1,0 +1,19 @@
+﻿usage: relay-kit signal export [-h] [--pulse-file PULSE_FILE]
+                               [--output-dir OUTPUT_DIR]
+                               [--event-limit EVENT_LIMIT] [--otlp] [--json]
+                               [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --pulse-file PULSE_FILE
+                        Pulse report JSON file
+  --output-dir OUTPUT_DIR
+                        Output directory (default: <project>/.relay-
+                        kit/signals)
+  --event-limit EVENT_LIMIT
+                        Recent evidence events to export
+  --otlp                Also write Relay OTLP-compatible JSON
+  --json                Emit machine-readable output paths and export payload

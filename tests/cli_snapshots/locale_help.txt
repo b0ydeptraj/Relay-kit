@@ -1,0 +1,11 @@
+﻿usage: relay-kit locale [-h] {show,set} ...
+
+Read or update Relay-kit global runtime locale policy.
+
+positional arguments:
+  {show,set}
+    show      Show the current runtime locale policy
+    set       Set runtime locale policy with one global switch
+
+options:
+  -h, --help  show this help message and exit

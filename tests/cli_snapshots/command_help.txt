@@ -1,0 +1,11 @@
+﻿usage: relay-kit command [-h] {list,diagnose} ...
+
+List and diagnose Relay-kit lifecycle command surfaces.
+
+positional arguments:
+  {list,diagnose}
+    list           List lifecycle commands and route targets
+    diagnose       Check adapter lifecycle command parity
+
+options:
+  -h, --help       show this help message and exit

@@ -1,0 +1,12 @@
+﻿usage: relay-kit delegation capabilities [-h]
+                                         [--adapter {codex,claude,agent,antigravity,all}]
+                                         [--json]
+                                         [project_path]
+
+positional arguments:
+  project_path
+
+options:
+  -h, --help            show this help message and exit
+  --adapter {codex,claude,agent,antigravity,all}
+  --json

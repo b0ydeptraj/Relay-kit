@@ -1,0 +1,16 @@
+﻿usage: relay-kit eval domain-pack [-h] [--pack PACK]
+                                  [--output-file OUTPUT_FILE] [--json]
+                                  [--strict]
+                                  {list,run} [project_path]
+
+positional arguments:
+  {list,run}            Domain pack action
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --pack PACK           Domain pack name for `run`
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero unless the pack action passes

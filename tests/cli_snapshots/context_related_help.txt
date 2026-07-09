@@ -1,0 +1,14 @@
+﻿usage: relay-kit context related [-h] --path PATH [--limit LIMIT]
+                                 [--index-file INDEX_FILE] [--json]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --path PATH           Source path to inspect
+  --limit LIMIT         Maximum related file count
+  --index-file INDEX_FILE
+                        Optional context index JSON path
+  --json                Emit machine-readable related-file results

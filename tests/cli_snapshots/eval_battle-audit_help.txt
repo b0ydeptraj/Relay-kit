@@ -1,0 +1,18 @@
+﻿usage: relay-kit eval battle-audit [-h]
+                                   [--skill-battle-file SKILL_BATTLE_FILE]
+                                   [--output-file OUTPUT_FILE] [--json]
+                                   [--strict]
+                                   [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --skill-battle-file SKILL_BATTLE_FILE
+                        Optional skill battle JSON report to fold into audit
+                        findings
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero when high-severity findings exist

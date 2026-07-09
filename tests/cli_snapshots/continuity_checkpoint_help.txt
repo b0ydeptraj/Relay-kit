@@ -1,0 +1,18 @@
+﻿usage: relay-kit continuity checkpoint [-h] [--json] [--objective OBJECTIVE]
+                                       [--lane LANE] [--blocker BLOCKER]
+                                       [--next-step NEXT_STEP] [--note NOTE]
+                                       [project_path]
+
+positional arguments:
+  project_path          Target project root
+
+options:
+  -h, --help            show this help message and exit
+  --json                Emit JSON output
+  --objective OBJECTIVE
+                        Current objective summary
+  --lane LANE           Active lane id
+  --blocker BLOCKER     Current blocker
+  --next-step NEXT_STEP
+                        Exact next step
+  --note NOTE           Optional checkpoint note

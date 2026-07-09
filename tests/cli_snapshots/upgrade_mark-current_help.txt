@@ -1,0 +1,16 @@
+﻿usage: relay-kit upgrade mark-current [-h] [--bundle BUNDLE]
+                                      [--adapter {codex,claude,antigravity,generic,all}]
+                                      [--manifest-file MANIFEST_FILE]
+                                      [project_path]
+
+positional arguments:
+  project_path          Project root to update
+
+options:
+  -h, --help            show this help message and exit
+  --bundle BUNDLE       Runtime bundle installed in the project (default:
+                        enterprise)
+  --adapter {codex,claude,antigravity,generic,all}
+                        Installed adapter. Repeat for multiple adapters.
+  --manifest-file MANIFEST_FILE
+                        Optional bundle manifest path

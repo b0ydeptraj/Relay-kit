@@ -1,0 +1,17 @@
+Relay-kit contract import
+- project: C:\Users\b0ydeptrai\Documents\relay-kit
+- contract: C:\Users\b0ydeptrai\Documents\relay-kit\.relay-kit\contract-sync\relay-contract.json
+- mode: dry-run
+- status: pass
+- actions: 9
+- findings: 0
+- contract updates:
+  - .relay-kit/contracts/PRD.md :: Functional requirements -> skipped-empty (0 items)
+  - .relay-kit/contracts/PRD.md :: Acceptance criteria -> skipped-empty (0 items)
+  - .relay-kit/contracts/PRD.md :: Risks and mitigations -> skipped-empty (0 items)
+  - .relay-kit/contracts/stories/story-001.md :: Acceptance criteria -> skipped-empty (0 items)
+  - .relay-kit/contracts/stories/story-001.md :: Test notes -> skipped-empty (0 items)
+  - .relay-kit/contracts/stories/story-001.md :: Risks -> skipped-empty (0 items)
+  - .relay-kit/contracts/tech-spec.md :: Files likely affected -> skipped-empty (0 items)
+  - .relay-kit/contracts/tech-spec.md :: Verification steps -> skipped-empty (0 items)
+  - .relay-kit/contracts/qa-report.md :: Evidence collected -> skipped-empty (0 items)

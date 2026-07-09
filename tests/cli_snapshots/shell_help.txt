@@ -1,0 +1,10 @@
+﻿usage: relay-kit shell [-h] {compact} ...
+
+Run shell commands through Relay-kit raw-log preserving compaction.
+
+positional arguments:
+  {compact}
+    compact   Run a command and compact its shell output
+
+options:
+  -h, --help  show this help message and exit

@@ -1,0 +1,10 @@
+﻿usage: relay-kit signal [-h] {export} ...
+
+Export Relay-kit Pulse and evidence signals as local telemetry artifacts.
+
+positional arguments:
+  {export}
+    export    Write Relay signal JSON, JSONL, and optional OTLP JSON
+
+options:
+  -h, --help  show this help message and exit

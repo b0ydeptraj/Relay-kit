@@ -1,0 +1,16 @@
+﻿usage: relay-kit eval real-world [-h] [--cases-file CASES_FILE]
+                                 [--output-file OUTPUT_FILE] [--json]
+                                 [--strict]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --cases-file CASES_FILE
+                        Optional real-world case fixture JSON
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero unless all cases pass

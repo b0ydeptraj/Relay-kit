@@ -1,0 +1,2218 @@
+commands:
+  dashboard:
+    handler: relay_kit_v3.cli.dashboard.run_dashboard
+    help_text: Start Relay-Kit Live Dashboard
+    args:
+      project_path:
+        nargs: '?'
+        default: .
+        help: Project root to inspect
+    flags:
+      --host:
+        type: str
+        default: 127.0.0.1
+        help: Host to bind
+      --port:
+        type: int
+        default: 8000
+        help: Port to bind
+  doctor:
+    handler: relay_kit_v3.cli.doctor.run_doctor
+    help_text: Run Relay-kit runtime verification gates.
+    args:
+      project_path:
+        nargs: '?'
+        default: .
+        help: Project root to inspect
+    flags:
+      --skip-tests:
+        action: store_true
+        help: Skip the local pytest suite
+      --policy-pack:
+        help: Policy pack passed to policy guard
+        choices:
+        - baseline
+        - enterprise
+        - team
+      --verbose:
+        action: store_true
+        help: Print stdout and stderr for passing gates
+      --json:
+        action: store_true
+        help: Emit machine-readable doctor results
+  evidence:
+    handler: relay_kit_v3.cli.evidence.run_evidence
+    help_text: Inspect Relay-kit evidence ledger events.
+    subcommands:
+      summary:
+        handler: relay_kit_v3.cli.evidence.run_evidence
+        help_text: Summarize recent evidence events
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --limit:
+            type: int
+            default: 20
+            help: Recent event count to show
+          --json:
+            action: store_true
+            help: Emit JSON summary
+  contract:
+    handler: relay_kit_v3.cli.contract.run_contract
+    help_text: Export and import Relay-kit planning and QA contracts as machine-readable
+      contract JSON.
+    subcommands:
+      export:
+        handler: relay_kit_v3.cli.contract.run_contract_export
+        help_text: Export Relay-kit contracts to JSON
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --output-file:
+            default: null
+            help: 'Output path (default: <project>/.relay-kit/contract-sync/relay-contract.json)'
+      import:
+        handler: relay_kit_v3.cli.contract.run_contract_import
+        help_text: Plan or apply Relay contract JSON into contracts
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to update
+        flags:
+          --contract-file:
+            default: null
+            help: 'Input contract JSON path (default: <project>/.relay-kit/contract-sync/relay-contract.json)'
+          --apply:
+            action: store_true
+            help: Write contract updates instead of dry-running
+          --force:
+            action: store_true
+            help: Overwrite concrete existing contract sections
+          --strict:
+            action: store_true
+            help: Return non-zero on invalid contract JSON or skipped conflicts
+          --json:
+            action: store_true
+            help: Emit machine-readable import report
+  context:
+    handler: relay_kit_v3.cli.context.run_context
+    help_text: Audit Relay-kit context governance and build a local no-API context
+      graph.
+    subcommands:
+      audit:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Audit source freshness and authority
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --stale-days:
+            type: int
+            default: 30
+            help: Age threshold for stale sources
+          --output-file:
+            default: null
+            help: Optional context audit JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless context audit passes
+          --json:
+            action: store_true
+            help: Emit machine-readable context audit
+      index:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Build a local file, symbol, import, test, and docs index
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to index
+        flags:
+          --output-file:
+            default: null
+            help: 'Optional index JSON output path (default: <project>/.relay-kit/context/index.json)'
+          --json:
+            action: store_true
+            help: Emit machine-readable context index summary
+      search:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Search the local context graph
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --query:
+            required: true
+            help: Query text
+          --limit:
+            type: int
+            default: 10
+            help: Maximum result count
+          --index-file:
+            default: null
+            help: Optional context index JSON path
+          --embedding-model:
+            default: null
+            help: 'Force Tier 1/2 embedding model (e.g., nomic-embed-text-v1.5, bge-m3)'
+          --json:
+            action: store_true
+            help: Emit machine-readable search results
+      related:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Find files related to a path in the local context graph
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --path:
+            required: true
+            help: Source path to inspect
+          --limit:
+            type: int
+            default: 10
+            help: Maximum related file count
+          --index-file:
+            default: null
+            help: Optional context index JSON path
+          --json:
+            action: store_true
+            help: Emit machine-readable related-file results
+      explain-symbol:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Explain definitions, references, and tests for a symbol
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --symbol:
+            required: true
+            help: Symbol name to explain
+          --limit:
+            type: int
+            default: 10
+            help: Maximum definition/reference count
+          --index-file:
+            default: null
+            help: Optional context index JSON path
+          --json:
+            action: store_true
+            help: Emit machine-readable symbol explanation
+      active:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Set or show active file/selection context
+        subcommands:
+          set:
+            handler: relay_kit_v3.cli.context.run_context
+            help_text: Set active context
+            args:
+              project_path:
+                nargs: '?'
+                default: .
+                help: Project root to inspect
+            flags:
+              --file:
+                required: true
+                help: Active file path
+              --selection:
+                default: null
+                help: Optional active selection text
+              --json:
+                action: store_true
+                help: Emit machine-readable active context
+          show:
+            handler: relay_kit_v3.cli.context.run_context
+            help_text: Show active context
+            args:
+              project_path:
+                nargs: '?'
+                default: .
+                help: Project root to inspect
+            flags:
+              --json:
+                action: store_true
+                help: Emit machine-readable active context
+      mcp:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Expose local context tools for MCP-style clients
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --list-tools:
+            action: store_true
+            help: Print local context tool manifest and exit
+          --tool:
+            choices:
+            - context.search
+            - context.related
+            - context.explain_symbol
+            - context.active
+            default: null
+          --query:
+            default: null
+            help: Query for context.search
+          --path:
+            default: null
+            help: Path for context.related
+          --symbol:
+            default: null
+            help: Symbol for context.explain_symbol
+          --limit:
+            type: int
+            default: 10
+            help: Tool result limit
+          --json:
+            action: store_true
+            help: Emit machine-readable MCP manifest or tool result
+      watch:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Refresh the local context index when indexed files change
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to watch
+        flags:
+          --output-file:
+            default: null
+            help: Optional index JSON output path
+          --once:
+            action: store_true
+            help: Build once and exit
+          --interval:
+            default: 2.0
+            help: Polling interval in seconds
+          --max-iterations:
+            type: int
+            default: null
+            help: Stop after N polling iterations
+          --json:
+            action: store_true
+            help: Emit machine-readable watch summary
+      budget:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Estimate token budget and compression safety
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --max-tokens:
+            type: int
+            help: Token budget ceiling
+          --query:
+            default: null
+            help: Optional query text to focus context budget sources
+          --scope:
+            action: append
+            choices:
+            - state
+            - contracts
+            - docs
+            - evidence
+            - registry
+            help: Limit source scopes; defaults to all scopes
+          --stale-days:
+            type: int
+            default: 30
+            help: Age threshold for stale sources
+          --output-file:
+            default: null
+            help: Optional context budget JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless budget and retention pass
+          --json:
+            action: store_true
+            help: Emit machine-readable context budget
+      pack:
+        handler: relay_kit_v3.cli.context.run_context
+        help_text: Build task-scoped context pack within token budget
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --task:
+            required: true
+            help: Task text used to rank relevant context sources
+          --max-tokens:
+            type: int
+            help: Token budget ceiling
+          --scope:
+            action: append
+            choices:
+            - state
+            - contracts
+            - docs
+            - evidence
+            - registry
+            help: Limit source scopes; defaults to all scopes
+          --stale-days:
+            type: int
+            default: 30
+            help: Age threshold for stale sources
+          --output-file:
+            default: null
+            help: Optional context pack JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless budget and retention pass
+          --json:
+            action: store_true
+            help: Emit machine-readable context pack
+  lane:
+    handler: relay_kit_v3.cli.lane.run_lane
+    help_text: Audit Relay-kit multi-lane coordination state.
+    subcommands:
+      audit:
+        handler: relay_kit_v3.cli.lane.run_lane
+        help_text: Audit lane locks, dependencies, waves, and handoffs
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --output-file:
+            default: null
+            help: Optional lane audit JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless lane audit passes
+          --json:
+            action: store_true
+            help: Emit machine-readable lane audit
+      simulate:
+        handler: relay_kit_v3.cli.lane.run_lane
+        help_text: Simulate multi-lane execution before forking
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root
+        flags:
+          --tasks:
+            required: true
+            help: Path to tasks.json containing delegation targets
+          --agents:
+            type: int
+            default: 1
+            help: Number of agents to simulate
+          --json:
+            action: store_true
+            help: Emit machine-readable output
+      run:
+        handler: relay_kit_v3.cli.lane.run_lane
+        help_text: Run multi-lane execution with lock protection
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root
+        flags:
+          --tasks:
+            required: true
+            help: Path to tasks.json containing delegation targets
+          --agents:
+            type: int
+            default: 1
+            help: Number of agents to run
+          --json:
+            action: store_true
+            help: Emit machine-readable output
+  delegation:
+    handler: relay_kit_v3.cli.delegation.run_delegation
+    help_text: Plan and audit quota-aware subagent delegation.
+    subcommands:
+      plan:
+        handler: relay_kit_v3.cli.delegation.run_delegation
+        help_text: Plan bounded delegation with reasoning and quota controls
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+        flags:
+          --task:
+            required: true
+          --budget:
+            type: int
+            default: null
+          --complexity:
+            choices:
+            - L0
+            - L1
+            - L2
+            - L3
+            - L4
+            default: null
+          --adapter:
+            choices:
+            - codex
+            - claude
+            - agent
+            - antigravity
+            - all
+            default: all
+          --artifact:
+            default: null
+          --lock-scope:
+            default: null
+          --expected-return-condition:
+            default: null
+          --verification-command:
+            default: null
+          --independent:
+            action: store_true
+          --apply:
+            action: store_true
+          --strict:
+            action: store_true
+          --json:
+            action: store_true
+      audit:
+        handler: relay_kit_v3.cli.delegation.run_delegation
+        help_text: Audit delegation quota and lifecycle state
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+        flags:
+          --strict:
+            action: store_true
+          --json:
+            action: store_true
+      close-completed:
+        handler: relay_kit_v3.cli.delegation.run_delegation
+        help_text: Close agents with recorded handoff evidence
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+        flags:
+          --json:
+            action: store_true
+      record-usage:
+        handler: relay_kit_v3.cli.delegation.run_delegation
+        help_text: Record adapter-reported token usage
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+        flags:
+          --agent-id:
+            required: true
+          --input-tokens:
+            required: true
+            type: int
+          --output-tokens:
+            required: true
+            type: int
+          --json:
+            action: store_true
+      capabilities:
+        handler: relay_kit_v3.cli.delegation.run_delegation
+        help_text: Report adapter delegation capability enforcement
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+        flags:
+          --adapter:
+            choices:
+            - codex
+            - claude
+            - agent
+            - antigravity
+            - all
+            default: all
+          --json:
+            action: store_true
+  locale:
+    handler: relay_kit_v3.cli.locale.run_locale
+    help_text: Read or update Relay-kit global runtime locale policy.
+    subcommands:
+      show:
+        handler: relay_kit_v3.cli.locale.run_locale
+        help_text: Show the current runtime locale policy
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --json:
+            action: store_true
+            help: Emit machine-readable locale policy
+      set:
+        handler: relay_kit_v3.cli.locale.run_locale
+        help_text: Set runtime locale policy with one global switch
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to update
+        flags:
+          --locale:
+            required: true
+            help: 'Primary locale profile (allowed: vi, en)'
+          --fallback-locale:
+            default: null
+            help: Fallback locale profile (default unchanged)
+          --enforce-output-language:
+            dest: enforce_output_language
+            action: store_true
+            help: Enforce output language according to locale profile (default on).
+          --no-enforce-output-language:
+            dest: enforce_output_language
+            action: store_false
+            help: Allow mixed-language output when explicitly needed.
+          --json:
+            action: store_true
+            help: Emit machine-readable locale policy
+  token:
+    handler: relay_kit_v3.cli.token.run_token
+    help_text: Audit token-economy metrics for context budget and compression safety.
+    subcommands:
+      audit:
+        handler: relay_kit_v3.cli.token.run_token
+        help_text: Run token-economy audit
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --max-tokens:
+            type: int
+            help: Token budget ceiling
+          --scope:
+            action: append
+            choices:
+            - state
+            - contracts
+            - docs
+            - evidence
+            - registry
+            help: Limit source scopes; defaults to all scopes
+          --stale-days:
+            type: int
+            default: 30
+            help: Age threshold for stale sources
+          --output-file:
+            default: null
+            help: Optional token audit JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless budget and retention pass
+          --json:
+            action: store_true
+            help: Emit machine-readable token audit
+  calibrate:
+    handler: relay_kit_v3.cli.calibrate.run_calibrate
+    help_text: Calibrate overclaim-prone Relay-kit claims against proof evidence.
+    subcommands:
+      claims:
+        handler: relay_kit_v3.cli.calibrate.run_calibrate
+        help_text: Calibrate explicit claim text
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --claim:
+            action: append
+            help: Exact claim text to calibrate
+          --claim-file:
+            default: null
+            help: JSON, markdown, or text file with claims
+          --output-file:
+            default: null
+            help: Optional signal calibration JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero when a claim is blocked
+          --json:
+            action: store_true
+            help: Emit machine-readable signal calibration report
+      skill:
+        handler: relay_kit_v3.cli.calibrate.run_calibrate
+        help_text: Calibrate skill quality claims
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --skill:
+            default: all
+            help: Skill name or all
+          --output-file:
+            default: null
+            help: Optional signal calibration JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero when a claim is blocked
+          --json:
+            action: store_true
+            help: Emit machine-readable signal calibration report
+      readiness:
+        handler: relay_kit_v3.cli.calibrate.run_calibrate
+        help_text: Calibrate readiness and public proof claims
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --output-file:
+            default: null
+            help: Optional signal calibration JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero when a claim is blocked
+          --json:
+            action: store_true
+            help: Emit machine-readable signal calibration report
+  shell:
+    handler: relay_kit_v3.cli.shell.run_shell
+    help_text: Run shell commands through Relay-kit raw-log preserving compaction.
+    subcommands:
+      compact:
+        handler: relay_kit_v3.cli.shell.run_shell
+        help_text: Run a command and compact its shell output
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root used for raw evidence logs
+        flags:
+          --cwd:
+            default: null
+            help: Working directory for the command; defaults to project root
+          --timeout:
+            default: null
+            help: Optional command timeout in seconds
+          --strict:
+            action: store_true
+            help: Fail if compaction drops required signal
+          --json:
+            action: store_true
+            help: Emit machine-readable compact shell report
+  adapter:
+    handler: relay_kit_v3.cli.adapter.run_adapter
+    help_text: Diagnose Relay-kit adapter skill surfaces.
+    subcommands:
+      diagnose:
+        handler: relay_kit_v3.cli.adapter.run_adapter
+        help_text: Check adapter skill parity and metadata drift
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --adapter:
+            choices:
+            - codex
+            - claude
+            - agent
+            - antigravity
+            - all
+            default: all
+            help: Adapter surface to inspect
+          --output-file:
+            default: null
+            help: Optional adapter diagnostics JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless diagnostics pass
+          --json:
+            action: store_true
+            help: Emit machine-readable diagnostics
+  command:
+    handler: relay_kit_v3.cli.command.run_command
+    help_text: List and diagnose Relay-kit lifecycle command surfaces.
+    subcommands:
+      list:
+        handler: relay_kit_v3.cli.command.run_command
+        help_text: List lifecycle commands and route targets
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root (reserved for CLI symmetry)
+        flags:
+          --json:
+            action: store_true
+            help: Emit machine-readable lifecycle command list
+      diagnose:
+        handler: relay_kit_v3.cli.command.run_command
+        help_text: Check adapter lifecycle command parity
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --adapter:
+            choices:
+            - codex
+            - claude
+            - agent
+            - antigravity
+            - all
+            default: all
+            help: Adapter surface to inspect
+          --output-file:
+            default: null
+            help: Optional command diagnostics JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless command parity passes
+          --json:
+            action: store_true
+            help: Emit machine-readable command diagnostics
+  agent:
+    handler: relay_kit_v3.cli.agent.run_agent
+    help_text: List and diagnose Relay-kit role-based agent profiles.
+    subcommands:
+      list:
+        handler: relay_kit_v3.cli.agent.run_agent
+        help_text: List Relay-kit agent profiles and route contracts
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root (reserved for CLI symmetry)
+        flags:
+          --json:
+            action: store_true
+            help: Emit machine-readable agent profile list
+      diagnose:
+        handler: relay_kit_v3.cli.agent.run_agent
+        help_text: Check adapter agent profile parity and contract integrity
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --adapter:
+            choices:
+            - codex
+            - claude
+            - agent
+            - antigravity
+            - all
+            default: all
+            help: Adapter surface to inspect
+          --output-file:
+            default: null
+            help: Optional agent diagnostics JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless agent diagnostics pass
+          --json:
+            action: store_true
+            help: Emit machine-readable agent diagnostics
+  query:
+    handler: relay_kit_v3.cli.query.run_query
+    help_text: Search Relay-kit state, contracts, docs, evidence, and registry sources.
+    subcommands:
+      search:
+        handler: relay_kit_v3.cli.query.run_query
+        help_text: Rank local Relay-kit sources for a query
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --query:
+            required: true
+            help: Query text
+          --scope:
+            action: append
+            choices:
+            - state
+            - contracts
+            - docs
+            - evidence
+            - registry
+            help: Limit search to one or more scopes; defaults to all scopes
+          --limit:
+            type: int
+            default: 10
+            help: Maximum result count
+          --stale-days:
+            type: int
+            default: 30
+            help: Freshness threshold in days
+          --output-file:
+            default: null
+            help: Optional query search JSON output path
+          --json:
+            action: store_true
+            help: Emit machine-readable search results
+  prompt:
+    handler: relay_kit_v3.cli.prompt.run_prompt
+    help_text: Enhance short or ambiguous user prompts with Relay-kit skill context.
+    subcommands:
+      enhance:
+        handler: relay_kit_v3.cli.prompt.run_prompt
+        help_text: Turn a short request into a skill-aware working prompt
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --prompt:
+            required: true
+            help: User prompt to enhance
+          --top-limit:
+            type: int
+            default: 5
+            help: Number of route candidates to include
+          --output-file:
+            default: null
+            help: Optional prompt enhancement JSON output path
+          --json:
+            action: store_true
+            help: Emit machine-readable prompt enhancement
+  service:
+    handler: relay_kit_v3.cli.service.run_service
+    help_text: Inspect Relay-kit service-boundary map and static dependency rules.
+    subcommands:
+      boundaries:
+        handler: relay_kit_v3.cli.service.run_service
+        help_text: Check service-boundary map and static import rules
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --output-file:
+            default: null
+            help: Optional service-boundary JSON output path
+          --strict:
+            action: store_true
+            help: Return non-zero when boundary findings exist
+          --json:
+            action: store_true
+            help: Emit machine-readable boundary report
+  runtime:
+    handler: relay_kit_v3.cli.runtime.run_runtime
+    help_text: Run Relay-kit runtime diagnostics through portable public commands.
+    subcommands:
+      doctor:
+        handler: relay_kit_v3.cli.runtime.run_runtime
+        help_text: Detect runtime drift in generated skill surfaces
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --state-mode:
+            choices:
+            - template
+            - live
+            default: template
+          --adapters:
+            nargs: +
+            choices:
+            - all
+            - claude
+            - agent
+            - codex
+            default:
+            - all
+          --strict:
+            action: store_true
+            help: Return non-zero when findings exist
+  skill:
+    handler: relay_kit_v3.cli.skill.run_skill
+    help_text: Run Relay-kit skill behavior gates through portable public commands.
+    subcommands:
+      gauntlet:
+        handler: relay_kit_v3.cli.skill.run_skill
+        help_text: Run SKILL.md behavior regression checks
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when findings exist
+          --semantic:
+            action: store_true
+            help: Also check registry parity and routing scenarios
+          --scenario-fixtures:
+            default: null
+            help: Optional scenario fixture JSON path
+  impact:
+    handler: relay_kit_v3.cli.impact.run_impact
+    help_text: Run Relay-kit blast-radius utilities through portable public commands.
+    subcommands:
+      radar:
+        handler: relay_kit_v3.cli.impact.run_impact
+        help_text: Generate a compact blast-radius report
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --base:
+            default: null
+            help: Optional base ref for git diff
+          --head:
+            default: HEAD
+            help: Head ref for git diff
+          --json:
+            action: store_true
+            help: Emit JSON output
+  accessibility:
+    handler: relay_kit_v3.cli.accessibility.run_accessibility
+    help_text: Run Relay-kit accessibility gates through portable public commands.
+    subcommands:
+      review:
+        handler: relay_kit_v3.cli.accessibility.run_accessibility
+        help_text: Generate or evaluate an accessibility checklist
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --surface:
+            default: null
+            help: Screen, flow, or surface under review
+          --report-file:
+            default: null
+            help: Optional checklist evidence file
+          --output-file:
+            default: null
+            help: Optional generated report output path
+          --strict:
+            action: store_true
+            help: Fail when evidence report is missing
+          --json:
+            action: store_true
+            help: Emit JSON output
+  manifest:
+    handler: relay_kit_v3.cli.manifest.run_manifest
+    help_text: Write or verify checksummed Relay-kit bundle manifests.
+    subcommands:
+      write:
+        handler: relay_kit_v3.cli.manifest.run_manifest
+        help_text: Write a checksummed bundle manifest
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root for default output
+        flags:
+          --output-file:
+            default: null
+            help: 'Output path (default: <project>/.relay-kit/manifest/bundles.json)'
+      stamp:
+        handler: relay_kit_v3.cli.manifest.run_manifest
+        help_text: Write deterministic trust metadata for a manifest
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root for default manifest/trust paths
+        flags:
+          --manifest-file:
+            default: null
+            help: 'Manifest path (default: <project>/.relay-kit/manifest/bundles.json)'
+          --trust-file:
+            default: null
+            help: 'Trust metadata path (default: <project>/.relay-kit/manifest/trust.json)'
+          --issuer:
+            default: local
+            help: Trust stamp issuer label
+          --channel:
+            default: local
+            help: Release channel label
+      verify:
+        handler: relay_kit_v3.cli.manifest.run_manifest
+        help_text: Verify a checksummed bundle manifest
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root for default manifest lookup
+        flags:
+          --manifest-file:
+            default: null
+            help: 'Manifest path (default: <project>/.relay-kit/manifest/bundles.json)'
+          --trust-file:
+            default: null
+            help: 'Trust metadata path (default: beside manifest as trust.json)'
+          --trusted:
+            action: store_true
+            help: Require deterministic trust metadata
+  eval:
+    handler: relay_kit_v3.cli.eval.run_eval
+    help_text: Run Relay-kit workflow scenario evaluations.
+    subcommands:
+      run:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Run workflow routing scenario evals
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --scenario-fixtures:
+            default: null
+            help: 'JSON scenario fixture file (default: bundled Relay-kit fixtures)'
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --baseline-file:
+            default: null
+            help: Optional prior workflow eval JSON used for regression checks
+          --min-pass-rate:
+            default: null
+            help: Minimum accepted scenario pass rate
+          --min-route-margin:
+            type: int
+            default: null
+            help: Minimum top-route score margin
+          --min-evidence-coverage:
+            default: null
+            help: Minimum expected-term coverage
+          --min-scenarios:
+            type: int
+            default: null
+            help: Minimum scenario count
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when any scenario fails
+      real-world:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Run production-shaped skill contract cases
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --cases-file:
+            default: null
+            help: Optional real-world case fixture JSON
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero unless all cases pass
+      skill-battle:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Score skills against deep battle cases
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root that owns temporary battle fixtures
+        flags:
+          --skill:
+            default: all
+            help: Skill name or `all`
+          --suite:
+            default: deep
+            choices:
+            - deep
+            help: Skill battle suite to run
+          --cleanup:
+            action: store_true
+            help: Delete temporary skill battle fixtures after the run
+          --min-score:
+            default: 8.0
+            help: Minimum accepted per-skill score
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero unless all selected skills meet min score
+      competency-battle:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Score skills by competency coverage and optional deep battle evidence
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --skill:
+            default: all
+            help: Skill name or `all`
+          --suite:
+            default: core
+            choices:
+            - core
+            - deep
+            help: Competency suite to run
+          --cleanup:
+            action: store_true
+            help: Delete temporary deep battle fixtures after the run
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero unless all selected skills are competency-covered
+      skill-weakness-report:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Summarize weak skill battle findings
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --battle-file:
+            default: null
+            help: Optional skill battle JSON report to summarize
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when weaknesses exist
+      battle-audit:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Audit skill resources and public surfaces for battle readiness
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --skill-battle-file:
+            default: null
+            help: Optional skill battle JSON report to fold into audit findings
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when high-severity findings exist
+      battle-benchmark:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Run safe read-only public repo benchmark cases
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root that owns the temp benchmark folder
+        flags:
+          --suite:
+            default: curated
+            choices:
+            - curated
+            - deep
+            help: Benchmark suite to run
+          --cleanup:
+            action: store_true
+            help: Delete temporary cloned repos after the run
+          --repo-limit:
+            type: int
+            default: null
+            help: Limit the number of repos from the suite
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero unless benchmark cases pass
+      repo-profile:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: Classify repo archetype from the local context index
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --write-index:
+            action: store_true
+            help: Persist a context index while profiling
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when domain coverage is unknown
+      domain-pack:
+        handler: relay_kit_v3.cli.eval.run_eval
+        help_text: List or run optional domain competency packs
+        args:
+          domain_action:
+            choices:
+            - list
+            - run
+            help: Domain pack action
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --pack:
+            default: null
+            help: Domain pack name for `run`
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero unless the pack action passes
+  proof:
+    handler: relay_kit_v3.cli.proof.run_proof
+    help_text: Audit skill proof status across theoretical, validated, and field-tested
+      levels.
+    subcommands:
+      audit:
+        handler: relay_kit_v3.cli.proof.run_proof
+        help_text: Classify canonical skills by proof level
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --workflow-fixture:
+            default: null
+            help: Optional workflow scenario fixture JSON
+          --real-world-cases-file:
+            default: null
+            help: Optional real-world skill case fixture JSON
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --strict:
+            action: store_true
+            help: Return non-zero if any skill is theoretical
+          --json:
+            action: store_true
+            help: Emit JSON report
+  upgrade:
+    handler: relay_kit_v3.cli.upgrade.run_upgrade
+    help_text: Check and mark versioned Relay-kit runtime upgrades.
+    subcommands:
+      check:
+        handler: relay_kit_v3.cli.upgrade.run_upgrade
+        help_text: Check whether a project runtime is current
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --manifest-file:
+            default: null
+            help: Optional bundle manifest path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when action is required
+      plan:
+        handler: relay_kit_v3.cli.upgrade.run_upgrade
+        help_text: Print an upgrade plan for this project
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --manifest-file:
+            default: null
+            help: Optional bundle manifest path
+          --json:
+            action: store_true
+            help: Emit JSON report
+          --strict:
+            action: store_true
+            help: Return non-zero when action is required
+      mark-current:
+        handler: relay_kit_v3.cli.upgrade.run_upgrade
+        help_text: Write the current Relay-kit runtime version marker
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to update
+        flags:
+          --bundle:
+            default: enterprise
+            help: 'Runtime bundle installed in the project (default: enterprise)'
+          --adapter:
+            action: append
+            choices:
+            - codex
+            - claude
+            - antigravity
+            - generic
+            - all
+            help: Installed adapter. Repeat for multiple adapters.
+          --manifest-file:
+            default: null
+            help: Optional bundle manifest path
+  policy:
+    handler: relay_kit_v3.cli.policy.run_policy
+    help_text: Inspect and run Relay-kit policy guard packs.
+    subcommands:
+      check:
+        handler: relay_kit_v3.cli.policy.run_policy
+        help_text: Run policy guard with a named pack
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --pack:
+            choices:
+            - baseline
+            - enterprise
+            - team
+          --strict:
+            action: store_true
+            help: Return non-zero when findings exist
+          --json:
+            action: store_true
+            help: Emit JSON report
+      list:
+        handler: relay_kit_v3.cli.policy.run_policy
+        help_text: List available policy packs
+  support:
+    handler: relay_kit_v3.cli.support.run_support
+    help_text: Prepare Relay-kit support diagnostics.
+    subcommands:
+      bundle:
+        handler: relay_kit_v3.cli.support.run_support
+        help_text: Write a support diagnostic JSON bundle
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --policy-pack:
+            help: Policy pack used for support diagnostics
+            choices:
+            - baseline
+            - enterprise
+            - team
+          --output-file:
+            default: null
+            help: 'Output path (default: <project>/.relay-kit/support/support-bundle.json)'
+          --evidence-limit:
+            type: int
+            default: 20
+            help: Recent evidence ledger events to include
+          --json:
+            action: store_true
+            help: Emit bundle payload and output path as JSON
+      request:
+        handler: relay_kit_v3.cli.support.run_support
+        help_text: Write and validate a support request intake JSON
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --severity:
+            choices:
+            - P0
+            - P1
+            - P2
+            - P3
+            default: null
+          --summary:
+            default: null
+            help: One sentence describing the blocked workflow
+          --package-version:
+            default: null
+            help: Relay-kit package version
+          --os:
+            dest: operating_system
+            default: null
+            help: Operating system
+          --shell:
+            default: null
+            help: Shell used for failing commands
+          --bundle:
+            dest: installed_bundle
+            default: null
+            help: Installed Relay-kit bundle
+          --adapter:
+            dest: adapter_target
+            default: null
+            help: Adapter target such as codex or claude
+          --policy-pack:
+            default: null
+            help: Policy pack used for diagnostics
+          --expected:
+            dest: expected_behavior
+            default: null
+            help: Expected behavior
+          --actual:
+            dest: actual_behavior
+            default: null
+            help: Actual behavior
+          --recent-changes:
+            default: null
+            help: Recent Relay-kit or runtime changes
+          --workaround:
+            default: null
+            help: Current workaround, if any
+          --diagnostic-file:
+            action: append
+            default: null
+            help: Diagnostic file to attach. Repeat for multiple files.
+          --output-file:
+            default: null
+            help: 'Output path (default: <project>/.relay-kit/support/support-request.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless the support request is ready
+          --json:
+            action: store_true
+            help: Emit machine-readable support request
+      triage:
+        handler: relay_kit_v3.cli.support.run_support
+        help_text: Inspect support request and bundle readiness for triage
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --request-file:
+            default: null
+            help: 'Support request JSON path (default: <project>/.relay-kit/support/support-request.json)'
+          --bundle-file:
+            default: null
+            help: 'Support bundle JSON path (default: <project>/.relay-kit/support/support-bundle.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless support triage is ready
+          --json:
+            action: store_true
+            help: Emit machine-readable support triage
+      soak:
+        handler: relay_kit_v3.cli.support.run_support
+        help_text: Run P0/P1/P2 support handoff soak fixtures
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --bundle-file:
+            default: null
+            help: 'Support bundle JSON path (default: <project>/.relay-kit/support/support-bundle.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless support soak passes
+          --json:
+            action: store_true
+            help: Emit machine-readable support soak report
+  readiness:
+    handler: relay_kit_v3.cli.readiness.run_readiness
+    help_text: Run the local governance readiness gate suite.
+    subcommands:
+      check:
+        handler: relay_kit_v3.cli.readiness.run_readiness
+        help_text: Check whether Relay-kit is ready for paid/team use
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --profile:
+            choices:
+            - team
+            - enterprise
+            default: enterprise
+          --skip-tests:
+            action: store_true
+            help: Skip pytest inside the readiness suite
+          --json:
+            action: store_true
+            help: Emit machine-readable readiness report
+  release:
+    handler: relay_kit_v3.cli.release.run_release
+    help_text: Verify local release-lane prerequisites for Relay-kit.
+    subcommands:
+      verify:
+        handler: relay_kit_v3.cli.release.run_release
+        help_text: Verify local release-lane prerequisites
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --require-clean:
+            action: store_true
+            help: Fail when the git worktree is dirty
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --json:
+            action: store_true
+            help: Emit machine-readable release-lane report
+      readiness:
+        handler: relay_kit_v3.cli.release.run_release
+        help_text: Generate release readiness checklists and deploy signals
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --phase:
+            choices:
+            - pre
+            - post
+            - both
+            default: both
+          --signals-file:
+            default: null
+            help: Optional JSON file with boolean release signals
+          --output-file:
+            default: null
+            help: Optional checklist report output path
+          --strict:
+            action: store_true
+            help: Fail when no machine-checkable signals file is supplied
+          --json:
+            action: store_true
+            help: Emit JSON result
+  continuity:
+    handler: relay_kit_v3.cli.continuity.run_continuity
+    help_text: Preserve and restore Relay-kit continuity across long chats and sessions.
+    subcommands:
+      checkpoint:
+        handler: relay_kit_v3.cli.continuity.run_continuity
+        help_text: Capture continuity snapshot
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON output
+          --objective:
+            default: null
+            help: Current objective summary
+          --lane:
+            default: null
+            help: Active lane id
+          --blocker:
+            default: null
+            help: Current blocker
+          --next-step:
+            default: null
+            help: Exact next step
+          --note:
+            default: null
+            help: Optional checkpoint note
+      rehydrate:
+        handler: relay_kit_v3.cli.continuity.run_continuity
+        help_text: Rehydrate context from last checkpoint
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON output
+      handoff:
+        handler: relay_kit_v3.cli.continuity.run_continuity
+        help_text: Create handoff pack from latest manifest
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON output
+          --reason:
+            default: null
+            help: Reason for handoff file naming
+          --receiver:
+            default: null
+            help: Intended receiver
+      diff-since-last:
+        handler: relay_kit_v3.cli.continuity.run_continuity
+        help_text: Diff tracked continuity files since last checkpoint
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON output
+  migration:
+    handler: relay_kit_v3.cli.migration.run_migration
+    help_text: Run Relay-kit migration and naming guards through portable public commands.
+    subcommands:
+      guard:
+        handler: relay_kit_v3.cli.migration.run_migration
+        help_text: Detect retired naming tokens
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --strict:
+            action: store_true
+            help: Return non-zero when findings exist
+          --json:
+            action: store_true
+            help: Emit JSON report
+  publish:
+    handler: relay_kit_v3.cli.publish.run_publish
+    help_text: Plan and record package publication evidence without uploading artifacts.
+    subcommands:
+      plan:
+        handler: relay_kit_v3.cli.publish.run_publish
+        help_text: Check package publication prerequisites
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --channel:
+            choices:
+            - pypi
+            - testpypi
+            - internal
+            default: pypi
+          --target-version:
+            default: null
+            help: Expected package version
+          --dist-dir:
+            default: null
+            help: 'Distribution artifact directory (default: <project>/dist)'
+          --ci-url:
+            default: null
+            help: Remote CI evidence URL
+          --release-url:
+            default: null
+            help: GitHub release or release-note URL
+          --package-url:
+            default: null
+            help: Package index evidence URL
+          --allow-dev:
+            action: store_true
+            help: Allow dev/local versions on the selected channel
+          --output-file:
+            default: null
+            help: Optional JSON report output path
+          --strict:
+            action: store_true
+            help: Return non-zero unless the publication plan is ready
+          --json:
+            action: store_true
+            help: Emit machine-readable publication plan
+      evidence:
+        handler: relay_kit_v3.cli.publish.run_publish
+        help_text: Record package publication execution evidence
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --channel:
+            choices:
+            - pypi
+            - testpypi
+            - internal
+            default: pypi
+          --dist-dir:
+            default: null
+            help: 'Distribution artifact directory (default: <project>/dist)'
+          --ci-url:
+            default: null
+            help: Remote CI evidence URL
+          --release-url:
+            default: null
+            help: GitHub release or release-note URL
+          --package-url:
+            default: null
+            help: Package index evidence URL
+          --twine-check-file:
+            default: null
+            help: Captured output from python -m twine check dist/*
+          --upload-log-file:
+            default: null
+            help: Captured package upload log or package-index confirmation
+          --publication-plan-file:
+            default: null
+            help: Optional publication-plan JSON to bind to this evidence
+          --allow-dev:
+            action: store_true
+            help: Allow dev/local versions on the selected channel
+          --output-file:
+            default: null
+            help: 'JSON report output path (default: <project>/.relay-kit/release/publication-evidence.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless publication evidence is complete
+          --json:
+            action: store_true
+            help: Emit machine-readable publication evidence
+      trail:
+        handler: relay_kit_v3.cli.publish.run_publish
+        help_text: Write a publication execution trail with capture commands
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --channel:
+            choices:
+            - pypi
+            - testpypi
+            - internal
+            default: pypi
+          --target-version:
+            default: null
+            help: Expected package version
+          --dist-dir:
+            default: null
+            help: 'Distribution artifact directory (default: <project>/dist)'
+          --evidence-dir:
+            default: null
+            help: 'Directory for captured twine/upload logs (default: <project>/.tmp/relay-publication/<version>)'
+          --ci-url:
+            default: null
+            help: Remote CI evidence URL
+          --release-url:
+            default: null
+            help: GitHub release or release-note URL
+          --package-url:
+            default: null
+            help: Package index evidence URL
+          --shell:
+            choices:
+            - powershell
+            - bash
+            default: powershell
+          --allow-dev:
+            action: store_true
+            help: Allow dev/local versions on the selected channel
+          --output-file:
+            default: null
+            help: 'JSON trail output path (default: <project>/.relay-kit/release/publication-trail.json)'
+          --markdown-file:
+            default: null
+            help: 'Markdown trail output path (default: <project>/.relay-kit/release/publication-trail.md)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless the publication trail is ready
+          --json:
+            action: store_true
+            help: Emit machine-readable publication trail
+      index-check:
+        handler: relay_kit_v3.cli.publish.run_publish
+        help_text: Verify package-index metadata for the published version
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --channel:
+            choices:
+            - pypi
+            - testpypi
+            - internal
+            default: pypi
+          --target-version:
+            default: null
+            help: 'Expected package-index version (default: project version)'
+          --package-url:
+            default: null
+            help: Package index evidence URL
+          --timeout:
+            default: 10.0
+            help: Package-index request timeout in seconds
+          --output-file:
+            default: null
+            help: 'JSON report output path (default: <project>/.relay-kit/release/package-index-check.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless package-index metadata is published
+          --json:
+            action: store_true
+            help: Emit machine-readable package-index check
+      status:
+        handler: relay_kit_v3.cli.publish.run_publish
+        help_text: Inspect local publication trail and execution evidence
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --trail-file:
+            default: null
+            help: 'Publication trail JSON path (default: <project>/.relay-kit/release/publication-trail.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless the publication trail is complete
+          --json:
+            action: store_true
+            help: Emit machine-readable publication trail status
+  commercial:
+    handler: relay_kit_v3.cli.commercial.run_commercial
+    help_text: Assemble commercial proof dossiers from local gates and external evidence
+      pointers.
+    subcommands:
+      dossier:
+        handler: relay_kit_v3.cli.commercial.run_commercial
+        help_text: Write a commercial readiness proof dossier
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --channel:
+            choices:
+            - pypi
+            - testpypi
+            - internal
+            default: pypi
+          --ci-url:
+            default: null
+            help: Green remote CI evidence URL
+          --release-url:
+            default: null
+            help: Release page or release-note URL
+          --package-url:
+            default: null
+            help: Package-index or internal registry URL
+          --sla-url:
+            default: null
+            help: Approved SLA/support policy URL
+          --support-url:
+            default: null
+            help: Paid-support intake or escalation workflow URL
+          --legal-owner:
+            default: null
+            help: Owner who approved legal/SLA commitments
+          --support-owner:
+            default: null
+            help: Owner accountable for paid-support triage
+          --readiness-profile:
+            choices:
+            - team
+            - enterprise
+            default: enterprise
+          --skip-readiness-tests:
+            action: store_true
+            help: Skip pytest inside the readiness gate
+          --publication-trail-file:
+            default: null
+            help: 'Publication trail JSON path (default: <project>/.relay-kit/release/publication-trail.json)'
+          --support-request-file:
+            default: null
+            help: 'Support request JSON path (default: <project>/.relay-kit/support/support-request.json)'
+          --support-bundle-file:
+            default: null
+            help: 'Support bundle JSON path (default: <project>/.relay-kit/support/support-bundle.json)'
+          --output-file:
+            default: null
+            help: 'JSON dossier output path (default: <project>/.relay-kit/commercial/commercial-dossier.json)'
+          --strict:
+            action: store_true
+            help: Return non-zero unless the dossier is ready
+          --json:
+            action: store_true
+            help: Emit machine-readable commercial dossier
+  pulse:
+    handler: relay_kit_v3.cli.pulse.run_pulse
+    help_text: Build a static Relay-kit Pulse report from quality, readiness, and
+      evidence signals.
+    subcommands:
+      build:
+        handler: relay_kit_v3.cli.pulse.run_pulse
+        help_text: Write Pulse JSON and HTML reports
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --output-dir:
+            default: null
+            help: 'Output directory (default: <project>/.relay-kit/pulse)'
+          --profile:
+            choices:
+            - team
+            - enterprise
+            default: enterprise
+          --include-readiness:
+            action: store_true
+            help: Run readiness check with --skip-tests
+          --include-publication:
+            action: store_true
+            help: Run no-upload publication plan and include it
+          --include-package-index:
+            action: store_true
+            help: Read default package-index check artifact and include it
+          --include-support-request:
+            action: store_true
+            help: Read default support request intake artifact and include it
+          --include-commercial-dossier:
+            action: store_true
+            help: Read default commercial dossier artifact and include it
+          --include-context-audit:
+            action: store_true
+            help: Run context audit and include governance health
+          --include-lane-audit:
+            action: store_true
+            help: Run lane audit and include lane health
+          --include-adapter-diagnostics:
+            action: store_true
+            help: Run adapter diagnostics and include adapter health
+          --include-token-audit:
+            action: store_true
+            help: Run token audit and include token health
+          --include-delegation-audit:
+            action: store_true
+            help: Run delegation audit and include delegation health
+          --include-query-search:
+            action: store_true
+            help: Run query search and include query health
+          --include-service-boundaries:
+            action: store_true
+            help: Run service-boundary checks and include service health
+          --readiness-file:
+            default: null
+            help: Existing readiness JSON report to include
+          --publication-file:
+            default: null
+            help: Existing publication plan JSON report to include
+          --package-index-file:
+            default: null
+            help: Existing package-index check JSON report to include
+          --support-request-file:
+            default: null
+            help: Existing support request JSON report to include
+          --commercial-dossier-file:
+            default: null
+            help: Existing commercial dossier JSON report to include
+          --context-audit-file:
+            default: null
+            help: Existing context audit JSON report to include
+          --lane-audit-file:
+            default: null
+            help: Existing lane audit JSON report to include
+          --adapter-diagnostics-file:
+            default: null
+            help: Existing adapter diagnostics JSON report to include
+          --token-audit-file:
+            default: null
+            help: Existing token audit JSON report to include
+          --delegation-audit-file:
+            default: null
+            help: Existing delegation audit JSON report to include
+          --signal-calibration-file:
+            default: null
+            help: Existing signal calibration JSON report to include
+          --skip-signal-calibration:
+            action: store_true
+            help: Do not build the default signal calibration summary
+          --query-search-file:
+            default: null
+            help: Existing query search JSON report to include
+          --service-boundaries-file:
+            default: null
+            help: Existing service-boundary JSON report to include
+          --query-search-text:
+            default: relay governance
+            help: Query text when --include-query-search builds a report
+          --workflow-eval-file:
+            default: null
+            help: Existing workflow eval JSON report to include
+          --evidence-limit:
+            type: int
+            default: 20
+            help: Recent evidence events to include
+          --history-limit:
+            type: int
+            default: 20
+            help: Historical Pulse snapshots to include
+          --no-history:
+            action: store_true
+            help: Do not append this run to Pulse history
+          --json:
+            action: store_true
+            help: Emit machine-readable output paths and report
+  signal:
+    handler: relay_kit_v3.cli.signal.run_signal
+    help_text: Export Relay-kit Pulse and evidence signals as local telemetry artifacts.
+    subcommands:
+      export:
+        handler: relay_kit_v3.cli.signal.run_signal
+        help_text: Write Relay signal JSON, JSONL, and optional OTLP JSON
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Project root to inspect
+        flags:
+          --pulse-file:
+            default: null
+            help: Pulse report JSON file
+          --output-dir:
+            default: null
+            help: 'Output directory (default: <project>/.relay-kit/signals)'
+          --event-limit:
+            type: int
+            default: 50
+            help: Recent evidence events to export
+          --otlp:
+            action: store_true
+            help: Also write Relay OTLP-compatible JSON
+          --json:
+            action: store_true
+            help: Emit machine-readable output paths and export payload
+  journal:
+    handler: relay_kit_v3.cli.journal.run_journal
+    help_text: Manage the field journal.
+    subcommands:
+      list:
+        handler: relay_kit_v3.cli.journal.run_journal_list
+        help_text: List journal entries
+      inspect:
+        handler: relay_kit_v3.cli.journal.run_journal_inspect
+        help_text: Inspect a journal entry
+        args:
+          id:
+            help: ID of the entry to inspect
+      promote:
+        handler: relay_kit_v3.cli.journal.run_journal_promote
+        help_text: Human approve to promote entry to high confidence
+        args:
+          id:
+            help: ID of the entry to promote
+      capture:
+        handler: relay_kit_v3.cli.journal.run_journal_capture
+        help_text: Manual capture entry when auto-capture lacks evidence
+        flags:
+          --evidence-ref:
+            help: Reference to the evidence hash or link
+            required: true
+          --content:
+            help: Content description
+          --error-signature:
+            help: Error signature for pattern matching
+
+  extension:
+    handler: relay_kit_v3.cli.extension.cmd_list
+    help_text: Manage trusted extension packs.
+    subcommands:
+      install:
+        handler: relay_kit_v3.cli.extension.cmd_install
+        help_text: Install an extension pack from a directory
+        args:
+          path:
+            help: Path to the extension pack directory
+        flags:
+          --reviewed:
+            action: store_true
+            help: Explicitly mark the extension as reviewed by a human
+      list:
+        handler: relay_kit_v3.cli.extension.cmd_list
+        help_text: List installed extension packs
+      remove:
+        handler: relay_kit_v3.cli.extension.cmd_remove
+        help_text: Remove an installed extension pack
+        args:
+          name:
+            help: Name of the extension pack to remove

@@ -1,0 +1,26 @@
+﻿usage: relay-kit publish index-check [-h] [--channel {pypi,testpypi,internal}]
+                                     [--target-version TARGET_VERSION]
+                                     [--package-url PACKAGE_URL]
+                                     [--timeout TIMEOUT]
+                                     [--output-file OUTPUT_FILE] [--strict]
+                                     [--json]
+                                     [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --channel {pypi,testpypi,internal}
+  --target-version TARGET_VERSION
+                        Expected package-index version (default: project
+                        version)
+  --package-url PACKAGE_URL
+                        Package index evidence URL
+  --timeout TIMEOUT     Package-index request timeout in seconds
+  --output-file OUTPUT_FILE
+                        JSON report output path (default: <project>/.relay-
+                        kit/release/package-index-check.json)
+  --strict              Return non-zero unless package-index metadata is
+                        published
+  --json                Emit machine-readable package-index check

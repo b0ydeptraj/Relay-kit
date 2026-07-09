@@ -1,0 +1,12 @@
+﻿usage: relay-kit continuity handoff [-h] [--json] [--reason REASON]
+                                    [--receiver RECEIVER]
+                                    [project_path]
+
+positional arguments:
+  project_path         Target project root
+
+options:
+  -h, --help           show this help message and exit
+  --json               Emit JSON output
+  --reason REASON      Reason for handoff file naming
+  --receiver RECEIVER  Intended receiver

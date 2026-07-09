@@ -1,0 +1,104 @@
+﻿usage: relay-kit pulse build [-h] [--output-dir OUTPUT_DIR]
+                             [--profile {team,enterprise}]
+                             [--include-readiness] [--include-publication]
+                             [--include-package-index]
+                             [--include-support-request]
+                             [--include-commercial-dossier]
+                             [--include-context-audit] [--include-lane-audit]
+                             [--include-adapter-diagnostics]
+                             [--include-token-audit]
+                             [--include-delegation-audit]
+                             [--include-query-search]
+                             [--include-service-boundaries]
+                             [--readiness-file READINESS_FILE]
+                             [--publication-file PUBLICATION_FILE]
+                             [--package-index-file PACKAGE_INDEX_FILE]
+                             [--support-request-file SUPPORT_REQUEST_FILE]
+                             [--commercial-dossier-file COMMERCIAL_DOSSIER_FILE]
+                             [--context-audit-file CONTEXT_AUDIT_FILE]
+                             [--lane-audit-file LANE_AUDIT_FILE]
+                             [--adapter-diagnostics-file ADAPTER_DIAGNOSTICS_FILE]
+                             [--token-audit-file TOKEN_AUDIT_FILE]
+                             [--delegation-audit-file DELEGATION_AUDIT_FILE]
+                             [--signal-calibration-file SIGNAL_CALIBRATION_FILE]
+                             [--skip-signal-calibration]
+                             [--query-search-file QUERY_SEARCH_FILE]
+                             [--service-boundaries-file SERVICE_BOUNDARIES_FILE]
+                             [--query-search-text QUERY_SEARCH_TEXT]
+                             [--workflow-eval-file WORKFLOW_EVAL_FILE]
+                             [--evidence-limit EVIDENCE_LIMIT]
+                             [--history-limit HISTORY_LIMIT] [--no-history]
+                             [--json]
+                             [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+                        Output directory (default: <project>/.relay-kit/pulse)
+  --profile {team,enterprise}
+  --include-readiness   Run readiness check with --skip-tests
+  --include-publication
+                        Run no-upload publication plan and include it
+  --include-package-index
+                        Read default package-index check artifact and include
+                        it
+  --include-support-request
+                        Read default support request intake artifact and
+                        include it
+  --include-commercial-dossier
+                        Read default commercial dossier artifact and include
+                        it
+  --include-context-audit
+                        Run context audit and include governance health
+  --include-lane-audit  Run lane audit and include lane health
+  --include-adapter-diagnostics
+                        Run adapter diagnostics and include adapter health
+  --include-token-audit
+                        Run token audit and include token health
+  --include-delegation-audit
+                        Run delegation audit and include delegation health
+  --include-query-search
+                        Run query search and include query health
+  --include-service-boundaries
+                        Run service-boundary checks and include service health
+  --readiness-file READINESS_FILE
+                        Existing readiness JSON report to include
+  --publication-file PUBLICATION_FILE
+                        Existing publication plan JSON report to include
+  --package-index-file PACKAGE_INDEX_FILE
+                        Existing package-index check JSON report to include
+  --support-request-file SUPPORT_REQUEST_FILE
+                        Existing support request JSON report to include
+  --commercial-dossier-file COMMERCIAL_DOSSIER_FILE
+                        Existing commercial dossier JSON report to include
+  --context-audit-file CONTEXT_AUDIT_FILE
+                        Existing context audit JSON report to include
+  --lane-audit-file LANE_AUDIT_FILE
+                        Existing lane audit JSON report to include
+  --adapter-diagnostics-file ADAPTER_DIAGNOSTICS_FILE
+                        Existing adapter diagnostics JSON report to include
+  --token-audit-file TOKEN_AUDIT_FILE
+                        Existing token audit JSON report to include
+  --delegation-audit-file DELEGATION_AUDIT_FILE
+                        Existing delegation audit JSON report to include
+  --signal-calibration-file SIGNAL_CALIBRATION_FILE
+                        Existing signal calibration JSON report to include
+  --skip-signal-calibration
+                        Do not build the default signal calibration summary
+  --query-search-file QUERY_SEARCH_FILE
+                        Existing query search JSON report to include
+  --service-boundaries-file SERVICE_BOUNDARIES_FILE
+                        Existing service-boundary JSON report to include
+  --query-search-text QUERY_SEARCH_TEXT
+                        Query text when --include-query-search builds a report
+  --workflow-eval-file WORKFLOW_EVAL_FILE
+                        Existing workflow eval JSON report to include
+  --evidence-limit EVIDENCE_LIMIT
+                        Recent evidence events to include
+  --history-limit HISTORY_LIMIT
+                        Historical Pulse snapshots to include
+  --no-history          Do not append this run to Pulse history
+  --json                Emit machine-readable output paths and report

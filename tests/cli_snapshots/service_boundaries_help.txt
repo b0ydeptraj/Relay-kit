@@ -1,0 +1,13 @@
+﻿usage: relay-kit service boundaries [-h] [--output-file OUTPUT_FILE]
+                                    [--strict] [--json]
+                                    [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --output-file OUTPUT_FILE
+                        Optional service-boundary JSON output path
+  --strict              Return non-zero when boundary findings exist
+  --json                Emit machine-readable boundary report

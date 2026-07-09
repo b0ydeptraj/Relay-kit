@@ -1,0 +1,20 @@
+﻿usage: relay-kit locale set [-h] --locale LOCALE
+                            [--fallback-locale FALLBACK_LOCALE]
+                            [--enforce-output-language]
+                            [--no-enforce-output-language] [--json]
+                            [project_path]
+
+positional arguments:
+  project_path          Project root to update
+
+options:
+  -h, --help            show this help message and exit
+  --locale LOCALE       Primary locale profile (allowed: vi, en)
+  --fallback-locale FALLBACK_LOCALE
+                        Fallback locale profile (default unchanged)
+  --enforce-output-language
+                        Enforce output language according to locale profile
+                        (default on).
+  --no-enforce-output-language
+                        Allow mixed-language output when explicitly needed.
+  --json                Emit machine-readable locale policy

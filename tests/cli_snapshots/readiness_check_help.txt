@@ -1,0 +1,12 @@
+﻿usage: relay-kit readiness check [-h] [--profile {team,enterprise}]
+                                 [--skip-tests] [--json]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --profile {team,enterprise}
+  --skip-tests          Skip pytest inside the readiness suite
+  --json                Emit machine-readable readiness report

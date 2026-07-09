@@ -1,0 +1,11 @@
+usage: relay-kit contract export [-h] [--output-file OUTPUT_FILE]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --output-file OUTPUT_FILE
+                        Output path (default: <project>/.relay-kit/contract-
+                        sync/relay-contract.json)

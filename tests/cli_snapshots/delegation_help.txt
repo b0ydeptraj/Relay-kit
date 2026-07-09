@@ -1,0 +1,17 @@
+﻿usage: relay-kit delegation [-h]
+                            {plan,audit,close-completed,record-usage,capabilities}
+                            ...
+
+Plan and audit quota-aware subagent delegation.
+
+positional arguments:
+  {plan,audit,close-completed,record-usage,capabilities}
+    plan                Plan bounded delegation with reasoning and quota
+                        controls
+    audit               Audit delegation quota and lifecycle state
+    close-completed     Close agents with recorded handoff evidence
+    record-usage        Record adapter-reported token usage
+    capabilities        Report adapter delegation capability enforcement
+
+options:
+  -h, --help            show this help message and exit

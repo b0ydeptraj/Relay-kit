@@ -1,0 +1,10 @@
+usage: relay-kit evidence [-h] {summary} ...
+
+Inspect Relay-kit evidence ledger events.
+
+positional arguments:
+  {summary}
+    summary   Summarize recent evidence events
+
+options:
+  -h, --help  show this help message and exit

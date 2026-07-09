@@ -1,0 +1,25 @@
+﻿usage: relay-kit context [-h]
+                         {audit,index,search,related,explain-symbol,active,mcp,watch,budget,pack}
+                         ...
+
+Audit Relay-kit context governance and build a local no-API context graph.
+
+positional arguments:
+  {audit,index,search,related,explain-symbol,active,mcp,watch,budget,pack}
+    audit               Audit source freshness and authority
+    index               Build a local file, symbol, import, test, and docs
+                        index
+    search              Search the local context graph
+    related             Find files related to a path in the local context
+                        graph
+    explain-symbol      Explain definitions, references, and tests for a
+                        symbol
+    active              Set or show active file/selection context
+    mcp                 Expose local context tools for MCP-style clients
+    watch               Refresh the local context index when indexed files
+                        change
+    budget              Estimate token budget and compression safety
+    pack                Build task-scoped context pack within token budget
+
+options:
+  -h, --help            show this help message and exit

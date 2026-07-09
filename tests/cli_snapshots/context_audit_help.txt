@@ -1,0 +1,15 @@
+﻿usage: relay-kit context audit [-h] [--stale-days STALE_DAYS]
+                               [--output-file OUTPUT_FILE] [--strict] [--json]
+                               [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --stale-days STALE_DAYS
+                        Age threshold for stale sources
+  --output-file OUTPUT_FILE
+                        Optional context audit JSON output path
+  --strict              Return non-zero unless context audit passes
+  --json                Emit machine-readable context audit

@@ -1,0 +1,17 @@
+--- expected
++++ actual
+@@ -1,11 +1,10 @@
+-usage: relay-kit policy [-h] {check,list} ...
++usage: relay-kit policy [-h] {check} ...
+ 
+ Inspect and run Relay-kit policy guard packs.
+ 
+ positional arguments:
+-  {check,list}
+-    check       Run policy guard with a named pack
+-    list        List available policy packs
++  {check}
++    check     Run policy guard with a named pack
+ 
+ options:
+-  -h, --help    show this help message and exit+  -h, --help  show this help message and exit

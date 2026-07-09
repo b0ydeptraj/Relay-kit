@@ -1,0 +1,12 @@
+﻿usage: relay-kit upgrade [-h] {check,plan,mark-current} ...
+
+Check and mark versioned Relay-kit runtime upgrades.
+
+positional arguments:
+  {check,plan,mark-current}
+    check               Check whether a project runtime is current
+    plan                Print an upgrade plan for this project
+    mark-current        Write the current Relay-kit runtime version marker
+
+options:
+  -h, --help            show this help message and exit

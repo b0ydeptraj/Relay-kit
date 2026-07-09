@@ -1,0 +1,10 @@
+﻿usage: relay-kit lane [-h] {audit} ...
+
+Audit Relay-kit multi-lane coordination state.
+
+positional arguments:
+  {audit}
+    audit     Audit lane locks, dependencies, waves, and handoffs
+
+options:
+  -h, --help  show this help message and exit

@@ -1,0 +1,44 @@
+--- expected
++++ actual
+@@ -1,12 +1,10 @@
+ usage: relay-kit support request [-h] [--severity {P0,P1,P2,P3}]
+                                  [--summary SUMMARY]
+-                                 [--package-version PACKAGE_VERSION]
+-                                 [--os OPERATING_SYSTEM] [--shell SHELL]
+-                                 [--bundle INSTALLED_BUNDLE]
+-                                 [--adapter ADAPTER_TARGET]
++                                 [--package-version PACKAGE_VERSION] [--os OS]
++                                 [--shell SHELL] [--bundle BUNDLE]
++                                 [--adapter ADAPTER]
+                                  [--policy-pack POLICY_PACK]
+-                                 [--expected EXPECTED_BEHAVIOR]
+-                                 [--actual ACTUAL_BEHAVIOR]
++                                 [--expected EXPECTED] [--actual ACTUAL]
+                                  [--recent-changes RECENT_CHANGES]
+                                  [--workaround WORKAROUND]
+                                  [--diagnostic-file DIAGNOSTIC_FILE]
+@@ -23,19 +21,14 @@
+   --summary SUMMARY     One sentence describing the blocked workflow
+   --package-version PACKAGE_VERSION
+                         Relay-kit package version
+-  --os OPERATING_SYSTEM
+-                        Operating system
++  --os OS               Operating system
+   --shell SHELL         Shell used for failing commands
+-  --bundle INSTALLED_BUNDLE
+-                        Installed Relay-kit bundle
+-  --adapter ADAPTER_TARGET
+-                        Adapter target such as codex or claude
++  --bundle BUNDLE       Installed Relay-kit bundle
++  --adapter ADAPTER     Adapter target such as codex or claude
+   --policy-pack POLICY_PACK
+                         Policy pack used for diagnostics
+-  --expected EXPECTED_BEHAVIOR
+-                        Expected behavior
+-  --actual ACTUAL_BEHAVIOR
+-                        Actual behavior
++  --expected EXPECTED   Expected behavior
++  --actual ACTUAL       Actual behavior
+   --recent-changes RECENT_CHANGES
+                         Recent Relay-kit or runtime changes
+   --workaround WORKAROUND

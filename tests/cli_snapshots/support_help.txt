@@ -1,0 +1,14 @@
+﻿usage: relay-kit support [-h] {bundle,request,triage,soak} ...
+
+Prepare Relay-kit support diagnostics.
+
+positional arguments:
+  {bundle,request,triage,soak}
+    bundle              Write a support diagnostic JSON bundle
+    request             Write and validate a support request intake JSON
+    triage              Inspect support request and bundle readiness for
+                        triage
+    soak                Run P0/P1/P2 support handoff soak fixtures
+
+options:
+  -h, --help            show this help message and exit

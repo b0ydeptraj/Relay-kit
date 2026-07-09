@@ -1,0 +1,19 @@
+﻿usage: relay-kit release readiness [-h] [--phase {pre,post,both}]
+                                   [--signals-file SIGNALS_FILE]
+                                   [--output-file OUTPUT_FILE] [--strict]
+                                   [--json]
+                                   [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --phase {pre,post,both}
+  --signals-file SIGNALS_FILE
+                        Optional JSON file with boolean release signals
+  --output-file OUTPUT_FILE
+                        Optional checklist report output path
+  --strict              Fail when no machine-checkable signals file is
+                        supplied
+  --json                Emit JSON result

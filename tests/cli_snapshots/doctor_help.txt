@@ -1,0 +1,17 @@
+usage: relay-kit doctor [-h] [--skip-tests]
+                        [--policy-pack {baseline,enterprise,team}] [--verbose]
+                        [--json]
+                        [project_path]
+
+Run Relay-kit runtime verification gates.
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --skip-tests          Skip the local pytest suite
+  --policy-pack {baseline,enterprise,team}
+                        Policy pack passed to policy guard
+  --verbose             Print stdout and stderr for passing gates
+  --json                Emit machine-readable doctor results

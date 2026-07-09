@@ -1,0 +1,28 @@
+﻿usage: relay-kit publish plan [-h] [--channel {pypi,testpypi,internal}]
+                              [--target-version TARGET_VERSION]
+                              [--dist-dir DIST_DIR] [--ci-url CI_URL]
+                              [--release-url RELEASE_URL]
+                              [--package-url PACKAGE_URL] [--allow-dev]
+                              [--output-file OUTPUT_FILE] [--strict] [--json]
+                              [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --channel {pypi,testpypi,internal}
+  --target-version TARGET_VERSION
+                        Expected package version
+  --dist-dir DIST_DIR   Distribution artifact directory (default:
+                        <project>/dist)
+  --ci-url CI_URL       Remote CI evidence URL
+  --release-url RELEASE_URL
+                        GitHub release or release-note URL
+  --package-url PACKAGE_URL
+                        Package index evidence URL
+  --allow-dev           Allow dev/local versions on the selected channel
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --strict              Return non-zero unless the publication plan is ready
+  --json                Emit machine-readable publication plan

@@ -1,0 +1,22 @@
+﻿usage: relay-kit context pack [-h] --task TASK [--max-tokens MAX_TOKENS]
+                              [--scope {state,contracts,docs,evidence,registry}]
+                              [--stale-days STALE_DAYS]
+                              [--output-file OUTPUT_FILE] [--strict] [--json]
+                              [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --task TASK           Task text used to rank relevant context sources
+  --max-tokens MAX_TOKENS
+                        Token budget ceiling
+  --scope {state,contracts,docs,evidence,registry}
+                        Limit source scopes; defaults to all scopes
+  --stale-days STALE_DAYS
+                        Age threshold for stale sources
+  --output-file OUTPUT_FILE
+                        Optional context pack JSON output path
+  --strict              Return non-zero unless budget and retention pass
+  --json                Emit machine-readable context pack

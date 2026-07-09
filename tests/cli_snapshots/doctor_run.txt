@@ -1,0 +1,63 @@
+Relay-kit doctor
+- project: C:\Users\b0ydeptrai\Documents\relay-kit
+- validate runtime: fail
+Traceback (most recent call last):
+  File "C:\Users\b0ydeptrai\Documents\relay-kit\scripts\validate_runtime.py", line 510, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\b0ydeptrai\Documents\relay-kit\scripts\validate_runtime.py", line 485, in main
+    validate_checked_in_runtime()
+  File "C:\Users\b0ydeptrai\Documents\relay-kit\scripts\validate_runtime.py", line 244, in validate_checked_in_runtime
+    assert_set(
+  File "C:\Users\b0ydeptrai\Documents\relay-kit\scripts\validate_runtime.py", line 125, in assert_set
+    fail(f"{name} mismatch. Missing: {missing or '-'} Extra: {extra or '-'}")
+  File "C:\Users\b0ydeptrai\Documents\relay-kit\scripts\validate_runtime.py", line 71, in fail
+    raise AssertionError(message)
+AssertionError: checked-in generated runtime for .agent/skills mismatch. Missing: - Extra: ['advanced-python-engineering', 'antibot-challenge-solving', 'attack-chain-orchestration', 'binary-reverse-methodology', 'binary-stealth-obfuscation', 'browser-fingerprint-engineering', 'cpp-systems-engineering', 'desktop-imgui-development', 'desktop-python-ui', 'edr-evasion-tactics', 'field-journal-evolution', 'frontend-crypto-reverse', 'malware-analysis-workflows', 'mmo-llm-automation', 'mmo-onchain-security-audit', 'mobile-app-reverse', 'network-stealth-c2', 'offensive-security-engagement', 'process-injection-techniques', 'protocol-fingerprint-spoofing', 'telemetry-blinding', 'terminal-operator-ui', 'windows-native-internals']
+- runtime doctor template: fail
+Runtime doctor report
+- state mode: template
+- findings: 2
+  - .agent/skills unexpected skills: advanced-python-engineering, antibot-challenge-solving, attack-chain-orchestration, binary-reverse-methodology, binary-stealth-obfuscation, browser-fingerprint-engineering, cpp-systems-engineering, desktop-imgui-development, desktop-python-ui, edr-evasion-tactics, field-journal-evolution, frontend-crypto-reverse, malware-analysis-workflows, mmo-llm-automation, mmo-onchain-security-audit, mobile-app-reverse, network-stealth-c2, offensive-security-engagement, process-injection-techniques, protocol-fingerprint-spoofing, telemetry-blinding, terminal-operator-ui, windows-native-internals
+  - Adapter parity drift in .agent/skills: missing vs reference=- extra vs reference=['advanced-python-engineering', 'antibot-challenge-solving', 'attack-chain-orchestration', 'binary-reverse-methodology', 'binary-stealth-obfuscation', 'browser-fingerprint-engineering', 'cpp-systems-engineering', 'desktop-imgui-development', 'desktop-python-ui', 'edr-evasion-tactics', 'field-journal-evolution', 'frontend-crypto-reverse', 'malware-analysis-workflows', 'mmo-llm-automation', 'mmo-onchain-security-audit', 'mobile-app-reverse', 'network-stealth-c2', 'offensive-security-engagement', 'process-injection-techniques', 'protocol-fingerprint-spoofing', 'telemetry-blinding', 'terminal-operator-ui', 'windows-native-internals']
+- runtime doctor live: fail
+Runtime doctor report
+- state mode: live
+- findings: 2
+  - .agent/skills unexpected skills: advanced-python-engineering, antibot-challenge-solving, attack-chain-orchestration, binary-reverse-methodology, binary-stealth-obfuscation, browser-fingerprint-engineering, cpp-systems-engineering, desktop-imgui-development, desktop-python-ui, edr-evasion-tactics, field-journal-evolution, frontend-crypto-reverse, malware-analysis-workflows, mmo-llm-automation, mmo-onchain-security-audit, mobile-app-reverse, network-stealth-c2, offensive-security-engagement, process-injection-techniques, protocol-fingerprint-spoofing, telemetry-blinding, terminal-operator-ui, windows-native-internals
+  - Adapter parity drift in .agent/skills: missing vs reference=- extra vs reference=['advanced-python-engineering', 'antibot-challenge-solving', 'attack-chain-orchestration', 'binary-reverse-methodology', 'binary-stealth-obfuscation', 'browser-fingerprint-engineering', 'cpp-systems-engineering', 'desktop-imgui-development', 'desktop-python-ui', 'edr-evasion-tactics', 'field-journal-evolution', 'frontend-crypto-reverse', 'malware-analysis-workflows', 'mmo-llm-automation', 'mmo-onchain-security-audit', 'mobile-app-reverse', 'network-stealth-c2', 'offensive-security-engagement', 'process-injection-techniques', 'protocol-fingerprint-spoofing', 'telemetry-blinding', 'terminal-operator-ui', 'windows-native-internals']
+- naming guard: pass
+- policy guard: pass
+- srs guard: pass
+- skill gauntlet: fail
+Checked 222 SKILL.md files.
+Semantic checks: on
+Scenario fixtures: 90
+Findings: 77
+
+Top findings:
+- .agent/skills/cook/SKILL.md [registry-next-steps-drift] Likely next step drift: expected=['brainstorm-hub', 'scout-hub', 'plan-hub', 'debug-hub', 'fix-hub', 'test-hub', 'review-hub', 'context-continuity'] actual=['brainstorm-hub', 'scout-hub', 'plan-hub', 'debug-hub', 'fix-hub', 'test-hub', 'review-hub', 'context-continuity', 'offensive-security-engagement']
+- .agent/skills/cook/SKILL.md [unknown-next-step] Unknown next-step skill: offensive-security-engagement
+- .agent/skills/debug-hub/SKILL.md [registry-next-steps-drift] Likely next step drift: expected=['root-cause-debugging', 'problem-solving', 'sequential-thinking', 'memory-search', 'runtime-doctor', 'fix-hub', 'test-hub', 'plan-hub', 'workflow-router'] actual=['root-cause-debugging', 'problem-solving', 'sequential-thinking', 'memory-search', 'runtime-doctor', 'fix-hub', 'test-hub', 'plan-hub', 'workflow-router', 'edr-evasion-tactics', 'telemetry-blinding', 'process-injection-techniques', 'antibot-challenge-solving', 'protocol-fingerprint-spoofing', 'browser-fingerprint-engineering', 'binary-stealth-obfuscation', 'binary-reverse-methodology', 'malware-analysis-workflows', 'frontend-crypto-reverse', 'field-journal-evolution']
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: edr-evasion-tactics
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: telemetry-blinding
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: process-injection-techniques
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: antibot-challenge-solving
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: protocol-fingerprint-spoofing
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: browser-fingerprint-engineering
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: binary-stealth-obfuscation
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: binary-reverse-methodology
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: malware-analysis-workflows
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: frontend-crypto-reverse
+- .agent/skills/debug-hub/SKILL.md [unknown-next-step] Unknown next-step skill: field-journal-evolution
+- .agent/skills/developer/SKILL.md [registry-next-steps-drift] Likely next step drift: expected=['test-first-development', 'execution-loop', 'go-service-engineering', 'next-product-frontend', 'data-persistence', 'dependency-management', 'project-architecture', 'test-hub', 'qa-governor', 'review-hub'] actual=['test-first-development', 'execution-loop', 'go-service-engineering', 'next-product-frontend', 'data-persistence', 'dependency-management', 'project-architecture', 'test-hub', 'qa-governor', 'review-hub', 'cpp-systems-engineering', 'windows-native-internals', 'advanced-python-engineering', 'binary-stealth-obfuscation', 'edr-evasion-tactics', 'process-injection-techniques', 'protocol-fingerprint-spoofing', 'browser-fingerprint-engineering', 'frontend-crypto-reverse', 'desktop-imgui-development', 'desktop-python-ui', 'terminal-operator-ui', 'field-journal-evolution']
+- .agent/skills/developer/SKILL.md [unknown-next-step] Unknown next-step skill: cpp-systems-engineering
+- .agent/skills/developer/SKILL.md [unknown-next-step] Unknown next-step skill: windows-native-internals
+- .agent/skills/developer/SKILL.md [unknown-next-step] Unknown next-step skill: advanced-python-engineering
+- .agent/skills/developer/SKILL.md [unknown-next-step] Unknown next-step skill: binary-stealth-obfuscation
+- .agent/skills/developer/SKILL.md [unknown-next-step] Unknown next-step skill: edr-evasion-tactics
+- ... and 57 more
+- workflow eval: pass
+- pytest: fail
+C:\Users\b0ydeptrai\AppData\Local\Programs\Python\Python311\python.exe: No module named pytest
+

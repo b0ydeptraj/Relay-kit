@@ -1,0 +1,32 @@
+﻿usage: relay-kit eval run [-h] [--scenario-fixtures SCENARIO_FIXTURES]
+                          [--output-file OUTPUT_FILE]
+                          [--baseline-file BASELINE_FILE]
+                          [--min-pass-rate MIN_PASS_RATE]
+                          [--min-route-margin MIN_ROUTE_MARGIN]
+                          [--min-evidence-coverage MIN_EVIDENCE_COVERAGE]
+                          [--min-scenarios MIN_SCENARIOS] [--json] [--strict]
+                          [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --scenario-fixtures SCENARIO_FIXTURES
+                        JSON scenario fixture file (default: bundled Relay-kit
+                        fixtures)
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --baseline-file BASELINE_FILE
+                        Optional prior workflow eval JSON used for regression
+                        checks
+  --min-pass-rate MIN_PASS_RATE
+                        Minimum accepted scenario pass rate
+  --min-route-margin MIN_ROUTE_MARGIN
+                        Minimum top-route score margin
+  --min-evidence-coverage MIN_EVIDENCE_COVERAGE
+                        Minimum expected-term coverage
+  --min-scenarios MIN_SCENARIOS
+                        Minimum scenario count
+  --json                Emit JSON report
+  --strict              Return non-zero when any scenario fails

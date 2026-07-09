@@ -1,0 +1,12 @@
+usage: relay-kit contract [-h] {export,import} ...
+
+Export and import Relay-kit planning and QA contracts as machine-readable
+contract JSON.
+
+positional arguments:
+  {export,import}
+    export         Export Relay-kit contracts to JSON
+    import         Plan or apply Relay contract JSON into contracts
+
+options:
+  -h, --help       show this help message and exit

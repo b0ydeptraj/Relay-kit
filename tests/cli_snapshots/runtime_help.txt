@@ -1,0 +1,10 @@
+﻿usage: relay-kit runtime [-h] {doctor} ...
+
+Run Relay-kit runtime diagnostics through portable public commands.
+
+positional arguments:
+  {doctor}
+    doctor    Detect runtime drift in generated skill surfaces
+
+options:
+  -h, --help  show this help message and exit

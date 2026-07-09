@@ -1,0 +1,18 @@
+﻿usage: relay-kit context mcp [-h] [--list-tools]
+                             [--tool {context.search,context.related,context.explain_symbol,context.active}]
+                             [--query QUERY] [--path PATH] [--symbol SYMBOL]
+                             [--limit LIMIT] [--json]
+                             [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --list-tools          Print local context tool manifest and exit
+  --tool {context.search,context.related,context.explain_symbol,context.active}
+  --query QUERY         Query for context.search
+  --path PATH           Path for context.related
+  --symbol SYMBOL       Symbol for context.explain_symbol
+  --limit LIMIT         Tool result limit
+  --json                Emit machine-readable MCP manifest or tool result

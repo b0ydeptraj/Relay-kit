@@ -1,0 +1,17 @@
+﻿usage: relay-kit context watch [-h] [--output-file OUTPUT_FILE] [--once]
+                               [--interval INTERVAL]
+                               [--max-iterations MAX_ITERATIONS] [--json]
+                               [project_path]
+
+positional arguments:
+  project_path          Project root to watch
+
+options:
+  -h, --help            show this help message and exit
+  --output-file OUTPUT_FILE
+                        Optional index JSON output path
+  --once                Build once and exit
+  --interval INTERVAL   Polling interval in seconds
+  --max-iterations MAX_ITERATIONS
+                        Stop after N polling iterations
+  --json                Emit machine-readable watch summary

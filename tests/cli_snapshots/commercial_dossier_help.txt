@@ -1,0 +1,52 @@
+﻿usage: relay-kit commercial dossier [-h] [--channel {pypi,testpypi,internal}]
+                                    [--ci-url CI_URL]
+                                    [--release-url RELEASE_URL]
+                                    [--package-url PACKAGE_URL]
+                                    [--sla-url SLA_URL]
+                                    [--support-url SUPPORT_URL]
+                                    [--legal-owner LEGAL_OWNER]
+                                    [--support-owner SUPPORT_OWNER]
+                                    [--readiness-profile {team,enterprise}]
+                                    [--skip-readiness-tests]
+                                    [--publication-trail-file PUBLICATION_TRAIL_FILE]
+                                    [--support-request-file SUPPORT_REQUEST_FILE]
+                                    [--support-bundle-file SUPPORT_BUNDLE_FILE]
+                                    [--output-file OUTPUT_FILE] [--strict]
+                                    [--json]
+                                    [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --channel {pypi,testpypi,internal}
+  --ci-url CI_URL       Green remote CI evidence URL
+  --release-url RELEASE_URL
+                        Release page or release-note URL
+  --package-url PACKAGE_URL
+                        Package-index or internal registry URL
+  --sla-url SLA_URL     Approved SLA/support policy URL
+  --support-url SUPPORT_URL
+                        Paid-support intake or escalation workflow URL
+  --legal-owner LEGAL_OWNER
+                        Owner who approved legal/SLA commitments
+  --support-owner SUPPORT_OWNER
+                        Owner accountable for paid-support triage
+  --readiness-profile {team,enterprise}
+  --skip-readiness-tests
+                        Skip pytest inside the readiness gate
+  --publication-trail-file PUBLICATION_TRAIL_FILE
+                        Publication trail JSON path (default:
+                        <project>/.relay-kit/release/publication-trail.json)
+  --support-request-file SUPPORT_REQUEST_FILE
+                        Support request JSON path (default: <project>/.relay-
+                        kit/support/support-request.json)
+  --support-bundle-file SUPPORT_BUNDLE_FILE
+                        Support bundle JSON path (default: <project>/.relay-
+                        kit/support/support-bundle.json)
+  --output-file OUTPUT_FILE
+                        JSON dossier output path (default: <project>/.relay-
+                        kit/commercial/commercial-dossier.json)
+  --strict              Return non-zero unless the dossier is ready
+  --json                Emit machine-readable commercial dossier

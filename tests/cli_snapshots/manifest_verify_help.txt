@@ -1,0 +1,16 @@
+﻿usage: relay-kit manifest verify [-h] [--manifest-file MANIFEST_FILE]
+                                 [--trust-file TRUST_FILE] [--trusted]
+                                 [project_path]
+
+positional arguments:
+  project_path          Project root for default manifest lookup
+
+options:
+  -h, --help            show this help message and exit
+  --manifest-file MANIFEST_FILE
+                        Manifest path (default: <project>/.relay-
+                        kit/manifest/bundles.json)
+  --trust-file TRUST_FILE
+                        Trust metadata path (default: beside manifest as
+                        trust.json)
+  --trusted             Require deterministic trust metadata

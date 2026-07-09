@@ -1,0 +1,19 @@
+﻿usage: relay-kit support bundle [-h]
+                                [--policy-pack {baseline,enterprise,team}]
+                                [--output-file OUTPUT_FILE]
+                                [--evidence-limit EVIDENCE_LIMIT] [--json]
+                                [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --policy-pack {baseline,enterprise,team}
+                        Policy pack used for support diagnostics
+  --output-file OUTPUT_FILE
+                        Output path (default: <project>/.relay-
+                        kit/support/support-bundle.json)
+  --evidence-limit EVIDENCE_LIMIT
+                        Recent evidence ledger events to include
+  --json                Emit bundle payload and output path as JSON

@@ -1,0 +1,18 @@
+﻿usage: relay-kit support triage [-h] [--request-file REQUEST_FILE]
+                                [--bundle-file BUNDLE_FILE] [--strict]
+                                [--json]
+                                [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --request-file REQUEST_FILE
+                        Support request JSON path (default: <project>/.relay-
+                        kit/support/support-request.json)
+  --bundle-file BUNDLE_FILE
+                        Support bundle JSON path (default: <project>/.relay-
+                        kit/support/support-bundle.json)
+  --strict              Return non-zero unless support triage is ready
+  --json                Emit machine-readable support triage

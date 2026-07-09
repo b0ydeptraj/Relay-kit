@@ -1,0 +1,13 @@
+﻿usage: relay-kit lane audit [-h] [--output-file OUTPUT_FILE] [--strict]
+                            [--json]
+                            [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --output-file OUTPUT_FILE
+                        Optional lane audit JSON output path
+  --strict              Return non-zero unless lane audit passes
+  --json                Emit machine-readable lane audit

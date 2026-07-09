@@ -1,0 +1,9 @@
+﻿usage: relay-kit context active [-h] {set,show} ...
+
+positional arguments:
+  {set,show}
+    set       Set active context
+    show      Show active context
+
+options:
+  -h, --help  show this help message and exit

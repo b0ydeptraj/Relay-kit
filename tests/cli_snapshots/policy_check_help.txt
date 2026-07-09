@@ -1,0 +1,12 @@
+﻿usage: relay-kit policy check [-h] [--pack {baseline,enterprise,team}]
+                              [--strict] [--json]
+                              [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --pack {baseline,enterprise,team}
+  --strict              Return non-zero when findings exist
+  --json                Emit JSON report

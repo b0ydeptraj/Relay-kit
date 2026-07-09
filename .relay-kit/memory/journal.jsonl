@@ -1,0 +1,2 @@
+{"id": "4b5f74bc-ee3a-4c4d-aead-1e0afcfb76fd", "timestamp": "2026-07-07T18:46:31.185802+00:00", "status": "candidate", "confidence": "low", "promotion_recommended": false, "evidence_ref": "hash1", "content": "", "error_signature": "test", "metadata": {}}
+{"id": "cde25a42-4018-4895-9c50-018d596214f9", "timestamp": "2026-07-07T18:48:06.353945+00:00", "status": "promoted", "confidence": "high", "promotion_recommended": false, "evidence_ref": "hash_cli_123", "content": "Test capture from CLI with api_key=[REDACTED_API_KEY]", "error_signature": "TestError", "metadata": {}}

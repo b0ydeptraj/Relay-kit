@@ -1,0 +1,19 @@
+﻿usage: relay-kit eval competency-battle [-h] [--skill SKILL]
+                                        [--suite {core,deep}] [--cleanup]
+                                        [--output-file OUTPUT_FILE] [--json]
+                                        [--strict]
+                                        [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --skill SKILL         Skill name or `all`
+  --suite {core,deep}   Competency suite to run
+  --cleanup             Delete temporary deep battle fixtures after the run
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero unless all selected skills are
+                        competency-covered

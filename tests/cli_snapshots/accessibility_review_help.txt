@@ -1,0 +1,18 @@
+﻿usage: relay-kit accessibility review [-h] [--surface SURFACE]
+                                      [--report-file REPORT_FILE]
+                                      [--output-file OUTPUT_FILE] [--strict]
+                                      [--json]
+                                      [project_path]
+
+positional arguments:
+  project_path          Target project root
+
+options:
+  -h, --help            show this help message and exit
+  --surface SURFACE     Screen, flow, or surface under review
+  --report-file REPORT_FILE
+                        Optional checklist evidence file
+  --output-file OUTPUT_FILE
+                        Optional generated report output path
+  --strict              Fail when evidence report is missing
+  --json                Emit JSON output

@@ -1,0 +1,39 @@
+﻿usage: relay-kit publish evidence [-h] [--channel {pypi,testpypi,internal}]
+                                  [--dist-dir DIST_DIR] [--ci-url CI_URL]
+                                  [--release-url RELEASE_URL]
+                                  [--package-url PACKAGE_URL]
+                                  [--twine-check-file TWINE_CHECK_FILE]
+                                  [--upload-log-file UPLOAD_LOG_FILE]
+                                  [--publication-plan-file PUBLICATION_PLAN_FILE]
+                                  [--allow-dev] [--output-file OUTPUT_FILE]
+                                  [--strict] [--json]
+                                  [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --channel {pypi,testpypi,internal}
+  --dist-dir DIST_DIR   Distribution artifact directory (default:
+                        <project>/dist)
+  --ci-url CI_URL       Remote CI evidence URL
+  --release-url RELEASE_URL
+                        GitHub release or release-note URL
+  --package-url PACKAGE_URL
+                        Package index evidence URL
+  --twine-check-file TWINE_CHECK_FILE
+                        Captured output from python -m twine check dist/*
+  --upload-log-file UPLOAD_LOG_FILE
+                        Captured package upload log or package-index
+                        confirmation
+  --publication-plan-file PUBLICATION_PLAN_FILE
+                        Optional publication-plan JSON to bind to this
+                        evidence
+  --allow-dev           Allow dev/local versions on the selected channel
+  --output-file OUTPUT_FILE
+                        JSON report output path (default: <project>/.relay-
+                        kit/release/publication-evidence.json)
+  --strict              Return non-zero unless publication evidence is
+                        complete
+  --json                Emit machine-readable publication evidence

@@ -1,0 +1,23 @@
+﻿usage: relay-kit eval [-h]
+                      {run,real-world,skill-battle,competency-battle,skill-weakness-report,battle-audit,battle-benchmark,repo-profile,domain-pack}
+                      ...
+
+Run Relay-kit workflow scenario evaluations.
+
+positional arguments:
+  {run,real-world,skill-battle,competency-battle,skill-weakness-report,battle-audit,battle-benchmark,repo-profile,domain-pack}
+    run                 Run workflow routing scenario evals
+    real-world          Run production-shaped skill contract cases
+    skill-battle        Score skills against deep battle cases
+    competency-battle   Score skills by competency coverage and optional deep
+                        battle evidence
+    skill-weakness-report
+                        Summarize weak skill battle findings
+    battle-audit        Audit skill resources and public surfaces for battle
+                        readiness
+    battle-benchmark    Run safe read-only public repo benchmark cases
+    repo-profile        Classify repo archetype from the local context index
+    domain-pack         List or run optional domain competency packs
+
+options:
+  -h, --help            show this help message and exit

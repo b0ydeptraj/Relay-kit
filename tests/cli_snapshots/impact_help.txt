@@ -1,0 +1,10 @@
+﻿usage: relay-kit impact [-h] {radar} ...
+
+Run Relay-kit blast-radius utilities through portable public commands.
+
+positional arguments:
+  {radar}
+    radar     Generate a compact blast-radius report
+
+options:
+  -h, --help  show this help message and exit

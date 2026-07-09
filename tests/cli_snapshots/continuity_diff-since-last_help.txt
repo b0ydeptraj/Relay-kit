@@ -1,0 +1,8 @@
+﻿usage: relay-kit continuity diff-since-last [-h] [--json] [project_path]
+
+positional arguments:
+  project_path  Target project root
+
+options:
+  -h, --help    show this help message and exit
+  --json        Emit JSON output

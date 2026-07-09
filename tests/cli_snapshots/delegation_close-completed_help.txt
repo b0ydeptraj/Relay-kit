@@ -1,0 +1,8 @@
+﻿usage: relay-kit delegation close-completed [-h] [--json] [project_path]
+
+positional arguments:
+  project_path
+
+options:
+  -h, --help    show this help message and exit
+  --json

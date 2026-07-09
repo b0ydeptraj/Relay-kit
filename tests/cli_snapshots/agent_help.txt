@@ -1,0 +1,11 @@
+﻿usage: relay-kit agent [-h] {list,diagnose} ...
+
+List and diagnose Relay-kit role-based agent profiles.
+
+positional arguments:
+  {list,diagnose}
+    list           List Relay-kit agent profiles and route contracts
+    diagnose       Check adapter agent profile parity and contract integrity
+
+options:
+  -h, --help       show this help message and exit

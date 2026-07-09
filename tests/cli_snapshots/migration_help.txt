@@ -1,0 +1,10 @@
+﻿usage: relay-kit migration [-h] {guard} ...
+
+Run Relay-kit migration and naming guards through portable public commands.
+
+positional arguments:
+  {guard}
+    guard     Detect retired naming tokens
+
+options:
+  -h, --help  show this help message and exit

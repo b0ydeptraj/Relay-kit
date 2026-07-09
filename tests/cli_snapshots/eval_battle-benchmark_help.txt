@@ -1,0 +1,20 @@
+﻿usage: relay-kit eval battle-benchmark [-h] [--suite {curated,deep}]
+                                       [--cleanup] [--repo-limit REPO_LIMIT]
+                                       [--output-file OUTPUT_FILE] [--json]
+                                       [--strict]
+                                       [project_path]
+
+positional arguments:
+  project_path          Project root that owns the temp benchmark folder
+
+options:
+  -h, --help            show this help message and exit
+  --suite {curated,deep}
+                        Benchmark suite to run
+  --cleanup             Delete temporary cloned repos after the run
+  --repo-limit REPO_LIMIT
+                        Limit the number of repos from the suite
+  --output-file OUTPUT_FILE
+                        Optional JSON report output path
+  --json                Emit JSON report
+  --strict              Return non-zero unless benchmark cases pass

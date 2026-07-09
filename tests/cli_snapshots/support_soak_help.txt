@@ -1,0 +1,14 @@
+﻿usage: relay-kit support soak [-h] [--bundle-file BUNDLE_FILE] [--strict]
+                              [--json]
+                              [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --bundle-file BUNDLE_FILE
+                        Support bundle JSON path (default: <project>/.relay-
+                        kit/support/support-bundle.json)
+  --strict              Return non-zero unless support soak passes
+  --json                Emit machine-readable support soak report

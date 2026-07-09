@@ -1,0 +1,15 @@
+﻿usage: relay-kit publish status [-h] [--trail-file TRAIL_FILE] [--strict]
+                                [--json]
+                                [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --trail-file TRAIL_FILE
+                        Publication trail JSON path (default:
+                        <project>/.relay-kit/release/publication-trail.json)
+  --strict              Return non-zero unless the publication trail is
+                        complete
+  --json                Emit machine-readable publication trail status

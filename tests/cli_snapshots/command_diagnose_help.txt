@@ -1,0 +1,17 @@
+﻿usage: relay-kit command diagnose [-h]
+                                  [--adapter {codex,claude,agent,antigravity,all}]
+                                  [--output-file OUTPUT_FILE] [--strict]
+                                  [--json]
+                                  [project_path]
+
+positional arguments:
+  project_path          Project root to inspect
+
+options:
+  -h, --help            show this help message and exit
+  --adapter {codex,claude,agent,antigravity,all}
+                        Adapter surface to inspect
+  --output-file OUTPUT_FILE
+                        Optional command diagnostics JSON output path
+  --strict              Return non-zero unless command parity passes
+  --json                Emit machine-readable command diagnostics

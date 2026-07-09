@@ -1,0 +1,18 @@
+--- expected
++++ actual
+@@ -1,5 +1,4 @@
+-usage: relay-kit support bundle [-h]
+-                                [--policy-pack {baseline,enterprise,team}]
++usage: relay-kit support bundle [-h] [--policy-pack POLICY_PACK]
+                                 [--output-file OUTPUT_FILE]
+                                 [--evidence-limit EVIDENCE_LIMIT] [--json]
+                                 [project_path]
+@@ -9,7 +8,7 @@
+ 
+ options:
+   -h, --help            show this help message and exit
+-  --policy-pack {baseline,enterprise,team}
++  --policy-pack POLICY_PACK
+                         Policy pack used for support diagnostics
+   --output-file OUTPUT_FILE
+                         Output path (default: <project>/.relay-

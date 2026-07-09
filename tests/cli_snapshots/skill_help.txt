@@ -1,0 +1,10 @@
+﻿usage: relay-kit skill [-h] {gauntlet} ...
+
+Run Relay-kit skill behavior gates through portable public commands.
+
+positional arguments:
+  {gauntlet}
+    gauntlet  Run SKILL.md behavior regression checks
+
+options:
+  -h, --help  show this help message and exit
