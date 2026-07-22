@@ -1,0 +1,58 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "network-stealth-c2",
+  "role": "c2-engineer",
+  "category": "offensive",
+  "core_competencies": [
+    {
+      "id": "offensive.beacon-discipline",
+      "label": "Configure beacon with jitter and sleep variation.",
+      "evidence_terms": [
+        "beacon",
+        "jitter",
+        "sleep"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.traffic-blending",
+      "label": "Blend C2 traffic with legitimate protocols.",
+      "evidence_terms": [
+        "HTTPS",
+        "DNS",
+        "CDN",
+        "blend"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.redirector-chain",
+      "label": "Use redirector chain to hide true C2 server.",
+      "evidence_terms": [
+        "redirector",
+        "proxy",
+        "CDN"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "offensive.fixed-interval",
+      "description": "Fixed beacon interval without jitter."
+    },
+    {
+      "id": "offensive.direct-c2",
+      "description": "Direct connection to C2 server without redirectors."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.049971+00:00"
+}

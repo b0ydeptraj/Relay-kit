@@ -1,0 +1,59 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "protocol-fingerprint-spoofing",
+  "role": "protocol-spoofer",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.ja3-match",
+      "label": "Match JA3/JA4 fingerprint to target client exactly.",
+      "evidence_terms": [
+        "JA3",
+        "JA4",
+        "cipher",
+        "extension"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.http2-consistency",
+      "label": "Ensure HTTP/2 settings match target browser.",
+      "evidence_terms": [
+        "SETTINGS",
+        "WINDOW_UPDATE",
+        "PRIORITY"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.tls-extension-order",
+      "label": "Maintain correct TLS extension ordering.",
+      "evidence_terms": [
+        "extension",
+        "order",
+        "SNI",
+        "ALPN"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.cipher-mismatch",
+      "description": "Cipher suite order doesn't match target JA3 hash."
+    },
+    {
+      "id": "evasion.missing-extension",
+      "description": "Missing TLS extensions that target client sends."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.084686+00:00"
+}

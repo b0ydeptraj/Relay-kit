@@ -3,6 +3,33 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.battle_audit import build_battle_audit, render_battle_audit, write_battle_audit
+from relay_kit_v3.battle_benchmark import build_battle_benchmark, render_battle_benchmark, write_battle_benchmark
+from relay_kit_v3.competency_battle import (
+    build_competency_battle,
+    render_competency_battle,
+    write_competency_battle,
+)
+from relay_kit_v3.domain_packs import (
+    build_domain_pack_list,
+    render_domain_pack_report,
+    run_domain_pack,
+    write_domain_pack_report,
+)
+from relay_kit_v3.real_world_eval import (
+    build_report as build_real_world_eval_report,
+    render_report as render_real_world_eval_report,
+    write_report as write_real_world_eval_report,
+)
+from relay_kit_v3.repo_profile import build_repo_profile, render_repo_profile, write_repo_profile
+from relay_kit_v3.skill_battle import (
+    build_skill_battle,
+    build_skill_weakness_report,
+    render_skill_battle,
+    render_skill_weakness_report,
+    write_skill_battle,
+)
+
 
 def run_eval(args: argparse.Namespace) -> int:
     if args.action == "skill-battle":

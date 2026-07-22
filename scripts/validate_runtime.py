@@ -202,6 +202,7 @@ def validate_context_continuity_utility() -> None:
             "run qa gate",
         )
         run_helper_script("scripts/context_continuity.py", "rehydrate", str(temp_dir))
+        run_helper_script("scripts/context_continuity.py", "auto", str(temp_dir), "--phase", "start")
         run_helper_script("scripts/context_continuity.py", "diff-since-last", str(temp_dir))
         run_helper_script(
             "scripts/context_continuity.py",

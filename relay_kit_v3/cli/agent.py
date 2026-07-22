@@ -1,13 +1,24 @@
 import argparse
 import json
 from pathlib import Path
-from relay_kit_v3.agent_parity import build_agent_diagnostics, render_agent_diagnostics, write_agent_diagnostics
-from relay_kit_v3.command_parity import lifecycle_command_records
+from relay_kit_v3.agent_profiles import (
+    agent_profile_records,
+    build_agent_diagnostics,
+    render_agent_diagnostics,
+    write_agent_diagnostics,
+)
+
+def run_agent(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "list":
+        return run_agent_list(args)
+    if action == "diagnose":
+        return run_agent_diagnose(args)
+    return 2
 
 def run_agent_list(args: argparse.Namespace) -> int:
-    from relay_kit_v3.agent_parity import agent_profile_records
     payload = {
-        "schema_version": "relay-kit.agent-profile.v1",
+        "schema_version": "relay-kit.agent-registry.v1",
         "status": "pass",
         "project_path": str(Path(args.project_path).resolve()),
         "summary": {"profile_count": len(agent_profile_records())},

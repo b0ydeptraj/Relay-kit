@@ -16,7 +16,7 @@ subcmds = {
     'support': ['bundle', 'request', 'triage', 'soak'],
     'readiness': ['check'],
     'release': ['verify', 'readiness'],
-    'continuity': ['checkpoint', 'rehydrate', 'handoff', 'diff-since-last'],
+    'continuity': ['checkpoint', 'auto', 'rehydrate', 'handoff', 'diff-since-last'],
     'migration': ['guard'],
     'publish': ['plan', 'evidence', 'trail', 'index-check', 'status'],
     'commercial': ['dossier'],

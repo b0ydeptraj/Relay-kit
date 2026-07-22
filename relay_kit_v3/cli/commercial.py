@@ -3,6 +3,11 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.commercial_dossier import (
+    build_commercial_dossier,
+    render_commercial_dossier,
+    write_commercial_dossier,
+)
 
 def run_commercial(args: argparse.Namespace) -> int:
     if args.action != "dossier":

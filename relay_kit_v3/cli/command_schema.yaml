@@ -706,6 +706,9 @@ commands:
             nargs: '?'
             default: .
             help: Project root used for raw evidence logs
+          command:
+            nargs: REMAINDER
+            help: Command to run after --
         flags:
           --cwd:
             default: null
@@ -1687,6 +1690,57 @@ commands:
           --note:
             default: null
             help: Optional checkpoint note
+      auto:
+        handler: relay_kit_v3.cli.continuity.run_continuity
+        help_text: Apply continuity policy for session lifecycle
+        args:
+          project_path:
+            nargs: '?'
+            default: .
+            help: Target project root
+        flags:
+          --json:
+            action: store_true
+            help: Emit JSON output
+          --phase:
+            choices:
+            - start
+            - resume
+            - before-final
+            - handoff
+            default: start
+            help: Session lifecycle phase to handle
+          --objective:
+            default: null
+            help: Current objective summary
+          --lane:
+            default: null
+            help: Active lane id
+          --blocker:
+            default: null
+            help: Current blocker
+          --next-step:
+            default: null
+            help: Exact next step
+          --note:
+            default: null
+            help: Optional auto continuity note
+          --reason:
+            default: null
+            help: Reason for handoff file naming
+          --receiver:
+            default: null
+            help: Intended handoff receiver
+          --max-age-minutes:
+            type: int
+            default: null
+            help: Override policy checkpoint age threshold
+          --force-checkpoint:
+            action: store_true
+            help: Always write a checkpoint
+          --force-rehydrate:
+            action: store_true
+            help: Always rehydrate when a manifest exists
       rehydrate:
         handler: relay_kit_v3.cli.continuity.run_continuity
         help_text: Rehydrate context from last checkpoint

@@ -1,12 +1,20 @@
 import argparse
 import json
 from pathlib import Path
-from relay_kit_v3.command_parity import (
+from relay_kit_v3.command_registry import (
     build_command_diagnostics,
     lifecycle_command_records,
     render_command_diagnostics,
     write_command_diagnostics,
 )
+
+def run_command(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "list":
+        return run_command_list(args)
+    if action == "diagnose":
+        return run_command_diagnose(args)
+    return 2
 
 def run_command_list(args: argparse.Namespace) -> int:
     payload = {

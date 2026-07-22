@@ -3,6 +3,23 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.publication import (
+    build_package_index_check,
+    build_publication_evidence,
+    build_publication_plan,
+    build_publication_trail,
+    build_publication_trail_status,
+    render_package_index_check,
+    render_publication_evidence,
+    render_publication_plan,
+    render_publication_trail,
+    render_publication_trail_status,
+    write_package_index_check,
+    write_publication_evidence,
+    write_publication_plan,
+    write_publication_trail,
+    write_publication_trail_markdown,
+)
 
 def run_publish(args: argparse.Namespace) -> int:
     if args.action == "plan":

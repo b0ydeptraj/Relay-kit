@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "binary-reverse-methodology",
+  "role": "reverse-engineer",
+  "category": "reverse-engineering",
+  "core_competencies": [
+    {
+      "id": "reverse.static-first",
+      "label": "Perform static analysis before dynamic analysis.",
+      "evidence_terms": [
+        "static",
+        "disassembly",
+        "strings"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.function-map",
+      "label": "Map function boundaries and call graph before deep analysis.",
+      "evidence_terms": [
+        "function",
+        "call graph",
+        "boundary"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.hypothesis-driven",
+      "label": "Form and test hypotheses about binary behavior.",
+      "evidence_terms": [
+        "hypothesis",
+        "test",
+        "verify"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "reverse.dynamic-first",
+      "description": "Jumping to dynamic analysis without static analysis context."
+    },
+    {
+      "id": "reverse.guess-without-evidence",
+      "description": "Guessing binary behavior without disassembly evidence."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.910544+00:00"
+}

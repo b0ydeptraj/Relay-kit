@@ -60,6 +60,15 @@ SERVICE_BOUNDARIES = [
 ]
 
 ALLOWED_RUNTIME_SCRIPT_IMPORTERS = {
+    "relay_kit_v3.cli.accessibility",
+    "relay_kit_v3.cli.continuity",
+    "relay_kit_v3.cli.eval",
+    "relay_kit_v3.cli.impact",
+    "relay_kit_v3.cli.migration",
+    "relay_kit_v3.cli.policy",
+    "relay_kit_v3.cli.release",
+    "relay_kit_v3.cli.runtime",
+    "relay_kit_v3.cli.skill",
     "relay_kit_v3.pulse",
     "relay_kit_v3.support_bundle",
 }

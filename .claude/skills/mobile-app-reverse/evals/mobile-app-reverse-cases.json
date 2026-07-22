@@ -1,0 +1,58 @@
+[
+  {
+    "id": "mobile-app-reverse-battle-read-first",
+    "skill": "mobile-app-reverse",
+    "repo_profile": "Relay-kit offensive tool pack with mobile-app-reverse skill",
+    "task": "reverse-engineer mobile applications including APK/IPA analysis, SSL pinning bypass, and API extraction. Use `mobile-app-reverse` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "apk_decompile",
+      "ssl_unpin"
+    ],
+    "expected_tests": [
+      "tests/test_mobile_app_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "APK decompile",
+      "IPA analysis",
+      "SSL pinning",
+      "API endpoint extraction"
+    ],
+    "bad_answer_traps": [
+      "skip manifest analysis",
+      "no root/jailbreak detection bypass",
+      "incomplete API map"
+    ]
+  },
+  {
+    "id": "mobile-app-reverse-deep-weakness-trap",
+    "skill": "mobile-app-reverse",
+    "repo_profile": "deep relay suite fixture with mobile-app-reverse domain expertise",
+    "task": "Score `mobile-app-reverse` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "apk_decompile",
+      "ssl_unpin"
+    ],
+    "expected_tests": [
+      "tests/test_mobile_app_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "APK decompile",
+      "IPA analysis",
+      "SSL pinning",
+      "API endpoint extraction",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

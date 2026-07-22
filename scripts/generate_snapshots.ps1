@@ -40,6 +40,7 @@ $commands = @(
   "release verify",
   "release readiness",
   "continuity checkpoint",
+  "continuity auto",
   "continuity rehydrate",
   "continuity handoff",
   "continuity diff-since-last",

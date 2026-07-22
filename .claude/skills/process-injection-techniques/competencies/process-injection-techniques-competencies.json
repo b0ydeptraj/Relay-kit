@@ -1,0 +1,58 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "process-injection-techniques",
+  "role": "injection-specialist",
+  "category": "offensive",
+  "core_competencies": [
+    {
+      "id": "offensive.arch-check",
+      "label": "Verify target process architecture before injection.",
+      "evidence_terms": [
+        "x86",
+        "x64",
+        "WoW64",
+        "architecture"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.cleanup-on-fail",
+      "label": "Clean up allocated resources if injection fails.",
+      "evidence_terms": [
+        "cleanup",
+        "VirtualFreeEx",
+        "handle"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.alloc-stealth",
+      "label": "Use stealthy memory allocation patterns.",
+      "evidence_terms": [
+        "MEM_COMMIT",
+        "PAGE_READWRITE",
+        "RWX"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "offensive.arch-mismatch",
+      "description": "Injecting into process with wrong architecture."
+    },
+    {
+      "id": "offensive.no-cleanup",
+      "description": "Leaving allocated memory on injection failure."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.072639+00:00"
+}

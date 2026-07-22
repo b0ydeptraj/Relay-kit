@@ -1,0 +1,60 @@
+[
+  {
+    "id": "field-journal-evolution-battle-read-first",
+    "skill": "field-journal-evolution",
+    "repo_profile": "Relay-kit offensive tool pack with field-journal-evolution skill",
+    "task": "evolve field journal entries by capturing pitfalls, techniques, and routing gaps with evidence backing. Use `field-journal-evolution` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/field_journal.py",
+      "relay_kit_v3/evidence_quality.py"
+    ],
+    "expected_symbols": [
+      "capture_entry",
+      "evidence_ref"
+    ],
+    "expected_tests": [
+      "tests/test_field_journal_evolution.py"
+    ],
+    "expected_evidence_terms": [
+      "evidence ref",
+      "confidence level",
+      "pattern capture",
+      "journal append"
+    ],
+    "bad_answer_traps": [
+      "entry without evidence",
+      "auto-promote",
+      "duplicate pattern"
+    ]
+  },
+  {
+    "id": "field-journal-evolution-deep-weakness-trap",
+    "skill": "field-journal-evolution",
+    "repo_profile": "deep relay suite fixture with field-journal-evolution domain expertise",
+    "task": "Score `field-journal-evolution` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/field_journal.py",
+      "relay_kit_v3/evidence_quality.py"
+    ],
+    "expected_symbols": [
+      "capture_entry",
+      "evidence_ref"
+    ],
+    "expected_tests": [
+      "tests/test_field_journal_evolution.py"
+    ],
+    "expected_evidence_terms": [
+      "evidence ref",
+      "confidence level",
+      "pattern capture",
+      "journal append",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

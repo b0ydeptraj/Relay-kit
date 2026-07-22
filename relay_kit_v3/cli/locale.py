@@ -2,7 +2,15 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from relay_kit_v3.locale_policy import inspect_runtime_locale, load_runtime_locale, update_runtime_locale
+from relay_kit_v3.runtime_locale import inspect_runtime_locale, load_runtime_locale, write_runtime_locale
+
+def run_locale(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "show":
+        return run_locale_show(args)
+    if action == "set":
+        return run_locale_set(args)
+    return 2
 
 def run_locale_show(args: argparse.Namespace) -> int:
     report = inspect_runtime_locale(args.project_path)
@@ -22,14 +30,16 @@ def run_locale_show(args: argparse.Namespace) -> int:
 
 def run_locale_set(args: argparse.Namespace) -> int:
     try:
-        report = update_runtime_locale(
-            args.project_path,
+        policy = write_runtime_locale(
+            Path(args.project_path).resolve(),
             locale=args.locale,
             fallback_locale=args.fallback_locale,
             enforce_output_language=args.enforce_output_language,
         )
+        report = inspect_runtime_locale(args.project_path)
+        report["policy"] = policy
         if getattr(args, "json", False):
-            print(json.dumps(report, ensure_ascii=True, indent=2))
+            print(json.dumps(policy, ensure_ascii=True, indent=2))
             return 0 if report.get("status") == "pass" else 1
         print("Updated Relay-kit runtime locale")
         print(f"- locale profile: {args.locale}")

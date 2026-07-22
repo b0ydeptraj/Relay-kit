@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "attack-chain-orchestration",
+  "role": "attack-orchestrator",
+  "category": "offensive",
+  "core_competencies": [
+    {
+      "id": "offensive.phase-ordering",
+      "label": "Follow ATT&CK kill chain ordering strictly.",
+      "evidence_terms": [
+        "ATT&CK",
+        "kill chain",
+        "phase"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.opsec-gates",
+      "label": "Enforce OPSEC checks between phase transitions.",
+      "evidence_terms": [
+        "OPSEC",
+        "transition",
+        "gate"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.evidence-chain",
+      "label": "Maintain evidence chain across all phases.",
+      "evidence_terms": [
+        "evidence",
+        "chain",
+        "artifact"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "offensive.skip-recon",
+      "description": "Skipping reconnaissance phase before initial access."
+    },
+    {
+      "id": "offensive.no-opsec-gate",
+      "description": "No OPSEC validation between attack phases."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.906476+00:00"
+}

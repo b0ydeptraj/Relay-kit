@@ -229,6 +229,13 @@ from relay_kit_v3.upgrade import build_upgrade_report, render_report, write_vers
 REPO_ROOT = Path(__file__).resolve().parent
 
 
+def _doctor_commands(project_path: str, skip_tests: bool, policy_pack: str = DEFAULT_POLICY_PACK) -> list[tuple[str, list[str]]]:
+    from relay_kit_v3.cli import doctor as doctor_cli
+
+    doctor_cli.REPO_ROOT = REPO_ROOT
+    return doctor_cli._doctor_commands(project_path, skip_tests, policy_pack)
+
+
 def _parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="relay-kit",
@@ -413,6 +420,8 @@ def _build_relay_argv(args: argparse.Namespace) -> list[str]:
 
 def main(argv: list[str] | None = None) -> int:
     raw_argv = sys.argv[1:] if argv is None else argv
+    if raw_argv and raw_argv[0] == "init":
+        raw_argv = raw_argv[1:]
     
     known_commands = {
         "doctor", "evidence", "contract", "context", "lane", "delegation",
@@ -424,13 +433,19 @@ def main(argv: list[str] | None = None) -> int:
     }
     
     if raw_argv and raw_argv[0] in known_commands:
+        if raw_argv[0] == "doctor":
+            from relay_kit_v3.cli import doctor as doctor_cli
+
+            doctor_cli.REPO_ROOT = REPO_ROOT
+            doctor_cli.subprocess = subprocess
+            doctor_cli.append_event = append_event
         return engine.dispatch(raw_argv[0], raw_argv[1:])
 
     args = _parse_args(raw_argv)
-    _setup_logging(args.verbose)
+    import logging; logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
     
     # Global public install fallback
-    if args.diagnostic_run:
+    if getattr(args, 'diagnostic_run', False):
         print(f"Relay-kit public runtime diagnostic: PASS (mock)")
         return 0
         
@@ -440,9 +455,16 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     print(f"Generating public Relay-kit ({args.bundle}) runtime in {args.project_path} for {ai_str}...")
-    _write_stub_files(args.project_path, ai_str, args.bundle)
-    print("Done. Relay-kit runtime is ready.")
-    return 0
+    core_argv = _build_relay_argv(args)
+    original_argv = sys.argv[:]
+    try:
+        sys.argv = core_argv
+        exit_code = relay_core.main("relay-kit")
+    finally:
+        sys.argv = original_argv
+    if exit_code == 0:
+        print("Done. Relay-kit runtime is ready.")
+    return int(exit_code)
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "desktop-python-ui",
+  "role": "python-ui-developer",
+  "category": "engineering",
+  "core_competencies": [
+    {
+      "id": "engineering.event-loop",
+      "label": "Keep the UI event loop responsive.",
+      "evidence_terms": [
+        "event loop",
+        "responsive",
+        "non-blocking"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.thread-safety",
+      "label": "Never update UI from worker threads directly.",
+      "evidence_terms": [
+        "thread",
+        "signal",
+        "invoke"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.layout-discipline",
+      "label": "Use layout managers instead of absolute positioning.",
+      "evidence_terms": [
+        "layout",
+        "grid",
+        "box"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "engineering.ui-from-thread",
+      "description": "Updating UI widgets directly from a background thread."
+    },
+    {
+      "id": "engineering.blocking-loop",
+      "description": "Blocking the event loop with synchronous I/O."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.962487+00:00"
+}

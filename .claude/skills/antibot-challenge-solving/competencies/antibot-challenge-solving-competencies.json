@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "antibot-challenge-solving",
+  "role": "antibot-specialist",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.challenge-classification",
+      "label": "Classify challenge type before attempting solution.",
+      "evidence_terms": [
+        "challenge",
+        "CAPTCHA",
+        "JS challenge"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.solver-strategy",
+      "label": "Select appropriate solver based on challenge analysis.",
+      "evidence_terms": [
+        "solver",
+        "strategy",
+        "fallback"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.token-extraction",
+      "label": "Extract and validate challenge response tokens.",
+      "evidence_terms": [
+        "token",
+        "response",
+        "validation"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.brute-force",
+      "description": "Attempting brute force without analyzing the challenge type."
+    },
+    {
+      "id": "evasion.no-fallback",
+      "description": "No fallback strategy when primary solver fails."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.892798+00:00"
+}

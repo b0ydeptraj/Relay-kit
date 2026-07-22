@@ -1,0 +1,60 @@
+[
+  {
+    "id": "terminal-operator-ui-battle-read-first",
+    "skill": "terminal-operator-ui",
+    "repo_profile": "Relay-kit offensive tool pack with terminal-operator-ui skill",
+    "task": "build terminal-based operator UIs using curses, Rich, Textual, or similar TUI frameworks. Use `terminal-operator-ui` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "App",
+      "Screen",
+      "Widget"
+    ],
+    "expected_tests": [
+      "tests/test_terminal_operator_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "TUI framework",
+      "keybinding",
+      "live update",
+      "responsive layout"
+    ],
+    "bad_answer_traps": [
+      "blocking input loop",
+      "no resize handling",
+      "missing keybinding docs"
+    ]
+  },
+  {
+    "id": "terminal-operator-ui-deep-weakness-trap",
+    "skill": "terminal-operator-ui",
+    "repo_profile": "deep relay suite fixture with terminal-operator-ui domain expertise",
+    "task": "Score `terminal-operator-ui` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "App",
+      "Screen",
+      "Widget"
+    ],
+    "expected_tests": [
+      "tests/test_terminal_operator_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "TUI framework",
+      "keybinding",
+      "live update",
+      "responsive layout",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

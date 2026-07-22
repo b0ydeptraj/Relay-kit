@@ -2,6 +2,11 @@ import argparse
 import json
 from relay_kit_v3.query_search import build_query_search, render_query_search, write_query_search
 
+def run_query(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "search":
+        return run_query_search(args)
+    return 2
+
 def run_query_search(args: argparse.Namespace) -> int:
     report = build_query_search(
         args.project_path,

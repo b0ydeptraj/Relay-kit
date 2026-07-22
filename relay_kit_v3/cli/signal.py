@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.signal_export import build_signal_export, write_signal_export
 
 def run_signal(args: argparse.Namespace) -> int:
     if args.action != "export":

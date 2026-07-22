@@ -2,6 +2,11 @@ import argparse
 import json
 from relay_kit_v3.token_economy import build_token_audit, render_token_audit, write_token_audit
 
+def run_token(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "audit":
+        return run_token_audit(args)
+    return 2
+
 def run_token_audit(args: argparse.Namespace) -> int:
     report = build_token_audit(
         args.project_path,

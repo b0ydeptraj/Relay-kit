@@ -3,6 +3,11 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.skill_proof import (
+    build_report as build_skill_proof_report,
+    render_report as render_skill_proof_report,
+    write_report as write_skill_proof_report,
+)
 
 def run_proof(args: argparse.Namespace) -> int:
     if args.action != "audit":

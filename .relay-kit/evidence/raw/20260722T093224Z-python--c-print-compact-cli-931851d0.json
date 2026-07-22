@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python",
+    "-c",
+    "print('compact cli')"
+  ],
+  "created_at": "2026-07-22T09:32:24.062313+00:00",
+  "cwd": "C:\\Users\\b0ydeptrai\\Documents\\relay-kit",
+  "returncode": 0,
+  "schema_version": "relay-kit.shell-raw.v1",
+  "stderr": "",
+  "stdout": "compact cli\n"
+}

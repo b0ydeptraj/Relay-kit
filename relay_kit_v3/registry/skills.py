@@ -2603,12 +2603,14 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "a compact resume brief with explicit next step and open loops",
         ],
         references=[
-            "Use `relay-kit continuity` modes for deterministic continuity artifacts.",
+            "Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.",
+            "Use manual `checkpoint`, `rehydrate`, `handoff`, and `diff-since-last` modes when debugging or forcing a specific continuity action.",
             "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
         ],
         next_steps=["workflow-router", "cook", "team", "handoff-context", "review-hub"],
         mission="Preserve lane continuity with explicit artifacts so the next session can continue safely without replaying full chat history.",
         tasks=[
+            "Run auto continuity at session start/resume so existing checkpoints are rehydrated and missing checkpoints are created.",
             "Run checkpoint before likely truncation, compaction, or session break.",
             "Run rehydrate at the start of a new thread to restore objective, lane, blockers, and next step.",
             "Run handoff when ownership moves across AI, thread, or operator.",

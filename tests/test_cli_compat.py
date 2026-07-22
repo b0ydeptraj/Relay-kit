@@ -343,6 +343,7 @@ def test_continuity_help_compat():
     passed = True
     passed = passed and check_help_compat(["continuity"], "continuity")
     passed = passed and check_help_compat(["continuity", "checkpoint"], "continuity_checkpoint")
+    passed = passed and check_help_compat(["continuity", "auto"], "continuity_auto")
     passed = passed and check_help_compat(["continuity", "rehydrate"], "continuity_rehydrate")
     passed = passed and check_help_compat(["continuity", "handoff"], "continuity_handoff")
     passed = passed and check_help_compat(["continuity", "diff-since-last"], "continuity_diff-since-last")

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "mmo-llm-automation-battle-read-first",
+    "skill": "mmo-llm-automation",
+    "repo_profile": "Relay-kit offensive tool pack with mmo-llm-automation skill",
+    "task": "integrate LLM APIs for bulk content generation, behavioral variance, and Sybil evasion in MMO operations. Use `mmo-llm-automation` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "llm_client",
+      "variance_engine"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_llm_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "prompt diversity",
+      "behavioral variance",
+      "content generation",
+      "Sybil evasion"
+    ],
+    "bad_answer_traps": [
+      "identical outputs",
+      "no rate limiting",
+      "detectable patterns"
+    ]
+  },
+  {
+    "id": "mmo-llm-automation-deep-weakness-trap",
+    "skill": "mmo-llm-automation",
+    "repo_profile": "deep relay suite fixture with mmo-llm-automation domain expertise",
+    "task": "Score `mmo-llm-automation` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "llm_client",
+      "variance_engine"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_llm_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "prompt diversity",
+      "behavioral variance",
+      "content generation",
+      "Sybil evasion",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

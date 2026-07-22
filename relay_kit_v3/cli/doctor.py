@@ -140,7 +140,7 @@ def run_doctor(args: argparse.Namespace) -> int:
     exit_code = 0
     gate_results: list[dict[str, object]] = []
     
-    policy = getattr(args, "policy_pack", DEFAULT_POLICY_PACK)
+    policy = getattr(args, "policy_pack", None) or DEFAULT_POLICY_PACK
     skip = getattr(args, "skip_tests", False)
 
     for label, command in _doctor_commands(project_path, skip, policy):
@@ -174,6 +174,19 @@ def run_doctor(args: argparse.Namespace) -> int:
             exit_code = 1
 
     if args.json:
-        print(json.dumps(gate_results, indent=2))
+        print(
+            json.dumps(
+                {
+                    "schema_version": "relay-kit.doctor.v1",
+                    "status": "pass" if exit_code == 0 else "fail",
+                    "project_path": project_path,
+                    "run_id": run_id,
+                    "gates": gate_results,
+                    "results": gate_results,
+                },
+                ensure_ascii=True,
+                indent=2,
+            )
+        )
         
     return exit_code

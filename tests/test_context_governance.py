@@ -127,6 +127,101 @@ def test_context_continuity_checkpoint_records_source_metadata(tmp_path: Path) -
     assert {"path", "source_type", "confidence", "age_days", "stale"} <= set(payload["sources"][0])
 
 
+def test_context_continuity_auto_start_checkpoints_when_missing(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/context_continuity.py",
+            "auto",
+            str(tmp_path),
+            "--phase",
+            "start",
+            "--objective",
+            "resume the repo hardening lane",
+            "--next-step",
+            "run continuity rehydrate",
+            "--json",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+
+    assert payload["schema_version"] == "relay-kit.continuity-auto.v1"
+    assert payload["action"] == "checkpoint"
+    assert (tmp_path / ".relay-kit" / "state" / "context-manifest.json").exists()
+    assert (tmp_path / ".relay-kit" / "state" / "continuity-policy.json").exists()
+
+
+def test_context_continuity_auto_start_rehydrates_existing_manifest(tmp_path: Path) -> None:
+    first = subprocess.run(
+        [
+            sys.executable,
+            "scripts/context_continuity.py",
+            "checkpoint",
+            str(tmp_path),
+            "--objective",
+            "keep continuity durable",
+            "--next-step",
+            "rehydrate on the next task",
+            "--json",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert first.returncode == 0, first.stderr
+
+    result = subprocess.run(
+        [sys.executable, "scripts/context_continuity.py", "auto", str(tmp_path), "--phase", "start", "--json"],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+
+    assert payload["action"] == "rehydrate"
+    assert payload["rehydrate"]["next_step"] == "rehydrate on the next task"
+
+
+def test_context_continuity_auto_handoff_writes_checkpoint_and_handoff(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/context_continuity.py",
+            "auto",
+            str(tmp_path),
+            "--phase",
+            "handoff",
+            "--objective",
+            "handoff continuity lane",
+            "--next-step",
+            "continue from handoff pack",
+            "--reason",
+            "agent-switch",
+            "--receiver",
+            "next-agent",
+            "--json",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+
+    assert payload["action"] == "checkpoint+handoff"
+    assert payload["handoff"]["receiver"] == "next-agent"
+    assert (tmp_path / payload["handoff"]["handoff_path"]).exists()
+
+
 def test_runtime_doctor_detects_stale_main_pointer_when_on_main(tmp_path: Path) -> None:
     write_context_project(tmp_path)
     findings: list[str] = []

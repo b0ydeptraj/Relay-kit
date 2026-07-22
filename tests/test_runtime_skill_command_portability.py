@@ -13,6 +13,7 @@ PORTABLE_SKILL_COMMANDS = [
     ("accessibility", "review"),
     ("release", "readiness"),
     ("continuity", "checkpoint"),
+    ("continuity", "auto"),
     ("continuity", "rehydrate"),
     ("continuity", "handoff"),
     ("continuity", "diff-since-last"),

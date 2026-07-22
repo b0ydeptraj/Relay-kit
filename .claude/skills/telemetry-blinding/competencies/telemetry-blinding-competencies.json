@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "telemetry-blinding",
+  "role": "telemetry-specialist",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.provider-enumeration",
+      "label": "Enumerate all active ETW providers before blinding.",
+      "evidence_terms": [
+        "ETW",
+        "provider",
+        "enumerate"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.amsi-bypass",
+      "label": "Bypass AMSI without detectable memory patches.",
+      "evidence_terms": [
+        "AMSI",
+        "AmsiScanBuffer",
+        "patch"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.verification",
+      "label": "Verify telemetry is actually suppressed after blinding.",
+      "evidence_terms": [
+        "verify",
+        "event",
+        "suppressed"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.partial-blind",
+      "description": "Only blinding some telemetry providers while others report."
+    },
+    {
+      "id": "evasion.no-verify",
+      "description": "Not verifying telemetry suppression after patching."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.100079+00:00"
+}

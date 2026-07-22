@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "binary-stealth-obfuscation",
+  "role": "obfuscation-specialist",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.entropy-control",
+      "label": "Control binary entropy to avoid statistical detection.",
+      "evidence_terms": [
+        "entropy",
+        "histogram",
+        "section"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.signature-mutation",
+      "label": "Mutate signatures to evade pattern matching.",
+      "evidence_terms": [
+        "signature",
+        "mutation",
+        "YARA"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.av-testing",
+      "label": "Test against AV engines before deployment.",
+      "evidence_terms": [
+        "AV",
+        "test",
+        "detection rate"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.high-entropy",
+      "description": "Producing high-entropy output that triggers statistical detection."
+    },
+    {
+      "id": "evasion.untested-payload",
+      "description": "Deploying without AV/EDR testing."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.922624+00:00"
+}

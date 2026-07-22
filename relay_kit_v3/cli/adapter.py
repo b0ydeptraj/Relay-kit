@@ -1,6 +1,11 @@
 import argparse
 import json
-from relay_kit_v3.adapter_parity import build_adapter_diagnostics, render_adapter_diagnostics, write_adapter_diagnostics
+from relay_kit_v3.adapter_diagnostics import build_adapter_diagnostics, render_adapter_diagnostics, write_adapter_diagnostics
+
+def run_adapter(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "diagnose":
+        return run_adapter_diagnose(args)
+    return 2
 
 def run_adapter_diagnose(args: argparse.Namespace) -> int:
     report = build_adapter_diagnostics(args.project_path, adapter=args.adapter)

@@ -2,6 +2,11 @@ import argparse
 import json
 from relay_kit_v3.evidence_ledger import summarize_events
 
+def run_evidence(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "summary":
+        return run_evidence_summary(args)
+    return 2
+
 def run_evidence_summary(args: argparse.Namespace) -> int:
     summary = summarize_events(args.project_path, limit=args.limit)
     if args.json:

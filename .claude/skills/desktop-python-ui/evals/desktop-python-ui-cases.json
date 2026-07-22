@@ -1,0 +1,58 @@
+[
+  {
+    "id": "desktop-python-ui-battle-read-first",
+    "skill": "desktop-python-ui",
+    "repo_profile": "Relay-kit offensive tool pack with desktop-python-ui skill",
+    "task": "build desktop applications using Python UI frameworks like PyQt, PySide, Tkinter, or Dear PyGui. Use `desktop-python-ui` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "QApplication",
+      "MainWindow"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_python_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "event loop",
+      "signal-slot",
+      "widget tree",
+      "threading model"
+    ],
+    "bad_answer_traps": [
+      "UI updates from worker thread",
+      "blocking event loop",
+      "no error dialog"
+    ]
+  },
+  {
+    "id": "desktop-python-ui-deep-weakness-trap",
+    "skill": "desktop-python-ui",
+    "repo_profile": "deep relay suite fixture with desktop-python-ui domain expertise",
+    "task": "Score `desktop-python-ui` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "QApplication",
+      "MainWindow"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_python_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "event loop",
+      "signal-slot",
+      "widget tree",
+      "threading model",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

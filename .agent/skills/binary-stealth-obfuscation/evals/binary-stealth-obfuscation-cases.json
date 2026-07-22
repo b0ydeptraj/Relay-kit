@@ -1,0 +1,58 @@
+[
+  {
+    "id": "binary-stealth-obfuscation-battle-read-first",
+    "skill": "binary-stealth-obfuscation",
+    "repo_profile": "Relay-kit offensive tool pack with binary-stealth-obfuscation skill",
+    "task": "obfuscate binary payloads to evade static analysis, AV signatures, and YARA rules. Use `binary-stealth-obfuscation` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "obfuscator",
+      "packer"
+    ],
+    "expected_tests": [
+      "tests/test_binary_stealth_obfuscation.py"
+    ],
+    "expected_evidence_terms": [
+      "entropy control",
+      "signature evasion",
+      "packing",
+      "mutation engine"
+    ],
+    "bad_answer_traps": [
+      "high entropy without justification",
+      "no AV test",
+      "single technique only"
+    ]
+  },
+  {
+    "id": "binary-stealth-obfuscation-deep-weakness-trap",
+    "skill": "binary-stealth-obfuscation",
+    "repo_profile": "deep relay suite fixture with binary-stealth-obfuscation domain expertise",
+    "task": "Score `binary-stealth-obfuscation` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "obfuscator",
+      "packer"
+    ],
+    "expected_tests": [
+      "tests/test_binary_stealth_obfuscation.py"
+    ],
+    "expected_evidence_terms": [
+      "entropy control",
+      "signature evasion",
+      "packing",
+      "mutation engine",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

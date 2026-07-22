@@ -1,0 +1,60 @@
+[
+  {
+    "id": "desktop-imgui-development-battle-read-first",
+    "skill": "desktop-imgui-development",
+    "repo_profile": "Relay-kit offensive tool pack with desktop-imgui-development skill",
+    "task": "build desktop overlay and tool UIs using Dear ImGui with DirectX/OpenGL backends. Use `desktop-imgui-development` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ImGui",
+      "ImVec2",
+      "ImGuiWindowFlags"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_imgui_development.py"
+    ],
+    "expected_evidence_terms": [
+      "render loop",
+      "overlay",
+      "input handling",
+      "widget layout"
+    ],
+    "bad_answer_traps": [
+      "blocking render loop",
+      "no input passthrough",
+      "missing cleanup"
+    ]
+  },
+  {
+    "id": "desktop-imgui-development-deep-weakness-trap",
+    "skill": "desktop-imgui-development",
+    "repo_profile": "deep relay suite fixture with desktop-imgui-development domain expertise",
+    "task": "Score `desktop-imgui-development` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ImGui",
+      "ImVec2",
+      "ImGuiWindowFlags"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_imgui_development.py"
+    ],
+    "expected_evidence_terms": [
+      "render loop",
+      "overlay",
+      "input handling",
+      "widget layout",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

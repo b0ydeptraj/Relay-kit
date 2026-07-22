@@ -1,6 +1,11 @@
 import argparse
 import json
-from relay_kit_v3.service_boundary import build_service_boundary_report, render_service_boundary_report, write_service_boundary_report
+from relay_kit_v3.service_boundaries import build_service_boundary_report, render_service_boundary_report, write_service_boundary_report
+
+def run_service(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "boundaries":
+        return run_service_boundaries(args)
+    return 2
 
 def run_service_boundaries(args: argparse.Namespace) -> int:
     report = build_service_boundary_report(args.project_path)

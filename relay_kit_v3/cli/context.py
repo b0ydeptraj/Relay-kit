@@ -191,7 +191,7 @@ def run_context(args):
     elif action == "pack": return run_context_pack(args)
     elif action == "budget": return run_context_budget(args)
     elif action == "watch": return run_context_watch(args)
-    elif action == "explain_symbol": return run_context_explain_symbol(args)
+    elif action in {"explain-symbol", "explain_symbol"}: return run_context_explain_symbol(args)
     elif action == "mcp": return run_context_mcp(args)
     elif action == "active":
         sub_action = getattr(args, "action_active", None)

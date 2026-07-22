@@ -1,0 +1,59 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "mobile-app-reverse",
+  "role": "mobile-reverser",
+  "category": "reverse-engineering",
+  "core_competencies": [
+    {
+      "id": "reverse.manifest-analysis",
+      "label": "Analyze AndroidManifest.xml/Info.plist before code.",
+      "evidence_terms": [
+        "manifest",
+        "permissions",
+        "components"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.ssl-bypass",
+      "label": "Bypass SSL pinning for traffic interception.",
+      "evidence_terms": [
+        "SSL",
+        "pinning",
+        "Frida",
+        "proxy"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.api-mapping",
+      "label": "Map all API endpoints from decompiled code.",
+      "evidence_terms": [
+        "API",
+        "endpoint",
+        "URL",
+        "request"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "reverse.skip-manifest",
+      "description": "Diving into code without analyzing app manifest."
+    },
+    {
+      "id": "reverse.incomplete-api",
+      "description": "Missing API endpoints in extraction."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.042358+00:00"
+}

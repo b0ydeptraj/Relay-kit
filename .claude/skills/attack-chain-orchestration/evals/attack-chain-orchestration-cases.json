@@ -1,0 +1,58 @@
+[
+  {
+    "id": "attack-chain-orchestration-battle-read-first",
+    "skill": "attack-chain-orchestration",
+    "repo_profile": "Relay-kit offensive tool pack with attack-chain-orchestration skill",
+    "task": "orchestrate multi-phase attack chains following ATT&CK framework ordering with OPSEC discipline. Use `attack-chain-orchestration` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "attack_chain",
+      "phase_order"
+    ],
+    "expected_tests": [
+      "tests/test_attack_chain_orchestration.py"
+    ],
+    "expected_evidence_terms": [
+      "ATT&CK phase",
+      "kill chain",
+      "OPSEC ordering",
+      "phase transition"
+    ],
+    "bad_answer_traps": [
+      "skip recon phase",
+      "no OPSEC check between phases",
+      "unordered execution"
+    ]
+  },
+  {
+    "id": "attack-chain-orchestration-deep-weakness-trap",
+    "skill": "attack-chain-orchestration",
+    "repo_profile": "deep relay suite fixture with attack-chain-orchestration domain expertise",
+    "task": "Score `attack-chain-orchestration` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "attack_chain",
+      "phase_order"
+    ],
+    "expected_tests": [
+      "tests/test_attack_chain_orchestration.py"
+    ],
+    "expected_evidence_terms": [
+      "ATT&CK phase",
+      "kill chain",
+      "OPSEC ordering",
+      "phase transition",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

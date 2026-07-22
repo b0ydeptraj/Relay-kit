@@ -1,0 +1,58 @@
+[
+  {
+    "id": "binary-reverse-methodology-battle-read-first",
+    "skill": "binary-reverse-methodology",
+    "repo_profile": "Relay-kit offensive tool pack with binary-reverse-methodology skill",
+    "task": "systematically reverse-engineer binary executables using static and dynamic analysis techniques. Use `binary-reverse-methodology` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "disassembly",
+      "decompiler"
+    ],
+    "expected_tests": [
+      "tests/test_binary_reverse_methodology.py"
+    ],
+    "expected_evidence_terms": [
+      "static analysis",
+      "dynamic analysis",
+      "control flow",
+      "function boundary"
+    ],
+    "bad_answer_traps": [
+      "skip static before dynamic",
+      "no function boundary map",
+      "guessing without evidence"
+    ]
+  },
+  {
+    "id": "binary-reverse-methodology-deep-weakness-trap",
+    "skill": "binary-reverse-methodology",
+    "repo_profile": "deep relay suite fixture with binary-reverse-methodology domain expertise",
+    "task": "Score `binary-reverse-methodology` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "disassembly",
+      "decompiler"
+    ],
+    "expected_tests": [
+      "tests/test_binary_reverse_methodology.py"
+    ],
+    "expected_evidence_terms": [
+      "static analysis",
+      "dynamic analysis",
+      "control flow",
+      "function boundary",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

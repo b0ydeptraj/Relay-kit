@@ -1,0 +1,69 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "advanced-python-engineering",
+  "role": "python-specialist",
+  "category": "engineering",
+  "core_competencies": [
+    {
+      "id": "engineering.async-discipline",
+      "label": "Declare async model and identify cancellation points.",
+      "evidence_terms": [
+        "asyncio",
+        "trio",
+        "cancellation"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.interop-safety",
+      "label": "Document ctypes/cffi signatures with original C headers.",
+      "evidence_terms": [
+        "ctypes",
+        "cffi",
+        "calling convention"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.error-hierarchy",
+      "label": "Define recoverable vs fatal exception hierarchy.",
+      "evidence_terms": [
+        "exception",
+        "recoverable",
+        "fatal"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.dependency-pins",
+      "label": "Pin all external dependency versions.",
+      "evidence_terms": [
+        "version",
+        "pin",
+        "requirements"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "engineering.mixed-async-sync",
+      "description": "Mixed async and sync I/O in the same call chain without explicit bridging."
+    },
+    {
+      "id": "engineering.floating-deps",
+      "description": "Floating dependency versions causing reproducibility failures."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.889290+00:00"
+}

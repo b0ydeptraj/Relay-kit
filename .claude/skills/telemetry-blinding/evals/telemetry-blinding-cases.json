@@ -1,0 +1,58 @@
+[
+  {
+    "id": "telemetry-blinding-battle-read-first",
+    "skill": "telemetry-blinding",
+    "repo_profile": "Relay-kit offensive tool pack with telemetry-blinding skill",
+    "task": "blind or suppress host telemetry including ETW, Sysmon, AMSI, and Windows event logging. Use `telemetry-blinding` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "etw_patch",
+      "amsi_bypass"
+    ],
+    "expected_tests": [
+      "tests/test_telemetry_blinding.py"
+    ],
+    "expected_evidence_terms": [
+      "ETW provider",
+      "Sysmon filter",
+      "AMSI patch",
+      "event log"
+    ],
+    "bad_answer_traps": [
+      "incomplete provider list",
+      "detectable patch",
+      "no verification"
+    ]
+  },
+  {
+    "id": "telemetry-blinding-deep-weakness-trap",
+    "skill": "telemetry-blinding",
+    "repo_profile": "deep relay suite fixture with telemetry-blinding domain expertise",
+    "task": "Score `telemetry-blinding` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "etw_patch",
+      "amsi_bypass"
+    ],
+    "expected_tests": [
+      "tests/test_telemetry_blinding.py"
+    ],
+    "expected_evidence_terms": [
+      "ETW provider",
+      "Sysmon filter",
+      "AMSI patch",
+      "event log",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

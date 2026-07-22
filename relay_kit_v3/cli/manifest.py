@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.bundle_manifest import verify_manifest_file, verify_trusted_manifest_file, write_manifest, write_trust_stamp
 
 def run_manifest(args: argparse.Namespace) -> int:
     if args.action == "write":

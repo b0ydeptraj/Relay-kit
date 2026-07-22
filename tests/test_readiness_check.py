@@ -7,6 +7,7 @@ from pathlib import Path
 
 import relay_kit_public_cli
 from relay_kit_v3 import readiness
+from relay_kit_v3.cli import readiness as readiness_cli
 from relay_kit_v3.generator import emit_core_skills
 from relay_kit_v3.runtime_locale import write_runtime_locale
 from relay_kit_v3.support_bundle import SCHEMA_VERSION as SUPPORT_SCHEMA_VERSION
@@ -527,7 +528,7 @@ def test_public_cli_readiness_check_json(monkeypatch, capsys) -> None:
             "findings": [],
         }
 
-    monkeypatch.setattr(relay_kit_public_cli, "build_readiness_report", fake_report)
+    monkeypatch.setattr(readiness_cli, "build_readiness_report", fake_report)
 
     exit_code = relay_kit_public_cli.main(["readiness", "check", ".", "--profile", "enterprise", "--json"])
     payload = json.loads(capsys.readouterr().out)

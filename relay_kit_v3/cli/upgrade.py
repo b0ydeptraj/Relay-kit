@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.upgrade import build_upgrade_report, render_report, write_version_marker
 
 def run_upgrade(args: argparse.Namespace) -> int:
     if args.action in {"check", "plan"}:

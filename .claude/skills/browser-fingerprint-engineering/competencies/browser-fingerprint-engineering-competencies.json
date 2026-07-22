@@ -1,0 +1,59 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "browser-fingerprint-engineering",
+  "role": "fingerprint-engineer",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.fingerprint-consistency",
+      "label": "Ensure all fingerprint components are internally consistent.",
+      "evidence_terms": [
+        "canvas",
+        "WebGL",
+        "AudioContext",
+        "navigator"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.spoof-detection",
+      "label": "Verify spoofed fingerprints are not detectable as spoofed.",
+      "evidence_terms": [
+        "detection",
+        "consistency",
+        "entropy"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.behavioral-mimicry",
+      "label": "Mimic real user behavioral patterns.",
+      "evidence_terms": [
+        "mouse",
+        "keyboard",
+        "scroll",
+        "timing"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.inconsistent-fp",
+      "description": "Fingerprint components contradict each other."
+    },
+    {
+      "id": "evasion.detectable-spoof",
+      "description": "Spoofed values are detectable by integrity checks."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.934706+00:00"
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "frontend-crypto-reverse",
+  "role": "crypto-reverser",
+  "category": "reverse-engineering",
+  "core_competencies": [
+    {
+      "id": "reverse.deobfuscation",
+      "label": "Systematically deobfuscate JavaScript before analysis.",
+      "evidence_terms": [
+        "deobfuscate",
+        "AST",
+        "control flow"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.algorithm-id",
+      "label": "Identify cryptographic algorithm from implementation patterns.",
+      "evidence_terms": [
+        "algorithm",
+        "HMAC",
+        "AES",
+        "RSA"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.key-extraction",
+      "label": "Extract signing keys and rotation schedule.",
+      "evidence_terms": [
+        "key",
+        "rotation",
+        "extraction"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "reverse.assumed-algo",
+      "description": "Assuming crypto algorithm without evidence from code."
+    },
+    {
+      "id": "reverse.no-replay",
+      "description": "Not testing replayed requests to verify signing logic."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.001647+00:00"
+}

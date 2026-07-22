@@ -11,6 +11,8 @@ Preserve lane continuity with explicit artifacts so the next session can continu
 - a compact resume brief with explicit next step and open loops
 
 ## Typical tasks
+- Run auto continuity at session start/resume so existing checkpoints are rehydrated and missing checkpoints are created.
+- Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.
 - Run checkpoint before likely truncation, compaction, or session break.
 - Run rehydrate at the start of a new thread to restore objective, lane, blockers, and next step.
 - Run handoff when ownership moves across AI, thread, or operator.

@@ -860,7 +860,7 @@
       "a compact resume brief with explicit next step and open loops"
     ],
     "pass_rubric": [
-      "Use `relay-kit continuity` modes for deterministic continuity artifacts.",
+      "Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.",
       "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
       "workflow-router"
     ]

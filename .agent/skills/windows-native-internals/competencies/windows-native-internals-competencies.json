@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "windows-native-internals",
+  "role": "windows-internals-specialist",
+  "category": "engineering",
+  "core_competencies": [
+    {
+      "id": "engineering.struct-versioning",
+      "label": "Verify struct offsets against target OS build number.",
+      "evidence_terms": [
+        "PEB",
+        "offset",
+        "build number"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.fallback-path",
+      "label": "Provide fallback when undocumented API changes.",
+      "evidence_terms": [
+        "fallback",
+        "documented",
+        "alternative"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.version-gating",
+      "label": "Gate behavior on OS version/build number.",
+      "evidence_terms": [
+        "version",
+        "build",
+        "IsWindows10OrGreater"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "engineering.wrong-offset",
+      "description": "Using struct offset from wrong OS version."
+    },
+    {
+      "id": "engineering.no-fallback",
+      "description": "No fallback path for undocumented API."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.123597+00:00"
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "windows-native-internals-battle-read-first",
+    "skill": "windows-native-internals",
+    "repo_profile": "Relay-kit offensive tool pack with windows-native-internals skill",
+    "task": "work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and system information classes. Use `windows-native-internals` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "PEB",
+      "TEB",
+      "NtQuerySystemInformation"
+    ],
+    "expected_tests": [
+      "tests/test_windows_native_internals.py"
+    ],
+    "expected_evidence_terms": [
+      "PEB walk",
+      "TEB access",
+      "SYSTEM_INFORMATION_CLASS",
+      "kernel object"
+    ],
+    "bad_answer_traps": [
+      "wrong struct offset for OS version",
+      "undocumented API without fallback",
+      "no version check"
+    ]
+  },
+  {
+    "id": "windows-native-internals-deep-weakness-trap",
+    "skill": "windows-native-internals",
+    "repo_profile": "deep relay suite fixture with windows-native-internals domain expertise",
+    "task": "Score `windows-native-internals` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "PEB",
+      "TEB",
+      "NtQuerySystemInformation"
+    ],
+    "expected_tests": [
+      "tests/test_windows_native_internals.py"
+    ],
+    "expected_evidence_terms": [
+      "PEB walk",
+      "TEB access",
+      "SYSTEM_INFORMATION_CLASS",
+      "kernel object",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

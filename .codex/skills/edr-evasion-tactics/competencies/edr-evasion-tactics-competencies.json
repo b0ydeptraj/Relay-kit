@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "edr-evasion-tactics",
+  "role": "edr-evasion-specialist",
+  "category": "evasion",
+  "core_competencies": [
+    {
+      "id": "evasion.syscall-correctness",
+      "label": "Use correct syscall numbers for target OS version.",
+      "evidence_terms": [
+        "syscall",
+        "SSN",
+        "version"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.unhook-completeness",
+      "label": "Unhook all monitored APIs, not just common ones.",
+      "evidence_terms": [
+        "unhook",
+        "ntdll",
+        "IAT"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.etw-blinding",
+      "label": "Blind ETW without detectable patching artifacts.",
+      "evidence_terms": [
+        "ETW",
+        "patch",
+        "blind"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "evasion.wrong-ssn",
+      "description": "Using wrong syscall service number for the target OS build."
+    },
+    {
+      "id": "evasion.partial-unhook",
+      "description": "Unhooking only common APIs while leaving others monitored."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.972666+00:00"
+}

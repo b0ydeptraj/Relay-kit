@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "offensive-security-engagement",
+  "role": "engagement-gate",
+  "category": "offensive",
+  "core_competencies": [
+    {
+      "id": "offensive.authorization-gate",
+      "label": "Block all offensive work until engagement proof is cached.",
+      "evidence_terms": [
+        "authorization",
+        "engagement",
+        "proof"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.attack-mapping",
+      "label": "Map every offensive task to ATT&CK phase.",
+      "evidence_terms": [
+        "ATT&CK",
+        "phase",
+        "mapping"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.risk-annotation",
+      "label": "Annotate risk tier before specialist execution.",
+      "evidence_terms": [
+        "risk",
+        "tier",
+        "annotation"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "offensive.no-auth",
+      "description": "Proceeding with offensive techniques without engagement proof."
+    },
+    {
+      "id": "offensive.no-attack-map",
+      "description": "Skipping ATT&CK phase mapping."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.059507+00:00"
+}

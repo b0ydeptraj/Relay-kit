@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "mmo-onchain-security-audit",
+  "role": "onchain-auditor",
+  "category": "security",
+  "core_competencies": [
+    {
+      "id": "security.reentrancy-check",
+      "label": "Check for reentrancy vulnerabilities in all external calls.",
+      "evidence_terms": [
+        "reentrancy",
+        "external call",
+        "state change"
+      ],
+      "archetypes": [
+        "security"
+      ]
+    },
+    {
+      "id": "security.access-control",
+      "label": "Verify access control on all privileged functions.",
+      "evidence_terms": [
+        "onlyOwner",
+        "modifier",
+        "access"
+      ],
+      "archetypes": [
+        "security"
+      ]
+    },
+    {
+      "id": "security.gas-analysis",
+      "label": "Analyze gas costs and potential DoS through gas exhaustion.",
+      "evidence_terms": [
+        "gas",
+        "loop",
+        "DoS"
+      ],
+      "archetypes": [
+        "security"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "security.missed-reentrancy",
+      "description": "Missing reentrancy check on external call."
+    },
+    {
+      "id": "security.no-access-control",
+      "description": "Privileged function without access control modifier."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.034239+00:00"
+}

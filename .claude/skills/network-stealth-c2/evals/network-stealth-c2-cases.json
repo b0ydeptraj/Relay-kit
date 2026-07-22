@@ -1,0 +1,58 @@
+[
+  {
+    "id": "network-stealth-c2-battle-read-first",
+    "skill": "network-stealth-c2",
+    "repo_profile": "Relay-kit offensive tool pack with network-stealth-c2 skill",
+    "task": "build and operate C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline. Use `network-stealth-c2` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "beacon_config",
+      "redirector"
+    ],
+    "expected_tests": [
+      "tests/test_network_stealth_c2.py"
+    ],
+    "expected_evidence_terms": [
+      "domain fronting",
+      "traffic blending",
+      "jitter",
+      "redirector chain"
+    ],
+    "bad_answer_traps": [
+      "fixed beacon interval",
+      "no redirector",
+      "plaintext C2 channel"
+    ]
+  },
+  {
+    "id": "network-stealth-c2-deep-weakness-trap",
+    "skill": "network-stealth-c2",
+    "repo_profile": "deep relay suite fixture with network-stealth-c2 domain expertise",
+    "task": "Score `network-stealth-c2` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "beacon_config",
+      "redirector"
+    ],
+    "expected_tests": [
+      "tests/test_network_stealth_c2.py"
+    ],
+    "expected_evidence_terms": [
+      "domain fronting",
+      "traffic blending",
+      "jitter",
+      "redirector chain",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "desktop-imgui-development",
+  "role": "imgui-developer",
+  "category": "engineering",
+  "core_competencies": [
+    {
+      "id": "engineering.render-loop",
+      "label": "Implement non-blocking render loop with proper frame timing.",
+      "evidence_terms": [
+        "frame",
+        "vsync",
+        "delta time"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.overlay-transparency",
+      "label": "Configure transparent overlay with click-through.",
+      "evidence_terms": [
+        "overlay",
+        "transparent",
+        "passthrough"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.imgui-state",
+      "label": "Manage ImGui widget state and ID stack correctly.",
+      "evidence_terms": [
+        "ID",
+        "PushID",
+        "state"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "engineering.blocking-render",
+      "description": "Blocking the render loop with synchronous operations."
+    },
+    {
+      "id": "engineering.no-cleanup",
+      "description": "Missing ImGui/backend cleanup on shutdown."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:14.950451+00:00"
+}

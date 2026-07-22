@@ -1,0 +1,60 @@
+[
+  {
+    "id": "cpp-systems-engineering-battle-read-first",
+    "skill": "cpp-systems-engineering",
+    "repo_profile": "Relay-kit offensive tool pack with cpp-systems-engineering skill",
+    "task": "implement systems-level C++ for kernel drivers, DLL injection, memory manipulation, and Win32/NT API integration. Use `cpp-systems-engineering` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "NtApi",
+      "HANDLE",
+      "DWORD"
+    ],
+    "expected_tests": [
+      "tests/test_cpp_systems_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "Win32 API",
+      "NT internals",
+      "memory layout",
+      "calling convention"
+    ],
+    "bad_answer_traps": [
+      "no error checking on API calls",
+      "memory leak",
+      "wrong calling convention"
+    ]
+  },
+  {
+    "id": "cpp-systems-engineering-deep-weakness-trap",
+    "skill": "cpp-systems-engineering",
+    "repo_profile": "deep relay suite fixture with cpp-systems-engineering domain expertise",
+    "task": "Score `cpp-systems-engineering` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "NtApi",
+      "HANDLE",
+      "DWORD"
+    ],
+    "expected_tests": [
+      "tests/test_cpp_systems_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "Win32 API",
+      "NT internals",
+      "memory layout",
+      "calling convention",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

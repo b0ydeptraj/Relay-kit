@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.pulse import build_pulse_report, write_pulse_report
 
 def run_pulse(args: argparse.Namespace) -> int:
     if args.action != "build":

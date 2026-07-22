@@ -1,0 +1,62 @@
+[
+  {
+    "id": "advanced-python-engineering-battle-read-first",
+    "skill": "advanced-python-engineering",
+    "repo_profile": "Relay-kit offensive tool pack with advanced-python-engineering skill",
+    "task": "implement advanced Python patterns including async I/O, ctypes/cffi interop, metaprogramming, and C extension modules. Use `advanced-python-engineering` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "asyncio",
+      "ctypes",
+      "cffi"
+    ],
+    "expected_tests": [
+      "tests/test_advanced_python_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "async model",
+      "ctypes signature",
+      "error hierarchy",
+      "version pin"
+    ],
+    "bad_answer_traps": [
+      "no version pin",
+      "mixed async/sync",
+      "missing C header doc"
+    ]
+  },
+  {
+    "id": "advanced-python-engineering-deep-weakness-trap",
+    "skill": "advanced-python-engineering",
+    "repo_profile": "deep relay suite fixture with advanced-python-engineering domain expertise",
+    "task": "Score `advanced-python-engineering` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "asyncio",
+      "ctypes",
+      "cffi"
+    ],
+    "expected_tests": [
+      "tests/test_advanced_python_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "async model",
+      "ctypes signature",
+      "error hierarchy",
+      "version pin",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 from relay_kit_v3.cli.utils import _run_script_main
+from relay_kit_v3.release_lane import build_release_lane_report, render_release_lane_report, write_release_lane_report
 
 
 def run_release(args: argparse.Namespace) -> int:

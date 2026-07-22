@@ -1,10 +1,20 @@
 import argparse
 import json
 from relay_kit_v3.signal_calibration import (
-    build_signal_calibration_report,
-    render_signal_calibration_report,
-    write_signal_calibration_report,
+    build_report as build_signal_calibration_report,
+    render_report as render_signal_calibration_report,
+    write_report as write_signal_calibration_report,
 )
+
+def run_calibrate(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "claims":
+        return run_calibrate_claims(args)
+    if action == "skill":
+        return run_calibrate_skill(args)
+    if action == "readiness":
+        return run_calibrate_readiness(args)
+    return 2
 
 def run_calibrate_claims(args: argparse.Namespace) -> int:
     report = build_signal_calibration_report(

@@ -2,6 +2,11 @@ import argparse
 import json
 from relay_kit_v3.intent_enhancer import build_prompt_enhancement, render_prompt_enhancement, write_prompt_enhancement
 
+def run_prompt(args: argparse.Namespace) -> int:
+    if getattr(args, "action", None) == "enhance":
+        return run_prompt_enhance(args)
+    return 2
+
 def run_prompt_enhance(args: argparse.Namespace) -> int:
     report = build_prompt_enhancement(
         args.project_path,

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "protocol-fingerprint-spoofing-battle-read-first",
+    "skill": "protocol-fingerprint-spoofing",
+    "repo_profile": "Relay-kit offensive tool pack with protocol-fingerprint-spoofing skill",
+    "task": "spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4/HTTP2 fingerprinting. Use `protocol-fingerprint-spoofing` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ja3_hash",
+      "tls_config"
+    ],
+    "expected_tests": [
+      "tests/test_protocol_fingerprint_spoofing.py"
+    ],
+    "expected_evidence_terms": [
+      "JA3 fingerprint",
+      "JA4",
+      "cipher suite order",
+      "HTTP/2 settings"
+    ],
+    "bad_answer_traps": [
+      "cipher order mismatch",
+      "missing extensions",
+      "inconsistent HTTP/2 frames"
+    ]
+  },
+  {
+    "id": "protocol-fingerprint-spoofing-deep-weakness-trap",
+    "skill": "protocol-fingerprint-spoofing",
+    "repo_profile": "deep relay suite fixture with protocol-fingerprint-spoofing domain expertise",
+    "task": "Score `protocol-fingerprint-spoofing` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ja3_hash",
+      "tls_config"
+    ],
+    "expected_tests": [
+      "tests/test_protocol_fingerprint_spoofing.py"
+    ],
+    "expected_evidence_terms": [
+      "JA3 fingerprint",
+      "JA4",
+      "cipher suite order",
+      "HTTP/2 settings",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  }
+]

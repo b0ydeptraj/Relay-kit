@@ -1,11 +1,13 @@
-﻿usage: relay-kit continuity [-h]
-                            {checkpoint,rehydrate,handoff,diff-since-last} ...
+usage: relay-kit continuity [-h]
+                            {checkpoint,auto,rehydrate,handoff,diff-since-last}
+                            ...
 
 Preserve and restore Relay-kit continuity across long chats and sessions.
 
 positional arguments:
-  {checkpoint,rehydrate,handoff,diff-since-last}
+  {checkpoint,auto,rehydrate,handoff,diff-since-last}
     checkpoint          Capture continuity snapshot
+    auto                Apply continuity policy for session lifecycle
     rehydrate           Rehydrate context from last checkpoint
     handoff             Create handoff pack from latest manifest
     diff-since-last     Diff tracked continuity files since last checkpoint

@@ -11,8 +11,13 @@ def _load_schema() -> dict:
 
 def _apply_schema_to_parser(parser: argparse.ArgumentParser, schema: dict, dest_name: str = "action"):
     args_schema = schema.get("args", {})
+    remainder_args: list[tuple[str, dict]] = []
     for arg_name, arg_config in args_schema.items():
         kwargs = dict(arg_config)
+        if kwargs.get("nargs") == "REMAINDER":
+            kwargs["nargs"] = argparse.REMAINDER
+            remainder_args.append((arg_name, kwargs))
+            continue
         parser.add_argument(arg_name, **kwargs)
         
     flags_schema = schema.get("flags", {})
@@ -22,7 +27,14 @@ def _apply_schema_to_parser(parser: argparse.ArgumentParser, schema: dict, dest_
             kwargs["type"] = int
         elif kwargs.get("type") == "float":
             kwargs["type"] = float
+        if kwargs.get("nargs") == "REMAINDER":
+            kwargs["nargs"] = argparse.REMAINDER
         parser.add_argument(flag_name, **kwargs)
+
+    # REMAINDER positionals must be registered after flags so options such as
+    # `--json -- <command...>` are parsed by Relay-kit before command capture.
+    for arg_name, kwargs in remainder_args:
+        parser.add_argument(arg_name, **kwargs)
         
     if "subcommands" in schema:
         subparsers = parser.add_subparsers(dest=dest_name, required=True)
@@ -54,8 +66,24 @@ def dispatch(command_name: str, argv: list[str]) -> int:
     if not cmd_schema:
         raise ValueError(f"Command '{command_name}' not found in schema.")
         
-    parser = build_parser(command_name, schema)
-    parsed_args = parser.parse_args(argv)
+    command_tail: list[str] | None = None
+    parse_argv = argv
+    if command_name == "shell" and argv[:1] == ["compact"] and "--" in argv:
+        separator_index = argv.index("--")
+        command_tail = argv[separator_index + 1 :]
+        parse_argv = argv[:separator_index]
+        shell_parser = argparse.ArgumentParser(prog="relay-kit shell compact")
+        shell_parser.add_argument("action")
+        shell_parser.add_argument("project_path", nargs="?", default=".")
+        shell_parser.add_argument("--cwd", default=None)
+        shell_parser.add_argument("--timeout", default=None)
+        shell_parser.add_argument("--strict", action="store_true")
+        shell_parser.add_argument("--json", action="store_true")
+        parsed_args = shell_parser.parse_args(parse_argv)
+        setattr(parsed_args, "command", command_tail)
+    else:
+        parser = build_parser(command_name, schema)
+        parsed_args = parser.parse_args(parse_argv)
     
     # Traverse to find the deepest handler
     current_schema = cmd_schema

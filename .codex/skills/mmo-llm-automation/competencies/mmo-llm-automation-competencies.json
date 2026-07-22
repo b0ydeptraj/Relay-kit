@@ -1,0 +1,57 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "mmo-llm-automation",
+  "role": "llm-automation-specialist",
+  "category": "automation",
+  "core_competencies": [
+    {
+      "id": "automation.prompt-diversity",
+      "label": "Generate diverse prompts to avoid pattern detection.",
+      "evidence_terms": [
+        "prompt",
+        "diversity",
+        "template"
+      ],
+      "archetypes": [
+        "automation"
+      ]
+    },
+    {
+      "id": "automation.rate-discipline",
+      "label": "Respect API rate limits and implement backoff.",
+      "evidence_terms": [
+        "rate",
+        "limit",
+        "backoff"
+      ],
+      "archetypes": [
+        "automation"
+      ]
+    },
+    {
+      "id": "automation.output-variance",
+      "label": "Ensure output variance across generated content.",
+      "evidence_terms": [
+        "variance",
+        "unique",
+        "fingerprint"
+      ],
+      "archetypes": [
+        "automation"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "automation.identical-output",
+      "description": "Producing identical content across multiple accounts."
+    },
+    {
+      "id": "automation.no-rate-limit",
+      "description": "Ignoring API rate limits."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T09:54:15.020141+00:00"
+}

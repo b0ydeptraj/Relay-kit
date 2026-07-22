@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.policy_packs import POLICY_PACKS
 
 def run_policy(args: argparse.Namespace) -> int:
     if args.action == "list":

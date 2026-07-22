@@ -3,6 +3,7 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.readiness import build_readiness_report, render_readiness_report
 
 def run_readiness(args: argparse.Namespace) -> int:
     if args.action != "check":

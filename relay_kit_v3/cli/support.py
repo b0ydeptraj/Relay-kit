@@ -3,6 +3,14 @@ import sys
 import json
 from pathlib import Path
 
+from relay_kit_v3.support_bundle import build_support_bundle, write_support_bundle
+from relay_kit_v3.support_request import build_support_request, render_support_request, write_support_request
+from relay_kit_v3.support_triage import (
+    build_support_soak_report,
+    build_support_triage,
+    render_support_soak_report,
+    render_support_triage,
+)
 
 def run_support(args: argparse.Namespace) -> int:
     if args.action == "bundle":
