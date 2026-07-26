@@ -212,6 +212,11 @@ def test_public_cli_commercial_dossier_json_and_strict(monkeypatch, tmp_path: Pa
 
     monkeypatch.setattr(relay_kit_public_cli, "build_commercial_dossier", fake_build)
     monkeypatch.setattr(relay_kit_public_cli, "write_commercial_dossier", fake_write)
+    # The CLI dispatches "commercial dossier" through relay_kit_v3.cli.commercial,
+    # which binds its own reference to these functions at import time. Patch that
+    # namespace too, otherwise the real (multi-minute) readiness pipeline runs.
+    monkeypatch.setattr("relay_kit_v3.cli.commercial.build_commercial_dossier", fake_build)
+    monkeypatch.setattr("relay_kit_v3.cli.commercial.write_commercial_dossier", fake_write)
 
     exit_code = relay_kit_public_cli.main(
         [
