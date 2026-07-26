@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with advanced-python-engineering domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py, relay_kit_public_cli.py
-- Symbols or named surfaces to confirm: asyncio, ctypes, cffi
-- Evidence terms that should appear in a strong answer: async model, ctypes signature, error hierarchy, version pin
+- Symbols or named surfaces to confirm: asyncio, ctypes, cffi, MetaClass
+- Evidence terms that should appear in a strong answer: async model, ctypes signature, error hierarchy, version pin, event loop
 
 ## Working Loop
 

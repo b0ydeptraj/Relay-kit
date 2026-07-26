@@ -1,8 +1,8 @@
 # attack-chain-orchestration Battle-Calibrated Output
 
-Request: orchestrate multi-phase attack chains following ATT&CK framework ordering with OPSEC discipline
+Request: orchestrate multi-phase authorized attack chains following ATT&CK framework with OPSEC discipline
 
-Recommended skill: `attack-chain-orchestration` because the request matches `attack-orchestrator` work and has concrete repo anchors.
+Recommended skill: `attack-chain-orchestration` because the request matches `attack-chain-planner` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `phase transition` remains unverified until the focused gate or benchmark hit is captured.
+- `engagement proof` remains unverified until the focused gate or benchmark hit is captured.

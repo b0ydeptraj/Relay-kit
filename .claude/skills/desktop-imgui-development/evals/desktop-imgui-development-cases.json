@@ -2,7 +2,7 @@
   {
     "id": "desktop-imgui-development-battle-read-first",
     "skill": "desktop-imgui-development",
-    "repo_profile": "Relay-kit offensive tool pack with desktop-imgui-development skill",
+    "repo_profile": "Relay-kit offensive tool pack with desktop-imgui-development domain expertise",
     "task": "build desktop overlay and tool UIs using Dear ImGui with DirectX/OpenGL backends. Use `desktop-imgui-development` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
@@ -10,7 +10,8 @@
     "expected_symbols": [
       "ImGui",
       "ImVec2",
-      "ImGuiWindowFlags"
+      "ImGuiWindowFlags",
+      "ImDrawList"
     ],
     "expected_tests": [
       "tests/test_desktop_imgui_development.py"
@@ -19,7 +20,8 @@
       "render loop",
       "overlay",
       "input handling",
-      "widget layout"
+      "widget layout",
+      "ImDrawList"
     ],
     "bad_answer_traps": [
       "blocking render loop",
@@ -38,7 +40,8 @@
     "expected_symbols": [
       "ImGui",
       "ImVec2",
-      "ImGuiWindowFlags"
+      "ImGuiWindowFlags",
+      "ImDrawList"
     ],
     "expected_tests": [
       "tests/test_desktop_imgui_development.py"
@@ -47,7 +50,6 @@
       "render loop",
       "overlay",
       "input handling",
-      "widget layout",
       "residual risk",
       "weak evidence"
     ],
@@ -55,6 +57,34 @@
       "looks like",
       "usual checklist",
       "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "desktop-imgui-development-public-repo-benchmark-anchor",
+    "skill": "desktop-imgui-development",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `desktop-imgui-development` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ImGui",
+      "ImVec2"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_imgui_development.py"
+    ],
+    "expected_evidence_terms": [
+      "render loop",
+      "overlay",
+      "input handling",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

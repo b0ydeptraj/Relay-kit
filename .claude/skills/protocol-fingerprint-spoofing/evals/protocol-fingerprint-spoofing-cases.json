@@ -2,14 +2,16 @@
   {
     "id": "protocol-fingerprint-spoofing-battle-read-first",
     "skill": "protocol-fingerprint-spoofing",
-    "repo_profile": "Relay-kit offensive tool pack with protocol-fingerprint-spoofing skill",
-    "task": "spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4/HTTP2 fingerprinting. Use `protocol-fingerprint-spoofing` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with protocol-fingerprint-spoofing domain expertise",
+    "task": "spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4 fingerprinting. Use `protocol-fingerprint-spoofing` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "ja3_hash",
-      "tls_config"
+      "tls_config",
+      "cipher_suite",
+      "http2_settings"
     ],
     "expected_tests": [
       "tests/test_protocol_fingerprint_spoofing.py"
@@ -18,7 +20,8 @@
       "JA3 fingerprint",
       "JA4",
       "cipher suite order",
-      "HTTP/2 settings"
+      "HTTP/2 settings",
+      "TLS extension order"
     ],
     "bad_answer_traps": [
       "cipher order mismatch",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "ja3_hash",
+      "tls_config",
+      "cipher_suite",
+      "http2_settings"
+    ],
+    "expected_tests": [
+      "tests/test_protocol_fingerprint_spoofing.py"
+    ],
+    "expected_evidence_terms": [
+      "JA3 fingerprint",
+      "JA4",
+      "cipher suite order",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "protocol-fingerprint-spoofing-public-repo-benchmark-anchor",
+    "skill": "protocol-fingerprint-spoofing",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `protocol-fingerprint-spoofing` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "ja3_hash",
       "tls_config"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "JA3 fingerprint",
       "JA4",
       "cipher suite order",
-      "HTTP/2 settings",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

@@ -1,6 +1,6 @@
 # network-stealth-c2 Weak Output Anti-Example
 
-Request: build and operate C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline
+Request: build C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline
 
 Weak answer:
 

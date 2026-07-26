@@ -1,0 +1,28 @@
+{
+  "name": "Nocturne Ops",
+  "domain": "Security / red-team / terminal",
+  "mode": "dark",
+  "font": {
+    "display": "JetBrains Mono",
+    "sans": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "radius": 5,
+    "radiusSm": 4
+  },
+  "surfaceStyle": "flat",
+  "accentStyle": "solid",
+  "labelStyle": "mono",
+  "color": {
+    "bg": "#0B0B0C",
+    "surface": "#161617",
+    "surface2": "#1E1E20",
+    "ink": "#E8E6E1",
+    "muted": "#8A8880",
+    "line": "#2A2A2C",
+    "primary": "#A3E635",
+    "accent2": "#EF4444",
+    "onPrimary": "#0B0B0C"
+  }
+}

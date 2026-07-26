@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "brainstorm",
+  "role": "specialist",
+  "category": "ideation",
+  "core_competencies": [
+    {
+      "id": "ideation.problem-framing",
+      "label": "Frame the core problem before generating solutions.",
+      "evidence_terms": [
+        "problem",
+        "framing",
+        "user"
+      ],
+      "archetypes": [
+        "ideation"
+      ]
+    },
+    {
+      "id": "ideation.segment-definition",
+      "label": "Define target user segment and their jobs-to-be-done.",
+      "evidence_terms": [
+        "segment",
+        "user",
+        "jobs-to-be-done"
+      ],
+      "archetypes": [
+        "ideation"
+      ]
+    },
+    {
+      "id": "ideation.opportunity-sizing",
+      "label": "Estimate opportunity size before committing to direction.",
+      "evidence_terms": [
+        "opportunity",
+        "size",
+        "priority"
+      ],
+      "archetypes": [
+        "ideation"
+      ]
+    },
+    {
+      "id": "ideation.assumption-listing",
+      "label": "List key assumptions that could invalidate the idea.",
+      "evidence_terms": [
+        "assumption",
+        "risk",
+        "unknown"
+      ],
+      "archetypes": [
+        "ideation"
+      ]
+    },
+    {
+      "id": "ideation.direction-choice",
+      "label": "End with a clear direction or stop decision.",
+      "evidence_terms": [
+        "direction",
+        "stop",
+        "decision"
+      ],
+      "archetypes": [
+        "ideation"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "ideation.feature-list",
+      "description": "Generating a giant feature wish list instead of bounded direction."
+    },
+    {
+      "id": "ideation.no-user-segment",
+      "description": "Missing target user segment in the output."
+    },
+    {
+      "id": "ideation.premature-plan",
+      "description": "Jumping to planning before direction is validated."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.071152+00:00"
+}

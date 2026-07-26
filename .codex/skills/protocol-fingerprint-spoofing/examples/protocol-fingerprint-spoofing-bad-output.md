@@ -1,6 +1,6 @@
 # protocol-fingerprint-spoofing Weak Output Anti-Example
 
-Request: spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4/HTTP2 fingerprinting
+Request: spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4 fingerprinting
 
 Weak answer:
 

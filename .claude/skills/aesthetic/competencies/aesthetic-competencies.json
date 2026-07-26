@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "aesthetic",
+  "role": "aesthetic-review",
+  "category": "frontend-quality",
+  "core_competencies": [
+    {
+      "id": "frontend-quality.reference-driven",
+      "label": "Source real references and compare against them before judging quality.",
+      "evidence_terms": [
+        "reference",
+        "screenshot",
+        "comparison"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-quality.type-space-rhythm",
+      "label": "Check type hierarchy, spacing scale, and vertical rhythm.",
+      "evidence_terms": [
+        "type hierarchy",
+        "spacing scale",
+        "rhythm"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-quality.color-contrast",
+      "label": "Verify palette, contrast, and token consistency.",
+      "evidence_terms": [
+        "contrast",
+        "palette",
+        "token"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-quality.distinctiveness",
+      "label": "Detect and remove generic AI-default aesthetics.",
+      "evidence_terms": [
+        "generic",
+        "distinctive",
+        "default"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-quality.visual-proof",
+      "label": "Tie the verdict to a screenshot or visual-regression surface.",
+      "evidence_terms": [
+        "visual regression",
+        "screenshot",
+        "before after"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "frontend-quality.pretty-claim-no-reference",
+      "description": "Claims quality without a reference comparison."
+    },
+    {
+      "id": "frontend-quality.contrast-claim-no-check",
+      "description": "Claims accessible color without a contrast check."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

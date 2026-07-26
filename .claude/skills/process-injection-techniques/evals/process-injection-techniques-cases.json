@@ -2,14 +2,16 @@
   {
     "id": "process-injection-techniques-battle-read-first",
     "skill": "process-injection-techniques",
-    "repo_profile": "Relay-kit offensive tool pack with process-injection-techniques skill",
-    "task": "implement process injection techniques including DLL injection, process hollowing, APC injection, and thread hijacking. Use `process-injection-techniques` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with process-injection-techniques domain expertise",
+    "task": "implement process injection including DLL injection, process hollowing, APC injection, and thread hijacking. Use `process-injection-techniques` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "inject_dll",
-      "hollow_process"
+      "hollow_process",
+      "apc_inject",
+      "thread_hijack"
     ],
     "expected_tests": [
       "tests/test_process_injection_techniques.py"
@@ -18,7 +20,8 @@
       "DLL injection",
       "process hollowing",
       "APC queue",
-      "thread context"
+      "thread context",
+      "reflective loading"
     ],
     "bad_answer_traps": [
       "wrong process architecture",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "inject_dll",
+      "hollow_process",
+      "apc_inject",
+      "thread_hijack"
+    ],
+    "expected_tests": [
+      "tests/test_process_injection_techniques.py"
+    ],
+    "expected_evidence_terms": [
+      "DLL injection",
+      "process hollowing",
+      "APC queue",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "process-injection-techniques-public-repo-benchmark-anchor",
+    "skill": "process-injection-techniques",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `process-injection-techniques` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "inject_dll",
       "hollow_process"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "DLL injection",
       "process hollowing",
       "APC queue",
-      "thread context",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

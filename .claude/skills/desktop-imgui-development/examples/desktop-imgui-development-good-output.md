@@ -2,7 +2,7 @@
 
 Request: build desktop overlay and tool UIs using Dear ImGui with DirectX/OpenGL backends
 
-Recommended skill: `desktop-imgui-development` because the request matches `imgui-developer` work and has concrete repo anchors.
+Recommended skill: `desktop-imgui-development` because the request matches `imgui-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `widget layout` remains unverified until the focused gate or benchmark hit is captured.
+- `ImDrawList` remains unverified until the focused gate or benchmark hit is captured.

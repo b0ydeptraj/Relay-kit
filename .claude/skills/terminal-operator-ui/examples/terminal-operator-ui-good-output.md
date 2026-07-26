@@ -1,8 +1,8 @@
 # terminal-operator-ui Battle-Calibrated Output
 
-Request: build terminal-based operator UIs using curses, Rich, Textual, or similar TUI frameworks
+Request: build terminal-based operator UIs using Rich, Textual, or curses for automation dashboards and CLI tools
 
-Recommended skill: `terminal-operator-ui` because the request matches `tui-developer` work and has concrete repo anchors.
+Recommended skill: `terminal-operator-ui` because the request matches `tui-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `responsive layout` remains unverified until the focused gate or benchmark hit is captured.
+- `Rich` remains unverified until the focused gate or benchmark hit is captured.

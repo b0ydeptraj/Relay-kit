@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+  :root{
+    --bg:#fff;--surface:#fff;--surface2:#f4f4f5;--ink:#18181b;--muted:#71717a;--line:#e4e4e7;
+    --primary:#059669;--onPrimary:#fff;--accent2:#059669;--ring:rgba(0,0,0,.06);
+    --radius:14px;--radiusSm:9px;--gap:13px;--pad:18px;
+    --fontD:'Inter';--fontS:'Inter';--fontM:'JetBrains Mono';
+  }
+  *{box-sizing:border-box;margin:0}
+  body{width:640px;height:600px;background:var(--bg);color:var(--ink);font-family:var(--fontS),system-ui,sans-serif;padding:22px;overflow:hidden}
+  .top{display:flex;align-items:center;gap:11px;margin-bottom:18px}
+  .logo{width:36px;height:36px;border-radius:var(--radiusSm);background:var(--primary);display:grid;place-items:center;flex:none}
+  body[data-accent="gradient"] .logo{background:linear-gradient(135deg,var(--primary),var(--accent2))}
+  .logo svg{width:22px;height:22px}
+  .title{font-family:var(--fontD),serif;font-weight:600;font-size:20px;letter-spacing:-.01em}
+  body[data-label="mono"] .title{font-family:var(--fontM),monospace;font-weight:500;letter-spacing:0}
+  .top .act{margin-left:auto;padding:8px 15px;border-radius:var(--radiusSm);background:var(--primary);color:var(--onPrimary);font-size:13px;font-weight:600}
+  body[data-accent="gradient"] .top .act{background:linear-gradient(135deg,var(--primary),var(--accent2))}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--primary)}
+  h1{font-family:var(--fontD),serif;font-weight:600;font-size:27px;letter-spacing:-.02em;margin:5px 0 3px}
+  body[data-label="mono"] h1{font-family:var(--fontM),monospace;font-weight:600;letter-spacing:-.01em;font-size:24px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+  .stats{display:flex;gap:var(--gap);margin-bottom:var(--gap)}
+  .stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px var(--pad)}
+  body[data-surface="shadow"] .stat{border-color:transparent;box-shadow:0 1px 2px var(--ring),0 12px 26px -16px var(--ring)}
+  body[data-surface="flat"] .stat{border-color:transparent;background:var(--surface2)}
+  .stat .n{font-family:var(--fontD),serif;font-size:26px;color:var(--primary)}
+  body[data-label="mono"] .stat .n{font-family:var(--fontM),monospace}
+  .stat .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap)}
+  body[data-surface="shadow"] .card{border-color:transparent;box-shadow:0 1px 2px var(--ring),0 14px 30px -18px var(--ring)}
+  body[data-surface="flat"] .card{border-color:transparent;background:var(--surface2)}
+  .k{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .k .n{font-weight:650;font-size:14px}
+  body[data-label="mono"] .k .n{font-family:var(--fontM),monospace;font-weight:500;font-size:13px}
+  .pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--surface2);color:var(--primary)}
+  body[data-accent="gradient"] .pill{background:linear-gradient(135deg,var(--primary),var(--accent2));color:var(--onPrimary)}
+  .bar{height:8px;background:var(--surface2);border-radius:999px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--primary);border-radius:999px}
+  body[data-accent="gradient"] .bar i{background:linear-gradient(90deg,var(--primary),var(--accent2))}
+  .meta{font-size:12px;color:var(--muted);margin-top:8px}
+  .list .row{display:flex;align-items:center;gap:11px;padding:9px 0;border-top:1px solid var(--line)}
+  .list .row:first-child{border-top:none}
+  .dot{width:9px;height:9px;border-radius:3px;background:var(--primary);flex:none}
+  .row .n{font-size:13.5px;font-weight:500}
+  body[data-label="mono"] .row .n{font-family:var(--fontM),monospace;font-size:12.5px}
+  .row .t{margin-left:auto;font-size:11px;color:var(--muted);font-family:var(--fontM),monospace}
+  .chart{display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:12px}
+  .chart b{flex:1;background:var(--primary);border-radius:4px 4px 0 0;opacity:.85}
+  body[data-accent="gradient"] .chart b{background:linear-gradient(var(--accent2),var(--primary))}
+</style></head><body>
+  <div class="top">
+    <div class="logo"><svg viewBox="0 0 100 100"><circle cx="29" cy="50" r="8" fill="#fff"/><path d="M44 31 L63 50 L44 69" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M62 31 L81 50 L62 69" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg></div>
+    <div class="title" id="appname">Appname</div>
+    <div class="act">New</div>
+  </div>
+  <div class="eyebrow" id="eyebrow">Overview</div>
+  <h1 id="headline">Dashboard</h1>
+  <div class="sub" id="sub">A screen built from relay-kit tokens.</div>
+  <div class="stats">
+    <div class="stat"><div class="n">128</div><div class="l" id="s1">active</div></div>
+    <div class="stat"><div class="n">99%</div><div class="l" id="s2">healthy</div></div>
+    <div class="stat"><div class="n">24</div><div class="l" id="s3">queued</div></div>
+  </div>
+  <div class="card"><div class="k"><span class="n" id="cardn">Primary task</span><span class="pill" id="pill">running</span></div>
+    <div class="bar"><i style="width:64%"></i></div>
+    <div class="chart"><b style="height:40%"></b><b style="height:62%"></b><b style="height:50%"></b><b style="height:78%"></b><b style="height:66%"></b><b style="height:90%"></b><b style="height:72%"></b><b style="height:96%"></b></div>
+  </div>
+  <div class="card list">
+    <div class="row"><span class="dot"></span><span class="n" id="r1">item-one</span><span class="t">PASS</span></div>
+    <div class="row"><span class="dot" style="background:var(--muted)"></span><span class="n" id="r2">item-two</span><span class="t">HOLD</span></div>
+    <div class="row"><span class="dot"></span><span class="n" id="r3">item-three</span><span class="t">PASS</span></div>
+  </div>
+</body></html>

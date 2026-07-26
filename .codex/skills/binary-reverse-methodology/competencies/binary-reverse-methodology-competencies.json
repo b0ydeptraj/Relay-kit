@@ -39,6 +39,30 @@
       "archetypes": [
         "reverse-engineering"
       ]
+    },
+    {
+      "id": "reverse.anti-analysis",
+      "label": "Identify and neutralize anti-analysis techniques.",
+      "evidence_terms": [
+        "anti-debug",
+        "obfuscation",
+        "packing"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.protocol-reconstruction",
+      "label": "Reconstruct network protocol or data format from binary.",
+      "evidence_terms": [
+        "protocol",
+        "format",
+        "struct"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "reverse.guess-without-evidence",
       "description": "Guessing binary behavior without disassembly evidence."
+    },
+    {
+      "id": "reverse.ignore-anti-analysis",
+      "description": "Not checking for anti-analysis techniques before debugging."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.912072+00:00"
+  "generated_at": "2026-07-22T10:23:55.853018+00:00"
 }

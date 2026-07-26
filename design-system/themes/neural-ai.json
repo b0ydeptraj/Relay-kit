@@ -1,0 +1,28 @@
+{
+  "name": "Neural AI",
+  "domain": "AI / ML platform",
+  "mode": "dark",
+  "font": {
+    "display": "Sora",
+    "sans": "JetBrains Mono",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "radius": 13,
+    "radiusSm": 10
+  },
+  "surfaceStyle": "shadow",
+  "accentStyle": "gradient",
+  "labelStyle": "mono",
+  "color": {
+    "bg": "#0A0B10",
+    "surface": "#12141C",
+    "surface2": "#191C27",
+    "ink": "#E9ECF5",
+    "muted": "#8188A0",
+    "line": "#242838",
+    "primary": "#A855F7",
+    "accent2": "#EC4899",
+    "onPrimary": "#0A0B10"
+  }
+}

@@ -39,6 +39,30 @@
       "archetypes": [
         "engineering"
       ]
+    },
+    {
+      "id": "engineering.handle-inheritance",
+      "label": "Understand handle inheritance and duplication semantics.",
+      "evidence_terms": [
+        "handle",
+        "inheritance",
+        "DuplicateHandle"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.wow64-awareness",
+      "label": "Account for WoW64 differences in 32-bit on 64-bit Windows.",
+      "evidence_terms": [
+        "WoW64",
+        "32-bit",
+        "64-bit"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "engineering.no-fallback",
       "description": "No fallback path for undocumented API."
+    },
+    {
+      "id": "engineering.wow64-blind",
+      "description": "Ignoring WoW64 differences when targeting both architectures."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.123597+00:00"
+  "generated_at": "2026-07-22T10:23:57.056043+00:00"
 }

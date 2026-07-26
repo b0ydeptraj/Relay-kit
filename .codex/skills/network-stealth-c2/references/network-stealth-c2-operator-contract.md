@@ -1,6 +1,6 @@
 # network-stealth-c2 Battle Contract
 
-Primary role: c2-engineer
+Primary role: c2-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with network-stealth-c2 domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: beacon_config, redirector
-- Evidence terms that should appear in a strong answer: domain fronting, traffic blending, jitter, redirector chain
+- Symbols or named surfaces to confirm: beacon_config, redirector, jitter, domain_fronting
+- Evidence terms that should appear in a strong answer: domain fronting, traffic blending, jitter, redirector chain, beacon discipline
 
 ## Working Loop
 

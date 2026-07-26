@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "attack-chain-orchestration",
-  "role": "attack-orchestrator",
+  "role": "attack-chain-planner",
   "category": "offensive",
   "core_competencies": [
     {
@@ -39,6 +39,30 @@
       "archetypes": [
         "offensive"
       ]
+    },
+    {
+      "id": "offensive.authorization-first",
+      "label": "Verify engagement proof before any offensive action.",
+      "evidence_terms": [
+        "authorization",
+        "proof",
+        "scope"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.cleanup-planning",
+      "label": "Plan cleanup and removal for each phase.",
+      "evidence_terms": [
+        "cleanup",
+        "removal",
+        "persistence"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "offensive.no-opsec-gate",
       "description": "No OPSEC validation between attack phases."
+    },
+    {
+      "id": "offensive.no-cleanup-plan",
+      "description": "No cleanup or removal plan for deployed artifacts."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.906476+00:00"
+  "generated_at": "2026-07-22T10:23:55.849269+00:00"
 }

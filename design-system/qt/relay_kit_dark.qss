@@ -1,0 +1,20 @@
+/* Relay-kit — Qt stylesheet (generated). Pair with relay_kit_theme.py */
+* { font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; color: #F2EBDD; }
+QMainWindow, QWidget { background: #15140F; }
+QFrame#Card, QGroupBox { background: #201E17; border: 1px solid #332C22; border-radius: 12px; }
+QLabel#H1 { font-family: "Fraunces", Georgia, serif; font-size: 32px; color: #F2EBDD; }
+QLabel#Eyebrow { color: #34D399; font-weight: 700; letter-spacing: 1px; }
+QLabel#Muted { color: #9C9284; }
+QPushButton { background: #201E17; border: 1px solid #332C22; border-radius: 8px; padding: 8px 16px; }
+QPushButton:hover { border-color: #34D399; color: #34D399; }
+QPushButton#Primary { background: #34D399; color: #08130D; border: none; font-weight: 600; }
+QPushButton#Primary:hover { background: #6EE7B7; }
+QLineEdit, QComboBox, QPlainTextEdit { background: #201E17; border: 1px solid #332C22; border-radius: 8px; padding: 8px 10px; selection-background-color: #0E241C; }
+QLineEdit:focus, QComboBox:focus { border: 1.5px solid #34D399; }
+QListWidget#Nav { background: #26231B; border: none; border-right: 1px solid #332C22; padding: 8px; }
+QListWidget#Nav::item { padding: 9px 12px; border-radius: 8px; color: #D6CDBB; }
+QListWidget#Nav::item:selected { background: #0E241C; color: #6EE7B7; }
+QProgressBar { background: #26231B; border: none; border-radius: 999px; height: 8px; text-align: center; }
+QProgressBar::chunk { background: #34D399; border-radius: 999px; }
+QHeaderView::section { background: #26231B; color: #9C9284; border: none; padding: 8px; }
+QStatusBar { background: #26231B; color: #9C9284; }

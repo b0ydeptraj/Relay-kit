@@ -1,4 +1,4 @@
-﻿---
+---
 name: review-pr
 description: Use when a branch or PR needs a deliberate review before merge or sign-off. Public Relay-kit entrypoint for branch and PR review.
 ---

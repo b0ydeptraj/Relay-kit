@@ -1,6 +1,6 @@
 # terminal-operator-ui Battle Contract
 
-Primary role: tui-developer
+Primary role: tui-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with terminal-operator-ui domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: App, Screen, Widget
-- Evidence terms that should appear in a strong answer: TUI framework, keybinding, live update, responsive layout
+- Symbols or named surfaces to confirm: App, Screen, Widget, rich_console
+- Evidence terms that should appear in a strong answer: TUI framework, keybinding, live update, responsive layout, Rich
 
 ## Working Loop
 

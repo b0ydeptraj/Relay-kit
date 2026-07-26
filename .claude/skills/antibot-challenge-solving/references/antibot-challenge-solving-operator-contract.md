@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with antibot-challenge-solving domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: challenge_solver, captcha
-- Evidence terms that should appear in a strong answer: challenge type, solver strategy, behavioral bypass, token extraction
+- Symbols or named surfaces to confirm: challenge_solver, captcha, turnstile, datadome
+- Evidence terms that should appear in a strong answer: challenge type, solver strategy, behavioral bypass, token extraction, fallback
 
 ## Working Loop
 

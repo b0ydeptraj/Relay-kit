@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with process-injection-techniques domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: inject_dll, hollow_process
-- Evidence terms that should appear in a strong answer: DLL injection, process hollowing, APC queue, thread context
+- Symbols or named surfaces to confirm: inject_dll, hollow_process, apc_inject, thread_hijack
+- Evidence terms that should appear in a strong answer: DLL injection, process hollowing, APC queue, thread context, reflective loading
 
 ## Working Loop
 

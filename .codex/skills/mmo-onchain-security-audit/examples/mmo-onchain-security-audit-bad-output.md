@@ -1,6 +1,6 @@
 # mmo-onchain-security-audit Weak Output Anti-Example
 
-Request: audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities before deployment
+Request: audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities
 
 Weak answer:
 

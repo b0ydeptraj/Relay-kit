@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "frontend-crypto-reverse",
-  "role": "crypto-reverser",
+  "role": "crypto-reverse-specialist",
   "category": "reverse-engineering",
   "core_competencies": [
     {
@@ -40,6 +40,30 @@
       "archetypes": [
         "reverse-engineering"
       ]
+    },
+    {
+      "id": "reverse.wasm-analysis",
+      "label": "Analyze WASM modules for crypto logic.",
+      "evidence_terms": [
+        "WASM",
+        "binary",
+        "module"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.replay-verification",
+      "label": "Verify signing logic by replaying captured requests.",
+      "evidence_terms": [
+        "replay",
+        "request",
+        "verify"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -50,9 +74,13 @@
     {
       "id": "reverse.no-replay",
       "description": "Not testing replayed requests to verify signing logic."
+    },
+    {
+      "id": "reverse.missed-key-rotation",
+      "description": "Not accounting for key rotation schedule."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.001647+00:00"
+  "generated_at": "2026-07-22T10:23:55.952485+00:00"
 }

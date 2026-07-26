@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 92" role="img" aria-label="relay-kit">
+  <defs><linearGradient id="e2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+  <rect x="6" y="10" width="72" height="72" rx="19" fill="url(#e2)"/>
+  <circle cx="27" cy="46" r="6" fill="#FBF4EC"/>
+  <path d="M39 31 L53 46 L39 61" fill="none" stroke="#FBF4EC" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M52 31 L66 46 L52 61" fill="none" stroke="#FBF4EC" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  <text x="98" y="59" font-family="'Inter',system-ui,sans-serif" font-size="42" font-weight="680" letter-spacing="-1.2" fill="#22201C">relay<tspan fill="#059669">·</tspan>kit</text>
+</svg>

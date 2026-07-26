@@ -1,6 +1,6 @@
 # offensive-security-engagement Battle-Calibrated Output
 
-Request: gate and provide context for offensive security lanes including engagement proof caching and ATT&CK mapping
+Request: gate offensive security lanes by verifying engagement proof and mapping ATT&CK phases
 
 Recommended skill: `offensive-security-engagement` because the request matches `engagement-gate` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `risk tier` remains unverified until the focused gate or benchmark hit is captured.
+- `lane mode` remains unverified until the focused gate or benchmark hit is captured.

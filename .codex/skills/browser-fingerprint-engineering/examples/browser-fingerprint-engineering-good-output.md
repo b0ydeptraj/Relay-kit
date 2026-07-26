@@ -2,7 +2,7 @@
 
 Request: engineer consistent browser fingerprints to defeat canvas, WebGL, AudioContext, and behavioral fingerprinting
 
-Recommended skill: `browser-fingerprint-engineering` because the request matches `fingerprint-engineer` work and has concrete repo anchors.
+Recommended skill: `browser-fingerprint-engineering` because the request matches `browser-fingerprint-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `font enumeration` remains unverified until the focused gate or benchmark hit is captured.
+- `navigator consistency` remains unverified until the focused gate or benchmark hit is captured.

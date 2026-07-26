@@ -1,0 +1,91 @@
+[
+  {
+    "id": "brainstorm-battle-read-first",
+    "skill": "brainstorm",
+    "repo_profile": "Relay-kit offensive tool pack with brainstorm domain expertise",
+    "task": "turn a rough idea into a clear direction before implementation begins. Use `brainstorm` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "brainstorm_hub",
+      "workflow_router",
+      "product_brief"
+    ],
+    "expected_tests": [
+      "tests/test_brainstorm.py"
+    ],
+    "expected_evidence_terms": [
+      "product brief",
+      "ideation",
+      "direction",
+      "opportunity",
+      "user segment"
+    ],
+    "bad_answer_traps": [
+      "giant feature list",
+      "no user segment",
+      "skip to planning"
+    ]
+  },
+  {
+    "id": "brainstorm-deep-weakness-trap",
+    "skill": "brainstorm",
+    "repo_profile": "deep relay suite fixture with brainstorm domain expertise",
+    "task": "Score `brainstorm` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "brainstorm_hub",
+      "workflow_router",
+      "product_brief"
+    ],
+    "expected_tests": [
+      "tests/test_brainstorm.py"
+    ],
+    "expected_evidence_terms": [
+      "product brief",
+      "ideation",
+      "direction",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "brainstorm-public-repo-benchmark-anchor",
+    "skill": "brainstorm",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `brainstorm` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "brainstorm_hub",
+      "workflow_router"
+    ],
+    "expected_tests": [
+      "tests/test_brainstorm.py"
+    ],
+    "expected_evidence_terms": [
+      "product brief",
+      "ideation",
+      "direction",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "name": "Relay Editorial",
+  "domain": "Dev-tool / relay-kit's own product",
+  "mode": "light",
+  "font": {
+    "display": "Fraunces",
+    "sans": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "radius": 16,
+    "radiusSm": 9
+  },
+  "surfaceStyle": "border",
+  "accentStyle": "solid",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#FAF6EF",
+    "surface": "#FFFFFF",
+    "surface2": "#F3ECDF",
+    "ink": "#22201C",
+    "muted": "#6E665A",
+    "line": "#E8DFCF",
+    "primary": "#059669",
+    "accent2": "#047857",
+    "onPrimary": "#FFFFFF"
+  }
+}

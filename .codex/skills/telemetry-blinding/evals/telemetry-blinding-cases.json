@@ -2,14 +2,16 @@
   {
     "id": "telemetry-blinding-battle-read-first",
     "skill": "telemetry-blinding",
-    "repo_profile": "Relay-kit offensive tool pack with telemetry-blinding skill",
-    "task": "blind or suppress host telemetry including ETW, Sysmon, AMSI, and Windows event logging. Use `telemetry-blinding` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with telemetry-blinding domain expertise",
+    "task": "suppress or blind host telemetry including ETW, Sysmon, AMSI, and Windows event logging. Use `telemetry-blinding` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "etw_patch",
-      "amsi_bypass"
+      "amsi_bypass",
+      "sysmon_filter",
+      "event_log"
     ],
     "expected_tests": [
       "tests/test_telemetry_blinding.py"
@@ -18,7 +20,8 @@
       "ETW provider",
       "Sysmon filter",
       "AMSI patch",
-      "event log"
+      "event log",
+      "telemetry suppression"
     ],
     "bad_answer_traps": [
       "incomplete provider list",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "etw_patch",
+      "amsi_bypass",
+      "sysmon_filter",
+      "event_log"
+    ],
+    "expected_tests": [
+      "tests/test_telemetry_blinding.py"
+    ],
+    "expected_evidence_terms": [
+      "ETW provider",
+      "Sysmon filter",
+      "AMSI patch",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "telemetry-blinding-public-repo-benchmark-anchor",
+    "skill": "telemetry-blinding",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `telemetry-blinding` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "etw_patch",
       "amsi_bypass"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "ETW provider",
       "Sysmon filter",
       "AMSI patch",
-      "event log",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

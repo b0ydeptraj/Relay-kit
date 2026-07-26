@@ -1,6 +1,6 @@
 # mmo-onchain-security-audit Battle-Calibrated Output
 
-Request: audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities before deployment
+Request: audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities
 
 Recommended skill: `mmo-onchain-security-audit` because the request matches `onchain-auditor` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `integer overflow` remains unverified until the focused gate or benchmark hit is captured.
+- `gas analysis` remains unverified until the focused gate or benchmark hit is captured.

@@ -1,0 +1,28 @@
+{
+  "name": "Cobalt Fintech",
+  "domain": "Finance / crypto dashboard",
+  "mode": "dark",
+  "font": {
+    "display": "Space Grotesk",
+    "sans": "Inter",
+    "mono": "Space Grotesk"
+  },
+  "shape": {
+    "radius": 12,
+    "radiusSm": 9
+  },
+  "surfaceStyle": "shadow",
+  "accentStyle": "gradient",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#0A1120",
+    "surface": "#111A2E",
+    "surface2": "#16223A",
+    "ink": "#E6EDF7",
+    "muted": "#7E8DA6",
+    "line": "#1E2C48",
+    "primary": "#22D3EE",
+    "accent2": "#6366F1",
+    "onPrimary": "#04121A"
+  }
+}

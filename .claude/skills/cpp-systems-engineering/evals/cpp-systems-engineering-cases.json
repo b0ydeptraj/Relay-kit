@@ -2,15 +2,16 @@
   {
     "id": "cpp-systems-engineering-battle-read-first",
     "skill": "cpp-systems-engineering",
-    "repo_profile": "Relay-kit offensive tool pack with cpp-systems-engineering skill",
-    "task": "implement systems-level C++ for kernel drivers, DLL injection, memory manipulation, and Win32/NT API integration. Use `cpp-systems-engineering` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with cpp-systems-engineering domain expertise",
+    "task": "implement systems-level C++ for Windows native APIs, memory management, and kernel-adjacent code. Use `cpp-systems-engineering` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "NtApi",
       "HANDLE",
-      "DWORD"
+      "DWORD",
+      "RAII"
     ],
     "expected_tests": [
       "tests/test_cpp_systems_engineering.py"
@@ -19,7 +20,8 @@
       "Win32 API",
       "NT internals",
       "memory layout",
-      "calling convention"
+      "calling convention",
+      "RAII"
     ],
     "bad_answer_traps": [
       "no error checking on API calls",
@@ -38,7 +40,8 @@
     "expected_symbols": [
       "NtApi",
       "HANDLE",
-      "DWORD"
+      "DWORD",
+      "RAII"
     ],
     "expected_tests": [
       "tests/test_cpp_systems_engineering.py"
@@ -47,7 +50,6 @@
       "Win32 API",
       "NT internals",
       "memory layout",
-      "calling convention",
       "residual risk",
       "weak evidence"
     ],
@@ -55,6 +57,34 @@
       "looks like",
       "usual checklist",
       "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "cpp-systems-engineering-public-repo-benchmark-anchor",
+    "skill": "cpp-systems-engineering",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `cpp-systems-engineering` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "NtApi",
+      "HANDLE"
+    ],
+    "expected_tests": [
+      "tests/test_cpp_systems_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "Win32 API",
+      "NT internals",
+      "memory layout",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

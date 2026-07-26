@@ -1,4 +1,4 @@
-﻿---
+---
 name: build-it
 description: Use when an approved story or tech spec is ready for implementation with controlled scope and evidence. Public Relay-kit entrypoint for building.
 ---

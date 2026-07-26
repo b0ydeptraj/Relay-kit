@@ -39,6 +39,30 @@
       "archetypes": [
         "evasion"
       ]
+    },
+    {
+      "id": "evasion.import-obfuscation",
+      "label": "Obfuscate import table to avoid API-based detection.",
+      "evidence_terms": [
+        "import",
+        "IAT",
+        "hash"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.string-encryption",
+      "label": "Encrypt or encode strings to avoid string-based detection.",
+      "evidence_terms": [
+        "string",
+        "encrypt",
+        "XOR"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "evasion.untested-payload",
       "description": "Deploying without AV/EDR testing."
+    },
+    {
+      "id": "evasion.clear-imports",
+      "description": "Leaving IAT intact exposing suspicious API calls."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.922624+00:00"
+  "generated_at": "2026-07-22T10:23:55.867985+00:00"
 }

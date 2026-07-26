@@ -24,3 +24,5 @@ venv/
 # OS junk
 .DS_Store
 Thumbs.db
+_upgrade/
+apply-relay-kit-upgrade.bat

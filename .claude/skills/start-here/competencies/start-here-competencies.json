@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "start-here",
+  "role": "specialist",
+  "category": "routing",
+  "core_competencies": [
+    {
+      "id": "routing.intent-classification",
+      "label": "Classify request intent before recommending a path.",
+      "evidence_terms": [
+        "intent",
+        "classify",
+        "complexity"
+      ],
+      "archetypes": [
+        "routing"
+      ]
+    },
+    {
+      "id": "routing.skill-recommendation",
+      "label": "Recommend a specific next skill with reasoning.",
+      "evidence_terms": [
+        "skill",
+        "recommend",
+        "reason"
+      ],
+      "archetypes": [
+        "routing"
+      ]
+    },
+    {
+      "id": "routing.state-check",
+      "label": "Read workflow-state before routing.",
+      "evidence_terms": [
+        "workflow-state",
+        "read",
+        "context"
+      ],
+      "archetypes": [
+        "routing"
+      ]
+    },
+    {
+      "id": "routing.artifact-naming",
+      "label": "Name the artifact the next skill should create or update.",
+      "evidence_terms": [
+        "artifact",
+        "create",
+        "update"
+      ],
+      "archetypes": [
+        "routing"
+      ]
+    },
+    {
+      "id": "routing.track-selection",
+      "label": "Select quick-flow, product-flow, or enterprise-flow track.",
+      "evidence_terms": [
+        "track",
+        "quick-flow",
+        "product-flow"
+      ],
+      "archetypes": [
+        "routing"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "routing.no-skill",
+      "description": "Not recommending a specific next skill."
+    },
+    {
+      "id": "routing.skip-state",
+      "description": "Routing without reading existing workflow state."
+    },
+    {
+      "id": "routing.vague-direction",
+      "description": "Giving vague process advice instead of next skill name."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.151442+00:00"
+}

@@ -1,6 +1,6 @@
 # cpp-systems-engineering Weak Output Anti-Example
 
-Request: implement systems-level C++ for kernel drivers, DLL injection, memory manipulation, and Win32/NT API integration
+Request: implement systems-level C++ for Windows native APIs, memory management, and kernel-adjacent code
 
 Weak answer:
 

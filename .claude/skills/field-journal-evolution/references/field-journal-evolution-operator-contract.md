@@ -1,6 +1,6 @@
 # field-journal-evolution Battle Contract
 
-Primary role: journal-curator
+Primary role: knowledge-writeback
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with field-journal-evolution domain expertise
 - First files to inspect: relay_kit_v3/field_journal.py, relay_kit_v3/evidence_quality.py
-- Symbols or named surfaces to confirm: capture_entry, evidence_ref
-- Evidence terms that should appear in a strong answer: evidence ref, confidence level, pattern capture, journal append
+- Symbols or named surfaces to confirm: capture_entry, evidence_ref, journal_append, confidence
+- Evidence terms that should appear in a strong answer: evidence ref, confidence level, pattern capture, journal append, candidate status
 
 ## Working Loop
 

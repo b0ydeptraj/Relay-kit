@@ -1,6 +1,6 @@
 # antibot-challenge-solving Battle-Calibrated Output
 
-Request: solve or bypass antibot challenges including CAPTCHAs, JavaScript challenges, and behavioral verification
+Request: solve or bypass antibot challenges including CAPTCHAs, Cloudflare Turnstile, Datadome, and behavioral verification
 
 Recommended skill: `antibot-challenge-solving` because the request matches `antibot-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `token extraction` remains unverified until the focused gate or benchmark hit is captured.
+- `fallback` remains unverified until the focused gate or benchmark hit is captured.

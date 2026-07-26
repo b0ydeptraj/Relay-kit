@@ -39,6 +39,30 @@
       "archetypes": [
         "engineering"
       ]
+    },
+    {
+      "id": "engineering.handle-discipline",
+      "label": "Properly close handles and release resources in all exit paths.",
+      "evidence_terms": [
+        "CloseHandle",
+        "RAII",
+        "destructor"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.exception-safety",
+      "label": "Ensure exception safety in constructors and destructors.",
+      "evidence_terms": [
+        "exception",
+        "noexcept",
+        "destructor"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "engineering.memory-leak",
       "description": "Allocating without corresponding deallocation path."
+    },
+    {
+      "id": "engineering.handle-leak",
+      "description": "Failing to close handles in all exit paths."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.942845+00:00"
+  "generated_at": "2026-07-22T10:23:55.900853+00:00"
 }

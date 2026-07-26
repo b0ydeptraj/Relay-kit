@@ -1,6 +1,6 @@
 # antibot-challenge-solving Weak Output Anti-Example
 
-Request: solve or bypass antibot challenges including CAPTCHAs, JavaScript challenges, and behavioral verification
+Request: solve or bypass antibot challenges including CAPTCHAs, Cloudflare Turnstile, Datadome, and behavioral verification
 
 Weak answer:
 

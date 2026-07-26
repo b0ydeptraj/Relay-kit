@@ -1,6 +1,6 @@
 # mobile-app-reverse Weak Output Anti-Example
 
-Request: reverse-engineer mobile applications including APK/IPA analysis, SSL pinning bypass, and API extraction
+Request: reverse-engineer mobile APK/IPA apps to find API endpoints, signing keys, and certificate pinning
 
 Weak answer:
 

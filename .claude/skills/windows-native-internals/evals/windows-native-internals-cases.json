@@ -2,15 +2,16 @@
   {
     "id": "windows-native-internals-battle-read-first",
     "skill": "windows-native-internals",
-    "repo_profile": "Relay-kit offensive tool pack with windows-native-internals skill",
-    "task": "work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and system information classes. Use `windows-native-internals` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with windows-native-internals domain expertise",
+    "task": "work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and SSDT. Use `windows-native-internals` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "PEB",
       "TEB",
-      "NtQuerySystemInformation"
+      "NtQuerySystemInformation",
+      "SSDT"
     ],
     "expected_tests": [
       "tests/test_windows_native_internals.py"
@@ -19,7 +20,8 @@
       "PEB walk",
       "TEB access",
       "SYSTEM_INFORMATION_CLASS",
-      "kernel object"
+      "kernel object",
+      "SSDT"
     ],
     "bad_answer_traps": [
       "wrong struct offset for OS version",
@@ -38,7 +40,8 @@
     "expected_symbols": [
       "PEB",
       "TEB",
-      "NtQuerySystemInformation"
+      "NtQuerySystemInformation",
+      "SSDT"
     ],
     "expected_tests": [
       "tests/test_windows_native_internals.py"
@@ -47,7 +50,6 @@
       "PEB walk",
       "TEB access",
       "SYSTEM_INFORMATION_CLASS",
-      "kernel object",
       "residual risk",
       "weak evidence"
     ],
@@ -55,6 +57,34 @@
       "looks like",
       "usual checklist",
       "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "windows-native-internals-public-repo-benchmark-anchor",
+    "skill": "windows-native-internals",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `windows-native-internals` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "PEB",
+      "TEB"
+    ],
+    "expected_tests": [
+      "tests/test_windows_native_internals.py"
+    ],
+    "expected_evidence_terms": [
+      "PEB walk",
+      "TEB access",
+      "SYSTEM_INFORMATION_CLASS",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

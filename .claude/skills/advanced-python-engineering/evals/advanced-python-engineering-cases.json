@@ -2,7 +2,7 @@
   {
     "id": "advanced-python-engineering-battle-read-first",
     "skill": "advanced-python-engineering",
-    "repo_profile": "Relay-kit offensive tool pack with advanced-python-engineering skill",
+    "repo_profile": "Relay-kit offensive tool pack with advanced-python-engineering domain expertise",
     "task": "implement advanced Python patterns including async I/O, ctypes/cffi interop, metaprogramming, and C extension modules. Use `advanced-python-engineering` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py",
@@ -11,7 +11,8 @@
     "expected_symbols": [
       "asyncio",
       "ctypes",
-      "cffi"
+      "cffi",
+      "MetaClass"
     ],
     "expected_tests": [
       "tests/test_advanced_python_engineering.py"
@@ -20,7 +21,8 @@
       "async model",
       "ctypes signature",
       "error hierarchy",
-      "version pin"
+      "version pin",
+      "event loop"
     ],
     "bad_answer_traps": [
       "no version pin",
@@ -40,7 +42,8 @@
     "expected_symbols": [
       "asyncio",
       "ctypes",
-      "cffi"
+      "cffi",
+      "MetaClass"
     ],
     "expected_tests": [
       "tests/test_advanced_python_engineering.py"
@@ -49,7 +52,6 @@
       "async model",
       "ctypes signature",
       "error hierarchy",
-      "version pin",
       "residual risk",
       "weak evidence"
     ],
@@ -57,6 +59,35 @@
       "looks like",
       "usual checklist",
       "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "advanced-python-engineering-public-repo-benchmark-anchor",
+    "skill": "advanced-python-engineering",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `advanced-python-engineering` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "asyncio",
+      "ctypes"
+    ],
+    "expected_tests": [
+      "tests/test_advanced_python_engineering.py"
+    ],
+    "expected_evidence_terms": [
+      "async model",
+      "ctypes signature",
+      "error hierarchy",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

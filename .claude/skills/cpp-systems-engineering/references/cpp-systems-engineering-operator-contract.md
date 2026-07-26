@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with cpp-systems-engineering domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: NtApi, HANDLE, DWORD
-- Evidence terms that should appear in a strong answer: Win32 API, NT internals, memory layout, calling convention
+- Symbols or named surfaces to confirm: NtApi, HANDLE, DWORD, RAII
+- Evidence terms that should appear in a strong answer: Win32 API, NT internals, memory layout, calling convention, RAII
 
 ## Working Loop
 

@@ -1,6 +1,6 @@
 # desktop-python-ui Battle Contract
 
-Primary role: python-ui-developer
+Primary role: python-ui-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with desktop-python-ui domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: QApplication, MainWindow
-- Evidence terms that should appear in a strong answer: event loop, signal-slot, widget tree, threading model
+- Symbols or named surfaces to confirm: QApplication, MainWindow, QThread, Signal
+- Evidence terms that should appear in a strong answer: event loop, signal-slot, widget tree, threading model, layout manager
 
 ## Working Loop
 

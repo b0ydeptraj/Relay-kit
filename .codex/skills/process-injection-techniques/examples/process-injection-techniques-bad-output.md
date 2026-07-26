@@ -1,6 +1,6 @@
 # process-injection-techniques Weak Output Anti-Example
 
-Request: implement process injection techniques including DLL injection, process hollowing, APC injection, and thread hijacking
+Request: implement process injection including DLL injection, process hollowing, APC injection, and thread hijacking
 
 Weak answer:
 

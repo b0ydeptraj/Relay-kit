@@ -1,6 +1,6 @@
 # attack-chain-orchestration Battle Contract
 
-Primary role: attack-orchestrator
+Primary role: attack-chain-planner
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with attack-chain-orchestration domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: attack_chain, phase_order
-- Evidence terms that should appear in a strong answer: ATT&CK phase, kill chain, OPSEC ordering, phase transition
+- Symbols or named surfaces to confirm: attack_chain, phase_order, engagement_proof, ATT_CK
+- Evidence terms that should appear in a strong answer: ATT&CK phase, kill chain, OPSEC ordering, phase transition, engagement proof
 
 ## Working Loop
 

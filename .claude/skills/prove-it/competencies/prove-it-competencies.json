@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "prove-it",
+  "role": "specialist",
+  "category": "verification",
+  "core_competencies": [
+    {
+      "id": "verification.claim-mapping",
+      "label": "Map every completion claim to concrete evidence.",
+      "evidence_terms": [
+        "claim",
+        "evidence",
+        "proof"
+      ],
+      "archetypes": [
+        "verification"
+      ]
+    },
+    {
+      "id": "verification.command-proof",
+      "label": "Cite the exact command and output that proves the claim.",
+      "evidence_terms": [
+        "command",
+        "output",
+        "log"
+      ],
+      "archetypes": [
+        "verification"
+      ]
+    },
+    {
+      "id": "verification.residual-risk",
+      "label": "Name what is still unverified after evidence pass.",
+      "evidence_terms": [
+        "residual",
+        "unverified",
+        "risk"
+      ],
+      "archetypes": [
+        "verification"
+      ]
+    },
+    {
+      "id": "verification.no-self-assertion",
+      "label": "Never accept self-assertion as proof.",
+      "evidence_terms": [
+        "self-assertion",
+        "proof",
+        "evidence"
+      ],
+      "archetypes": [
+        "verification"
+      ]
+    },
+    {
+      "id": "verification.regression-check",
+      "label": "Verify no regressions introduced by the change.",
+      "evidence_terms": [
+        "regression",
+        "existing",
+        "test"
+      ],
+      "archetypes": [
+        "verification"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "verification.self-assertion",
+      "description": "Accepting self-assertion as proof of completion."
+    },
+    {
+      "id": "verification.no-command-proof",
+      "description": "Missing command output to substantiate claims."
+    },
+    {
+      "id": "verification.hidden-residual",
+      "description": "Not naming what remains unverified after evidence pass."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.112323+00:00"
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "debug-systematically",
+  "role": "specialist",
+  "category": "debugging",
+  "core_competencies": [
+    {
+      "id": "debugging.reproduction-first",
+      "label": "Reproduce the issue before proposing fixes.",
+      "evidence_terms": [
+        "reproduce",
+        "failing",
+        "command"
+      ],
+      "archetypes": [
+        "debugging"
+      ]
+    },
+    {
+      "id": "debugging.root-cause",
+      "label": "Identify root cause, not just symptoms.",
+      "evidence_terms": [
+        "root cause",
+        "symptom",
+        "cause"
+      ],
+      "archetypes": [
+        "debugging"
+      ]
+    },
+    {
+      "id": "debugging.investigation-notes",
+      "label": "Write investigation notes with evidence and ruled-out causes.",
+      "evidence_terms": [
+        "investigation",
+        "evidence",
+        "ruled out"
+      ],
+      "archetypes": [
+        "debugging"
+      ]
+    },
+    {
+      "id": "debugging.hypothesis-testing",
+      "label": "Test hypotheses systematically before implementing fix.",
+      "evidence_terms": [
+        "hypothesis",
+        "probe",
+        "test"
+      ],
+      "archetypes": [
+        "debugging"
+      ]
+    },
+    {
+      "id": "debugging.fix-scope",
+      "label": "Bound the fix surface before implementing.",
+      "evidence_terms": [
+        "fix",
+        "scope",
+        "blast radius"
+      ],
+      "archetypes": [
+        "debugging"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "debugging.guess-patch",
+      "description": "Guessing at fixes without establishing root cause."
+    },
+    {
+      "id": "debugging.no-reproduction",
+      "description": "Proposing fixes without reproducing the issue."
+    },
+    {
+      "id": "debugging.symptom-not-cause",
+      "description": "Fixing symptoms without addressing root cause."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.099744+00:00"
+}

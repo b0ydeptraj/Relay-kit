@@ -2,14 +2,16 @@
   {
     "id": "mobile-app-reverse-battle-read-first",
     "skill": "mobile-app-reverse",
-    "repo_profile": "Relay-kit offensive tool pack with mobile-app-reverse skill",
-    "task": "reverse-engineer mobile applications including APK/IPA analysis, SSL pinning bypass, and API extraction. Use `mobile-app-reverse` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with mobile-app-reverse domain expertise",
+    "task": "reverse-engineer mobile APK/IPA apps to find API endpoints, signing keys, and certificate pinning. Use `mobile-app-reverse` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "apk_decompile",
-      "ssl_unpin"
+      "ssl_unpin",
+      "frida_hook",
+      "jadx"
     ],
     "expected_tests": [
       "tests/test_mobile_app_reverse.py"
@@ -18,7 +20,8 @@
       "APK decompile",
       "IPA analysis",
       "SSL pinning",
-      "API endpoint extraction"
+      "API endpoint extraction",
+      "Frida hook"
     ],
     "bad_answer_traps": [
       "skip manifest analysis",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "apk_decompile",
+      "ssl_unpin",
+      "frida_hook",
+      "jadx"
+    ],
+    "expected_tests": [
+      "tests/test_mobile_app_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "APK decompile",
+      "IPA analysis",
+      "SSL pinning",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "mobile-app-reverse-public-repo-benchmark-anchor",
+    "skill": "mobile-app-reverse",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `mobile-app-reverse` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "apk_decompile",
       "ssl_unpin"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "APK decompile",
       "IPA analysis",
       "SSL pinning",
-      "API endpoint extraction",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

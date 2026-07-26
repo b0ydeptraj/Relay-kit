@@ -1,6 +1,6 @@
 # telemetry-blinding Battle-Calibrated Output
 
-Request: blind or suppress host telemetry including ETW, Sysmon, AMSI, and Windows event logging
+Request: suppress or blind host telemetry including ETW, Sysmon, AMSI, and Windows event logging
 
 Recommended skill: `telemetry-blinding` because the request matches `telemetry-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `event log` remains unverified until the focused gate or benchmark hit is captured.
+- `telemetry suppression` remains unverified until the focused gate or benchmark hit is captured.

@@ -1,8 +1,8 @@
 # protocol-fingerprint-spoofing Battle-Calibrated Output
 
-Request: spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4/HTTP2 fingerprinting
+Request: spoof TLS/HTTP protocol fingerprints to match specific clients and evade JA3/JA4 fingerprinting
 
-Recommended skill: `protocol-fingerprint-spoofing` because the request matches `protocol-spoofer` work and has concrete repo anchors.
+Recommended skill: `protocol-fingerprint-spoofing` because the request matches `protocol-fingerprint-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `HTTP/2 settings` remains unverified until the focused gate or benchmark hit is captured.
+- `TLS extension order` remains unverified until the focused gate or benchmark hit is captured.

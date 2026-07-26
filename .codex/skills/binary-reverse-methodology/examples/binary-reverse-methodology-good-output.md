@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `function boundary` remains unverified until the focused gate or benchmark hit is captured.
+- `call graph` remains unverified until the focused gate or benchmark hit is captured.

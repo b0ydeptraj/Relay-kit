@@ -1,6 +1,6 @@
 # desktop-imgui-development Battle Contract
 
-Primary role: imgui-developer
+Primary role: imgui-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with desktop-imgui-development domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: ImGui, ImVec2, ImGuiWindowFlags
-- Evidence terms that should appear in a strong answer: render loop, overlay, input handling, widget layout
+- Symbols or named surfaces to confirm: ImGui, ImVec2, ImGuiWindowFlags, ImDrawList
+- Evidence terms that should appear in a strong answer: render loop, overlay, input handling, widget layout, ImDrawList
 
 ## Working Loop
 

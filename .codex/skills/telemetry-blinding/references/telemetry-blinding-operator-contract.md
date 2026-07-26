@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with telemetry-blinding domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: etw_patch, amsi_bypass
-- Evidence terms that should appear in a strong answer: ETW provider, Sysmon filter, AMSI patch, event log
+- Symbols or named surfaces to confirm: etw_patch, amsi_bypass, sysmon_filter, event_log
+- Evidence terms that should appear in a strong answer: ETW provider, Sysmon filter, AMSI patch, event log, telemetry suppression
 
 ## Working Loop
 

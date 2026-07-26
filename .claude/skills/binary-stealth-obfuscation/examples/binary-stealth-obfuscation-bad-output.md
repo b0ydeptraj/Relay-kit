@@ -1,6 +1,6 @@
 # binary-stealth-obfuscation Weak Output Anti-Example
 
-Request: obfuscate binary payloads to evade static analysis, AV signatures, and YARA rules
+Request: obfuscate binary payloads to evade static analysis, AV/EDR signatures, and YARA rules
 
 Weak answer:
 

@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with binary-stealth-obfuscation domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: obfuscator, packer
-- Evidence terms that should appear in a strong answer: entropy control, signature evasion, packing, mutation engine
+- Symbols or named surfaces to confirm: obfuscator, packer, mutation, entropy
+- Evidence terms that should appear in a strong answer: entropy control, signature evasion, packing, mutation engine, YARA rule
 
 ## Working Loop
 

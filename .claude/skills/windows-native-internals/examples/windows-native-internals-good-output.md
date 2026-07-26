@@ -1,6 +1,6 @@
 # windows-native-internals Battle-Calibrated Output
 
-Request: work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and system information classes
+Request: work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and SSDT
 
 Recommended skill: `windows-native-internals` because the request matches `windows-internals-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `kernel object` remains unverified until the focused gate or benchmark hit is captured.
+- `SSDT` remains unverified until the focused gate or benchmark hit is captured.

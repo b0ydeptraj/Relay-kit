@@ -1,6 +1,6 @@
 # mobile-app-reverse Battle Contract
 
-Primary role: mobile-reverser
+Primary role: mobile-reverse-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with mobile-app-reverse domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: apk_decompile, ssl_unpin
-- Evidence terms that should appear in a strong answer: APK decompile, IPA analysis, SSL pinning, API endpoint extraction
+- Symbols or named surfaces to confirm: apk_decompile, ssl_unpin, frida_hook, jadx
+- Evidence terms that should appear in a strong answer: APK decompile, IPA analysis, SSL pinning, API endpoint extraction, Frida hook
 
 ## Working Loop
 

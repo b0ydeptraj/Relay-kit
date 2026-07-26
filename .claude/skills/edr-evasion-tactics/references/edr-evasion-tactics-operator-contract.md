@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with edr-evasion-tactics domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: syscall_stub, unhook
-- Evidence terms that should appear in a strong answer: userland hook, direct syscall, ETW patch, callback removal
+- Symbols or named surfaces to confirm: syscall_stub, unhook, SSN, AMSI
+- Evidence terms that should appear in a strong answer: userland hook, direct syscall, ETW patch, callback removal, SSN
 
 ## Working Loop
 

@@ -39,6 +39,30 @@
       "archetypes": [
         "automation"
       ]
+    },
+    {
+      "id": "automation.quality-filter",
+      "label": "Filter low-quality outputs before publishing.",
+      "evidence_terms": [
+        "quality",
+        "filter",
+        "threshold"
+      ],
+      "archetypes": [
+        "automation"
+      ]
+    },
+    {
+      "id": "automation.cost-tracking",
+      "label": "Track LLM API costs per operation.",
+      "evidence_terms": [
+        "cost",
+        "tokens",
+        "budget"
+      ],
+      "archetypes": [
+        "automation"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "automation.no-rate-limit",
       "description": "Ignoring API rate limits."
+    },
+    {
+      "id": "automation.no-quality-filter",
+      "description": "Publishing LLM output without quality check."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.020141+00:00"
+  "generated_at": "2026-07-22T10:23:55.984460+00:00"
 }

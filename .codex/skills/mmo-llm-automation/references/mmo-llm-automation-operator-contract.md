@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with mmo-llm-automation domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: llm_client, variance_engine
-- Evidence terms that should appear in a strong answer: prompt diversity, behavioral variance, content generation, Sybil evasion
+- Symbols or named surfaces to confirm: llm_client, variance_engine, prompt_template, batch_generate
+- Evidence terms that should appear in a strong answer: prompt diversity, behavioral variance, content generation, Sybil evasion, rate limit
 
 ## Working Loop
 

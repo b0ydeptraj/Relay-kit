@@ -1,6 +1,6 @@
 # cpp-systems-engineering Battle-Calibrated Output
 
-Request: implement systems-level C++ for kernel drivers, DLL injection, memory manipulation, and Win32/NT API integration
+Request: implement systems-level C++ for Windows native APIs, memory management, and kernel-adjacent code
 
 Recommended skill: `cpp-systems-engineering` because the request matches `cpp-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `calling convention` remains unverified until the focused gate or benchmark hit is captured.
+- `RAII` remains unverified until the focused gate or benchmark hit is captured.

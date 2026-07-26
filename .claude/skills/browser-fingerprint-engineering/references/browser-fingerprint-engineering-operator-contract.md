@@ -1,6 +1,6 @@
 # browser-fingerprint-engineering Battle Contract
 
-Primary role: fingerprint-engineer
+Primary role: browser-fingerprint-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with browser-fingerprint-engineering domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: canvas_fingerprint, webgl_hash
-- Evidence terms that should appear in a strong answer: canvas hash, WebGL renderer, AudioContext, font enumeration
+- Symbols or named surfaces to confirm: canvas_fingerprint, webgl_hash, audiocontext, navigator
+- Evidence terms that should appear in a strong answer: canvas hash, WebGL renderer, AudioContext, font enumeration, navigator consistency
 
 ## Working Loop
 

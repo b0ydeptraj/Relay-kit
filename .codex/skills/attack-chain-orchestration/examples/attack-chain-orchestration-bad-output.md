@@ -1,6 +1,6 @@
 # attack-chain-orchestration Weak Output Anti-Example
 
-Request: orchestrate multi-phase attack chains following ATT&CK framework ordering with OPSEC discipline
+Request: orchestrate multi-phase authorized attack chains following ATT&CK framework with OPSEC discipline
 
 Weak answer:
 

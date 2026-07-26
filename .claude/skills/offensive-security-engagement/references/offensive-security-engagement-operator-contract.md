@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with offensive-security-engagement domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: engagement_proof, risk_tier
-- Evidence terms that should appear in a strong answer: engagement proof, authorization, ATT&CK phase, risk tier
+- Symbols or named surfaces to confirm: engagement_proof, risk_tier, workflow_state, ATT_CK
+- Evidence terms that should appear in a strong answer: engagement proof, authorization, ATT&CK phase, risk tier, lane mode
 
 ## Working Loop
 

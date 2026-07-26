@@ -39,6 +39,30 @@
       "archetypes": [
         "security"
       ]
+    },
+    {
+      "id": "security.integer-safety",
+      "label": "Check for integer overflow/underflow in arithmetic operations.",
+      "evidence_terms": [
+        "overflow",
+        "underflow",
+        "SafeMath"
+      ],
+      "archetypes": [
+        "security"
+      ]
+    },
+    {
+      "id": "security.event-logging",
+      "label": "Verify critical state changes emit events for transparency.",
+      "evidence_terms": [
+        "event",
+        "emit",
+        "log"
+      ],
+      "archetypes": [
+        "security"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "security.no-access-control",
       "description": "Privileged function without access control modifier."
+    },
+    {
+      "id": "security.unchecked-arithmetic",
+      "description": "Integer arithmetic without overflow protection."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.034239+00:00"
+  "generated_at": "2026-07-22T10:23:56.002058+00:00"
 }

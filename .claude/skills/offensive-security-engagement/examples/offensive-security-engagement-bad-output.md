@@ -1,6 +1,6 @@
 # offensive-security-engagement Weak Output Anti-Example
 
-Request: gate and provide context for offensive security lanes including engagement proof caching and ATT&CK mapping
+Request: gate offensive security lanes by verifying engagement proof and mapping ATT&CK phases
 
 Weak answer:
 

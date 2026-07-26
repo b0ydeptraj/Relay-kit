@@ -1,6 +1,6 @@
 # protocol-fingerprint-spoofing Battle Contract
 
-Primary role: protocol-spoofer
+Primary role: protocol-fingerprint-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with protocol-fingerprint-spoofing domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: ja3_hash, tls_config
-- Evidence terms that should appear in a strong answer: JA3 fingerprint, JA4, cipher suite order, HTTP/2 settings
+- Symbols or named surfaces to confirm: ja3_hash, tls_config, cipher_suite, http2_settings
+- Evidence terms that should appear in a strong answer: JA3 fingerprint, JA4, cipher suite order, HTTP/2 settings, TLS extension order
 
 ## Working Loop
 

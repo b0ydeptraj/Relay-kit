@@ -1,0 +1,93 @@
+[
+  {
+    "id": "aesthetic-battle-read-first",
+    "skill": "aesthetic",
+    "repo_profile": "product UI repo where first-pass output risks looking generic / obviously AI-generated",
+    "task": "handle a aesthetic request, name files first, and identify the proof surface before editing. Use `aesthetic` and cite the first files before advice.",
+    "expected_files": [
+      "src/app/(marketing)/page.tsx",
+      "src/components/Hero.tsx",
+      "tailwind.config.ts"
+    ],
+    "expected_symbols": [
+      "Hero",
+      "designTokens",
+      "ThemeProvider"
+    ],
+    "expected_tests": [
+      "tests/visual/home.spec.ts"
+    ],
+    "expected_evidence_terms": [
+      "reference screenshot",
+      "spacing scale",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "looks clean",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "aesthetic-public-repo-benchmark-anchor",
+    "skill": "aesthetic",
+    "repo_profile": "product UI repo where first-pass output risks looking generic / obviously AI-generated",
+    "task": "Run a read-only benchmark-style pass for `aesthetic` and explain what evidence is still missing.",
+    "expected_files": [
+      "src/app/(marketing)/page.tsx",
+      "src/components/Hero.tsx",
+      "tailwind.config.ts"
+    ],
+    "expected_symbols": [
+      "Hero",
+      "designTokens",
+      "ThemeProvider"
+    ],
+    "expected_tests": [
+      "tests/visual/home.spec.ts"
+    ],
+    "expected_evidence_terms": [
+      "visual regression",
+      "type hierarchy",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "looks clean",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "aesthetic-deep-weakness-trap",
+    "skill": "aesthetic",
+    "repo_profile": "product UI repo where first-pass output risks looking generic / obviously AI-generated",
+    "task": "Score `aesthetic` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "src/app/(marketing)/page.tsx",
+      "src/components/Hero.tsx",
+      "tailwind.config.ts"
+    ],
+    "expected_symbols": [
+      "Hero",
+      "designTokens",
+      "ThemeProvider"
+    ],
+    "expected_tests": [
+      "tests/visual/home.spec.ts"
+    ],
+    "expected_evidence_terms": [
+      "reference screenshot",
+      "spacing scale",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "looks clean",
+      "usual checklist",
+      "should be fine"
+    ]
+  }
+]

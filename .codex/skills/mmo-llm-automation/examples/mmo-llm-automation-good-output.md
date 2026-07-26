@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `Sybil evasion` remains unverified until the focused gate or benchmark hit is captured.
+- `rate limit` remains unverified until the focused gate or benchmark hit is captured.

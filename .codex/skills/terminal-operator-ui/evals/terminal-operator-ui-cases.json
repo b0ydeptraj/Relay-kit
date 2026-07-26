@@ -2,15 +2,16 @@
   {
     "id": "terminal-operator-ui-battle-read-first",
     "skill": "terminal-operator-ui",
-    "repo_profile": "Relay-kit offensive tool pack with terminal-operator-ui skill",
-    "task": "build terminal-based operator UIs using curses, Rich, Textual, or similar TUI frameworks. Use `terminal-operator-ui` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with terminal-operator-ui domain expertise",
+    "task": "build terminal-based operator UIs using Rich, Textual, or curses for automation dashboards and CLI tools. Use `terminal-operator-ui` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "App",
       "Screen",
-      "Widget"
+      "Widget",
+      "rich_console"
     ],
     "expected_tests": [
       "tests/test_terminal_operator_ui.py"
@@ -19,7 +20,8 @@
       "TUI framework",
       "keybinding",
       "live update",
-      "responsive layout"
+      "responsive layout",
+      "Rich"
     ],
     "bad_answer_traps": [
       "blocking input loop",
@@ -38,7 +40,8 @@
     "expected_symbols": [
       "App",
       "Screen",
-      "Widget"
+      "Widget",
+      "rich_console"
     ],
     "expected_tests": [
       "tests/test_terminal_operator_ui.py"
@@ -47,7 +50,6 @@
       "TUI framework",
       "keybinding",
       "live update",
-      "responsive layout",
       "residual risk",
       "weak evidence"
     ],
@@ -55,6 +57,34 @@
       "looks like",
       "usual checklist",
       "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "terminal-operator-ui-public-repo-benchmark-anchor",
+    "skill": "terminal-operator-ui",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `terminal-operator-ui` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "App",
+      "Screen"
+    ],
+    "expected_tests": [
+      "tests/test_terminal_operator_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "TUI framework",
+      "keybinding",
+      "live update",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

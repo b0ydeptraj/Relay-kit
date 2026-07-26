@@ -1,6 +1,6 @@
 # desktop-python-ui Weak Output Anti-Example
 
-Request: build desktop applications using Python UI frameworks like PyQt, PySide, Tkinter, or Dear PyGui
+Request: build desktop Python GUI applications using PyQt6/PySide6, Tkinter, or wxPython
 
 Weak answer:
 

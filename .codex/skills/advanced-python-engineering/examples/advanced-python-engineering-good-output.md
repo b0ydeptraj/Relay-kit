@@ -21,4 +21,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `version pin` remains unverified until the focused gate or benchmark hit is captured.
+- `event loop` remains unverified until the focused gate or benchmark hit is captured.

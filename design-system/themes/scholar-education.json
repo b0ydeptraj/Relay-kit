@@ -1,0 +1,28 @@
+{
+  "name": "Scholar Education",
+  "domain": "Education / learning",
+  "mode": "light",
+  "font": {
+    "display": "Lora",
+    "sans": "Inter",
+    "mono": "Lora"
+  },
+  "shape": {
+    "radius": 12,
+    "radiusSm": 9
+  },
+  "surfaceStyle": "border",
+  "accentStyle": "solid",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#FFFDF6",
+    "surface": "#FFFFFF",
+    "surface2": "#F5F1E4",
+    "ink": "#2A2620",
+    "muted": "#7A7266",
+    "line": "#EBE4D3",
+    "primary": "#2547B0",
+    "accent2": "#B45309",
+    "onPrimary": "#FFFFFF"
+  }
+}

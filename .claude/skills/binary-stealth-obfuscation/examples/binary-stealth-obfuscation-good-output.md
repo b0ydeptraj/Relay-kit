@@ -1,6 +1,6 @@
 # binary-stealth-obfuscation Battle-Calibrated Output
 
-Request: obfuscate binary payloads to evade static analysis, AV signatures, and YARA rules
+Request: obfuscate binary payloads to evade static analysis, AV/EDR signatures, and YARA rules
 
 Recommended skill: `binary-stealth-obfuscation` because the request matches `obfuscation-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `mutation engine` remains unverified until the focused gate or benchmark hit is captured.
+- `YARA rule` remains unverified until the focused gate or benchmark hit is captured.

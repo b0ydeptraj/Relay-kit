@@ -1,6 +1,6 @@
 # telemetry-blinding Weak Output Anti-Example
 
-Request: blind or suppress host telemetry including ETW, Sysmon, AMSI, and Windows event logging
+Request: suppress or blind host telemetry including ETW, Sysmon, AMSI, and Windows event logging
 
 Weak answer:
 

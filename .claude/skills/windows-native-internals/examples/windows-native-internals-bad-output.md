@@ -1,6 +1,6 @@
 # windows-native-internals Weak Output Anti-Example
 
-Request: work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and system information classes
+Request: work with Windows NT internals including undocumented APIs, PEB/TEB structures, kernel objects, and SSDT
 
 Weak answer:
 

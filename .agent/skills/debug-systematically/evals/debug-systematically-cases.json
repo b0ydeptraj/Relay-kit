@@ -1,0 +1,93 @@
+[
+  {
+    "id": "debug-systematically-battle-read-first",
+    "skill": "debug-systematically",
+    "repo_profile": "Relay-kit offensive tool pack with debug-systematically domain expertise",
+    "task": "debug a bug, regression, or mismatch using disciplined root-cause analysis. Use `debug-systematically` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "debug_hub",
+      "root_cause",
+      "investigation_notes",
+      "reproduction"
+    ],
+    "expected_tests": [
+      "tests/test_debug_systematically.py"
+    ],
+    "expected_evidence_terms": [
+      "root cause",
+      "reproduction",
+      "investigation notes",
+      "symptom",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guess and patch",
+      "no reproduction",
+      "skip investigation notes"
+    ]
+  },
+  {
+    "id": "debug-systematically-deep-weakness-trap",
+    "skill": "debug-systematically",
+    "repo_profile": "deep relay suite fixture with debug-systematically domain expertise",
+    "task": "Score `debug-systematically` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "debug_hub",
+      "root_cause",
+      "investigation_notes",
+      "reproduction"
+    ],
+    "expected_tests": [
+      "tests/test_debug_systematically.py"
+    ],
+    "expected_evidence_terms": [
+      "root cause",
+      "reproduction",
+      "investigation notes",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "debug-systematically-public-repo-benchmark-anchor",
+    "skill": "debug-systematically",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `debug-systematically` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "debug_hub",
+      "root_cause"
+    ],
+    "expected_tests": [
+      "tests/test_debug_systematically.py"
+    ],
+    "expected_evidence_terms": [
+      "root cause",
+      "reproduction",
+      "investigation notes",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

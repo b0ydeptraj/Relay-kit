@@ -39,6 +39,30 @@
       "archetypes": [
         "evasion"
       ]
+    },
+    {
+      "id": "evasion.sysmon-evasion",
+      "label": "Evade Sysmon rules for process and network events.",
+      "evidence_terms": [
+        "Sysmon",
+        "rule",
+        "process"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.eventlog-clearing",
+      "label": "Clear or filter Windows event log entries selectively.",
+      "evidence_terms": [
+        "event log",
+        "clear",
+        "filter"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "evasion.no-verify",
       "description": "Not verifying telemetry suppression after patching."
+    },
+    {
+      "id": "evasion.detectable-clear",
+      "description": "Clearing event logs in detectable way (log of log clearing)."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.092452+00:00"
+  "generated_at": "2026-07-22T10:23:56.084303+00:00"
 }

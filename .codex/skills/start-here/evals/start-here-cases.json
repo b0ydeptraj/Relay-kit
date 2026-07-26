@@ -1,0 +1,91 @@
+[
+  {
+    "id": "start-here-battle-read-first",
+    "skill": "start-here",
+    "repo_profile": "Relay-kit offensive tool pack with start-here domain expertise",
+    "task": "route a request to the right Relay-kit path, next skill, and artifact without guessing. Use `start-here` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "workflow_router",
+      "next_skill",
+      "routing_kernel"
+    ],
+    "expected_tests": [
+      "tests/test_start_here.py"
+    ],
+    "expected_evidence_terms": [
+      "routing",
+      "next skill",
+      "track",
+      "entrypoint",
+      "workflow state"
+    ],
+    "bad_answer_traps": [
+      "skip routing",
+      "no skill recommendation",
+      "skip workflow state"
+    ]
+  },
+  {
+    "id": "start-here-deep-weakness-trap",
+    "skill": "start-here",
+    "repo_profile": "deep relay suite fixture with start-here domain expertise",
+    "task": "Score `start-here` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "workflow_router",
+      "next_skill",
+      "routing_kernel"
+    ],
+    "expected_tests": [
+      "tests/test_start_here.py"
+    ],
+    "expected_evidence_terms": [
+      "routing",
+      "next skill",
+      "track",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "start-here-public-repo-benchmark-anchor",
+    "skill": "start-here",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `start-here` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "workflow_router",
+      "next_skill"
+    ],
+    "expected_tests": [
+      "tests/test_start_here.py"
+    ],
+    "expected_evidence_terms": [
+      "routing",
+      "next skill",
+      "track",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

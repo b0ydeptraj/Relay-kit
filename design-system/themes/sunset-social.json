@@ -1,0 +1,28 @@
+{
+  "name": "Sunset Social",
+  "domain": "Content / creator / marketing",
+  "mode": "light",
+  "font": {
+    "display": "Poppins",
+    "sans": "Poppins",
+    "mono": "Poppins"
+  },
+  "shape": {
+    "radius": 22,
+    "radiusSm": 16
+  },
+  "surfaceStyle": "shadow",
+  "accentStyle": "gradient",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#FFF6F2",
+    "surface": "#FFFFFF",
+    "surface2": "#FDEBEF",
+    "ink": "#2C1E29",
+    "muted": "#8A7580",
+    "line": "#F4DDE2",
+    "primary": "#FB5E7E",
+    "accent2": "#A855F7",
+    "onPrimary": "#FFFFFF"
+  }
+}

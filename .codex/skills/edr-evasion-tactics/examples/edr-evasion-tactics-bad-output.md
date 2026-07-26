@@ -1,6 +1,6 @@
 # edr-evasion-tactics Weak Output Anti-Example
 
-Request: evade EDR detection through unhooking, direct syscalls, callback manipulation, and ETW blinding
+Request: evade EDR detection through unhooking, direct syscalls, ETW patching, and callback manipulation
 
 Weak answer:
 

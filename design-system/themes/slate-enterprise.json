@@ -1,0 +1,28 @@
+{
+  "name": "Slate Enterprise",
+  "domain": "SaaS / operations console",
+  "mode": "light",
+  "font": {
+    "display": "Inter",
+    "sans": "Inter",
+    "mono": "Inter"
+  },
+  "shape": {
+    "radius": 10,
+    "radiusSm": 8
+  },
+  "surfaceStyle": "border",
+  "accentStyle": "solid",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#F7F8FA",
+    "surface": "#FFFFFF",
+    "surface2": "#EEF1F5",
+    "ink": "#1E293B",
+    "muted": "#64748B",
+    "line": "#E2E8F0",
+    "primary": "#4F46E5",
+    "accent2": "#4F46E5",
+    "onPrimary": "#FFFFFF"
+  }
+}

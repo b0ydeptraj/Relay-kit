@@ -1,0 +1,28 @@
+{
+  "name": "Verdant Commerce",
+  "domain": "E-commerce / storefront",
+  "mode": "light",
+  "font": {
+    "display": "Sora",
+    "sans": "Inter",
+    "mono": "Sora"
+  },
+  "shape": {
+    "radius": 14,
+    "radiusSm": 10
+  },
+  "surfaceStyle": "shadow",
+  "accentStyle": "solid",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "surface2": "#F4F6F4",
+    "ink": "#14231A",
+    "muted": "#6B7B70",
+    "line": "#E6ECE7",
+    "primary": "#EA580C",
+    "accent2": "#F59E0B",
+    "onPrimary": "#FFFFFF"
+  }
+}

@@ -2,7 +2,7 @@
 
 Request: reverse client-side cryptography, obfuscated JavaScript, WASM modules, and API signing parameters
 
-Recommended skill: `frontend-crypto-reverse` because the request matches `crypto-reverser` work and has concrete repo anchors.
+Recommended skill: `frontend-crypto-reverse` because the request matches `crypto-reverse-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `key extraction` remains unverified until the focused gate or benchmark hit is captured.
+- `replay test` remains unverified until the focused gate or benchmark hit is captured.

@@ -2,15 +2,17 @@
   {
     "id": "field-journal-evolution-battle-read-first",
     "skill": "field-journal-evolution",
-    "repo_profile": "Relay-kit offensive tool pack with field-journal-evolution skill",
-    "task": "evolve field journal entries by capturing pitfalls, techniques, and routing gaps with evidence backing. Use `field-journal-evolution` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with field-journal-evolution domain expertise",
+    "task": "evolve field journal by capturing pitfalls, techniques, and routing gaps with evidence backing. Use `field-journal-evolution` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/field_journal.py",
       "relay_kit_v3/evidence_quality.py"
     ],
     "expected_symbols": [
       "capture_entry",
-      "evidence_ref"
+      "evidence_ref",
+      "journal_append",
+      "confidence"
     ],
     "expected_tests": [
       "tests/test_field_journal_evolution.py"
@@ -19,7 +21,8 @@
       "evidence ref",
       "confidence level",
       "pattern capture",
-      "journal append"
+      "journal append",
+      "candidate status"
     ],
     "bad_answer_traps": [
       "entry without evidence",
@@ -38,6 +41,37 @@
     ],
     "expected_symbols": [
       "capture_entry",
+      "evidence_ref",
+      "journal_append",
+      "confidence"
+    ],
+    "expected_tests": [
+      "tests/test_field_journal_evolution.py"
+    ],
+    "expected_evidence_terms": [
+      "evidence ref",
+      "confidence level",
+      "pattern capture",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "field-journal-evolution-public-repo-benchmark-anchor",
+    "skill": "field-journal-evolution",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `field-journal-evolution` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/field_journal.py",
+      "relay_kit_v3/evidence_quality.py"
+    ],
+    "expected_symbols": [
+      "capture_entry",
       "evidence_ref"
     ],
     "expected_tests": [
@@ -47,14 +81,13 @@
       "evidence ref",
       "confidence level",
       "pattern capture",
-      "journal append",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

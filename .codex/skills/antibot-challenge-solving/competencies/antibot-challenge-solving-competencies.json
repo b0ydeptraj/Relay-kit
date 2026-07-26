@@ -39,6 +39,30 @@
       "archetypes": [
         "evasion"
       ]
+    },
+    {
+      "id": "evasion.behavioral-timing",
+      "label": "Match human-like timing patterns to avoid behavioral detection.",
+      "evidence_terms": [
+        "timing",
+        "delay",
+        "human"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.fingerprint-consistency",
+      "label": "Maintain consistent fingerprint during challenge solving.",
+      "evidence_terms": [
+        "fingerprint",
+        "canvas",
+        "WebGL"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "evasion.no-fallback",
       "description": "No fallback strategy when primary solver fails."
+    },
+    {
+      "id": "evasion.static-selectors",
+      "description": "Using hardcoded CSS selectors that break with DOM changes."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.892798+00:00"
+  "generated_at": "2026-07-22T10:23:55.834335+00:00"
 }

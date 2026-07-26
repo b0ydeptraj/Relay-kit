@@ -1,6 +1,6 @@
 # frontend-crypto-reverse Battle Contract
 
-Primary role: crypto-reverser
+Primary role: crypto-reverse-specialist
 Layer: layer-4-specialists-and-standalones
 Battle family: offensive-tool-pack
 
@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with frontend-crypto-reverse domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: crypto_params, wasm_decode
-- Evidence terms that should appear in a strong answer: JS deobfuscation, WASM reverse, signing algorithm, key extraction
+- Symbols or named surfaces to confirm: crypto_params, wasm_decode, deobfuscate, HMAC
+- Evidence terms that should appear in a strong answer: JS deobfuscation, WASM reverse, signing algorithm, key extraction, replay test
 
 ## Working Loop
 

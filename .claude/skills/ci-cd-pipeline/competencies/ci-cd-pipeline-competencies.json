@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "ci-cd-pipeline",
+  "role": "cicd-specialist",
+  "category": "ci-cd",
+  "core_competencies": [
+    {
+      "id": "ci-cd.stage-gates",
+      "label": "Define blocking gates on protected branches.",
+      "evidence_terms": [
+        "blocking gate",
+        "required check",
+        "protected branch"
+      ],
+      "archetypes": [
+        "delivery-pipeline"
+      ]
+    },
+    {
+      "id": "ci-cd.reproducible-build",
+      "label": "Pin toolchain and cache by lockfile hash for reproducible builds.",
+      "evidence_terms": [
+        "toolchain pin",
+        "cache key",
+        "reproducible"
+      ],
+      "archetypes": [
+        "delivery-pipeline"
+      ]
+    },
+    {
+      "id": "ci-cd.artifact-promotion",
+      "label": "Build once and promote a versioned artifact across environments.",
+      "evidence_terms": [
+        "artifact",
+        "promotion",
+        "version"
+      ],
+      "archetypes": [
+        "delivery-pipeline"
+      ]
+    },
+    {
+      "id": "ci-cd.rollback",
+      "label": "Define a tested rollback trigger and path.",
+      "evidence_terms": [
+        "rollback",
+        "trigger",
+        "previous version"
+      ],
+      "archetypes": [
+        "delivery-pipeline"
+      ]
+    },
+    {
+      "id": "ci-cd.fail-closed",
+      "label": "Keep the pipeline fail-closed on missing or errored gates.",
+      "evidence_terms": [
+        "fail closed",
+        "block",
+        "gate error"
+      ],
+      "archetypes": [
+        "delivery-pipeline"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "ci-cd.warn-and-pass",
+      "description": "Treats a broken gate as a warning instead of a block."
+    },
+    {
+      "id": "ci-cd.rebuild-per-env",
+      "description": "Rebuilds instead of promoting one artifact."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

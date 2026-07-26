@@ -2,14 +2,16 @@
   {
     "id": "mmo-llm-automation-battle-read-first",
     "skill": "mmo-llm-automation",
-    "repo_profile": "Relay-kit offensive tool pack with mmo-llm-automation skill",
+    "repo_profile": "Relay-kit offensive tool pack with mmo-llm-automation domain expertise",
     "task": "integrate LLM APIs for bulk content generation, behavioral variance, and Sybil evasion in MMO operations. Use `mmo-llm-automation` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "llm_client",
-      "variance_engine"
+      "variance_engine",
+      "prompt_template",
+      "batch_generate"
     ],
     "expected_tests": [
       "tests/test_mmo_llm_automation.py"
@@ -18,7 +20,8 @@
       "prompt diversity",
       "behavioral variance",
       "content generation",
-      "Sybil evasion"
+      "Sybil evasion",
+      "rate limit"
     ],
     "bad_answer_traps": [
       "identical outputs",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "llm_client",
+      "variance_engine",
+      "prompt_template",
+      "batch_generate"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_llm_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "prompt diversity",
+      "behavioral variance",
+      "content generation",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "mmo-llm-automation-public-repo-benchmark-anchor",
+    "skill": "mmo-llm-automation",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `mmo-llm-automation` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "llm_client",
       "variance_engine"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "prompt diversity",
       "behavioral variance",
       "content generation",
-      "Sybil evasion",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

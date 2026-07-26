@@ -2,14 +2,16 @@
   {
     "id": "network-stealth-c2-battle-read-first",
     "skill": "network-stealth-c2",
-    "repo_profile": "Relay-kit offensive tool pack with network-stealth-c2 skill",
-    "task": "build and operate C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline. Use `network-stealth-c2` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with network-stealth-c2 domain expertise",
+    "task": "build C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline. Use `network-stealth-c2` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "beacon_config",
-      "redirector"
+      "redirector",
+      "jitter",
+      "domain_fronting"
     ],
     "expected_tests": [
       "tests/test_network_stealth_c2.py"
@@ -18,7 +20,8 @@
       "domain fronting",
       "traffic blending",
       "jitter",
-      "redirector chain"
+      "redirector chain",
+      "beacon discipline"
     ],
     "bad_answer_traps": [
       "fixed beacon interval",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "beacon_config",
+      "redirector",
+      "jitter",
+      "domain_fronting"
+    ],
+    "expected_tests": [
+      "tests/test_network_stealth_c2.py"
+    ],
+    "expected_evidence_terms": [
+      "domain fronting",
+      "traffic blending",
+      "jitter",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "network-stealth-c2-public-repo-benchmark-anchor",
+    "skill": "network-stealth-c2",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `network-stealth-c2` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "beacon_config",
       "redirector"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "domain fronting",
       "traffic blending",
       "jitter",
-      "redirector chain",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

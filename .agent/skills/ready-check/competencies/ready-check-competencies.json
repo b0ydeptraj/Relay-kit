@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "ready-check",
+  "role": "specialist",
+  "category": "readiness",
+  "core_competencies": [
+    {
+      "id": "readiness.criteria-check",
+      "label": "Verify all acceptance criteria are met before go decision.",
+      "evidence_terms": [
+        "acceptance",
+        "criteria",
+        "met"
+      ],
+      "archetypes": [
+        "readiness"
+      ]
+    },
+    {
+      "id": "readiness.qa-report",
+      "label": "Produce or reference QA report with test results.",
+      "evidence_terms": [
+        "QA",
+        "report",
+        "test"
+      ],
+      "archetypes": [
+        "readiness"
+      ]
+    },
+    {
+      "id": "readiness.explicit-verdict",
+      "label": "End with explicit go, no-go, or conditional verdict.",
+      "evidence_terms": [
+        "verdict",
+        "go",
+        "no-go"
+      ],
+      "archetypes": [
+        "readiness"
+      ]
+    },
+    {
+      "id": "readiness.regression-surface",
+      "label": "Check regression surface against test coverage.",
+      "evidence_terms": [
+        "regression",
+        "coverage",
+        "test"
+      ],
+      "archetypes": [
+        "readiness"
+      ]
+    },
+    {
+      "id": "readiness.risk-statement",
+      "label": "State residual risk with the readiness verdict.",
+      "evidence_terms": [
+        "risk",
+        "residual",
+        "statement"
+      ],
+      "archetypes": [
+        "readiness"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "readiness.no-criteria",
+      "description": "Declaring ready without checking acceptance criteria."
+    },
+    {
+      "id": "readiness.no-verdict",
+      "description": "Not providing explicit go/no-go verdict."
+    },
+    {
+      "id": "readiness.hidden-risk",
+      "description": "Not stating residual risk alongside readiness verdict."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.126028+00:00"
+}

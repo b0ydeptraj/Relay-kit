@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "network-stealth-c2",
-  "role": "c2-engineer",
+  "role": "c2-specialist",
   "category": "offensive",
   "core_competencies": [
     {
@@ -40,6 +40,30 @@
       "archetypes": [
         "offensive"
       ]
+    },
+    {
+      "id": "offensive.protocol-mimicry",
+      "label": "Mimic legitimate protocol traffic patterns.",
+      "evidence_terms": [
+        "mimicry",
+        "HTTP",
+        "pattern"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.operator-security",
+      "label": "Protect operator infrastructure from attribution.",
+      "evidence_terms": [
+        "attribution",
+        "VPN",
+        "opsec"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
     }
   ],
   "failure_traps": [
@@ -50,9 +74,13 @@
     {
       "id": "offensive.direct-c2",
       "description": "Direct connection to C2 server without redirectors."
+    },
+    {
+      "id": "offensive.plaintext-channel",
+      "description": "Using unencrypted C2 communication channel."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.049971+00:00"
+  "generated_at": "2026-07-22T10:23:56.032648+00:00"
 }

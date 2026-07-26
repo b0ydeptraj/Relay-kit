@@ -1,6 +1,6 @@
 # terminal-operator-ui Weak Output Anti-Example
 
-Request: build terminal-based operator UIs using curses, Rich, Textual, or similar TUI frameworks
+Request: build terminal-based operator UIs using Rich, Textual, or curses for automation dashboards and CLI tools
 
 Weak answer:
 

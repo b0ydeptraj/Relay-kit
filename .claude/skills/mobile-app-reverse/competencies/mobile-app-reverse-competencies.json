@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "mobile-app-reverse",
-  "role": "mobile-reverser",
+  "role": "mobile-reverse-specialist",
   "category": "reverse-engineering",
   "core_competencies": [
     {
@@ -41,6 +41,30 @@
       "archetypes": [
         "reverse-engineering"
       ]
+    },
+    {
+      "id": "reverse.root-detection-bypass",
+      "label": "Bypass root/jailbreak detection checks.",
+      "evidence_terms": [
+        "root",
+        "jailbreak",
+        "detection"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.signing-key-extract",
+      "label": "Extract signing keys or certificate from app bundle.",
+      "evidence_terms": [
+        "signing",
+        "key",
+        "certificate"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -51,9 +75,13 @@
     {
       "id": "reverse.incomplete-api",
       "description": "Missing API endpoints in extraction."
+    },
+    {
+      "id": "reverse.no-root-bypass",
+      "description": "Not bypassing root detection before analysis."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.042358+00:00"
+  "generated_at": "2026-07-22T10:23:56.015920+00:00"
 }

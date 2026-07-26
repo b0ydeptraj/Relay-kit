@@ -10,8 +10,8 @@ Use this skill only after the request is anchored to a real artifact, repo area,
 
 - Repo profile: Relay-kit offensive tool pack with mmo-onchain-security-audit domain expertise
 - First files to inspect: relay_kit_v3/registry/skills.py
-- Symbols or named surfaces to confirm: contract_audit, reentrancy_check
-- Evidence terms that should appear in a strong answer: reentrancy, front-running, access control, integer overflow
+- Symbols or named surfaces to confirm: contract_audit, reentrancy_check, access_control, gas_analysis
+- Evidence terms that should appear in a strong answer: reentrancy, front-running, access control, integer overflow, gas analysis
 
 ## Working Loop
 

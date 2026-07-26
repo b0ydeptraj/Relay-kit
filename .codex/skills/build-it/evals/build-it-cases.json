@@ -1,0 +1,93 @@
+[
+  {
+    "id": "build-it-battle-read-first",
+    "skill": "build-it",
+    "repo_profile": "Relay-kit offensive tool pack with build-it domain expertise",
+    "task": "implement an approved story or tech spec with controlled scope and evidence. Use `build-it` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "developer",
+      "execution_loop",
+      "story",
+      "tech_spec"
+    ],
+    "expected_tests": [
+      "tests/test_build_it.py"
+    ],
+    "expected_evidence_terms": [
+      "story",
+      "tech-spec",
+      "implementation",
+      "evidence",
+      "controlled scope"
+    ],
+    "bad_answer_traps": [
+      "skip story review",
+      "no evidence gate",
+      "unbounded scope"
+    ]
+  },
+  {
+    "id": "build-it-deep-weakness-trap",
+    "skill": "build-it",
+    "repo_profile": "deep relay suite fixture with build-it domain expertise",
+    "task": "Score `build-it` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "developer",
+      "execution_loop",
+      "story",
+      "tech_spec"
+    ],
+    "expected_tests": [
+      "tests/test_build_it.py"
+    ],
+    "expected_evidence_terms": [
+      "story",
+      "tech-spec",
+      "implementation",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "build-it-public-repo-benchmark-anchor",
+    "skill": "build-it",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `build-it` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "developer",
+      "execution_loop"
+    ],
+    "expected_tests": [
+      "tests/test_build_it.py"
+    ],
+    "expected_evidence_terms": [
+      "story",
+      "tech-spec",
+      "implementation",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

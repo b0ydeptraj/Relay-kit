@@ -2,14 +2,16 @@
   {
     "id": "mmo-onchain-security-audit-battle-read-first",
     "skill": "mmo-onchain-security-audit",
-    "repo_profile": "Relay-kit offensive tool pack with mmo-onchain-security-audit skill",
-    "task": "audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities before deployment. Use `mmo-onchain-security-audit` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with mmo-onchain-security-audit domain expertise",
+    "task": "audit on-chain scripts, smart contracts, and wallet automation for security vulnerabilities. Use `mmo-onchain-security-audit` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "contract_audit",
-      "reentrancy_check"
+      "reentrancy_check",
+      "access_control",
+      "gas_analysis"
     ],
     "expected_tests": [
       "tests/test_mmo_onchain_security_audit.py"
@@ -18,7 +20,8 @@
       "reentrancy",
       "front-running",
       "access control",
-      "integer overflow"
+      "integer overflow",
+      "gas analysis"
     ],
     "bad_answer_traps": [
       "skip reentrancy check",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "contract_audit",
+      "reentrancy_check",
+      "access_control",
+      "gas_analysis"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_onchain_security_audit.py"
+    ],
+    "expected_evidence_terms": [
+      "reentrancy",
+      "front-running",
+      "access control",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "mmo-onchain-security-audit-public-repo-benchmark-anchor",
+    "skill": "mmo-onchain-security-audit",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `mmo-onchain-security-audit` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "contract_audit",
       "reentrancy_check"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "reentrancy",
       "front-running",
       "access control",
-      "integer overflow",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

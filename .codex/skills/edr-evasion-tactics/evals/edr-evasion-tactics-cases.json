@@ -2,14 +2,16 @@
   {
     "id": "edr-evasion-tactics-battle-read-first",
     "skill": "edr-evasion-tactics",
-    "repo_profile": "Relay-kit offensive tool pack with edr-evasion-tactics skill",
-    "task": "evade EDR detection through unhooking, direct syscalls, callback manipulation, and ETW blinding. Use `edr-evasion-tactics` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with edr-evasion-tactics domain expertise",
+    "task": "evade EDR detection through unhooking, direct syscalls, ETW patching, and callback manipulation. Use `edr-evasion-tactics` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "syscall_stub",
-      "unhook"
+      "unhook",
+      "SSN",
+      "AMSI"
     ],
     "expected_tests": [
       "tests/test_edr_evasion_tactics.py"
@@ -18,7 +20,8 @@
       "userland hook",
       "direct syscall",
       "ETW patch",
-      "callback removal"
+      "callback removal",
+      "SSN"
     ],
     "bad_answer_traps": [
       "incomplete unhook",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "syscall_stub",
+      "unhook",
+      "SSN",
+      "AMSI"
+    ],
+    "expected_tests": [
+      "tests/test_edr_evasion_tactics.py"
+    ],
+    "expected_evidence_terms": [
+      "userland hook",
+      "direct syscall",
+      "ETW patch",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "edr-evasion-tactics-public-repo-benchmark-anchor",
+    "skill": "edr-evasion-tactics",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `edr-evasion-tactics` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "syscall_stub",
       "unhook"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "userland hook",
       "direct syscall",
       "ETW patch",
-      "callback removal",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

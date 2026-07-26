@@ -1,6 +1,6 @@
 # process-injection-techniques Battle-Calibrated Output
 
-Request: implement process injection techniques including DLL injection, process hollowing, APC injection, and thread hijacking
+Request: implement process injection including DLL injection, process hollowing, APC injection, and thread hijacking
 
 Recommended skill: `process-injection-techniques` because the request matches `injection-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `thread context` remains unverified until the focused gate or benchmark hit is captured.
+- `reflective loading` remains unverified until the focused gate or benchmark hit is captured.

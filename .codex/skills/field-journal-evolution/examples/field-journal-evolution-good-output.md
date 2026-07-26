@@ -1,8 +1,8 @@
 # field-journal-evolution Battle-Calibrated Output
 
-Request: evolve field journal entries by capturing pitfalls, techniques, and routing gaps with evidence backing
+Request: evolve field journal by capturing pitfalls, techniques, and routing gaps with evidence backing
 
-Recommended skill: `field-journal-evolution` because the request matches `journal-curator` work and has concrete repo anchors.
+Recommended skill: `field-journal-evolution` because the request matches `knowledge-writeback` work and has concrete repo anchors.
 
 Read first:
 
@@ -21,4 +21,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `journal append` remains unverified until the focused gate or benchmark hit is captured.
+- `candidate status` remains unverified until the focused gate or benchmark hit is captured.

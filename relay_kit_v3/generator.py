@@ -18,7 +18,9 @@ from .registry import (
     DOC_RENDERERS,
     LEGACY_ROLE_MAP,
     NATIVE_SUPPORT_SKILLS,
+    OFFENSIVE_TOOL_PACK_SKILLS,
     ORCHESTRATOR_SKILLS,
+    PUBLIC_ENTRYPOINT_SKILLS,
     REFERENCE_NAMES_FOR_BUNDLE,
     ROLE_SKILLS,
     SUPPORT_REFERENCES,
@@ -72,6 +74,8 @@ BUNDLES: Dict[str, List[str]] = {
         list(CLEANUP_SKILLS.keys()),
         list(NATIVE_SUPPORT_SKILLS.keys()),
         list(DISCIPLINE_UTILITY_SKILLS.keys()),
+        list(OFFENSIVE_TOOL_PACK_SKILLS.keys()),
+        list(PUBLIC_ENTRYPOINT_SKILLS.keys()),
     ),
 }
 

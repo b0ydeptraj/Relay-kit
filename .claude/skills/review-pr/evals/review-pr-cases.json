@@ -1,0 +1,93 @@
+[
+  {
+    "id": "review-pr-battle-read-first",
+    "skill": "review-pr",
+    "repo_profile": "Relay-kit offensive tool pack with review-pr domain expertise",
+    "task": "review a branch or PR before merge with evidence-backed sign-off. Use `review-pr` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "review_hub",
+      "pr_review",
+      "branch",
+      "merge"
+    ],
+    "expected_tests": [
+      "tests/test_review_pr.py"
+    ],
+    "expected_evidence_terms": [
+      "branch review",
+      "PR review",
+      "code review",
+      "merge criteria",
+      "sign-off"
+    ],
+    "bad_answer_traps": [
+      "merge without review",
+      "review without criteria",
+      "skip regression check"
+    ]
+  },
+  {
+    "id": "review-pr-deep-weakness-trap",
+    "skill": "review-pr",
+    "repo_profile": "deep relay suite fixture with review-pr domain expertise",
+    "task": "Score `review-pr` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "review_hub",
+      "pr_review",
+      "branch",
+      "merge"
+    ],
+    "expected_tests": [
+      "tests/test_review_pr.py"
+    ],
+    "expected_evidence_terms": [
+      "branch review",
+      "PR review",
+      "code review",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "review-pr-public-repo-benchmark-anchor",
+    "skill": "review-pr",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `review-pr` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "review_hub",
+      "pr_review"
+    ],
+    "expected_tests": [
+      "tests/test_review_pr.py"
+    ],
+    "expected_evidence_terms": [
+      "branch review",
+      "PR review",
+      "code review",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

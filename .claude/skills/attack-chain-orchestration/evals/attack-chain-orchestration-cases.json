@@ -2,14 +2,16 @@
   {
     "id": "attack-chain-orchestration-battle-read-first",
     "skill": "attack-chain-orchestration",
-    "repo_profile": "Relay-kit offensive tool pack with attack-chain-orchestration skill",
-    "task": "orchestrate multi-phase attack chains following ATT&CK framework ordering with OPSEC discipline. Use `attack-chain-orchestration` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with attack-chain-orchestration domain expertise",
+    "task": "orchestrate multi-phase authorized attack chains following ATT&CK framework with OPSEC discipline. Use `attack-chain-orchestration` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "attack_chain",
-      "phase_order"
+      "phase_order",
+      "engagement_proof",
+      "ATT_CK"
     ],
     "expected_tests": [
       "tests/test_attack_chain_orchestration.py"
@@ -18,7 +20,8 @@
       "ATT&CK phase",
       "kill chain",
       "OPSEC ordering",
-      "phase transition"
+      "phase transition",
+      "engagement proof"
     ],
     "bad_answer_traps": [
       "skip recon phase",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "attack_chain",
+      "phase_order",
+      "engagement_proof",
+      "ATT_CK"
+    ],
+    "expected_tests": [
+      "tests/test_attack_chain_orchestration.py"
+    ],
+    "expected_evidence_terms": [
+      "ATT&CK phase",
+      "kill chain",
+      "OPSEC ordering",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "attack-chain-orchestration-public-repo-benchmark-anchor",
+    "skill": "attack-chain-orchestration",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `attack-chain-orchestration` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "attack_chain",
       "phase_order"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "ATT&CK phase",
       "kill chain",
       "OPSEC ordering",
-      "phase transition",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

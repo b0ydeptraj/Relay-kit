@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "browser-fingerprint-engineering",
-  "role": "fingerprint-engineer",
+  "role": "browser-fingerprint-specialist",
   "category": "evasion",
   "core_competencies": [
     {
@@ -41,6 +41,30 @@
       "archetypes": [
         "evasion"
       ]
+    },
+    {
+      "id": "evasion.font-enumeration",
+      "label": "Control font enumeration to match target browser profile.",
+      "evidence_terms": [
+        "font",
+        "enumeration",
+        "metric"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.timezone-locale",
+      "label": "Set timezone, locale, and language to match fingerprint profile.",
+      "evidence_terms": [
+        "timezone",
+        "locale",
+        "language"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
     }
   ],
   "failure_traps": [
@@ -51,9 +75,13 @@
     {
       "id": "evasion.detectable-spoof",
       "description": "Spoofed values are detectable by integrity checks."
+    },
+    {
+      "id": "evasion.wrong-font-set",
+      "description": "Font list doesn't match target OS/browser combination."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.934706+00:00"
+  "generated_at": "2026-07-22T10:23:55.884214+00:00"
 }

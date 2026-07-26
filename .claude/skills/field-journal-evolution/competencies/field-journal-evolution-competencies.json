@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "field-journal-evolution",
-  "role": "journal-curator",
+  "role": "knowledge-writeback",
   "category": "meta",
   "core_competencies": [
     {
@@ -39,6 +39,30 @@
       "archetypes": [
         "meta"
       ]
+    },
+    {
+      "id": "meta.confidence-labeling",
+      "label": "Label confidence level explicitly on every entry.",
+      "evidence_terms": [
+        "confidence",
+        "low",
+        "medium"
+      ],
+      "archetypes": [
+        "meta"
+      ]
+    },
+    {
+      "id": "meta.pattern-classification",
+      "label": "Classify entry as pitfall, technique, routing-gap, or discovery.",
+      "evidence_terms": [
+        "pitfall",
+        "technique",
+        "routing-gap"
+      ],
+      "archetypes": [
+        "meta"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "meta.auto-promote",
       "description": "Automatically promoting entry without human approval."
+    },
+    {
+      "id": "meta.wrong-classification",
+      "description": "Misclassifying entry type causing incorrect retrieval."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.989789+00:00"
+  "generated_at": "2026-07-22T10:23:55.942840+00:00"
 }

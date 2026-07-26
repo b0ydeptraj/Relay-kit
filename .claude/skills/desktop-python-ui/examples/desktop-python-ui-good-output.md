@@ -1,8 +1,8 @@
 # desktop-python-ui Battle-Calibrated Output
 
-Request: build desktop applications using Python UI frameworks like PyQt, PySide, Tkinter, or Dear PyGui
+Request: build desktop Python GUI applications using PyQt6/PySide6, Tkinter, or wxPython
 
-Recommended skill: `desktop-python-ui` because the request matches `python-ui-developer` work and has concrete repo anchors.
+Recommended skill: `desktop-python-ui` because the request matches `python-ui-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `threading model` remains unverified until the focused gate or benchmark hit is captured.
+- `layout manager` remains unverified until the focused gate or benchmark hit is captured.

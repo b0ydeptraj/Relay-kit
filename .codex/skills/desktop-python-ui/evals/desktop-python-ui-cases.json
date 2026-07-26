@@ -2,14 +2,16 @@
   {
     "id": "desktop-python-ui-battle-read-first",
     "skill": "desktop-python-ui",
-    "repo_profile": "Relay-kit offensive tool pack with desktop-python-ui skill",
-    "task": "build desktop applications using Python UI frameworks like PyQt, PySide, Tkinter, or Dear PyGui. Use `desktop-python-ui` and cite the first files before advice.",
+    "repo_profile": "Relay-kit offensive tool pack with desktop-python-ui domain expertise",
+    "task": "build desktop Python GUI applications using PyQt6/PySide6, Tkinter, or wxPython. Use `desktop-python-ui` and cite the first files before advice.",
     "expected_files": [
       "relay_kit_v3/registry/skills.py"
     ],
     "expected_symbols": [
       "QApplication",
-      "MainWindow"
+      "MainWindow",
+      "QThread",
+      "Signal"
     ],
     "expected_tests": [
       "tests/test_desktop_python_ui.py"
@@ -18,7 +20,8 @@
       "event loop",
       "signal-slot",
       "widget tree",
-      "threading model"
+      "threading model",
+      "layout manager"
     ],
     "bad_answer_traps": [
       "UI updates from worker thread",
@@ -36,6 +39,36 @@
     ],
     "expected_symbols": [
       "QApplication",
+      "MainWindow",
+      "QThread",
+      "Signal"
+    ],
+    "expected_tests": [
+      "tests/test_desktop_python_ui.py"
+    ],
+    "expected_evidence_terms": [
+      "event loop",
+      "signal-slot",
+      "widget tree",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "desktop-python-ui-public-repo-benchmark-anchor",
+    "skill": "desktop-python-ui",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `desktop-python-ui` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py"
+    ],
+    "expected_symbols": [
+      "QApplication",
       "MainWindow"
     ],
     "expected_tests": [
@@ -45,14 +78,13 @@
       "event loop",
       "signal-slot",
       "widget tree",
-      "threading model",
-      "residual risk",
-      "weak evidence"
+      "strict evidence",
+      "read-only"
     ],
     "bad_answer_traps": [
-      "looks like",
-      "usual checklist",
-      "battle-max-on-suite without proof"
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
     ]
   }
 ]

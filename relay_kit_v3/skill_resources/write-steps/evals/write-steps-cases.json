@@ -1,0 +1,93 @@
+[
+  {
+    "id": "write-steps-battle-read-first",
+    "skill": "write-steps",
+    "repo_profile": "Relay-kit offensive tool pack with write-steps domain expertise",
+    "task": "slice approved work into small, buildable, verifiable implementation steps. Use `write-steps` and cite the first files before advice.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "scrum_master",
+      "story",
+      "tech_spec",
+      "implementation_step"
+    ],
+    "expected_tests": [
+      "tests/test_write_steps.py"
+    ],
+    "expected_evidence_terms": [
+      "implementation steps",
+      "verifiable",
+      "buildable",
+      "slicing",
+      "done criteria"
+    ],
+    "bad_answer_traps": [
+      "steps without done criteria",
+      "too large steps",
+      "no verification signal"
+    ]
+  },
+  {
+    "id": "write-steps-deep-weakness-trap",
+    "skill": "write-steps",
+    "repo_profile": "deep relay suite fixture with write-steps domain expertise",
+    "task": "Score `write-steps` against a deep battle case, identify weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "scrum_master",
+      "story",
+      "tech_spec",
+      "implementation_step"
+    ],
+    "expected_tests": [
+      "tests/test_write_steps.py"
+    ],
+    "expected_evidence_terms": [
+      "implementation steps",
+      "verifiable",
+      "buildable",
+      "residual risk",
+      "weak evidence"
+    ],
+    "bad_answer_traps": [
+      "looks like",
+      "usual checklist",
+      "battle-max-on-suite without proof"
+    ]
+  },
+  {
+    "id": "write-steps-public-repo-benchmark-anchor",
+    "skill": "write-steps",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build, no tests",
+    "task": "Run a read-only battle benchmark style review for `write-steps` and explain what evidence is still missing.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_public_cli.py"
+    ],
+    "expected_symbols": [
+      "scrum_master",
+      "story"
+    ],
+    "expected_tests": [
+      "tests/test_write_steps.py"
+    ],
+    "expected_evidence_terms": [
+      "implementation steps",
+      "verifiable",
+      "buildable",
+      "strict evidence",
+      "read-only"
+    ],
+    "bad_answer_traps": [
+      "checklist only",
+      "expert guarantee",
+      "field-tested"
+    ]
+  }
+]

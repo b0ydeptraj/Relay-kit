@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "write-steps",
+  "role": "specialist",
+  "category": "planning",
+  "core_competencies": [
+    {
+      "id": "planning.step-size",
+      "label": "Keep steps small enough to complete in one focused pass.",
+      "evidence_terms": [
+        "small",
+        "focused",
+        "bounded"
+      ],
+      "archetypes": [
+        "planning"
+      ]
+    },
+    {
+      "id": "planning.done-criteria",
+      "label": "Every step must have explicit done criteria.",
+      "evidence_terms": [
+        "done",
+        "criteria",
+        "verification"
+      ],
+      "archetypes": [
+        "planning"
+      ]
+    },
+    {
+      "id": "planning.verification-signal",
+      "label": "Name the first verification command for each step.",
+      "evidence_terms": [
+        "verification",
+        "command",
+        "signal"
+      ],
+      "archetypes": [
+        "planning"
+      ]
+    },
+    {
+      "id": "planning.dependency-order",
+      "label": "Order steps by dependency, not by arbitrary sequence.",
+      "evidence_terms": [
+        "dependency",
+        "order",
+        "depends-on"
+      ],
+      "archetypes": [
+        "planning"
+      ]
+    },
+    {
+      "id": "planning.parallel-safety",
+      "label": "Mark which steps are safe to execute in parallel.",
+      "evidence_terms": [
+        "parallel",
+        "safe",
+        "wave"
+      ],
+      "archetypes": [
+        "planning"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "planning.no-done-criteria",
+      "description": "Steps without explicit done criteria."
+    },
+    {
+      "id": "planning.too-large-step",
+      "description": "Steps that span multiple subsystems without decomposition."
+    },
+    {
+      "id": "planning.no-verification",
+      "description": "Missing first verification signal for each step."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.171181+00:00"
+}

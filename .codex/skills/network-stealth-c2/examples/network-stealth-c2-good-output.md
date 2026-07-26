@@ -1,8 +1,8 @@
 # network-stealth-c2 Battle-Calibrated Output
 
-Request: build and operate C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline
+Request: build C2 infrastructure with traffic blending, domain fronting, protocol mimicry, and beaconing discipline
 
-Recommended skill: `network-stealth-c2` because the request matches `c2-engineer` work and has concrete repo anchors.
+Recommended skill: `network-stealth-c2` because the request matches `c2-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `redirector chain` remains unverified until the focused gate or benchmark hit is captured.
+- `beacon discipline` remains unverified until the focused gate or benchmark hit is captured.

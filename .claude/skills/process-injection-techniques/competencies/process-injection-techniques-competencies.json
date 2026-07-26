@@ -40,6 +40,30 @@
       "archetypes": [
         "offensive"
       ]
+    },
+    {
+      "id": "offensive.technique-selection",
+      "label": "Select injection technique based on target process protections.",
+      "evidence_terms": [
+        "technique",
+        "PPL",
+        "Protected Process"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.pid-validation",
+      "label": "Validate target PID exists and is accessible before injection.",
+      "evidence_terms": [
+        "PID",
+        "OpenProcess",
+        "ACCESS_DENIED"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
     }
   ],
   "failure_traps": [
@@ -50,9 +74,13 @@
     {
       "id": "offensive.no-cleanup",
       "description": "Leaving allocated memory on injection failure."
+    },
+    {
+      "id": "offensive.rwx-allocation",
+      "description": "Using RWX allocation that triggers security alerts."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.072639+00:00"
+  "generated_at": "2026-07-22T10:23:56.051761+00:00"
 }

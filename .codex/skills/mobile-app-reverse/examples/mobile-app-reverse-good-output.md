@@ -1,8 +1,8 @@
 # mobile-app-reverse Battle-Calibrated Output
 
-Request: reverse-engineer mobile applications including APK/IPA analysis, SSL pinning bypass, and API extraction
+Request: reverse-engineer mobile APK/IPA apps to find API endpoints, signing keys, and certificate pinning
 
-Recommended skill: `mobile-app-reverse` because the request matches `mobile-reverser` work and has concrete repo anchors.
+Recommended skill: `mobile-app-reverse` because the request matches `mobile-reverse-specialist` work and has concrete repo anchors.
 
 Read first:
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `API endpoint extraction` remains unverified until the focused gate or benchmark hit is captured.
+- `Frida hook` remains unverified until the focused gate or benchmark hit is captured.

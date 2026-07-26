@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "protocol-fingerprint-spoofing",
-  "role": "protocol-spoofer",
+  "role": "protocol-fingerprint-specialist",
   "category": "evasion",
   "core_competencies": [
     {
@@ -41,6 +41,30 @@
       "archetypes": [
         "evasion"
       ]
+    },
+    {
+      "id": "evasion.alpn-selection",
+      "label": "Configure ALPN negotiation to match target profile.",
+      "evidence_terms": [
+        "ALPN",
+        "h2",
+        "http/1.1"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
+    },
+    {
+      "id": "evasion.session-ticket",
+      "label": "Handle TLS session tickets consistently with target.",
+      "evidence_terms": [
+        "session",
+        "ticket",
+        "resumption"
+      ],
+      "archetypes": [
+        "evasion"
+      ]
     }
   ],
   "failure_traps": [
@@ -51,9 +75,13 @@
     {
       "id": "evasion.missing-extension",
       "description": "Missing TLS extensions that target client sends."
+    },
+    {
+      "id": "evasion.alpn-mismatch",
+      "description": "ALPN negotiation differs from target browser behavior."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.089425+00:00"
+  "generated_at": "2026-07-22T10:23:56.067826+00:00"
 }

@@ -1,6 +1,6 @@
 # field-journal-evolution Weak Output Anti-Example
 
-Request: evolve field journal entries by capturing pitfalls, techniques, and routing gaps with evidence backing
+Request: evolve field journal by capturing pitfalls, techniques, and routing gaps with evidence backing
 
 Weak answer:
 

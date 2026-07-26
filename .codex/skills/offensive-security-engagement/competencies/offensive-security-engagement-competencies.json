@@ -39,6 +39,30 @@
       "archetypes": [
         "offensive"
       ]
+    },
+    {
+      "id": "offensive.scope-enforcement",
+      "label": "Enforce engagement scope boundaries on every lane.",
+      "evidence_terms": [
+        "scope",
+        "boundary",
+        "in-scope"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
+    },
+    {
+      "id": "offensive.handoff-discipline",
+      "label": "Return control to calling hub after caching proof.",
+      "evidence_terms": [
+        "handoff",
+        "return",
+        "hub"
+      ],
+      "archetypes": [
+        "offensive"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "offensive.no-attack-map",
       "description": "Skipping ATT&CK phase mapping."
+    },
+    {
+      "id": "offensive.lane-ownership",
+      "description": "Taking ownership of the lane instead of returning to hub."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:15.062034+00:00"
+  "generated_at": "2026-07-22T10:23:56.043377+00:00"
 }

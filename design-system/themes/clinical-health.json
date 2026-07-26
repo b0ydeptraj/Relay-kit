@@ -1,0 +1,28 @@
+{
+  "name": "Clinical Health",
+  "domain": "Health / medical",
+  "mode": "light",
+  "font": {
+    "display": "IBM Plex Sans",
+    "sans": "IBM Plex Sans",
+    "mono": "IBM Plex Sans"
+  },
+  "shape": {
+    "radius": 10,
+    "radiusSm": 8
+  },
+  "surfaceStyle": "border",
+  "accentStyle": "solid",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#F4FAF9",
+    "surface": "#FFFFFF",
+    "surface2": "#E8F3F1",
+    "ink": "#122B2A",
+    "muted": "#5E7A78",
+    "line": "#D6E8E5",
+    "primary": "#0D9488",
+    "accent2": "#2563EB",
+    "onPrimary": "#FFFFFF"
+  }
+}

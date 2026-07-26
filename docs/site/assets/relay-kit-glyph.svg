@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Relay-kit">
+  <defs><linearGradient id="e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#e)"/>
+  <circle cx="29" cy="50" r="7.5" fill="#FBF4EC"/>
+  <path d="M43 32 L61 50 L43 68" fill="none" stroke="#FBF4EC" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M60 32 L78 50 L60 68" fill="none" stroke="#FBF4EC" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+</svg>

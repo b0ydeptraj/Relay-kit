@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "review-pr",
+  "role": "specialist",
+  "category": "review",
+  "core_competencies": [
+    {
+      "id": "review.criteria-driven",
+      "label": "Review against explicit acceptance criteria, not intuition.",
+      "evidence_terms": [
+        "criteria",
+        "acceptance",
+        "explicit"
+      ],
+      "archetypes": [
+        "review"
+      ]
+    },
+    {
+      "id": "review.regression-check",
+      "label": "Check that existing tests still pass.",
+      "evidence_terms": [
+        "regression",
+        "test",
+        "pass"
+      ],
+      "archetypes": [
+        "review"
+      ]
+    },
+    {
+      "id": "review.architecture-alignment",
+      "label": "Verify change aligns with existing architecture.",
+      "evidence_terms": [
+        "architecture",
+        "alignment",
+        "boundary"
+      ],
+      "archetypes": [
+        "review"
+      ]
+    },
+    {
+      "id": "review.evidence-requirement",
+      "label": "Require evidence before sign-off, not just inspection.",
+      "evidence_terms": [
+        "evidence",
+        "sign-off",
+        "proof"
+      ],
+      "archetypes": [
+        "review"
+      ]
+    },
+    {
+      "id": "review.explicit-verdict",
+      "label": "End with explicit merge/request-changes verdict.",
+      "evidence_terms": [
+        "merge",
+        "request-changes",
+        "verdict"
+      ],
+      "archetypes": [
+        "review"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "review.no-criteria",
+      "description": "Reviewing without checking acceptance criteria."
+    },
+    {
+      "id": "review.inspection-only",
+      "description": "Signing off based on code read without evidence."
+    },
+    {
+      "id": "review.no-verdict",
+      "description": "Not providing explicit merge or request-changes verdict."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-22T10:23:57.142388+00:00"
+}

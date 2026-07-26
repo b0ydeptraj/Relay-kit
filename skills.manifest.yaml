@@ -41,6 +41,7 @@ layers:
     - test-hub
     - review-hub
   layer_3_utility_providers:
+    - secure-code-review
     - research
     - doc-pointers
     - sequential-thinking
@@ -64,12 +65,22 @@ layers:
     - offensive-security-engagement
     - attack-chain-orchestration
   optional_discipline_overlays:
+    - refactoring-discipline
     - root-cause-debugging
     - test-first-development
     - evidence-before-completion
     - skill-evolution
     - field-journal-evolution
   layer_4_specialists_and_standalones:
+    - observability-instrumentation
+    - ci-cd-pipeline
+    - performance-optimization
+    - technical-writing
+    - database-migration-safety
+    - incident-response
+    - aesthetic
+    - frontend-design
+    - ui-styling
     - analyst
     - pm
     - architect

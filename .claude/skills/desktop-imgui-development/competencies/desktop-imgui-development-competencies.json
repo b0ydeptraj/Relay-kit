@@ -1,7 +1,7 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "desktop-imgui-development",
-  "role": "imgui-developer",
+  "role": "imgui-specialist",
   "category": "engineering",
   "core_competencies": [
     {
@@ -39,6 +39,30 @@
       "archetypes": [
         "engineering"
       ]
+    },
+    {
+      "id": "engineering.backend-init",
+      "label": "Initialize backend (D3D/GL) and clean up in all paths.",
+      "evidence_terms": [
+        "backend",
+        "D3D11",
+        "OpenGL"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.hotkey-system",
+      "label": "Implement configurable hotkey system for operator control.",
+      "evidence_terms": [
+        "hotkey",
+        "VK",
+        "toggle"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -49,9 +73,13 @@
     {
       "id": "engineering.no-cleanup",
       "description": "Missing ImGui/backend cleanup on shutdown."
+    },
+    {
+      "id": "engineering.id-collision",
+      "description": "Widget ID collisions causing incorrect state."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.955929+00:00"
+  "generated_at": "2026-07-22T10:23:55.901762+00:00"
 }

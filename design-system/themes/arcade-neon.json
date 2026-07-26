@@ -1,0 +1,28 @@
+{
+  "name": "Arcade Neon",
+  "domain": "Game / esports",
+  "mode": "dark",
+  "font": {
+    "display": "Orbitron",
+    "sans": "Inter",
+    "mono": "Orbitron"
+  },
+  "shape": {
+    "radius": 9,
+    "radiusSm": 7
+  },
+  "surfaceStyle": "shadow",
+  "accentStyle": "gradient",
+  "labelStyle": "normal",
+  "color": {
+    "bg": "#0C0916",
+    "surface": "#161029",
+    "surface2": "#1F1738",
+    "ink": "#EDE9FB",
+    "muted": "#8E86B0",
+    "line": "#2C2350",
+    "primary": "#FF3D9A",
+    "accent2": "#22D3EE",
+    "onPrimary": "#0C0916"
+  }
+}

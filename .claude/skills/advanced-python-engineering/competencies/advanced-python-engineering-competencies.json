@@ -51,6 +51,30 @@
       "archetypes": [
         "engineering"
       ]
+    },
+    {
+      "id": "engineering.type-hints",
+      "label": "Use type hints on all public interfaces.",
+      "evidence_terms": [
+        "type hint",
+        "annotation",
+        "mypy"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "engineering.test-coverage",
+      "label": "Verify implementation with focused unit and integration tests.",
+      "evidence_terms": [
+        "test",
+        "coverage",
+        "pytest"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
     }
   ],
   "failure_traps": [
@@ -61,9 +85,13 @@
     {
       "id": "engineering.floating-deps",
       "description": "Floating dependency versions causing reproducibility failures."
+    },
+    {
+      "id": "engineering.no-type-hints",
+      "description": "Missing type hints on public API surfaces."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T09:54:14.889290+00:00"
+  "generated_at": "2026-07-22T10:23:55.817761+00:00"
 }

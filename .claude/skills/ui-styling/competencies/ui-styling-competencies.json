@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "ui-styling",
+  "role": "ui-styling",
+  "category": "frontend-styling",
+  "core_competencies": [
+    {
+      "id": "frontend-styling.token-system",
+      "label": "Use and extend design tokens instead of hardcoded values.",
+      "evidence_terms": [
+        "design token",
+        "variable",
+        "scale"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-styling.theming",
+      "label": "Keep light/dark and brand themes consistent.",
+      "evidence_terms": [
+        "theme",
+        "dark mode",
+        "brand"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-styling.responsive-layout",
+      "label": "Build responsive layouts with predictable breakpoints.",
+      "evidence_terms": [
+        "responsive",
+        "breakpoint",
+        "layout"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-styling.accessible-components",
+      "label": "Ensure focus, contrast, and target size on components.",
+      "evidence_terms": [
+        "contrast",
+        "focus",
+        "target size"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    },
+    {
+      "id": "frontend-styling.style-reuse",
+      "label": "Extend the system rather than duplicating styles.",
+      "evidence_terms": [
+        "reuse",
+        "variant",
+        "composition"
+      ],
+      "archetypes": [
+        "frontend-app"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "frontend-styling.hardcoded-values",
+      "description": "Uses magic values instead of tokens."
+    },
+    {
+      "id": "frontend-styling.contrast-claim-no-check",
+      "description": "Claims accessible styling without a contrast/focus check."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

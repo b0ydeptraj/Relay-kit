@@ -1,6 +1,6 @@
 # edr-evasion-tactics Battle-Calibrated Output
 
-Request: evade EDR detection through unhooking, direct syscalls, callback manipulation, and ETW blinding
+Request: evade EDR detection through unhooking, direct syscalls, ETW patching, and callback manipulation
 
 Recommended skill: `edr-evasion-tactics` because the request matches `edr-evasion-specialist` work and has concrete repo anchors.
 
@@ -20,4 +20,4 @@ The safe next move is to inspect the named file path, compare it with the expect
 
 Residual risk:
 
-- `callback removal` remains unverified until the focused gate or benchmark hit is captured.
+- `SSN` remains unverified until the focused gate or benchmark hit is captured.
