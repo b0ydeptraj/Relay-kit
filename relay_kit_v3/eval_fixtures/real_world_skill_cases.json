@@ -1,1327 +1,1956 @@
 [
-  {
-    "id": "workflow-router-real-world-contract",
-    "skill": "workflow-router",
-    "task": "Use workflow-router for a production-shaped Relay-kit lane: Use when a request arrives, the user asks what to do next, or scope or complexity is unclear. Route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/state/workflow-state.md",
-      ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff"
-    ],
-    "required_evidence": [
-      ".relay-kit/state/workflow-state.md",
-      ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff"
-    ],
-    "pass_rubric": [
-      "Prefer existing project-context over assumptions.",
-      "Escalate from quick-flow to product-flow whenever hidden complexity appears.",
-      "bootstrap"
-    ]
-  },
-  {
-    "id": "bootstrap-real-world-contract",
-    "skill": "bootstrap",
-    "task": "Use bootstrap for a production-shaped Relay-kit lane: Use when starting a repo lane, after major structure changes, or whenever workflow-state or project-context is missing or stale. Initialize or refresh the shared Relay-kit runtime before a new lane begins. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/state/workflow-state.md",
-      ".relay-kit/contracts/project-context.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/state/workflow-state.md",
-      ".relay-kit/contracts/project-context.md"
-    ],
-    "pass_rubric": [
-      "Prefer lightweight initialization over speculative planning.",
-      "If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.",
-      "workflow-router"
-    ]
-  },
-  {
-    "id": "team-real-world-contract",
-    "skill": "team",
-    "task": "Use team for a production-shaped Relay-kit lane: Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/state/team-board.md",
-      ".relay-kit/state/workflow-state.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/state/team-board.md",
-      ".relay-kit/state/workflow-state.md"
-    ],
-    "pass_rubric": [
-      "Shared artifacts beat chat summaries; update the artifact before handing off.",
-      "Assign one owner skill per lane and name merge order explicitly.",
-      "cook"
-    ]
-  },
-  {
-    "id": "cook-real-world-contract",
-    "skill": "cook",
-    "task": "Use cook for a production-shaped Relay-kit lane: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "updated workflow-state",
-      "a named next hub or specialist"
-    ],
-    "required_evidence": [
-      "updated workflow-state",
-      "a named next hub or specialist"
-    ],
-    "pass_rubric": [
-      "Cook does not replace hubs; it chooses and sequences them.",
-      "Keep each pass small: one hub, one artifact decision, one clear next handoff.",
-      "brainstorm-hub"
-    ]
-  },
-  {
-    "id": "brainstorm-hub-real-world-contract",
-    "skill": "brainstorm-hub",
-    "task": "Use brainstorm-hub for a production-shaped Relay-kit lane: Use when the request is still an idea, an opportunity, or a loosely described improvement. Guide early ideation and rough problem framing before formal planning exists. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/product-brief.md or a decision not to proceed"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/product-brief.md or a decision not to proceed"
-    ],
-    "pass_rubric": [
-      "Use analyst for structured discovery and pm only once the shape is coherent enough to plan.",
-      "Prefer narrowing the problem over generating a giant feature wish list.",
-      "analyst"
-    ]
-  },
-  {
-    "id": "scout-hub-real-world-contract",
-    "skill": "scout-hub",
-    "task": "Use scout-hub for a production-shaped Relay-kit lane: Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/project-context.md",
-      ".relay-kit/references/*.md as needed"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/project-context.md",
-      ".relay-kit/references/*.md as needed"
-    ],
-    "pass_rubric": [
-      "Use project-architecture, dependency-management, api-integration, data-persistence, and testing-patterns as living references.",
-      "Prefer concrete file paths, commands, and entrypoints over summaries.",
-      "plan-hub"
-    ]
-  },
-  {
-    "id": "plan-hub-real-world-contract",
-    "skill": "plan-hub",
-    "task": "Use plan-hub for a production-shaped Relay-kit lane: Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "product-brief, PRD, architecture, epics, and stories or tech-spec depending track"
-    ],
-    "required_evidence": [
-      "product-brief, PRD, architecture, epics, and stories or tech-spec depending track"
-    ],
-    "pass_rubric": [
-      "Call only the roles needed to close the current planning gap.",
-      "Use scout-hub first if the current codebase context is too weak to plan safely.",
-      "analyst"
-    ]
-  },
-  {
-    "id": "debug-hub-real-world-contract",
-    "skill": "debug-hub",
-    "task": "Use debug-hub for a production-shaped Relay-kit lane: Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/investigation-notes.md",
-      ".relay-kit/contracts/tech-spec.md when a fix path is clear"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/investigation-notes.md",
-      ".relay-kit/contracts/tech-spec.md when a fix path is clear"
-    ],
-    "pass_rubric": [
-      "When discipline utilities are installed, use `root-cause-debugging` before touching code.",
-      "Use testing-patterns and problem-solving to turn evidence into a fix path.",
-      "fix-hub"
-    ]
-  },
-  {
-    "id": "fix-hub-real-world-contract",
-    "skill": "fix-hub",
-    "task": "Use fix-hub for a production-shaped Relay-kit lane: Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "refined tech-spec or story",
-      "implementation handoff to developer"
-    ],
-    "required_evidence": [
-      "refined tech-spec or story",
-      "implementation handoff to developer"
-    ],
-    "pass_rubric": [
-      "Keep the fix surface as small as possible.",
-      "Use developer plus execution-loop for execution, not as a replacement for scoping.",
-      "developer"
-    ]
-  },
-  {
-    "id": "test-hub-real-world-contract",
-    "skill": "test-hub",
-    "task": "Use test-hub for a production-shaped Relay-kit lane: Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/qa-report.md",
-      "updated workflow-state with pass, fail, or blocked verdict"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/qa-report.md",
-      "updated workflow-state with pass, fail, or blocked verdict"
-    ],
-    "pass_rubric": [
-      "Use qa-governor for the actual readiness gate.",
-      "Prefer evidence tied to acceptance criteria and regression surface.",
-      "qa-governor"
-    ]
-  },
-  {
-    "id": "review-hub-real-world-contract",
-    "skill": "review-hub",
-    "task": "Use review-hub for a production-shaped Relay-kit lane: Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "updated workflow-state",
-      "go/no-go review verdict"
-    ],
-    "required_evidence": [
-      "updated workflow-state",
-      "go/no-go review verdict"
-    ],
-    "pass_rubric": [
-      "Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.",
-      "Do not hide disagreement between artifacts; name it and route accordingly.",
-      "plan-hub"
-    ]
-  },
-  {
-    "id": "analyst-real-world-contract",
-    "skill": "analyst",
-    "task": "Use analyst for a production-shaped Relay-kit lane: Use when discovery is needed before writing a prd or choosing architecture. Clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/product-brief.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/product-brief.md"
-    ],
-    "pass_rubric": [
-      "Lean on research-expert, problem-solving, and sequential-thinking when the scope is fuzzy.",
-      "Keep the brief short enough that downstream roles can actually use it.",
-      "pm"
-    ]
-  },
-  {
-    "id": "pm-real-world-contract",
-    "skill": "pm",
-    "task": "Use pm for a production-shaped Relay-kit lane: Use when the work is past discovery and needs a buildable scope. Translate a product brief or scoped request into a prd, release slices, and acceptance criteria. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/PRD.md",
-      ".relay-kit/contracts/epics.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/PRD.md",
-      ".relay-kit/contracts/epics.md"
-    ],
-    "pass_rubric": [
-      "Do not hand wave acceptance criteria.",
-      "Separate must-have requirements from stretch goals and out-of-scope ideas.",
-      "architect"
-    ]
-  },
-  {
-    "id": "architect-real-world-contract",
-    "skill": "architect",
-    "task": "Use architect for a production-shaped Relay-kit lane: Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/architecture.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/architecture.md"
-    ],
-    "pass_rubric": [
-      "Mirror the existing codebase before inventing new patterns.",
-      "Pull in project-architecture, dependency-management, api-integration, data-persistence, security-patterns, performance-optimization, and logging-observability when relevant.",
-      "scrum-master"
-    ]
-  },
-  {
-    "id": "scrum-master-real-world-contract",
-    "skill": "scrum-master",
-    "task": "Use scrum-master for a production-shaped Relay-kit lane: Use when planning is done and work must be sliced into safe, verifiable increments. Turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/stories/story-xxx.md",
-      ".relay-kit/contracts/tech-spec.md when quick-flow is used"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/stories/story-xxx.md",
-      ".relay-kit/contracts/tech-spec.md when quick-flow is used"
-    ],
-    "pass_rubric": [
-      "Each story should be a thin vertical slice with explicit done criteria.",
-      "Do not create stories that hide architectural decisions or missing acceptance criteria.",
-      "developer"
-    ]
-  },
-  {
-    "id": "developer-real-world-contract",
-    "skill": "developer",
-    "task": "Use developer for a production-shaped Relay-kit lane: Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "working code",
-      "test evidence"
-    ],
-    "required_evidence": [
-      "working code",
-      "test evidence"
-    ],
-    "pass_rubric": [
-      "Use execution-loop as the execution engine.",
-      "Pull in project-architecture, api-integration, data-persistence, and testing-patterns as needed.",
-      "execution-loop"
-    ]
-  },
-  {
-    "id": "qa-governor-real-world-contract",
-    "skill": "qa-governor",
-    "task": "Use qa-governor for a production-shaped Relay-kit lane: Use when work needs a readiness verdict or implementation confidence is low. Check readiness against acceptance criteria, risk, and regression scope, then write a QA report. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/contracts/qa-report.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/contracts/qa-report.md"
-    ],
-    "pass_rubric": [
-      "Use testing-patterns as the evidence map for the project.",
-      "Use `evidence-before-completion` only for the narrow claim-to-evidence pass before this readiness gate.",
-      "review-hub"
-    ]
-  },
-  {
-    "id": "go-service-runtime-contract",
-    "skill": "go-service-engineering",
-    "task": "Design a Go service slice with API routing, persistence, cache, background jobs, unit tests, integration tests, and observability proof.",
-    "required_artifacts": [
-      "Go service implementation plan",
-      "service ownership"
-    ],
-    "required_evidence": [
-      "unit tests",
-      "integration tests",
-      "observability"
-    ],
-    "pass_rubric": [
-      "handler boundary",
-      "persistence",
-      "runtime evidence"
-    ]
-  },
-  {
-    "id": "next-product-app-router-shadcn",
-    "skill": "next-product-frontend",
-    "task": "Implement a Next.js App Router product screen using existing shadcn/Tailwind patterns with server actions, cache behavior, accessibility, and performance evidence.",
-    "required_artifacts": [
-      "Next.js implementation plan",
-      "route-level behavior proof"
-    ],
-    "required_evidence": [
-      "accessibility",
-      "performance",
-      "hydration-risk"
-    ],
-    "pass_rubric": [
-      "App Router",
-      "server component",
-      "client component"
-    ]
-  },
-  {
-    "id": "growth-launch-campaign",
-    "skill": "growth-marketing",
-    "task": "Create a launch campaign with positioning, channel strategy, funnel metrics, campaign QA, and post-launch measurement tied to product constraints.",
-    "required_artifacts": [
-      "growth execution plan",
-      "campaign QA"
-    ],
-    "required_evidence": [
-      "source-backed messaging",
-      "KPI targets",
-      "measurement method"
-    ],
-    "pass_rubric": [
-      "positioning",
-      "funnel",
-      "post-launch"
-    ]
-  },
-  {
-    "id": "market-research-competitor-pricing",
-    "skill": "market-research",
-    "task": "Compare competitors, refine ICP, collect pricing signals, and label each claim as verified, inferred, or unknown before a GTM decision.",
-    "required_artifacts": [
-      "ranked market findings",
-      "decision-impact summary"
-    ],
-    "required_evidence": [
-      "source authority",
-      "freshness",
-      "pricing signals"
-    ],
-    "pass_rubric": [
-      "competitor",
-      "ICP",
-      "decision impact"
-    ]
-  },
-  {
-    "id": "automation-ops-real-world-contract",
-    "skill": "automation-ops",
-    "task": "Use automation-ops for a production-shaped Relay-kit lane: Use when the request is workflow automation or operational scripting. Define schedulers, webhooks, runbooks, rollback safety, and dry-run discipline for reliable automation. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "automation design or implementation with operational safeguards and run evidence"
-    ],
-    "required_evidence": [
-      "automation design or implementation with operational safeguards and run evidence"
-    ],
-    "pass_rubric": [
-      "Prefer deterministic runbooks over one-off script behavior.",
-      "Require dry-run, rollback, and failure-handling rules for any risky operation.",
-      "developer"
-    ]
-  },
-  {
-    "id": "vietnamese-product-localization-real-world-contract",
-    "skill": "vietnamese-product-localization",
-    "task": "Use vietnamese-product-localization for a production-shaped Relay-kit lane: Use when product output must be localized for Vietnamese users. Produce Vietnamese or bilingual docs, support copy, release notes, and communication artifacts with quality constraints. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "Vietnamese or bilingual product artifacts with terminology and quality notes"
-    ],
-    "required_evidence": [
-      "Vietnamese or bilingual product artifacts with terminology and quality notes"
-    ],
-    "pass_rubric": [
-      "Treat Vietnamese support as profile-based policy, not a forced global default.",
-      "Maintain terminology consistency across docs, support, and product messaging.",
-      "growth-marketing"
-    ]
-  },
-  {
-    "id": "mmo-reup-automation-real-world-contract",
-    "skill": "mmo-reup-automation",
-    "task": "Use mmo-reup-automation for a production-shaped Relay-kit lane: design an operator-run reup console with source inventory, bulk action review, publish queue, reject drawer, evidence timeline, scheduling windows, dedupe, attribution tracking, and policy-safe publishing controls.",
-    "required_artifacts": [
-      "reup operator console design with dedupe ledger, run queue, rate controls, and rollback plan"
-    ],
-    "required_evidence": [
-      "source inventory",
-      "bulk action",
-      "publish queue",
-      "reject drawer",
-      "evidence timeline"
-    ],
-    "pass_rubric": [
-      "Require explicit rights and attribution constraints before any automated repost flow.",
-      "Use deterministic dedup keys and publish windows to avoid accidental spam bursts.",
-      "automation-ops"
-    ]
-  },
-  {
-    "id": "mmo-account-operations-real-world-contract",
-    "skill": "mmo-account-operations",
-    "task": "Use mmo-account-operations for a production-shaped Relay-kit lane: design an account operations console with profile table, folder/tag filters, owner columns, proxy binding, health score, cooldown, quarantine, bulk action review, and recovery runbooks.",
-    "required_artifacts": [
-      "account operations console contract with profile table, health scoring, risk controls, observability, and recovery plan"
-    ],
-    "required_evidence": [
-      "profile table",
-      "proxy binding",
-      "health score",
-      "cooldown",
-      "quarantine"
-    ],
-    "pass_rubric": [
-      "Account automation must use authorized credentials, clear ownership, and auditable actions.",
-      "Never design flows for CAPTCHA bypass, identity spoofing, or policy circumvention.",
-      "automation-ops"
-    ]
-  },
-  {
-    "id": "mmo-browser-fleet-session-reliability",
-    "skill": "mmo-browser-fleet-automation",
-    "task": "Run a policy-safe browser fleet workflow with profile inventory, profile-to-proxy affinity, session lease strategy, live debug evidence, screenshot trace, console logs, selector drift diagnostics, and one controlled failure path.",
-    "required_artifacts": [
-      "browser fleet operator design with profile/session lease table, stable selectors, run queue, and debug evidence",
-      "run traces"
-    ],
-    "required_evidence": [
-      "profile-to-proxy affinity",
-      "session lease",
-      "live debug",
-      "screenshot",
-      "console logs"
-    ],
-    "pass_rubric": [
-      "Use explicit waits, resilient locators, and deterministic retry policy instead of blind sleeps.",
-      "Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy.",
-      "browser-inspector"
-    ]
-  },
-  {
-    "id": "mmo-social-marketing-automation-real-world-contract",
-    "skill": "mmo-social-marketing-automation",
-    "task": "Use mmo-social-marketing-automation for a production-shaped Relay-kit lane: design a campaign workspace with content calendar, asset library, approval lane, reject reason taxonomy, quota meter, per-channel status, official API routing, and moderation safeguards.",
-    "required_artifacts": [
-      "social automation operator workflow with campaign queue, content QA, quota controls, and policy-safe execution"
-    ],
-    "required_evidence": [
-      "campaign workspace",
-      "content calendar",
-      "approval lane",
-      "quota meter",
-      "reject reason"
-    ],
-    "pass_rubric": [
-      "Use official platform APIs and published quota/automation rules as the default path.",
-      "Prevent duplicate or spam-like content bursts across accounts and channels.",
-      "growth-marketing"
-    ]
-  },
-  {
-    "id": "mmo-lowcode-automation-real-world-contract",
-    "skill": "mmo-lowcode-automation",
-    "task": "Use mmo-lowcode-automation for a production-shaped Relay-kit lane: design a low-code operations surface with node graph, execution list, manual execution, production execution, error workflow, redacted execution data, queue controls, and safe deployment controls.",
-    "required_artifacts": [
-      "low-code operations design with node graph, execution list, module contracts, retries, redaction, and observability hooks"
-    ],
-    "required_evidence": [
-      "node graph",
-      "execution list",
-      "manual execution",
-      "production execution",
-      "redacted execution"
-    ],
-    "pass_rubric": [
-      "Treat visual workflow nodes as production logic: define contracts and failure semantics explicitly.",
-      "Enforce per-scenario run limits and queue controls to prevent request storms.",
-      "automation-ops"
-    ]
-  },
-  {
-    "id": "mmo-mobile-app-automation-real-world-contract",
-    "skill": "mmo-mobile-app-automation",
-    "task": "Use mmo-mobile-app-automation for a production-shaped Relay-kit lane: design a mobile automation operations plan with device inventory, hub/provider split, lease owner, app version, logcat/crash/ANR evidence, remote-control link, stable selectors, app-state control, and repeatable run evidence.",
-    "required_artifacts": [
-      "mobile automation operations plan with device farm inventory, session lease, environment matrix, reliability controls, and evidence artifacts"
-    ],
-    "required_evidence": [
-      "device inventory",
-      "hub",
-      "provider",
-      "lease owner",
-      "logcat"
-    ],
-    "pass_rubric": [
-      "Prefer supported frameworks and official automation drivers for device control.",
-      "Define deterministic app-state setup and teardown to reduce flake.",
-      "automation-ops"
-    ]
-  },
-  {
-    "id": "mmo-cloud-queue-cost-guard",
-    "skill": "mmo-cloud-operations-automation",
-    "task": "Operate cloud MMO automation with worker pool, scheduler, queue dashboard, retry jitter, idempotent jobs, stalled job handling, dead-letter inspection, cost ceilings, pause/resume/retry controls, and SLO signal mapping.",
-    "required_artifacts": [
-      "cloud MMO operations architecture with worker pool, queue dashboard, idempotent jobs, backoff policies, and observability",
-      "alerts"
-    ],
-    "required_evidence": [
-      "worker pool",
-      "queue dashboard",
-      "stalled",
-      "dead-letter",
-      "pause"
-    ],
-    "pass_rubric": [
-      "Use idempotent job contracts, idempotency keys, and dead-letter handling for failure isolation.",
-      "Use exponential backoff with jitter for transient failures and throttling events.",
-      "policy-guard"
-    ]
-  },
-  {
-    "id": "mmo-api-quota-replay-safe",
-    "skill": "mmo-http-api-automation",
-    "task": "Build HTTP/API automation with endpoint catalog, request ledger, status code filters, retry count, duration/cost fields, official endpoint contracts, quota handling, 429 retry-backoff behavior, idempotency keys, and replay-safe evidence.",
-    "required_artifacts": [
-      "HTTP/API operator design with endpoint catalog, request ledger, contract validation, idempotent retry logic, and audit-ready logs",
-      "audit-ready logs"
-    ],
-    "required_evidence": [
-      "endpoint catalog",
-      "request ledger",
-      "status code",
-      "retry count",
-      "idempotency key"
-    ],
-    "pass_rubric": [
-      "Define request contracts from official API documentation before implementation.",
-      "Handle 429 and transient 5xx paths with bounded retries and reset-aware backoff.",
-      "api-integration"
-    ]
-  },
-  {
-    "id": "research-real-world-contract",
-    "skill": "research",
-    "task": "Use research for a production-shaped Relay-kit lane: Use when a hub needs fresh evidence but should retain ownership of the lane. Stateless research utility for product, market, technical, or domain questions. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "evidence bullets appended to the active artifact",
-      "assumption checks or citations for the current decision"
-    ],
-    "required_evidence": [
-      "evidence bullets appended to the active artifact",
-      "assumption checks or citations for the current decision"
-    ],
-    "pass_rubric": [
-      "Do not own the plan; feed findings back to the current hub.",
-      "Prefer current evidence over generic opinions.",
-      "brainstorm-hub"
-    ]
-  },
-  {
-    "id": "doc-pointers-real-world-contract",
-    "skill": "doc-pointers",
-    "task": "Use doc-pointers for a production-shaped Relay-kit lane: Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "doc pointers, file paths, or citations appended to the active artifact",
-      "a short conflict note when documentation and implementation disagree"
-    ],
-    "required_evidence": [
-      "doc pointers, file paths, or citations appended to the active artifact",
-      "a short conflict note when documentation and implementation disagree"
-    ],
-    "pass_rubric": [
-      "Return exact doc pointers, not vague summaries.",
-      "Prefer repo-local docs and code comments before broader sources when the task is codebase-specific.",
-      "scout-hub"
-    ]
-  },
-  {
-    "id": "sequential-thinking-real-world-contract",
-    "skill": "sequential-thinking",
-    "task": "Use sequential-thinking for a production-shaped Relay-kit lane: Use when a hub needs structured thought without changing ownership. Stepwise reasoning utility for debugging, planning, or decomposition. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "ordered reasoning steps added to investigation-notes or the active artifact"
-    ],
-    "required_evidence": [
-      "ordered reasoning steps added to investigation-notes or the active artifact"
-    ],
-    "pass_rubric": [
-      "Break work into explicit steps and checkpoints.",
-      "Reasoning should support a decision, not become the decision owner.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "problem-solving-real-world-contract",
-    "skill": "problem-solving",
-    "task": "Use problem-solving for a production-shaped Relay-kit lane: Use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence. Option-generation and root-cause utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "options, hypotheses, and trade-offs appended to the active artifact"
-    ],
-    "required_evidence": [
-      "options, hypotheses, and trade-offs appended to the active artifact"
-    ],
-    "pass_rubric": [
-      "Root cause beats guess-and-patch.",
-      "Surface trade-offs before implementation starts.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "multimodal-evidence-real-world-contract",
-    "skill": "multimodal-evidence",
-    "task": "Use multimodal-evidence for a production-shaped Relay-kit lane: Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "visual or media observations appended to the active artifact"
-    ],
-    "required_evidence": [
-      "visual or media observations appended to the active artifact"
-    ],
-    "pass_rubric": [
-      "Describe what is visible and why it matters.",
-      "Feed observations back to the owning hub.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "browser-inspector-real-world-contract",
-    "skill": "browser-inspector",
-    "task": "Use browser-inspector for a production-shaped Relay-kit lane: Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "browser-side evidence appended to investigation-notes or qa-report"
-    ],
-    "required_evidence": [
-      "browser-side evidence appended to investigation-notes or qa-report"
-    ],
-    "pass_rubric": [
-      "Collect evidence first, then suggest the next move.",
-      "Capture the smallest reproducible browser path.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "repo-map-real-world-contract",
-    "skill": "repo-map",
-    "task": "Use repo-map for a production-shaped Relay-kit lane: Use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting. Repo-map utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "repo map notes appended to project-context or architecture",
-      "a short read-first file list for the next skill"
-    ],
-    "required_evidence": [
-      "repo map notes appended to project-context or architecture",
-      "a short read-first file list for the next skill"
-    ],
-    "pass_rubric": [
-      "Good for unfamiliar areas and dependency direction.",
-      "Use it to orient the lane, not to replace design thinking.",
-      "scout-hub"
-    ]
-  },
-  {
-    "id": "memory-search-real-world-contract",
-    "skill": "memory-search",
-    "task": "Use memory-search for a production-shaped Relay-kit lane: Use when a hub needs past decisions, handoff breadcrumbs, or prior debug evidence from .relay-kit artifacts. Read-only state retrieval utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "matching evidence excerpts from .relay-kit/state or .relay-kit/contracts appended to the active artifact",
-      "a short continuity note that links current work to prior decisions"
-    ],
-    "required_evidence": [
-      "matching evidence excerpts from .relay-kit/state or .relay-kit/contracts appended to the active artifact",
-      "a short continuity note that links current work to prior decisions"
-    ],
-    "pass_rubric": [
-      "Prefer read-only retrieval from authoritative artifacts over replaying chat memory.",
-      "Use `relay-kit query search <project> --query ...` for deterministic lookups.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "release-readiness-real-world-contract",
-    "skill": "release-readiness",
-    "task": "Use release-readiness for a production-shaped Relay-kit lane: Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "release-readiness checklist notes appended to qa-report or workflow-state",
-      "explicit go, hold, or rollback recommendation tied to machine-checkable signals"
-    ],
-    "required_evidence": [
-      "release-readiness checklist notes appended to qa-report or workflow-state",
-      "explicit go, hold, or rollback recommendation tied to machine-checkable signals"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit release readiness <project> --phase pre|post` for deterministic checklists and signal evaluation.",
-      "Treat `ready-check` as review readiness, not automatic production readiness.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "accessibility-review-real-world-contract",
-    "skill": "accessibility-review",
-    "task": "Use accessibility-review for a production-shaped Relay-kit lane: Use when frontend work needs an explicit accessibility gate before merge, release, or completion claims. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "accessibility gate findings appended to qa-report or review notes",
-      "pass or hold verdict tied to keyboard, semantics, focus, and contrast evidence"
-    ],
-    "required_evidence": [
-      "accessibility gate findings appended to qa-report or review notes",
-      "pass or hold verdict tied to keyboard, semantics, focus, and contrast evidence"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit accessibility review <project>` to generate or evaluate the gate checklist.",
-      "Treat accessibility as a required quality bar, not cosmetic polish.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "skill-gauntlet-real-world-contract",
-    "skill": "skill-gauntlet",
-    "task": "Use skill-gauntlet for a production-shaped Relay-kit lane: Use when runtime skill behavior may have drifted and you need a regression gate before trusting routing or completion claims. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "skill behavior regression findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for SKILL.md trigger and structure discipline"
-    ],
-    "required_evidence": [
-      "skill behavior regression findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for SKILL.md trigger and structure discipline"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit skill gauntlet <project> --strict` for machine-checkable gating.",
-      "Run this before promoting large skill edits, bundle changes, or release branches.",
-      "review-hub"
-    ]
-  },
-  {
-    "id": "impact-radar-real-world-contract",
-    "skill": "impact-radar",
-    "task": "Use impact-radar for a production-shaped Relay-kit lane: Use when planning or review needs explicit blast-radius analysis before touching runtime, adapters, templates, or release-sensitive surfaces. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "impact-area and changed-file breakdown appended to workflow-state or review notes",
-      "risk level plus recommended verification gates for the current diff"
-    ],
-    "required_evidence": [
-      "impact-area and changed-file breakdown appended to workflow-state or review notes",
-      "risk level plus recommended verification gates for the current diff"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit impact radar <project>` for deterministic working-tree analysis.",
-      "Use `--base` and `--head` when the lane needs commit-range impact evidence for review.",
-      "plan-hub"
-    ]
-  },
-  {
-    "id": "runtime-doctor-real-world-contract",
-    "skill": "runtime-doctor",
-    "task": "Use runtime-doctor for a production-shaped Relay-kit lane: Use when runtime integrity may have drifted and you need deterministic diagnostics over adapters, artifacts, and lane state surfaces. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "runtime drift findings with exact surface references appended to qa-report or workflow-state",
-      "pass or hold recommendation for runtime health based on parity and artifact checks"
-    ],
-    "required_evidence": [
-      "runtime drift findings with exact surface references appended to qa-report or workflow-state",
-      "pass or hold recommendation for runtime health based on parity and artifact checks"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit runtime doctor <project> --strict` for deterministic runtime diagnostics.",
-      "Use `--state-mode live` when validating active project state artifacts before release claims.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "migration-guard-real-world-contract",
-    "skill": "migration-guard",
-    "task": "Use migration-guard for a production-shaped Relay-kit lane: Use when a naming cutover might leave stale compatibility tokens behind. Enforce token-level cutover policy with a strict fail-closed gate. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "cutover token drift findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for migration safety before merge"
-    ],
-    "required_evidence": [
-      "cutover token drift findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for migration safety before merge"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit migration guard <project> --strict` as the canonical naming gate.",
-      "Guard verdict is fail-closed: findings require cleanup before merge.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "policy-guard-real-world-contract",
-    "skill": "policy-guard",
-    "task": "Use policy-guard for a production-shaped Relay-kit lane: Use when high-risk agent operations need deterministic policy checks before trusting shell, path, secret, prompt, or allowlist changes, with a strict fail-closed posture. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "policy risk findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for high-risk runtime operations"
-    ],
-    "required_evidence": [
-      "policy risk findings appended to qa-report or workflow-state",
-      "explicit pass or hold verdict for high-risk runtime operations"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit policy check <project> --strict` as the canonical policy gate.",
-      "Treat policy findings as release blockers until reviewed by qa-governor or review-hub.",
-      "qa-governor"
-    ]
-  },
-  {
-    "id": "token-economy-failure-log-retention",
-    "skill": "token-economy",
-    "task": "Compact a large failing command log while preserving raw-required traceback and assertion lines, raw path pointers, budget violations, and signal retention metrics.",
-    "required_artifacts": [
-      "token audit report",
-      "task-scoped context pack"
-    ],
-    "required_evidence": [
-      "raw-required blocks",
-      "raw pointers",
-      "signal retention"
-    ],
-    "pass_rubric": [
-      "budget violations",
-      "retention metrics",
-      "raw path"
-    ]
-  },
-  {
-    "id": "context-continuity-real-world-contract",
-    "skill": "context-continuity",
-    "task": "Use context-continuity for a production-shaped Relay-kit lane: Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "checkpoint, rehydrate, handoff, or diff artifacts under .relay-kit/state and .relay-kit/handoffs",
-      "a compact resume brief with explicit next step and open loops"
-    ],
-    "required_evidence": [
-      "checkpoint, rehydrate, handoff, or diff artifacts under .relay-kit/state and .relay-kit/handoffs",
-      "a compact resume brief with explicit next step and open loops"
-    ],
-    "pass_rubric": [
-      "Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.",
-      "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
-      "workflow-router"
-    ]
-  },
-  {
-    "id": "handoff-context-real-world-contract",
-    "skill": "handoff-context",
-    "task": "Use handoff-context for a production-shaped Relay-kit lane: Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "focused context pack notes added to workflow-state, story, or handoff-log",
-      "an explicit include/exclude list for the receiving skill"
-    ],
-    "required_evidence": [
-      "focused context pack notes added to workflow-state, story, or handoff-log",
-      "an explicit include/exclude list for the receiving skill"
-    ],
-    "pass_rubric": [
-      "Minimize irrelevant context.",
-      "Package only what the receiving skill needs to act safely.",
-      "workflow-router"
-    ]
-  },
-  {
-    "id": "mermaid-diagrams-real-world-contract",
-    "skill": "mermaid-diagrams",
-    "task": "Use mermaid-diagrams for a production-shaped Relay-kit lane: Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "mermaid snippets inserted into architecture, project-context, or docs"
-    ],
-    "required_evidence": [
-      "mermaid snippets inserted into architecture, project-context, or docs"
-    ],
-    "pass_rubric": [
-      "Prefer diagrams that clarify ownership, flow, or sequencing.",
-      "Diagrams should serve the artifact, not replace it.",
-      "plan-hub"
-    ]
-  },
-  {
-    "id": "ux-structure-real-world-contract",
-    "skill": "ux-structure",
-    "task": "Use ux-structure for a production-shaped Relay-kit lane: Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "ux notes appended to product-brief, PRD, architecture, or qa-report",
-      "recommended taste controls for design variance, motion intensity, and visual density"
-    ],
-    "required_evidence": [
-      "ux notes appended to product-brief, PRD, architecture, or qa-report",
-      "recommended taste controls for design variance, motion intensity, and visual density"
-    ],
-    "pass_rubric": [
-      "Use this skill to block AI-slop layouts, not merely to polish them.",
-      "Prefer reference-driven direction, explicit hierarchy, and deliberate grid structure over generic SaaS template patterns.",
-      "brainstorm-hub"
-    ]
-  },
-  {
-    "id": "media-tooling-real-world-contract",
-    "skill": "media-tooling",
-    "task": "Use media-tooling for a production-shaped Relay-kit lane: Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "media processing notes or asset instructions appended to the active artifact"
-    ],
-    "required_evidence": [
-      "media processing notes or asset instructions appended to the active artifact"
-    ],
-    "pass_rubric": [
-      "Useful for evidence packaging and asset-heavy workflows.",
-      "Should stay stateless and task-scoped.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "root-cause-debugging-real-world-contract",
-    "skill": "root-cause-debugging",
-    "task": "Use root-cause-debugging for a production-shaped Relay-kit lane: Use when a hub needs a disciplined investigation before proposing fixes. Structured root-cause debugging utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"
-    ],
-    "required_evidence": [
-      "root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"
-    ],
-    "pass_rubric": [
-      "No fixes before investigation.",
-      "Prefer evidence at component boundaries over guessed explanations.",
-      "debug-hub"
-    ]
-  },
-  {
-    "id": "test-first-development-real-world-contract",
-    "skill": "test-first-development",
-    "task": "Use test-first-development for a production-shaped Relay-kit lane: Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "test-first execution notes and evidence appended to story, tech-spec, or qa-report"
-    ],
-    "required_evidence": [
-      "test-first execution notes and evidence appended to story, tech-spec, or qa-report"
-    ],
-    "pass_rubric": [
-      "Write the failing test first when the behavior is testable.",
-      "Keep the change minimal until the new test is green.",
-      "developer"
-    ]
-  },
-  {
-    "id": "evidence-before-completion-real-world-contract",
-    "skill": "evidence-before-completion",
-    "task": "Use evidence-before-completion for a production-shaped Relay-kit lane: Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "fresh claim-to-evidence checks and proof output appended to workflow-state or the active artifact"
-    ],
-    "required_evidence": [
-      "fresh claim-to-evidence checks and proof output appended to workflow-state or the active artifact"
-    ],
-    "pass_rubric": [
-      "No completion claims without fresh verification output.",
-      "Match every claim to the command or evidence that proves it.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "skill-evolution-real-world-contract",
-    "skill": "skill-evolution",
-    "task": "Use skill-evolution for a production-shaped Relay-kit lane: Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "skill delta notes appended to tech-spec, qa-report, or the active artifact",
-      "frontmatter and trigger audit for every changed skill"
-    ],
-    "required_evidence": [
-      "skill delta notes appended to tech-spec, qa-report, or the active artifact",
-      "frontmatter and trigger audit for every changed skill"
-    ],
-    "pass_rubric": [
-      "Treat SKILL.md as a progressively disclosed command surface, not generic documentation.",
-      "Prefer path-scoped activation, forked context, and tight tool profiles for specialized or high-risk skills.",
-      "skill-gauntlet"
-    ]
-  },
-  {
-    "id": "execution-loop-real-world-contract",
-    "skill": "execution-loop",
-    "task": "Use execution-loop for a production-shaped Relay-kit lane: Use when building or fixing code iteratively and require evidence before claiming completion. Self-correcting development loop for implementation work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "working code plus test evidence"
-    ],
-    "required_evidence": [
-      "working code plus test evidence"
-    ],
-    "pass_rubric": [
-      "testing-patterns",
-      "If discipline utilities are installed, use `root-cause-debugging` before repeated fix attempts.",
-      "test-hub"
-    ]
-  },
-  {
-    "id": "project-architecture-real-world-contract",
-    "skill": "project-architecture",
-    "task": "Use project-architecture for a production-shaped Relay-kit lane: Use when designing a change, reviewing architectural drift, or implementing code in an unfamiliar area. Analyze the current codebase shape and maintain a living architecture reference. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/references/project-architecture.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/references/project-architecture.md"
-    ],
-    "pass_rubric": [
-      "Document what the codebase actually does today, not what the team intended six months ago.",
-      "Include concrete file paths, entrypoint mapping, call graph notes, ownership, dependency direction, and a boundary table.",
-      "architect"
-    ]
-  },
-  {
-    "id": "dependency-management-real-world-contract",
-    "skill": "dependency-management",
-    "task": "Use dependency-management for a production-shaped Relay-kit lane: Use when adding packages, updating libraries, or diagnosing environment drift. Capture dependency policy, lockfile usage, environment setup, and safe add-or-upgrade rules. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/references/dependency-management.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/references/dependency-management.md"
-    ],
-    "pass_rubric": [
-      "Record both the official package manager and what contributors actually use day to day.",
-      "Make transitive risk and pinning policy explicit.",
-      "architect"
-    ]
-  },
-  {
-    "id": "api-integration-real-world-contract",
-    "skill": "api-integration",
-    "task": "Use api-integration for a production-shaped Relay-kit lane: Use when building or changing API clients, webhooks, endpoints, or network-facing code. Document external service integration patterns, clients, auth, retries, and error handling. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/references/api-integration.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/references/api-integration.md"
-    ],
-    "pass_rubric": [
-      "Prefer concrete service names, client classes, and endpoint groups over generic summaries.",
-      "Make request id propagation, timeout budget, retries, 429 handling, idempotency, redacted logs, and error translation explicit.",
-      "architect"
-    ]
-  },
-  {
-    "id": "data-persistence-real-world-contract",
-    "skill": "data-persistence",
-    "task": "Use data-persistence for a production-shaped Relay-kit lane: Use when touching schemas, repositories, transactions, caches, or data flows. Document storage topology, models, migrations, caching, and consistency rules. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/references/data-persistence.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/references/data-persistence.md"
-    ],
-    "pass_rubric": [
-      "Cover both primary storage and auxiliary state like caches, queues, or object stores when relevant.",
-      "Document transaction boundary, isolation assumptions, rollback, backfill, and migration risks, not only happy-path structure.",
-      "architect"
-    ]
-  },
-  {
-    "id": "testing-patterns-real-world-contract",
-    "skill": "testing-patterns",
-    "task": "Use testing-patterns for a production-shaped Relay-kit lane: Use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough. Capture how the project tests code, mocks dependencies, and gathers evidence. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      ".relay-kit/references/testing-patterns.md"
-    ],
-    "required_evidence": [
-      ".relay-kit/references/testing-patterns.md"
-    ],
-    "pass_rubric": [
-      "Explain how to produce evidence locally, not only what frameworks exist.",
-      "Map tests to risk areas and brittle zones where regressions cluster.",
-      "developer"
-    ]
-  },
-  {
-    "id": "signal-calibration-overclaim-contract",
-    "skill": "signal-calibration",
-    "task": "Use signal-calibration for a production-shaped Relay-kit lane: calibrate overclaim-prone completion, readiness, skill quality, field-tested, production-ready, commercial-ready, backend realism, UI realism, MMO/API realism, or benchmark claims before accepting them. The operator must separate validated fixture evidence from field evidence and block stronger wording when proof is missing.",
-    "required_artifacts": [
-      ".relay-kit/eval/signal-calibration.json",
-      ".relay-kit/evidence/skill-field-evidence.json when field-tested wording is used"
-    ],
-    "required_evidence": [
-      "proof_level",
-      "evidence_sources",
-      "overclaim flags"
-    ],
-    "pass_rubric": [
-      "field-tested",
-      "confidence",
-      "residual risk"
-    ]
-  },
-  {
-    "id": "aesthetic-real-world-contract",
-    "skill": "aesthetic",
-    "task": "Use aesthetic for a production-shaped Relay-kit lane: Use when UI quality matters and the first-pass output risks looking obviously AI-generated. Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "aesthetic critique with screenshot evidence",
-      "reference comparison notes"
-    ],
-    "required_evidence": [
-      "reference",
-      "screenshot"
-    ],
-    "pass_rubric": [
-      "hierarchy",
-      "revision"
-    ]
-  },
-  {
-    "id": "frontend-design-real-world-contract",
-    "skill": "frontend-design",
-    "task": "Use frontend-design for a production-shaped Relay-kit lane: Use when the user asks to build web components, pages, or applications and visual quality matters. Create distinctive, production-grade frontend interfaces that avoid generic AI aesthetics. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "frontend surface with state coverage",
-      "rendered-state evidence"
-    ],
-    "required_evidence": [
-      "reference",
-      "screenshot"
-    ],
-    "pass_rubric": [
-      "state coverage",
-      "accessibility",
-      "performance"
-    ]
-  },
-  {
-    "id": "ui-styling-real-world-contract",
-    "skill": "ui-styling",
-    "task": "Use ui-styling for a production-shaped Relay-kit lane: Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components, customizing themes, or establishing consistent styling patterns across applications. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "styled UI implementation",
-      "component/state coverage"
-    ],
-    "required_evidence": [
-      "screenshot",
-      "accessibility notes"
-    ],
-    "pass_rubric": [
-      "tokens",
-      "focus",
-      "contrast",
-      "responsive"
-    ]
-  },
-  {
-    "id": "mmo-identity-infrastructure-real-world-contract",
-    "skill": "mmo-identity-infrastructure",
-    "task": "Use mmo-identity-infrastructure for a production-shaped Relay-kit lane: Use when MMO multi-account operations need fingerprint isolation, proxy-to-profile binding, anti-detect browser setup, and consistent digital identity management per account. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "profile x proxy binding registry",
-      "fingerprint consistency check"
-    ],
-    "required_evidence": [
-      "profile",
-      "proxy",
-      "timezone",
-      "locale"
-    ],
-    "pass_rubric": [
-      "binding registry",
-      "trust gate",
-      "fingerprint"
-    ]
-  },
-  {
-    "id": "mmo-proxy-network-ops-real-world-contract",
-    "skill": "mmo-proxy-network-ops",
-    "task": "Use mmo-proxy-network-ops for a production-shaped Relay-kit lane: Use when MMO operations need proxy pool management, health monitoring, sticky session assignment, rotation policy, and network-level isolation per account or workflow. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "proxy health check report",
-      "assignment registry"
-    ],
-    "required_evidence": [
-      "latency",
-      "blacklist status",
-      "assignment registry"
-    ],
-    "pass_rubric": [
-      "sticky session",
-      "zero proxy-sharing",
-      "decommission"
-    ]
-  },
-  {
-    "id": "mmo-nick-warmup-engine-real-world-contract",
-    "skill": "mmo-nick-warmup-engine",
-    "task": "Use mmo-nick-warmup-engine for a production-shaped Relay-kit lane: Use when MMO accounts need a structured warmup sequence to build platform trust before high-risk actions, including behavioral scripting, interaction scheduling, and trust-score monitoring. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "warmup schedule per phase",
-      "per-account readiness verdict"
-    ],
-    "required_evidence": [
-      "action budgets",
-      "trust-signal log",
-      "green run"
-    ],
-    "pass_rubric": [
-      "phase gates",
-      "behavioral variance",
-      "readiness verdict"
-    ]
-  },
-  {
-    "id": "mmo-ecommerce-multichannel-real-world-contract",
-    "skill": "mmo-ecommerce-multichannel",
-    "task": "Use mmo-ecommerce-multichannel for a production-shaped Relay-kit lane: Use when MMO ecommerce operations need multi-store listing sync, master SKU management, order routing, inventory deduplication, and automated fulfillment across Shopee, TikTok Shop, Lazada, and similar platforms. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "SKU mapping registry",
-      "multi-channel ecommerce automation plan"
-    ],
-    "required_evidence": [
-      "SKU mapping registry",
-      "inventory sync test",
-      "order routing trace"
-    ],
-    "pass_rubric": [
-      "Master SKU",
-      "buffer stock",
-      "fulfillment"
-    ]
-  },
-  {
-    "id": "mmo-content-factory-real-world-contract",
-    "skill": "mmo-content-factory",
-    "task": "Use mmo-content-factory for a production-shaped Relay-kit lane: Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "content production pipeline",
-      "sample batch"
-    ],
-    "required_evidence": [
-      "sample batch",
-      "publishing schedule proof",
-      "human-review decision log"
-    ],
-    "pass_rubric": [
-      "diversity",
-      "variant",
-      "feedback loop"
-    ]
-  },
-  {
-    "id": "mmo-crypto-wallet-farming-real-world-contract",
-    "skill": "mmo-crypto-wallet-farming",
-    "task": "Use mmo-crypto-wallet-farming for a production-shaped Relay-kit lane: Use when MMO crypto operations need multi-wallet isolation, airdrop task automation, on-chain interaction scripting, and Sybil-avoidance strategy for DeFi and airdrop farming. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "wallet registry",
-      "capital risk summary"
-    ],
-    "required_evidence": [
-      "wallet-to-profile-to-proxy binding registry",
-      "behavioral variance config",
-      "dry-run trace"
-    ],
-    "pass_rubric": [
-      "wallet isolation",
-      "capital risk",
-      "security"
-    ]
-  },
-  {
-    "id": "mmo-data-harvesting-real-world-contract",
-    "skill": "mmo-data-harvesting",
-    "task": "Use mmo-data-harvesting for a production-shaped Relay-kit lane: Use when MMO operations need structured data collection, lead enrichment, UID targeting list building, or AI-assisted seeding content generation within authorized access boundaries. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-    "required_artifacts": [
-      "data pipeline",
-      "seeding target lists"
-    ],
-    "required_evidence": [
-      "data source authorization proof",
-      "enriched dataset sample",
-      "AI variant sample"
-    ],
-    "pass_rubric": [
-      "dedup",
-      "encrypted storage",
-      "segmentation"
-    ]
-  },
-  {
-    "id": "delegation-control-real-world-contract",
-    "skill": "delegation-control",
-    "task": "Use delegation-control for a production-shaped Relay-kit lane before creating subagents. The operator must classify complexity, keep medium as the normal reasoning tier, prove that delegated work is independent and bounded, enforce quota and lock scope, create a task-specific context pack, and close the subagent only after handoff evidence is recorded.",
-    "required_artifacts": [
-      ".relay-kit/state/delegation-policy.json",
-      ".relay-kit/state/delegation-ledger.jsonl",
-      ".relay-kit/delegation/plans"
-    ],
-    "required_evidence": [
-      "reasoning tier decision",
-      "quota and lock scope",
-      "context pack path",
-      "handoff evidence and close reason"
-    ],
-    "pass_rubric": [
-      "medium default",
-      "no unnecessary spawn",
-      "bounded delegation",
-      "evidence-preserving close"
-    ]
-  }
+ {
+  "id": "workflow-router-real-world-contract",
+  "skill": "workflow-router",
+  "task": "Use workflow-router for a production-shaped Relay-kit lane: Use when a request arrives, the user asks what to do next, or scope or complexity is unclear. Route a request through the right delivery track, choose the active orchestrator or hub, and keep workflow-state current. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff"
+  ],
+  "required_evidence": [
+   ".relay-kit/state/workflow-state.md",
+   ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff"
+  ],
+  "pass_rubric": [
+   "Prefer existing project-context over assumptions.",
+   "Escalate from quick-flow to product-flow whenever hidden complexity appears.",
+   "bootstrap"
+  ]
+ },
+ {
+  "id": "bootstrap-real-world-contract",
+  "skill": "bootstrap",
+  "task": "Use bootstrap for a production-shaped Relay-kit lane: Use when starting a repo lane, after major structure changes, or whenever workflow-state or project-context is missing or stale. Initialize or refresh the shared Relay-kit runtime before a new lane begins. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   ".relay-kit/contracts/project-context.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/state/workflow-state.md",
+   ".relay-kit/contracts/project-context.md"
+  ],
+  "pass_rubric": [
+   "Prefer lightweight initialization over speculative planning.",
+   "If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.",
+   "workflow-router"
+  ]
+ },
+ {
+  "id": "team-real-world-contract",
+  "skill": "team",
+  "task": "Use team for a production-shaped Relay-kit lane: Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/team-board.md",
+   ".relay-kit/state/workflow-state.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/state/team-board.md",
+   ".relay-kit/state/workflow-state.md"
+  ],
+  "pass_rubric": [
+   "Shared artifacts beat chat summaries; update the artifact before handing off.",
+   "Assign one owner skill per lane and name merge order explicitly.",
+   "cook"
+  ]
+ },
+ {
+  "id": "cook-real-world-contract",
+  "skill": "cook",
+  "task": "Use cook for a production-shaped Relay-kit lane: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "updated workflow-state",
+   "a named next hub or specialist"
+  ],
+  "required_evidence": [
+   "updated workflow-state",
+   "a named next hub or specialist"
+  ],
+  "pass_rubric": [
+   "Cook does not replace hubs; it chooses and sequences them.",
+   "Keep each pass small: one hub, one artifact decision, one clear next handoff.",
+   "brainstorm-hub"
+  ]
+ },
+ {
+  "id": "brainstorm-hub-real-world-contract",
+  "skill": "brainstorm-hub",
+  "task": "Use brainstorm-hub for a production-shaped Relay-kit lane: Use when the request is still an idea, an opportunity, or a loosely described improvement. Guide early ideation and rough problem framing before formal planning exists. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/product-brief.md or a decision not to proceed"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/product-brief.md or a decision not to proceed"
+  ],
+  "pass_rubric": [
+   "Use analyst for structured discovery and pm only once the shape is coherent enough to plan.",
+   "Prefer narrowing the problem over generating a giant feature wish list.",
+   "analyst"
+  ]
+ },
+ {
+  "id": "scout-hub-real-world-contract",
+  "skill": "scout-hub",
+  "task": "Use scout-hub for a production-shaped Relay-kit lane: Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/project-context.md",
+   ".relay-kit/references/*.md as needed"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/project-context.md",
+   ".relay-kit/references/*.md as needed"
+  ],
+  "pass_rubric": [
+   "Use project-architecture, dependency-management, api-integration, data-persistence, and testing-patterns as living references.",
+   "Prefer concrete file paths, commands, and entrypoints over summaries.",
+   "plan-hub"
+  ]
+ },
+ {
+  "id": "plan-hub-real-world-contract",
+  "skill": "plan-hub",
+  "task": "Use plan-hub for a production-shaped Relay-kit lane: Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "product-brief, PRD, architecture, epics, and stories or tech-spec depending track"
+  ],
+  "required_evidence": [
+   "product-brief, PRD, architecture, epics, and stories or tech-spec depending track"
+  ],
+  "pass_rubric": [
+   "Call only the roles needed to close the current planning gap.",
+   "Use scout-hub first if the current codebase context is too weak to plan safely.",
+   "analyst"
+  ]
+ },
+ {
+  "id": "debug-hub-real-world-contract",
+  "skill": "debug-hub",
+  "task": "Use debug-hub for a production-shaped Relay-kit lane: Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/investigation-notes.md",
+   ".relay-kit/contracts/tech-spec.md when a fix path is clear"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/investigation-notes.md",
+   ".relay-kit/contracts/tech-spec.md when a fix path is clear"
+  ],
+  "pass_rubric": [
+   "When discipline utilities are installed, use `root-cause-debugging` before touching code.",
+   "Use testing-patterns and problem-solving to turn evidence into a fix path.",
+   "fix-hub"
+  ]
+ },
+ {
+  "id": "fix-hub-real-world-contract",
+  "skill": "fix-hub",
+  "task": "Use fix-hub for a production-shaped Relay-kit lane: Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "refined tech-spec or story",
+   "implementation handoff to developer"
+  ],
+  "required_evidence": [
+   "refined tech-spec or story",
+   "implementation handoff to developer"
+  ],
+  "pass_rubric": [
+   "Keep the fix surface as small as possible.",
+   "Use developer plus execution-loop for execution, not as a replacement for scoping.",
+   "developer"
+  ]
+ },
+ {
+  "id": "test-hub-real-world-contract",
+  "skill": "test-hub",
+  "task": "Use test-hub for a production-shaped Relay-kit lane: Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/qa-report.md",
+   "updated workflow-state with pass, fail, or blocked verdict"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/qa-report.md",
+   "updated workflow-state with pass, fail, or blocked verdict"
+  ],
+  "pass_rubric": [
+   "Use qa-governor for the actual readiness gate.",
+   "Prefer evidence tied to acceptance criteria and regression surface.",
+   "qa-governor"
+  ]
+ },
+ {
+  "id": "review-hub-real-world-contract",
+  "skill": "review-hub",
+  "task": "Use review-hub for a production-shaped Relay-kit lane: Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "updated workflow-state",
+   "go/no-go review verdict"
+  ],
+  "required_evidence": [
+   "updated workflow-state",
+   "go/no-go review verdict"
+  ],
+  "pass_rubric": [
+   "Review-hub is the mesh junction: it may send work back to plan, debug, fix, or test.",
+   "Do not hide disagreement between artifacts; name it and route accordingly.",
+   "plan-hub"
+  ]
+ },
+ {
+  "id": "analyst-real-world-contract",
+  "skill": "analyst",
+  "task": "Use analyst for a production-shaped Relay-kit lane: Use when discovery is needed before writing a prd or choosing architecture. Clarify product intent, assumptions, users, and open questions; produce a product brief for work that is not already fully scoped. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/product-brief.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/product-brief.md"
+  ],
+  "pass_rubric": [
+   "Lean on research-expert, problem-solving, and sequential-thinking when the scope is fuzzy.",
+   "Keep the brief short enough that downstream roles can actually use it.",
+   "pm"
+  ]
+ },
+ {
+  "id": "pm-real-world-contract",
+  "skill": "pm",
+  "task": "Use pm for a production-shaped Relay-kit lane: Use when the work is past discovery and needs a buildable scope. Translate a product brief or scoped request into a prd, release slices, and acceptance criteria. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/PRD.md",
+   ".relay-kit/contracts/epics.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/PRD.md",
+   ".relay-kit/contracts/epics.md"
+  ],
+  "pass_rubric": [
+   "Do not hand wave acceptance criteria.",
+   "Separate must-have requirements from stretch goals and out-of-scope ideas.",
+   "architect"
+  ]
+ },
+ {
+  "id": "architect-real-world-contract",
+  "skill": "architect",
+  "task": "Use architect for a production-shaped Relay-kit lane: Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/architecture.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/architecture.md"
+  ],
+  "pass_rubric": [
+   "Mirror the existing codebase before inventing new patterns.",
+   "Pull in project-architecture, dependency-management, api-integration, data-persistence, security-patterns, performance-optimization, and logging-observability when relevant.",
+   "scrum-master"
+  ]
+ },
+ {
+  "id": "scrum-master-real-world-contract",
+  "skill": "scrum-master",
+  "task": "Use scrum-master for a production-shaped Relay-kit lane: Use when planning is done and work must be sliced into safe, verifiable increments. Turn prd and architecture into implementation-ready stories or a tech spec for quick-flow work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/stories/story-xxx.md",
+   ".relay-kit/contracts/tech-spec.md when quick-flow is used"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/stories/story-xxx.md",
+   ".relay-kit/contracts/tech-spec.md when quick-flow is used"
+  ],
+  "pass_rubric": [
+   "Each story should be a thin vertical slice with explicit done criteria.",
+   "Do not create stories that hide architectural decisions or missing acceptance criteria.",
+   "developer"
+  ]
+ },
+ {
+  "id": "developer-real-world-contract",
+  "skill": "developer",
+  "task": "Use developer for a production-shaped Relay-kit lane: Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "working code",
+   "test evidence"
+  ],
+  "required_evidence": [
+   "working code",
+   "test evidence"
+  ],
+  "pass_rubric": [
+   "Use execution-loop as the execution engine.",
+   "Pull in project-architecture, api-integration, data-persistence, and testing-patterns as needed.",
+   "execution-loop"
+  ]
+ },
+ {
+  "id": "qa-governor-real-world-contract",
+  "skill": "qa-governor",
+  "task": "Use qa-governor for a production-shaped Relay-kit lane: Use when work needs a readiness verdict or implementation confidence is low. Check readiness against acceptance criteria, risk, and regression scope, then write a QA report. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/qa-report.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/qa-report.md"
+  ],
+  "pass_rubric": [
+   "Use testing-patterns as the evidence map for the project.",
+   "Use `evidence-before-completion` only for the narrow claim-to-evidence pass before this readiness gate.",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "go-service-runtime-contract",
+  "skill": "go-service-engineering",
+  "task": "Design a Go service slice with API routing, persistence, cache, background jobs, unit tests, integration tests, and observability proof.",
+  "required_artifacts": [
+   "Go service implementation plan",
+   "service ownership"
+  ],
+  "required_evidence": [
+   "unit tests",
+   "integration tests",
+   "observability"
+  ],
+  "pass_rubric": [
+   "handler boundary",
+   "persistence",
+   "runtime evidence"
+  ]
+ },
+ {
+  "id": "next-product-app-router-shadcn",
+  "skill": "next-product-frontend",
+  "task": "Implement a Next.js App Router product screen using existing shadcn/Tailwind patterns with server actions, cache behavior, accessibility, and performance evidence.",
+  "required_artifacts": [
+   "Next.js implementation plan",
+   "route-level behavior proof"
+  ],
+  "required_evidence": [
+   "accessibility",
+   "performance",
+   "hydration-risk"
+  ],
+  "pass_rubric": [
+   "App Router",
+   "server component",
+   "client component"
+  ]
+ },
+ {
+  "id": "growth-launch-campaign",
+  "skill": "growth-marketing",
+  "task": "Create a launch campaign with positioning, channel strategy, funnel metrics, campaign QA, and post-launch measurement tied to product constraints.",
+  "required_artifacts": [
+   "growth execution plan",
+   "campaign QA"
+  ],
+  "required_evidence": [
+   "source-backed messaging",
+   "KPI targets",
+   "measurement method"
+  ],
+  "pass_rubric": [
+   "positioning",
+   "funnel",
+   "post-launch"
+  ]
+ },
+ {
+  "id": "market-research-competitor-pricing",
+  "skill": "market-research",
+  "task": "Compare competitors, refine ICP, collect pricing signals, and label each claim as verified, inferred, or unknown before a GTM decision.",
+  "required_artifacts": [
+   "ranked market findings",
+   "decision-impact summary"
+  ],
+  "required_evidence": [
+   "source authority",
+   "freshness",
+   "pricing signals"
+  ],
+  "pass_rubric": [
+   "competitor",
+   "ICP",
+   "decision impact"
+  ]
+ },
+ {
+  "id": "automation-ops-real-world-contract",
+  "skill": "automation-ops",
+  "task": "Use automation-ops for a production-shaped Relay-kit lane: Use when the request is workflow automation or operational scripting. Define schedulers, webhooks, runbooks, rollback safety, and dry-run discipline for reliable automation. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "automation design or implementation with operational safeguards and run evidence"
+  ],
+  "required_evidence": [
+   "automation design or implementation with operational safeguards and run evidence"
+  ],
+  "pass_rubric": [
+   "Prefer deterministic runbooks over one-off script behavior.",
+   "Require dry-run, rollback, and failure-handling rules for any risky operation.",
+   "developer"
+  ]
+ },
+ {
+  "id": "vietnamese-product-localization-real-world-contract",
+  "skill": "vietnamese-product-localization",
+  "task": "Use vietnamese-product-localization for a production-shaped Relay-kit lane: Use when product output must be localized for Vietnamese users. Produce Vietnamese or bilingual docs, support copy, release notes, and communication artifacts with quality constraints. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "Vietnamese or bilingual product artifacts with terminology and quality notes"
+  ],
+  "required_evidence": [
+   "Vietnamese or bilingual product artifacts with terminology and quality notes"
+  ],
+  "pass_rubric": [
+   "Treat Vietnamese support as profile-based policy, not a forced global default.",
+   "Maintain terminology consistency across docs, support, and product messaging.",
+   "growth-marketing"
+  ]
+ },
+ {
+  "id": "mmo-reup-automation-real-world-contract",
+  "skill": "mmo-reup-automation",
+  "task": "Use mmo-reup-automation for a production-shaped Relay-kit lane: design an operator-run reup console with source inventory, bulk action review, publish queue, reject drawer, evidence timeline, scheduling windows, dedupe, attribution tracking, and policy-safe publishing controls.",
+  "required_artifacts": [
+   "reup operator console design with dedupe ledger, run queue, rate controls, and rollback plan"
+  ],
+  "required_evidence": [
+   "source inventory",
+   "bulk action",
+   "publish queue",
+   "reject drawer",
+   "evidence timeline"
+  ],
+  "pass_rubric": [
+   "Require explicit rights and attribution constraints before any automated repost flow.",
+   "Use deterministic dedup keys and publish windows to avoid accidental spam bursts.",
+   "automation-ops"
+  ]
+ },
+ {
+  "id": "mmo-account-operations-real-world-contract",
+  "skill": "mmo-account-operations",
+  "task": "Use mmo-account-operations for a production-shaped Relay-kit lane: design an account operations console with profile table, folder/tag filters, owner columns, proxy binding, health score, cooldown, quarantine, bulk action review, and recovery runbooks.",
+  "required_artifacts": [
+   "account operations console contract with profile table, health scoring, risk controls, observability, and recovery plan"
+  ],
+  "required_evidence": [
+   "profile table",
+   "proxy binding",
+   "health score",
+   "cooldown",
+   "quarantine"
+  ],
+  "pass_rubric": [
+   "Account automation must use authorized credentials, clear ownership, and auditable actions.",
+   "Never design flows for CAPTCHA bypass, identity spoofing, or policy circumvention.",
+   "automation-ops"
+  ]
+ },
+ {
+  "id": "mmo-browser-fleet-session-reliability",
+  "skill": "mmo-browser-fleet-automation",
+  "task": "Run a policy-safe browser fleet workflow with profile inventory, profile-to-proxy affinity, session lease strategy, live debug evidence, screenshot trace, console logs, selector drift diagnostics, and one controlled failure path.",
+  "required_artifacts": [
+   "browser fleet operator design with profile/session lease table, stable selectors, run queue, and debug evidence",
+   "run traces"
+  ],
+  "required_evidence": [
+   "profile-to-proxy affinity",
+   "session lease",
+   "live debug",
+   "screenshot",
+   "console logs"
+  ],
+  "pass_rubric": [
+   "Use explicit waits, resilient locators, and deterministic retry policy instead of blind sleeps.",
+   "Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy.",
+   "browser-inspector"
+  ]
+ },
+ {
+  "id": "mmo-social-marketing-automation-real-world-contract",
+  "skill": "mmo-social-marketing-automation",
+  "task": "Use mmo-social-marketing-automation for a production-shaped Relay-kit lane: design a campaign workspace with content calendar, asset library, approval lane, reject reason taxonomy, quota meter, per-channel status, official API routing, and moderation safeguards.",
+  "required_artifacts": [
+   "social automation operator workflow with campaign queue, content QA, quota controls, and policy-safe execution"
+  ],
+  "required_evidence": [
+   "campaign workspace",
+   "content calendar",
+   "approval lane",
+   "quota meter",
+   "reject reason"
+  ],
+  "pass_rubric": [
+   "Use official platform APIs and published quota/automation rules as the default path.",
+   "Prevent duplicate or spam-like content bursts across accounts and channels.",
+   "growth-marketing"
+  ]
+ },
+ {
+  "id": "mmo-lowcode-automation-real-world-contract",
+  "skill": "mmo-lowcode-automation",
+  "task": "Use mmo-lowcode-automation for a production-shaped Relay-kit lane: design a low-code operations surface with node graph, execution list, manual execution, production execution, error workflow, redacted execution data, queue controls, and safe deployment controls.",
+  "required_artifacts": [
+   "low-code operations design with node graph, execution list, module contracts, retries, redaction, and observability hooks"
+  ],
+  "required_evidence": [
+   "node graph",
+   "execution list",
+   "manual execution",
+   "production execution",
+   "redacted execution"
+  ],
+  "pass_rubric": [
+   "Treat visual workflow nodes as production logic: define contracts and failure semantics explicitly.",
+   "Enforce per-scenario run limits and queue controls to prevent request storms.",
+   "automation-ops"
+  ]
+ },
+ {
+  "id": "mmo-mobile-app-automation-real-world-contract",
+  "skill": "mmo-mobile-app-automation",
+  "task": "Use mmo-mobile-app-automation for a production-shaped Relay-kit lane: design a mobile automation operations plan with device inventory, hub/provider split, lease owner, app version, logcat/crash/ANR evidence, remote-control link, stable selectors, app-state control, and repeatable run evidence.",
+  "required_artifacts": [
+   "mobile automation operations plan with device farm inventory, session lease, environment matrix, reliability controls, and evidence artifacts"
+  ],
+  "required_evidence": [
+   "device inventory",
+   "hub",
+   "provider",
+   "lease owner",
+   "logcat"
+  ],
+  "pass_rubric": [
+   "Prefer supported frameworks and official automation drivers for device control.",
+   "Define deterministic app-state setup and teardown to reduce flake.",
+   "automation-ops"
+  ]
+ },
+ {
+  "id": "mmo-cloud-queue-cost-guard",
+  "skill": "mmo-cloud-operations-automation",
+  "task": "Operate cloud MMO automation with worker pool, scheduler, queue dashboard, retry jitter, idempotent jobs, stalled job handling, dead-letter inspection, cost ceilings, pause/resume/retry controls, and SLO signal mapping.",
+  "required_artifacts": [
+   "cloud MMO operations architecture with worker pool, queue dashboard, idempotent jobs, backoff policies, and observability",
+   "alerts"
+  ],
+  "required_evidence": [
+   "worker pool",
+   "queue dashboard",
+   "stalled",
+   "dead-letter",
+   "pause"
+  ],
+  "pass_rubric": [
+   "Use idempotent job contracts, idempotency keys, and dead-letter handling for failure isolation.",
+   "Use exponential backoff with jitter for transient failures and throttling events.",
+   "policy-guard"
+  ]
+ },
+ {
+  "id": "mmo-api-quota-replay-safe",
+  "skill": "mmo-http-api-automation",
+  "task": "Build HTTP/API automation with endpoint catalog, request ledger, status code filters, retry count, duration/cost fields, official endpoint contracts, quota handling, 429 retry-backoff behavior, idempotency keys, and replay-safe evidence.",
+  "required_artifacts": [
+   "HTTP/API operator design with endpoint catalog, request ledger, contract validation, idempotent retry logic, and audit-ready logs",
+   "audit-ready logs"
+  ],
+  "required_evidence": [
+   "endpoint catalog",
+   "request ledger",
+   "status code",
+   "retry count",
+   "idempotency key"
+  ],
+  "pass_rubric": [
+   "Define request contracts from official API documentation before implementation.",
+   "Handle 429 and transient 5xx paths with bounded retries and reset-aware backoff.",
+   "api-integration"
+  ]
+ },
+ {
+  "id": "research-real-world-contract",
+  "skill": "research",
+  "task": "Use research for a production-shaped Relay-kit lane: Use when a hub needs fresh evidence but should retain ownership of the lane. Stateless research utility for product, market, technical, or domain questions. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "evidence bullets appended to the active artifact",
+   "assumption checks or citations for the current decision"
+  ],
+  "required_evidence": [
+   "evidence bullets appended to the active artifact",
+   "assumption checks or citations for the current decision"
+  ],
+  "pass_rubric": [
+   "Do not own the plan; feed findings back to the current hub.",
+   "Prefer current evidence over generic opinions.",
+   "brainstorm-hub"
+  ]
+ },
+ {
+  "id": "doc-pointers-real-world-contract",
+  "skill": "doc-pointers",
+  "task": "Use doc-pointers for a production-shaped Relay-kit lane: Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "doc pointers, file paths, or citations appended to the active artifact",
+   "a short conflict note when documentation and implementation disagree"
+  ],
+  "required_evidence": [
+   "doc pointers, file paths, or citations appended to the active artifact",
+   "a short conflict note when documentation and implementation disagree"
+  ],
+  "pass_rubric": [
+   "Return exact doc pointers, not vague summaries.",
+   "Prefer repo-local docs and code comments before broader sources when the task is codebase-specific.",
+   "scout-hub"
+  ]
+ },
+ {
+  "id": "sequential-thinking-real-world-contract",
+  "skill": "sequential-thinking",
+  "task": "Use sequential-thinking for a production-shaped Relay-kit lane: Use when a hub needs structured thought without changing ownership. Stepwise reasoning utility for debugging, planning, or decomposition. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "ordered reasoning steps added to investigation-notes or the active artifact"
+  ],
+  "required_evidence": [
+   "ordered reasoning steps added to investigation-notes or the active artifact"
+  ],
+  "pass_rubric": [
+   "Break work into explicit steps and checkpoints.",
+   "Reasoning should support a decision, not become the decision owner.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "problem-solving-real-world-contract",
+  "skill": "problem-solving",
+  "task": "Use problem-solving for a production-shaped Relay-kit lane: Use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence. Option-generation and root-cause utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "options, hypotheses, and trade-offs appended to the active artifact"
+  ],
+  "required_evidence": [
+   "options, hypotheses, and trade-offs appended to the active artifact"
+  ],
+  "pass_rubric": [
+   "Root cause beats guess-and-patch.",
+   "Surface trade-offs before implementation starts.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "multimodal-evidence-real-world-contract",
+  "skill": "multimodal-evidence",
+  "task": "Use multimodal-evidence for a production-shaped Relay-kit lane: Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "visual or media observations appended to the active artifact"
+  ],
+  "required_evidence": [
+   "visual or media observations appended to the active artifact"
+  ],
+  "pass_rubric": [
+   "Describe what is visible and why it matters.",
+   "Feed observations back to the owning hub.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "browser-inspector-real-world-contract",
+  "skill": "browser-inspector",
+  "task": "Use browser-inspector for a production-shaped Relay-kit lane: Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "browser-side evidence appended to investigation-notes or qa-report"
+  ],
+  "required_evidence": [
+   "browser-side evidence appended to investigation-notes or qa-report"
+  ],
+  "pass_rubric": [
+   "Collect evidence first, then suggest the next move.",
+   "Capture the smallest reproducible browser path.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "repo-map-real-world-contract",
+  "skill": "repo-map",
+  "task": "Use repo-map for a production-shaped Relay-kit lane: Use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting. Repo-map utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "repo map notes appended to project-context or architecture",
+   "a short read-first file list for the next skill"
+  ],
+  "required_evidence": [
+   "repo map notes appended to project-context or architecture",
+   "a short read-first file list for the next skill"
+  ],
+  "pass_rubric": [
+   "Good for unfamiliar areas and dependency direction.",
+   "Use it to orient the lane, not to replace design thinking.",
+   "scout-hub"
+  ]
+ },
+ {
+  "id": "memory-search-real-world-contract",
+  "skill": "memory-search",
+  "task": "Use memory-search for a production-shaped Relay-kit lane: Use when a hub needs past decisions, handoff breadcrumbs, or prior debug evidence from .relay-kit artifacts. Read-only state retrieval utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "matching evidence excerpts from .relay-kit/state or .relay-kit/contracts appended to the active artifact",
+   "a short continuity note that links current work to prior decisions"
+  ],
+  "required_evidence": [
+   "matching evidence excerpts from .relay-kit/state or .relay-kit/contracts appended to the active artifact",
+   "a short continuity note that links current work to prior decisions"
+  ],
+  "pass_rubric": [
+   "Prefer read-only retrieval from authoritative artifacts over replaying chat memory.",
+   "Use `relay-kit query search <project> --query ...` for deterministic lookups.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "release-readiness-real-world-contract",
+  "skill": "release-readiness",
+  "task": "Use release-readiness for a production-shaped Relay-kit lane: Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "release-readiness checklist notes appended to qa-report or workflow-state",
+   "explicit go, hold, or rollback recommendation tied to machine-checkable signals"
+  ],
+  "required_evidence": [
+   "release-readiness checklist notes appended to qa-report or workflow-state",
+   "explicit go, hold, or rollback recommendation tied to machine-checkable signals"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit release readiness <project> --phase pre|post` for deterministic checklists and signal evaluation.",
+   "Treat `ready-check` as review readiness, not automatic production readiness.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "accessibility-review-real-world-contract",
+  "skill": "accessibility-review",
+  "task": "Use accessibility-review for a production-shaped Relay-kit lane: Use when frontend work needs an explicit accessibility gate before merge, release, or completion claims. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "accessibility gate findings appended to qa-report or review notes",
+   "pass or hold verdict tied to keyboard, semantics, focus, and contrast evidence"
+  ],
+  "required_evidence": [
+   "accessibility gate findings appended to qa-report or review notes",
+   "pass or hold verdict tied to keyboard, semantics, focus, and contrast evidence"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit accessibility review <project>` to generate or evaluate the gate checklist.",
+   "Treat accessibility as a required quality bar, not cosmetic polish.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "skill-gauntlet-real-world-contract",
+  "skill": "skill-gauntlet",
+  "task": "Use skill-gauntlet for a production-shaped Relay-kit lane: Use when runtime skill behavior may have drifted and you need a regression gate before trusting routing or completion claims. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "skill behavior regression findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for SKILL.md trigger and structure discipline"
+  ],
+  "required_evidence": [
+   "skill behavior regression findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for SKILL.md trigger and structure discipline"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit skill gauntlet <project> --strict` for machine-checkable gating.",
+   "Run this before promoting large skill edits, bundle changes, or release branches.",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "impact-radar-real-world-contract",
+  "skill": "impact-radar",
+  "task": "Use impact-radar for a production-shaped Relay-kit lane: Use when planning or review needs explicit blast-radius analysis before touching runtime, adapters, templates, or release-sensitive surfaces. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "impact-area and changed-file breakdown appended to workflow-state or review notes",
+   "risk level plus recommended verification gates for the current diff"
+  ],
+  "required_evidence": [
+   "impact-area and changed-file breakdown appended to workflow-state or review notes",
+   "risk level plus recommended verification gates for the current diff"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit impact radar <project>` for deterministic working-tree analysis.",
+   "Use `--base` and `--head` when the lane needs commit-range impact evidence for review.",
+   "plan-hub"
+  ]
+ },
+ {
+  "id": "runtime-doctor-real-world-contract",
+  "skill": "runtime-doctor",
+  "task": "Use runtime-doctor for a production-shaped Relay-kit lane: Use when runtime integrity may have drifted and you need deterministic diagnostics over adapters, artifacts, and lane state surfaces. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "runtime drift findings with exact surface references appended to qa-report or workflow-state",
+   "pass or hold recommendation for runtime health based on parity and artifact checks"
+  ],
+  "required_evidence": [
+   "runtime drift findings with exact surface references appended to qa-report or workflow-state",
+   "pass or hold recommendation for runtime health based on parity and artifact checks"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit runtime doctor <project> --strict` for deterministic runtime diagnostics.",
+   "Use `--state-mode live` when validating active project state artifacts before release claims.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "migration-guard-real-world-contract",
+  "skill": "migration-guard",
+  "task": "Use migration-guard for a production-shaped Relay-kit lane: Use when a naming cutover might leave stale compatibility tokens behind. Enforce token-level cutover policy with a strict fail-closed gate. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "cutover token drift findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for migration safety before merge"
+  ],
+  "required_evidence": [
+   "cutover token drift findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for migration safety before merge"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit migration guard <project> --strict` as the canonical naming gate.",
+   "Guard verdict is fail-closed: findings require cleanup before merge.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "policy-guard-real-world-contract",
+  "skill": "policy-guard",
+  "task": "Use policy-guard for a production-shaped Relay-kit lane: Use when high-risk agent operations need deterministic policy checks before trusting shell, path, secret, prompt, or allowlist changes, with a strict fail-closed posture. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "policy risk findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for high-risk runtime operations"
+  ],
+  "required_evidence": [
+   "policy risk findings appended to qa-report or workflow-state",
+   "explicit pass or hold verdict for high-risk runtime operations"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit policy check <project> --strict` as the canonical policy gate.",
+   "Treat policy findings as release blockers until reviewed by qa-governor or review-hub.",
+   "qa-governor"
+  ]
+ },
+ {
+  "id": "token-economy-failure-log-retention",
+  "skill": "token-economy",
+  "task": "Compact a large failing command log while preserving raw-required traceback and assertion lines, raw path pointers, budget violations, and signal retention metrics.",
+  "required_artifacts": [
+   "token audit report",
+   "task-scoped context pack"
+  ],
+  "required_evidence": [
+   "raw-required blocks",
+   "raw pointers",
+   "signal retention"
+  ],
+  "pass_rubric": [
+   "budget violations",
+   "retention metrics",
+   "raw path"
+  ]
+ },
+ {
+  "id": "context-continuity-real-world-contract",
+  "skill": "context-continuity",
+  "task": "Use context-continuity for a production-shaped Relay-kit lane: Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "checkpoint, rehydrate, handoff, or diff artifacts under .relay-kit/state and .relay-kit/handoffs",
+   "a compact resume brief with explicit next step and open loops"
+  ],
+  "required_evidence": [
+   "checkpoint, rehydrate, handoff, or diff artifacts under .relay-kit/state and .relay-kit/handoffs",
+   "a compact resume brief with explicit next step and open loops"
+  ],
+  "pass_rubric": [
+   "Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.",
+   "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
+   "workflow-router"
+  ]
+ },
+ {
+  "id": "handoff-context-real-world-contract",
+  "skill": "handoff-context",
+  "task": "Use handoff-context for a production-shaped Relay-kit lane: Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "focused context pack notes added to workflow-state, story, or handoff-log",
+   "an explicit include/exclude list for the receiving skill"
+  ],
+  "required_evidence": [
+   "focused context pack notes added to workflow-state, story, or handoff-log",
+   "an explicit include/exclude list for the receiving skill"
+  ],
+  "pass_rubric": [
+   "Minimize irrelevant context.",
+   "Package only what the receiving skill needs to act safely.",
+   "workflow-router"
+  ]
+ },
+ {
+  "id": "mermaid-diagrams-real-world-contract",
+  "skill": "mermaid-diagrams",
+  "task": "Use mermaid-diagrams for a production-shaped Relay-kit lane: Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "mermaid snippets inserted into architecture, project-context, or docs"
+  ],
+  "required_evidence": [
+   "mermaid snippets inserted into architecture, project-context, or docs"
+  ],
+  "pass_rubric": [
+   "Prefer diagrams that clarify ownership, flow, or sequencing.",
+   "Diagrams should serve the artifact, not replace it.",
+   "plan-hub"
+  ]
+ },
+ {
+  "id": "ux-structure-real-world-contract",
+  "skill": "ux-structure",
+  "task": "Use ux-structure for a production-shaped Relay-kit lane: Use when a hub needs sharper information hierarchy, cleaner flows, stronger screen structure, less generic AI-looking UI, or concrete UX corrections tied to implementation reality. UX and layout utility for user-facing work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "ux notes appended to product-brief, PRD, architecture, or qa-report",
+   "recommended taste controls for design variance, motion intensity, and visual density"
+  ],
+  "required_evidence": [
+   "ux notes appended to product-brief, PRD, architecture, or qa-report",
+   "recommended taste controls for design variance, motion intensity, and visual density"
+  ],
+  "pass_rubric": [
+   "Use this skill to block AI-slop layouts, not merely to polish them.",
+   "Prefer reference-driven direction, explicit hierarchy, and deliberate grid structure over generic SaaS template patterns.",
+   "brainstorm-hub"
+  ]
+ },
+ {
+  "id": "media-tooling-real-world-contract",
+  "skill": "media-tooling",
+  "task": "Use media-tooling for a production-shaped Relay-kit lane: Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "media processing notes or asset instructions appended to the active artifact"
+  ],
+  "required_evidence": [
+   "media processing notes or asset instructions appended to the active artifact"
+  ],
+  "pass_rubric": [
+   "Useful for evidence packaging and asset-heavy workflows.",
+   "Should stay stateless and task-scoped.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "root-cause-debugging-real-world-contract",
+  "skill": "root-cause-debugging",
+  "task": "Use root-cause-debugging for a production-shaped Relay-kit lane: Use when a hub needs a disciplined investigation before proposing fixes. Structured root-cause debugging utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"
+  ],
+  "required_evidence": [
+   "root-cause notes and disproven hypotheses appended to investigation-notes or the active artifact"
+  ],
+  "pass_rubric": [
+   "No fixes before investigation.",
+   "Prefer evidence at component boundaries over guessed explanations.",
+   "debug-hub"
+  ]
+ },
+ {
+  "id": "test-first-development-real-world-contract",
+  "skill": "test-first-development",
+  "task": "Use test-first-development for a production-shaped Relay-kit lane: Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "test-first execution notes and evidence appended to story, tech-spec, or qa-report"
+  ],
+  "required_evidence": [
+   "test-first execution notes and evidence appended to story, tech-spec, or qa-report"
+  ],
+  "pass_rubric": [
+   "Write the failing test first when the behavior is testable.",
+   "Keep the change minimal until the new test is green.",
+   "developer"
+  ]
+ },
+ {
+  "id": "evidence-before-completion-real-world-contract",
+  "skill": "evidence-before-completion",
+  "task": "Use evidence-before-completion for a production-shaped Relay-kit lane: Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "fresh claim-to-evidence checks and proof output appended to workflow-state or the active artifact"
+  ],
+  "required_evidence": [
+   "fresh claim-to-evidence checks and proof output appended to workflow-state or the active artifact"
+  ],
+  "pass_rubric": [
+   "No completion claims without fresh verification output.",
+   "Match every claim to the command or evidence that proves it.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "skill-evolution-real-world-contract",
+  "skill": "skill-evolution",
+  "task": "Use skill-evolution for a production-shaped Relay-kit lane: Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "skill delta notes appended to tech-spec, qa-report, or the active artifact",
+   "frontmatter and trigger audit for every changed skill"
+  ],
+  "required_evidence": [
+   "skill delta notes appended to tech-spec, qa-report, or the active artifact",
+   "frontmatter and trigger audit for every changed skill"
+  ],
+  "pass_rubric": [
+   "Treat SKILL.md as a progressively disclosed command surface, not generic documentation.",
+   "Prefer path-scoped activation, forked context, and tight tool profiles for specialized or high-risk skills.",
+   "skill-gauntlet"
+  ]
+ },
+ {
+  "id": "execution-loop-real-world-contract",
+  "skill": "execution-loop",
+  "task": "Use execution-loop for a production-shaped Relay-kit lane: Use when building or fixing code iteratively and require evidence before claiming completion. Self-correcting development loop for implementation work. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "working code plus test evidence"
+  ],
+  "required_evidence": [
+   "working code plus test evidence"
+  ],
+  "pass_rubric": [
+   "testing-patterns",
+   "If discipline utilities are installed, use `root-cause-debugging` before repeated fix attempts.",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "project-architecture-real-world-contract",
+  "skill": "project-architecture",
+  "task": "Use project-architecture for a production-shaped Relay-kit lane: Use when designing a change, reviewing architectural drift, or implementing code in an unfamiliar area. Analyze the current codebase shape and maintain a living architecture reference. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/references/project-architecture.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/references/project-architecture.md"
+  ],
+  "pass_rubric": [
+   "Document what the codebase actually does today, not what the team intended six months ago.",
+   "Include concrete file paths, entrypoint mapping, call graph notes, ownership, dependency direction, and a boundary table.",
+   "architect"
+  ]
+ },
+ {
+  "id": "dependency-management-real-world-contract",
+  "skill": "dependency-management",
+  "task": "Use dependency-management for a production-shaped Relay-kit lane: Use when adding packages, updating libraries, or diagnosing environment drift. Capture dependency policy, lockfile usage, environment setup, and safe add-or-upgrade rules. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/references/dependency-management.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/references/dependency-management.md"
+  ],
+  "pass_rubric": [
+   "Record both the official package manager and what contributors actually use day to day.",
+   "Make transitive risk and pinning policy explicit.",
+   "architect"
+  ]
+ },
+ {
+  "id": "api-integration-real-world-contract",
+  "skill": "api-integration",
+  "task": "Use api-integration for a production-shaped Relay-kit lane: Use when building or changing API clients, webhooks, endpoints, or network-facing code. Document external service integration patterns, clients, auth, retries, and error handling. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/references/api-integration.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/references/api-integration.md"
+  ],
+  "pass_rubric": [
+   "Prefer concrete service names, client classes, and endpoint groups over generic summaries.",
+   "Make request id propagation, timeout budget, retries, 429 handling, idempotency, redacted logs, and error translation explicit.",
+   "architect"
+  ]
+ },
+ {
+  "id": "data-persistence-real-world-contract",
+  "skill": "data-persistence",
+  "task": "Use data-persistence for a production-shaped Relay-kit lane: Use when touching schemas, repositories, transactions, caches, or data flows. Document storage topology, models, migrations, caching, and consistency rules. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/references/data-persistence.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/references/data-persistence.md"
+  ],
+  "pass_rubric": [
+   "Cover both primary storage and auxiliary state like caches, queues, or object stores when relevant.",
+   "Document transaction boundary, isolation assumptions, rollback, backfill, and migration risks, not only happy-path structure.",
+   "architect"
+  ]
+ },
+ {
+  "id": "testing-patterns-real-world-contract",
+  "skill": "testing-patterns",
+  "task": "Use testing-patterns for a production-shaped Relay-kit lane: Use when adding tests, updating fixtures, validating regressions, or deciding what proof is enough. Capture how the project tests code, mocks dependencies, and gathers evidence. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/references/testing-patterns.md"
+  ],
+  "required_evidence": [
+   ".relay-kit/references/testing-patterns.md"
+  ],
+  "pass_rubric": [
+   "Explain how to produce evidence locally, not only what frameworks exist.",
+   "Map tests to risk areas and brittle zones where regressions cluster.",
+   "developer"
+  ]
+ },
+ {
+  "id": "signal-calibration-overclaim-contract",
+  "skill": "signal-calibration",
+  "task": "Use signal-calibration for a production-shaped Relay-kit lane: calibrate overclaim-prone completion, readiness, skill quality, field-tested, production-ready, commercial-ready, backend realism, UI realism, MMO/API realism, or benchmark claims before accepting them. The operator must separate validated fixture evidence from field evidence and block stronger wording when proof is missing.",
+  "required_artifacts": [
+   ".relay-kit/eval/signal-calibration.json",
+   ".relay-kit/evidence/skill-field-evidence.json when field-tested wording is used"
+  ],
+  "required_evidence": [
+   "proof_level",
+   "evidence_sources",
+   "overclaim flags"
+  ],
+  "pass_rubric": [
+   "field-tested",
+   "confidence",
+   "residual risk"
+  ]
+ },
+ {
+  "id": "aesthetic-real-world-contract",
+  "skill": "aesthetic",
+  "task": "Use aesthetic for a production-shaped Relay-kit lane: Use when UI quality matters and the first-pass output risks looking obviously AI-generated. Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "aesthetic critique with screenshot evidence",
+   "reference comparison notes"
+  ],
+  "required_evidence": [
+   "reference",
+   "screenshot"
+  ],
+  "pass_rubric": [
+   "hierarchy",
+   "revision"
+  ]
+ },
+ {
+  "id": "frontend-design-real-world-contract",
+  "skill": "frontend-design",
+  "task": "Use frontend-design for a production-shaped Relay-kit lane: Use when the user asks to build web components, pages, or applications and visual quality matters. Create distinctive, production-grade frontend interfaces that avoid generic AI aesthetics. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "frontend surface with state coverage",
+   "rendered-state evidence"
+  ],
+  "required_evidence": [
+   "reference",
+   "screenshot"
+  ],
+  "pass_rubric": [
+   "state coverage",
+   "accessibility",
+   "performance"
+  ]
+ },
+ {
+  "id": "ui-styling-real-world-contract",
+  "skill": "ui-styling",
+  "task": "Use ui-styling for a production-shaped Relay-kit lane: Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components, customizing themes, or establishing consistent styling patterns across applications. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "styled UI implementation",
+   "component/state coverage"
+  ],
+  "required_evidence": [
+   "screenshot",
+   "accessibility notes"
+  ],
+  "pass_rubric": [
+   "tokens",
+   "focus",
+   "contrast",
+   "responsive"
+  ]
+ },
+ {
+  "id": "mmo-identity-infrastructure-real-world-contract",
+  "skill": "mmo-identity-infrastructure",
+  "task": "Use mmo-identity-infrastructure for a production-shaped Relay-kit lane: Use when MMO multi-account operations need fingerprint isolation, proxy-to-profile binding, anti-detect browser setup, and consistent digital identity management per account. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "profile x proxy binding registry",
+   "fingerprint consistency check"
+  ],
+  "required_evidence": [
+   "profile",
+   "proxy",
+   "timezone",
+   "locale"
+  ],
+  "pass_rubric": [
+   "binding registry",
+   "trust gate",
+   "fingerprint"
+  ]
+ },
+ {
+  "id": "mmo-proxy-network-ops-real-world-contract",
+  "skill": "mmo-proxy-network-ops",
+  "task": "Use mmo-proxy-network-ops for a production-shaped Relay-kit lane: Use when MMO operations need proxy pool management, health monitoring, sticky session assignment, rotation policy, and network-level isolation per account or workflow. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "proxy health check report",
+   "assignment registry"
+  ],
+  "required_evidence": [
+   "latency",
+   "blacklist status",
+   "assignment registry"
+  ],
+  "pass_rubric": [
+   "sticky session",
+   "zero proxy-sharing",
+   "decommission"
+  ]
+ },
+ {
+  "id": "mmo-nick-warmup-engine-real-world-contract",
+  "skill": "mmo-nick-warmup-engine",
+  "task": "Use mmo-nick-warmup-engine for a production-shaped Relay-kit lane: Use when MMO accounts need a structured warmup sequence to build platform trust before high-risk actions, including behavioral scripting, interaction scheduling, and trust-score monitoring. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "warmup schedule per phase",
+   "per-account readiness verdict"
+  ],
+  "required_evidence": [
+   "action budgets",
+   "trust-signal log",
+   "green run"
+  ],
+  "pass_rubric": [
+   "phase gates",
+   "behavioral variance",
+   "readiness verdict"
+  ]
+ },
+ {
+  "id": "mmo-ecommerce-multichannel-real-world-contract",
+  "skill": "mmo-ecommerce-multichannel",
+  "task": "Use mmo-ecommerce-multichannel for a production-shaped Relay-kit lane: Use when MMO ecommerce operations need multi-store listing sync, master SKU management, order routing, inventory deduplication, and automated fulfillment across Shopee, TikTok Shop, Lazada, and similar platforms. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "SKU mapping registry",
+   "multi-channel ecommerce automation plan"
+  ],
+  "required_evidence": [
+   "SKU mapping registry",
+   "inventory sync test",
+   "order routing trace"
+  ],
+  "pass_rubric": [
+   "Master SKU",
+   "buffer stock",
+   "fulfillment"
+  ]
+ },
+ {
+  "id": "mmo-content-factory-real-world-contract",
+  "skill": "mmo-content-factory",
+  "task": "Use mmo-content-factory for a production-shaped Relay-kit lane: Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "content production pipeline",
+   "sample batch"
+  ],
+  "required_evidence": [
+   "sample batch",
+   "publishing schedule proof",
+   "human-review decision log"
+  ],
+  "pass_rubric": [
+   "diversity",
+   "variant",
+   "feedback loop"
+  ]
+ },
+ {
+  "id": "mmo-crypto-wallet-farming-real-world-contract",
+  "skill": "mmo-crypto-wallet-farming",
+  "task": "Use mmo-crypto-wallet-farming for a production-shaped Relay-kit lane: Use when MMO crypto operations need multi-wallet isolation, airdrop task automation, on-chain interaction scripting, and Sybil-avoidance strategy for DeFi and airdrop farming. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "wallet registry",
+   "capital risk summary"
+  ],
+  "required_evidence": [
+   "wallet-to-profile-to-proxy binding registry",
+   "behavioral variance config",
+   "dry-run trace"
+  ],
+  "pass_rubric": [
+   "wallet isolation",
+   "capital risk",
+   "security"
+  ]
+ },
+ {
+  "id": "mmo-data-harvesting-real-world-contract",
+  "skill": "mmo-data-harvesting",
+  "task": "Use mmo-data-harvesting for a production-shaped Relay-kit lane: Use when MMO operations need structured data collection, lead enrichment, UID targeting list building, or AI-assisted seeding content generation within authorized access boundaries. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   "data pipeline",
+   "seeding target lists"
+  ],
+  "required_evidence": [
+   "data source authorization proof",
+   "enriched dataset sample",
+   "AI variant sample"
+  ],
+  "pass_rubric": [
+   "dedup",
+   "encrypted storage",
+   "segmentation"
+  ]
+ },
+ {
+  "id": "delegation-control-real-world-contract",
+  "skill": "delegation-control",
+  "task": "Use delegation-control for a production-shaped Relay-kit lane before creating subagents. The operator must classify complexity, keep medium as the normal reasoning tier, prove that delegated work is independent and bounded, enforce quota and lock scope, create a task-specific context pack, and close the subagent only after handoff evidence is recorded.",
+  "required_artifacts": [
+   ".relay-kit/state/delegation-policy.json",
+   ".relay-kit/state/delegation-ledger.jsonl",
+   ".relay-kit/delegation/plans"
+  ],
+  "required_evidence": [
+   "reasoning tier decision",
+   "quota and lock scope",
+   "context pack path",
+   "handoff evidence and close reason"
+  ],
+  "pass_rubric": [
+   "medium default",
+   "no unnecessary spawn",
+   "bounded delegation",
+   "evidence-preserving close"
+  ]
+ },
+ {
+  "id": "ci-cd-pipeline-real-world-contract",
+  "skill": "ci-cd-pipeline",
+  "task": "Use ci-cd-pipeline for a production-shaped Relay-kit lane: Use when designing or fixing build, test, and deploy automation: pipeline stages, caching, required gates, environment promotion, artifact versioning, and rollb The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "ci-cd-pipeline evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "release-readiness",
+   "dependency-management"
+  ],
+  "pass_rubric": [
+   "secure-code-review",
+   "incident-response"
+  ]
+ },
+ {
+  "id": "database-migration-safety-real-world-contract",
+  "skill": "database-migration-safety",
+  "task": "Use database-migration-safety for a production-shaped Relay-kit lane: Use when a schema or data migration touches a live database: expand/contract sequencing, backfills, index builds, lock analysis, and a tested rollback for zero- The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "database-migration-safety evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "data-persistence",
+   "release-readiness"
+  ],
+  "pass_rubric": [
+   "ci-cd-pipeline",
+   "incident-response"
+  ]
+ },
+ {
+  "id": "incident-response-real-world-contract",
+  "skill": "incident-response",
+  "task": "Use incident-response for a production-shaped Relay-kit lane: Use when a production incident is active or just resolved: triage severity, stabilize, communicate status, capture a timeline, and write a blameless postmortem  The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "incident-response evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "root-cause-debugging",
+   "observability-instrumentation"
+  ],
+  "pass_rubric": [
+   "fix-hub",
+   "ci-cd-pipeline"
+  ]
+ },
+ {
+  "id": "observability-instrumentation-real-world-contract",
+  "skill": "observability-instrumentation",
+  "task": "Use observability-instrumentation for a production-shaped Relay-kit lane: Use when a service needs structured logging, metrics, distributed tracing, health checks, or SLO-backed alerting so failures are diagnosable in production. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "observability-instrumentation evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "release-readiness",
+   "incident-response"
+  ],
+  "pass_rubric": [
+   "performance-optimization",
+   "runtime-doctor"
+  ]
+ },
+ {
+  "id": "performance-optimization-real-world-contract",
+  "skill": "performance-optimization",
+  "task": "Use performance-optimization for a production-shaped Relay-kit lane: Use when latency, throughput, memory, or cost regresses and needs disciplined profiling: measure a baseline, find the real bottleneck, fix the hot path, and pro The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "performance-optimization evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "observability-instrumentation",
+   "testing-patterns"
+  ],
+  "pass_rubric": [
+   "review-hub",
+   "runtime-doctor"
+  ]
+ },
+ {
+  "id": "refactoring-discipline-real-world-contract",
+  "skill": "refactoring-discipline",
+  "task": "Use refactoring-discipline for a production-shaped Relay-kit lane: Use when restructuring code without changing behavior: extract, rename, split, or de-duplicate under a green test suite with small reversible steps and a charac The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "refactoring-discipline evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "test-first-development",
+   "developer"
+  ],
+  "pass_rubric": [
+   "review-hub",
+   "testing-patterns"
+  ]
+ },
+ {
+  "id": "secure-code-review-real-world-contract",
+  "skill": "secure-code-review",
+  "task": "Use secure-code-review for a production-shaped Relay-kit lane: Use when application code needs a defensive security review before merge or release: injection, authn/authz, secrets handling, crypto misuse, SSRF, deserializat The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "secure-code-review evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "fix-hub",
+   "review-hub"
+  ],
+  "pass_rubric": [
+   "qa-governor",
+   "dependency-management"
+  ]
+ },
+ {
+  "id": "technical-writing-real-world-contract",
+  "skill": "technical-writing",
+  "task": "Use technical-writing for a production-shaped Relay-kit lane: Use when authoring or revising technical documentation: READMEs, API references, runbooks, architecture docs, onboarding guides, or changelogs that must be accu The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "technical-writing evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "review-hub",
+   "doc-pointers"
+  ],
+  "pass_rubric": [
+   "vietnamese-product-localization",
+   "release-readiness"
+  ]
+ },
+ {
+  "id": "llm-app-engineering-real-world-contract",
+  "skill": "llm-app-engineering",
+  "task": "Use llm-app-engineering for a production-shaped Relay-kit lane: Use when building an LLM-powered application feature such as prompt and context design, retrieval-augmented generation, tool and function schemas, agent loops,  The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "llm-app-engineering evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "developer",
+   "secure-code-review"
+  ],
+  "pass_rubric": [
+   "test-hub",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "iac-cloud-provisioning-real-world-contract",
+  "skill": "iac-cloud-provisioning",
+  "task": "Use iac-cloud-provisioning for a production-shaped Relay-kit lane: Use when provisioning or changing cloud infrastructure as code with Terraform, Pulumi, or CloudFormation, including state management, drift detection, plan revi The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "iac-cloud-provisioning evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "container-kubernetes-ops",
+   "secrets-management"
+  ],
+  "pass_rubric": [
+   "release-readiness",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "container-kubernetes-ops-real-world-contract",
+  "skill": "container-kubernetes-ops",
+  "task": "Use container-kubernetes-ops for a production-shaped Relay-kit lane: Use when packaging services into containers or operating Kubernetes workloads, including Dockerfiles, image hygiene, manifests, resource limits, probes, rollout The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "container-kubernetes-ops evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "iac-cloud-provisioning",
+   "secrets-management"
+  ],
+  "pass_rubric": [
+   "observability-instrumentation",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "secrets-management-real-world-contract",
+  "skill": "secrets-management",
+  "task": "Use secrets-management for a production-shaped Relay-kit lane: Use when handling secrets, API keys, tokens, or wallet keys across a fleet and you need vaulting, injection, rotation, scoping, and leak response instead of pla The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "secrets-management evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "iac-cloud-provisioning",
+   "container-kubernetes-ops"
+  ],
+  "pass_rubric": [
+   "secure-code-review",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "privacy-compliance-real-world-contract",
+  "skill": "privacy-compliance",
+  "task": "Use privacy-compliance for a production-shaped Relay-kit lane: Use when a workload collects, stores, or transfers personal data and needs a privacy and data-retention gate covering PII minimization, consent or lawful basis, The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "privacy-compliance evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "data-persistence",
+   "secure-code-review"
+  ],
+  "pass_rubric": [
+   "secrets-management",
+   "review-hub"
+  ]
+ },
+ {
+  "id": "mmo-authorization-gate-real-world-contract",
+  "skill": "mmo-authorization-gate",
+  "task": "Use mmo-authorization-gate for a production-shaped Relay-kit lane: Use when an MMO or automation lane touches a third-party platform and needs an explicit terms-of-service, authorization, and account-risk gate before high-risk  The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "mmo-authorization-gate evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "policy-guard",
+   "qa-governor"
+  ],
+  "pass_rubric": [
+   "review-hub",
+   "utility-provider"
+  ]
+ },
+ {
+  "id": "advanced-python-engineering-real-world-contract",
+  "skill": "advanced-python-engineering",
+  "task": "Use advanced-python-engineering for a production-shaped Relay-kit lane: Use when Python work requires advanced patterns: async I/O, ctypes/cffi interop, metaprogramming, C extension modules, performance optimization, or large-scale  The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "advanced-python-engineering evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "advanced-python-engineering",
+   "mmo-llm-automation"
+  ],
+  "pass_rubric": [
+   "mmo-http-api-automation",
+   "antibot-challenge-solving"
+  ]
+ },
+ {
+  "id": "antibot-challenge-solving-real-world-contract",
+  "skill": "antibot-challenge-solving",
+  "task": "Use antibot-challenge-solving for a production-shaped Relay-kit lane: Use when automation hits bot detection challenges: Cloudflare Turnstile/Bot Fight Mode, Datadome, PerimeterX, reCAPTCHA v2/v3/Enterprise, hCaptcha, or custom JS The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "antibot-challenge-solving evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "protocol-fingerprint-spoofing",
+   "browser-fingerprint-engineering"
+  ],
+  "pass_rubric": [
+   "mmo-http-api-automation",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "attack-chain-orchestration-real-world-contract",
+  "skill": "attack-chain-orchestration",
+  "task": "Use attack-chain-orchestration for a production-shaped Relay-kit lane: Use when planning or orchestrating a multi-phase authorized attack chain: from initial recon through execution, persistence, lateral movement, collection, and c The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "attack-chain-orchestration evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "offensive-security-engagement",
+   "edr-evasion-tactics"
+  ],
+  "pass_rubric": [
+   "process-injection-techniques",
+   "network-stealth-c2"
+  ]
+ },
+ {
+  "id": "binary-reverse-methodology-real-world-contract",
+  "skill": "binary-reverse-methodology",
+  "task": "Use binary-reverse-methodology for a production-shaped Relay-kit lane: Use when reverse engineering a binary: PE/ELF/Mach-O analysis, disassembly, decompilation, protocol reconstruction, anti-analysis bypass, or understanding undoc The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "binary-reverse-methodology evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "malware-analysis-workflows",
+   "binary-stealth-obfuscation"
+  ],
+  "pass_rubric": [
+   "frontend-crypto-reverse",
+   "windows-native-internals"
+  ]
+ },
+ {
+  "id": "binary-stealth-obfuscation-real-world-contract",
+  "skill": "binary-stealth-obfuscation",
+  "task": "Use binary-stealth-obfuscation for a production-shaped Relay-kit lane: Use when a binary payload, shellcode, or PE needs to evade static analysis, signature detection, AV/EDR scanning, or YARA rules through obfuscation, packing, or The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "binary-stealth-obfuscation evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "edr-evasion-tactics",
+   "telemetry-blinding"
+  ],
+  "pass_rubric": [
+   "process-injection-techniques",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "browser-fingerprint-engineering-real-world-contract",
+  "skill": "browser-fingerprint-engineering",
+  "task": "Use browser-fingerprint-engineering for a production-shaped Relay-kit lane: Use when browser-based automation needs to defeat canvas fingerprinting, WebGL fingerprinting, AudioContext fingerprinting, font detection, or behavioral biomet The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "browser-fingerprint-engineering evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "protocol-fingerprint-spoofing",
+   "antibot-challenge-solving"
+  ],
+  "pass_rubric": [
+   "mmo-identity-infrastructure",
+   "mmo-browser-fleet-automation"
+  ]
+ },
+ {
+  "id": "cpp-systems-engineering-real-world-contract",
+  "skill": "cpp-systems-engineering",
+  "task": "Use cpp-systems-engineering for a production-shaped Relay-kit lane: Use when implementing or debugging C++ systems code: Windows/Linux native, RAII, memory management, Win32 API, COM, WTL, STL, multithreading, performance-critic The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "cpp-systems-engineering evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "windows-native-internals",
+   "binary-stealth-obfuscation"
+  ],
+  "pass_rubric": [
+   "process-injection-techniques",
+   "desktop-imgui-development"
+  ]
+ },
+ {
+  "id": "desktop-imgui-development-real-world-contract",
+  "skill": "desktop-imgui-development",
+  "task": "Use desktop-imgui-development for a production-shaped Relay-kit lane: Use when building a desktop GUI with Dear ImGui (C++ or bindings): operator panels, real-time dashboards, debug overlays, game cheats UI, or tool UIs embedded i The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "desktop-imgui-development evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "cpp-systems-engineering",
+   "windows-native-internals"
+  ],
+  "pass_rubric": [
+   "test-hub",
+   "field-journal-evolution"
+  ]
+ },
+ {
+  "id": "desktop-python-ui-real-world-contract",
+  "skill": "desktop-python-ui",
+  "task": "Use desktop-python-ui for a production-shaped Relay-kit lane: Use when building a desktop Python GUI: PyQt6/PySide6, Tkinter, wxPython, or customtkinter for operator tools, automation dashboards, or config panels. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "desktop-python-ui evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "advanced-python-engineering",
+   "terminal-operator-ui"
+  ],
+  "pass_rubric": [
+   "test-hub",
+   "field-journal-evolution"
+  ]
+ },
+ {
+  "id": "edr-evasion-tactics-real-world-contract",
+  "skill": "edr-evasion-tactics",
+  "task": "Use edr-evasion-tactics for a production-shaped Relay-kit lane: Use when a payload or tool needs to evade EDR runtime detection: hook bypass, AMSI bypass, ETW patching, direct syscall, or AV memory scanning evasion. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "edr-evasion-tactics evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "telemetry-blinding",
+   "binary-stealth-obfuscation"
+  ],
+  "pass_rubric": [
+   "process-injection-techniques",
+   "windows-native-internals"
+  ]
+ },
+ {
+  "id": "field-journal-evolution-real-world-contract",
+  "skill": "field-journal-evolution",
+  "task": "Use field-journal-evolution for a production-shaped Relay-kit lane: Use when a task is complete, a pitfall is found, a new technique is discovered, or a routing gap is identified. Writeback experience to the field journal to evo The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "field-journal-evolution evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "workflow-router",
+   "cook"
+  ],
+  "pass_rubric": [
+   "developer",
+   "attack-chain-orchestration"
+  ]
+ },
+ {
+  "id": "frontend-crypto-reverse-real-world-contract",
+  "skill": "frontend-crypto-reverse",
+  "task": "Use frontend-crypto-reverse for a production-shaped Relay-kit lane: Use when web applications use client-side cryptography, obfuscated JS, WASM, or signing parameters that must be reversed to replicate API calls without a browse The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "frontend-crypto-reverse evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "protocol-fingerprint-spoofing",
+   "browser-fingerprint-engineering"
+  ],
+  "pass_rubric": [
+   "mmo-http-api-automation",
+   "mmo-data-harvesting"
+  ]
+ },
+ {
+  "id": "malware-analysis-workflows-real-world-contract",
+  "skill": "malware-analysis-workflows",
+  "task": "Use malware-analysis-workflows for a production-shaped Relay-kit lane: Use when analyzing suspicious binaries, malware samples, or unknown executables: static analysis, dynamic analysis, sandbox detonation, IOC extraction, and beha The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "malware-analysis-workflows evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "binary-reverse-methodology",
+   "edr-evasion-tactics"
+  ],
+  "pass_rubric": [
+   "binary-stealth-obfuscation",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "mmo-llm-automation-real-world-contract",
+  "skill": "mmo-llm-automation",
+  "task": "Use mmo-llm-automation for a production-shaped Relay-kit lane: Use when MMO operations need AI-assisted content generation, behavioral variance, Sybil evasion through LLM diversity, or LLM API integration for bulk content t The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "mmo-llm-automation evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "advanced-python-engineering",
+   "mmo-content-factory"
+  ],
+  "pass_rubric": [
+   "mmo-reup-automation",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "mmo-onchain-security-audit-real-world-contract",
+  "skill": "mmo-onchain-security-audit",
+  "task": "Use mmo-onchain-security-audit for a production-shaped Relay-kit lane: Use when MMO crypto operations involve on-chain script execution, smart contract interaction, or wallet automation that requires security audit before deploymen The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "mmo-onchain-security-audit evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "mmo-crypto-wallet-farming",
+   "mmo-http-api-automation"
+  ],
+  "pass_rubric": [
+   "test-hub",
+   "field-journal-evolution"
+  ]
+ },
+ {
+  "id": "mobile-app-reverse-real-world-contract",
+  "skill": "mobile-app-reverse",
+  "task": "Use mobile-app-reverse for a production-shaped Relay-kit lane: Use when MMO mobile operations need to reverse-engineer APK or IPA apps: find API endpoints, signing keys, certificate pinning bypass, or replicate app behavior The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "mobile-app-reverse evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "frontend-crypto-reverse",
+   "protocol-fingerprint-spoofing"
+  ],
+  "pass_rubric": [
+   "mmo-http-api-automation",
+   "mmo-mobile-app-automation"
+  ]
+ },
+ {
+  "id": "network-stealth-c2-real-world-contract",
+  "skill": "network-stealth-c2",
+  "task": "Use network-stealth-c2 for a production-shaped Relay-kit lane: Use when building or operating C2 infrastructure that needs traffic blending, domain fronting, protocol mimicry, redirectors, or beaconing that evades network d The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "network-stealth-c2 evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "edr-evasion-tactics",
+   "telemetry-blinding"
+  ],
+  "pass_rubric": [
+   "protocol-fingerprint-spoofing",
+   "test-hub"
+  ]
+ },
+ {
+  "id": "offensive-security-engagement-real-world-contract",
+  "skill": "offensive-security-engagement",
+  "task": "Use offensive-security-engagement for a production-shaped Relay-kit lane: Use when a request contains offensive, red-team, evasion, injection, stealth, C2, payload, syscall, hollowing, or bypass keywords, or when authorization_risk >= The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "offensive-security-engagement evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "attack-chain-orchestration",
+   "cpp-systems-engineering"
+  ],
+  "pass_rubric": [
+   "edr-evasion-tactics",
+   "process-injection-techniques"
+  ]
+ },
+ {
+  "id": "process-injection-techniques-real-world-contract",
+  "skill": "process-injection-techniques",
+  "task": "Use process-injection-techniques for a production-shaped Relay-kit lane: Use when a payload needs to run in the context of another process: classic injection, reflective DLL, process hollowing, APC injection, thread hijacking, or she The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "process-injection-techniques evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "edr-evasion-tactics",
+   "telemetry-blinding"
+  ],
+  "pass_rubric": [
+   "windows-native-internals",
+   "binary-stealth-obfuscation"
+  ]
+ },
+ {
+  "id": "protocol-fingerprint-spoofing-real-world-contract",
+  "skill": "protocol-fingerprint-spoofing",
+  "task": "Use protocol-fingerprint-spoofing for a production-shaped Relay-kit lane: Use when HTTP/HTTPS/TLS traffic needs to spoof or match a specific protocol fingerprint to evade network inspection, bot detection, or TLS fingerprinting (JA3/J The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "protocol-fingerprint-spoofing evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "browser-fingerprint-engineering",
+   "antibot-challenge-solving"
+  ],
+  "pass_rubric": [
+   "network-stealth-c2",
+   "mmo-http-api-automation"
+  ]
+ },
+ {
+  "id": "telemetry-blinding-real-world-contract",
+  "skill": "telemetry-blinding",
+  "task": "Use telemetry-blinding for a production-shaped Relay-kit lane: Use when operations need to suppress, redirect, or corrupt security telemetry: ETW providers, Sysmon, WEF, audit logs, or kernel callbacks. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "telemetry-blinding evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "edr-evasion-tactics",
+   "binary-stealth-obfuscation"
+  ],
+  "pass_rubric": [
+   "process-injection-techniques",
+   "network-stealth-c2"
+  ]
+ },
+ {
+  "id": "terminal-operator-ui-real-world-contract",
+  "skill": "terminal-operator-ui",
+  "task": "Use terminal-operator-ui for a production-shaped Relay-kit lane: Use when building a rich terminal UI (TUI) for operator control panels, automation dashboards, or CLI tools: Rich, Textual, blessed, curses, prompt_toolkit, or  The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "terminal-operator-ui evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "advanced-python-engineering",
+   "desktop-python-ui"
+  ],
+  "pass_rubric": [
+   "test-hub",
+   "field-journal-evolution"
+  ]
+ },
+ {
+  "id": "windows-native-internals-real-world-contract",
+  "skill": "windows-native-internals",
+  "task": "Use windows-native-internals for a production-shaped Relay-kit lane: Use when work requires Windows-internal knowledge: NT APIs, PEB/TEB, kernel structures, SSDT, ETW, driver interaction, object manager, undocumented syscalls, or The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/state/workflow-state.md",
+   "windows-native-internals evidence appended to the active artifact"
+  ],
+  "required_evidence": [
+   "cpp-systems-engineering",
+   "process-injection-techniques"
+  ],
+  "pass_rubric": [
+   "edr-evasion-tactics",
+   "telemetry-blinding"
+  ]
+ }
 ]
