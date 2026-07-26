@@ -5,23 +5,24 @@
     "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
     "task": "handle a incident-response request, name files first, and identify the proof surface before editing. Use `incident-response` and cite the first files before advice.",
     "expected_files": [
-      "ops/runbooks/latency.md",
-      "src/server/handlers.py",
-      "deploy/history.log"
+      "ops/triage.py",
+      "ops/timeline.py",
+      "ops/postmortem.py"
     ],
     "expected_symbols": [
-      "rollback",
-      "feature_flag",
-      "health_check"
+      "triage_severity",
+      "record_timeline",
+      "write_postmortem"
     ],
     "expected_tests": [
-      "ops/runbooks/latency.md"
+      "tests/test_incident.py"
     ],
     "expected_evidence_terms": [
       "severity",
       "mitigation",
       "verified",
-      "residual risk"
+      "residual risk",
+      "postmortem"
     ],
     "bad_answer_traps": [
       "still investigating",
@@ -35,23 +36,27 @@
     "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
     "task": "Run a read-only benchmark-style pass for `incident-response` and explain what evidence is still missing.",
     "expected_files": [
-      "ops/runbooks/latency.md",
-      "src/server/handlers.py",
-      "deploy/history.log"
+      "ops/triage.py",
+      "ops/timeline.py",
+      "ops/postmortem.py"
     ],
     "expected_symbols": [
-      "rollback",
-      "feature_flag",
-      "health_check"
+      "triage_severity",
+      "record_timeline",
+      "write_postmortem"
     ],
     "expected_tests": [
-      "ops/runbooks/latency.md"
+      "tests/test_incident.py"
     ],
     "expected_evidence_terms": [
       "timeline",
       "blameless postmortem",
       "read-only",
-      "unverified"
+      "unverified",
+      "severity",
+      "postmortem",
+      "verified",
+      "residual risk"
     ],
     "bad_answer_traps": [
       "still investigating",
@@ -65,24 +70,26 @@
     "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
     "task": "Score `incident-response` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
     "expected_files": [
-      "ops/runbooks/latency.md",
-      "src/server/handlers.py",
-      "deploy/history.log"
+      "ops/triage.py",
+      "ops/timeline.py",
+      "ops/postmortem.py"
     ],
     "expected_symbols": [
-      "rollback",
-      "feature_flag",
-      "health_check"
+      "triage_severity",
+      "record_timeline",
+      "write_postmortem"
     ],
     "expected_tests": [
-      "ops/runbooks/latency.md"
+      "tests/test_incident.py"
     ],
     "expected_evidence_terms": [
       "severity",
       "mitigation",
       "weak evidence",
       "claim status",
-      "residual risk"
+      "residual risk",
+      "postmortem",
+      "verified"
     ],
     "bad_answer_traps": [
       "still investigating",

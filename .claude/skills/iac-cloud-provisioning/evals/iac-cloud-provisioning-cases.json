@@ -5,22 +5,25 @@
     "repo_profile": "a Terraform repo with modules, a remote state backend, an environments folder, and a plan CI job",
     "task": "review an infrastructure change, read the plan diff, and flag any stateful replace before apply. Use `iac-cloud-provisioning` and cite the first files before advice.",
     "expected_files": [
-      "main.tf",
-      "modules/network/main.tf",
-      "environments/prod.tfvars"
+      "infra/stack.py",
+      "infra/state.py",
+      "infra/plan.py"
     ],
     "expected_symbols": [
-      "aws_db_instance",
-      "terraform_remote_state"
+      "build_stack",
+      "read_state",
+      "review_plan"
     ],
     "expected_tests": [
-      "tests/test_iac_cloud_provisioning.py"
+      "tests/test_provision.py"
     ],
     "expected_evidence_terms": [
       "plan diff",
       "state backend",
       "verified",
-      "residual risk"
+      "residual risk",
+      "drift detection",
+      "state lock"
     ],
     "bad_answer_traps": [
       "apply without plan",
@@ -35,20 +38,27 @@
     "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
     "task": "Anchor a `iac-cloud-provisioning` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
     "expected_files": [
-      "main.tf",
-      "modules/network/main.tf"
+      "infra/stack.py",
+      "infra/state.py",
+      "infra/plan.py"
     ],
     "expected_symbols": [
-      "aws_db_instance"
+      "build_stack",
+      "read_state",
+      "review_plan"
     ],
     "expected_tests": [
-      "tests/test_iac_cloud_provisioning.py"
+      "tests/test_provision.py"
     ],
     "expected_evidence_terms": [
       "blast radius",
       "rollback path",
       "read-only",
-      "not adoption proof"
+      "not adoption proof",
+      "drift detection",
+      "state lock",
+      "verified",
+      "residual risk"
     ],
     "bad_answer_traps": [
       "adoption claimed",
@@ -62,25 +72,27 @@
     "repo_profile": "deep infrastructure suite fixture with source, tests, docs, and an explicit overclaim trap",
     "task": "Score `iac-cloud-provisioning` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
     "expected_files": [
-      "main.tf",
-      "modules/network/main.tf",
-      "environments/prod.tfvars",
-      ".github/workflows/plan.yml"
+      "infra/stack.py",
+      "infra/state.py",
+      "infra/plan.py"
     ],
     "expected_symbols": [
-      "aws_db_instance",
-      "terraform_remote_state",
-      "lifecycle"
+      "build_stack",
+      "read_state",
+      "review_plan"
     ],
     "expected_tests": [
-      "tests/test_iac_cloud_provisioning.py"
+      "tests/test_provision.py"
     ],
     "expected_evidence_terms": [
       "plan diff",
       "state backend",
       "blast radius",
       "rollback path",
-      "residual risk"
+      "residual risk",
+      "drift detection",
+      "state lock",
+      "verified"
     ],
     "bad_answer_traps": [
       "apply without plan",

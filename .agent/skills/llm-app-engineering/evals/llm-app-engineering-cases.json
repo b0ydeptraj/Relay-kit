@@ -5,22 +5,25 @@
     "repo_profile": "an LLM feature repo with a prompt module, a retrieval index, tool schemas, and an offline eval set",
     "task": "review an LLM feature change, name the prompt/retrieval/tool files, and identify the eval that gates it. Use `llm-app-engineering` and cite the first files before advice.",
     "expected_files": [
-      "src/llm/prompt.py",
-      "src/llm/retrieval.py",
-      "src/llm/tools.py"
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
     ],
     "expected_symbols": [
       "build_prompt",
-      "retrieve_context"
+      "retrieve_context",
+      "tool_schema"
     ],
     "expected_tests": [
-      "tests/test_llm_app_engineering.py"
+      "tests/test_evals.py"
     ],
     "expected_evidence_terms": [
       "prompt contract",
       "top-k retrieval",
       "verified",
-      "residual risk"
+      "residual risk",
+      "retrieval",
+      "offline eval"
     ],
     "bad_answer_traps": [
       "prompt tuned with no eval",
@@ -35,20 +38,26 @@
     "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
     "task": "Anchor a `llm-app-engineering` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
     "expected_files": [
-      "src/llm/prompt.py",
-      "src/llm/retrieval.py"
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
     ],
     "expected_symbols": [
-      "build_prompt"
+      "build_prompt",
+      "retrieve_context",
+      "tool_schema"
     ],
     "expected_tests": [
-      "tests/test_llm_app_engineering.py"
+      "tests/test_evals.py"
     ],
     "expected_evidence_terms": [
       "tool schema",
       "offline eval",
       "read-only",
-      "not adoption proof"
+      "not adoption proof",
+      "retrieval",
+      "verified",
+      "residual risk"
     ],
     "bad_answer_traps": [
       "adoption claimed",
@@ -62,10 +71,9 @@
     "repo_profile": "deep llm-engineering suite fixture with source, tests, docs, and an explicit overclaim trap",
     "task": "Score `llm-app-engineering` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
     "expected_files": [
-      "src/llm/prompt.py",
-      "src/llm/retrieval.py",
-      "src/llm/tools.py",
-      "evals/cases.jsonl"
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
     ],
     "expected_symbols": [
       "build_prompt",
@@ -73,14 +81,16 @@
       "tool_schema"
     ],
     "expected_tests": [
-      "tests/test_llm_app_engineering.py"
+      "tests/test_evals.py"
     ],
     "expected_evidence_terms": [
       "prompt contract",
       "top-k retrieval",
       "tool schema",
       "offline eval",
-      "residual risk"
+      "residual risk",
+      "retrieval",
+      "verified"
     ],
     "bad_answer_traps": [
       "prompt tuned with no eval",

@@ -5,28 +5,31 @@
     "repo_profile": "a product repo with a signup form, a user data model, an analytics client, and a data-retention job",
     "task": "review what personal data a feature collects, justify each field, and name the retention and deletion path. Use `privacy-compliance` and cite the first files before advice.",
     "expected_files": [
-      "src/models/user.py",
-      "src/signup/form.py",
-      "src/analytics/client.py"
+      "privacy/pii.py",
+      "privacy/retention.py",
+      "privacy/consent.py"
     ],
     "expected_symbols": [
-      "User",
-      "capture_event"
+      "classify_pii",
+      "enforce_retention",
+      "check_consent"
     ],
     "expected_tests": [
-      "tests/test_privacy_compliance.py"
+      "tests/test_privacy.py"
     ],
     "expected_evidence_terms": [
       "PII classification",
       "lawful basis",
       "verified",
-      "residual risk"
+      "residual risk",
+      "pii minimization",
+      "retention limit"
     ],
     "bad_answer_traps": [
       "collect with no purpose",
-      "indefinite retention",
       "usual checklist",
-      "should be fine"
+      "should be fine",
+      "looks compliant enough"
     ]
   },
   {
@@ -35,20 +38,27 @@
     "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
     "task": "Anchor a `privacy-compliance` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
     "expected_files": [
-      "src/models/user.py",
-      "src/signup/form.py"
+      "privacy/pii.py",
+      "privacy/retention.py",
+      "privacy/consent.py"
     ],
     "expected_symbols": [
-      "User"
+      "classify_pii",
+      "enforce_retention",
+      "check_consent"
     ],
     "expected_tests": [
-      "tests/test_privacy_compliance.py"
+      "tests/test_privacy.py"
     ],
     "expected_evidence_terms": [
       "retention window",
       "deletion path",
       "read-only",
-      "not adoption proof"
+      "not adoption proof",
+      "pii minimization",
+      "retention limit",
+      "verified",
+      "residual risk"
     ],
     "bad_answer_traps": [
       "adoption claimed",
@@ -62,31 +72,33 @@
     "repo_profile": "deep privacy suite fixture with source, tests, docs, and an explicit overclaim trap",
     "task": "Score `privacy-compliance` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
     "expected_files": [
-      "src/models/user.py",
-      "src/signup/form.py",
-      "src/analytics/client.py",
-      "jobs/retention.py"
+      "privacy/pii.py",
+      "privacy/retention.py",
+      "privacy/consent.py"
     ],
     "expected_symbols": [
-      "User",
-      "capture_event",
-      "purge_expired"
+      "classify_pii",
+      "enforce_retention",
+      "check_consent"
     ],
     "expected_tests": [
-      "tests/test_privacy_compliance.py"
+      "tests/test_privacy.py"
     ],
     "expected_evidence_terms": [
       "PII classification",
       "lawful basis",
       "retention window",
       "deletion path",
-      "residual risk"
+      "residual risk",
+      "pii minimization",
+      "retention limit",
+      "verified"
     ],
     "bad_answer_traps": [
       "collect with no purpose",
-      "indefinite retention",
-      "deletion misses backups",
-      "max strength claimed early"
+      "usual checklist",
+      "should be fine",
+      "looks compliant enough"
     ]
   }
 ]

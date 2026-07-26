@@ -5,23 +5,24 @@
     "repo_profile": "repo with a CI workflow file, a lockfile, and a deploy script targeting staging and prod",
     "task": "handle a ci-cd-pipeline request, name files first, and identify the proof surface before editing. Use `ci-cd-pipeline` and cite the first files before advice.",
     "expected_files": [
-      ".github/workflows/ci.yml",
-      "scripts/deploy.sh",
-      "package-lock.json"
+      "pipeline/stages.py",
+      "pipeline/gate.py",
+      "scripts/deploy.py"
     ],
     "expected_symbols": [
-      "build",
-      "deploy",
-      "cache-key"
+      "run_stage",
+      "required_gate",
+      "rollback_release"
     ],
     "expected_tests": [
-      "tests/ci/test_pipeline.sh"
+      "tests/test_pipeline.py"
     ],
     "expected_evidence_terms": [
       "blocking gate",
       "cache key",
       "verified",
-      "residual risk"
+      "residual risk",
+      "rollback"
     ],
     "bad_answer_traps": [
       "pipeline is green",
@@ -35,23 +36,27 @@
     "repo_profile": "repo with a CI workflow file, a lockfile, and a deploy script targeting staging and prod",
     "task": "Run a read-only benchmark-style pass for `ci-cd-pipeline` and explain what evidence is still missing.",
     "expected_files": [
-      ".github/workflows/ci.yml",
-      "scripts/deploy.sh",
-      "package-lock.json"
+      "pipeline/stages.py",
+      "pipeline/gate.py",
+      "scripts/deploy.py"
     ],
     "expected_symbols": [
-      "build",
-      "deploy",
-      "cache-key"
+      "run_stage",
+      "required_gate",
+      "rollback_release"
     ],
     "expected_tests": [
-      "tests/ci/test_pipeline.sh"
+      "tests/test_pipeline.py"
     ],
     "expected_evidence_terms": [
       "artifact promotion",
       "rollback trigger",
       "read-only",
-      "unverified"
+      "unverified",
+      "blocking gate",
+      "rollback",
+      "verified",
+      "residual risk"
     ],
     "bad_answer_traps": [
       "pipeline is green",
@@ -65,24 +70,26 @@
     "repo_profile": "repo with a CI workflow file, a lockfile, and a deploy script targeting staging and prod",
     "task": "Score `ci-cd-pipeline` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
     "expected_files": [
-      ".github/workflows/ci.yml",
-      "scripts/deploy.sh",
-      "package-lock.json"
+      "pipeline/stages.py",
+      "pipeline/gate.py",
+      "scripts/deploy.py"
     ],
     "expected_symbols": [
-      "build",
-      "deploy",
-      "cache-key"
+      "run_stage",
+      "required_gate",
+      "rollback_release"
     ],
     "expected_tests": [
-      "tests/ci/test_pipeline.sh"
+      "tests/test_pipeline.py"
     ],
     "expected_evidence_terms": [
       "blocking gate",
       "cache key",
       "weak evidence",
       "claim status",
-      "residual risk"
+      "residual risk",
+      "rollback",
+      "verified"
     ],
     "bad_answer_traps": [
       "pipeline is green",
