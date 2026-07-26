@@ -7,7 +7,7 @@ Install once. Your agent stops guessing and starts working like an engineer.
 
 [![PyPI](https://img.shields.io/pypi/v/relay-kit?color=4f46e5&label=relay-kit&logo=pypi&logoColor=white)](https://pypi.org/project/relay-kit/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org)
-[![Skills](https://img.shields.io/badge/skills-113%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
+[![Skills](https://img.shields.io/badge/skills-119%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
 [![Adapters](https://img.shields.io/badge/adapters-Claude%20·%20Codex%20·%20Antigravity-8b5cf6)](https://github.com/b0ydeptraj/Relay-kit)
 [![License](https://img.shields.io/badge/license-Proprietary-gray)](LICENSE)
 
@@ -26,7 +26,7 @@ You're using Claude, Codex, or Cursor to build things. But the agent:
 - patches bugs without finding root cause
 - says "done" when nothing is proven
 
-Relay-kit solves this. It installs a structured workflow system into your project — 113 skills that agents actually follow, with built-in proof gates before anything is called done.
+Relay-kit solves this. It installs a structured workflow system into your project — 119 skills that agents actually follow, with built-in proof gates before anything is called done.
 
 ---
 
@@ -86,7 +86,7 @@ Running `relay-kit . --claude` writes structured skills into `.claude/skills/`. 
 
 ```
 your-project/
-├── .claude/skills/          ← 113 SKILL.md files Claude reads
+├── .claude/skills/          ← 119 SKILL.md files Claude reads
 ├── .codex/skills/           ← same for Codex
 ├── .agent/skills/           ← same for Antigravity
 └── .relay-kit/
@@ -273,6 +273,6 @@ Adds local embedding and tree-sitter symbol lookup.
 
 <div align="center">
 
-**Relay-kit v4 · 113 skills · Claude · Codex · Antigravity**
+**Relay-kit v4 · 119 skills · Claude · Codex · Antigravity**
 
 </div>

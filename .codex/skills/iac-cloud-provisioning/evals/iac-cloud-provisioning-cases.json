@@ -1,0 +1,92 @@
+[
+  {
+    "id": "iac-cloud-provisioning-battle-read-first",
+    "skill": "iac-cloud-provisioning",
+    "repo_profile": "a Terraform repo with modules, a remote state backend, an environments folder, and a plan CI job",
+    "task": "review an infrastructure change, read the plan diff, and flag any stateful replace before apply. Use `iac-cloud-provisioning` and cite the first files before advice.",
+    "expected_files": [
+      "main.tf",
+      "modules/network/main.tf",
+      "environments/prod.tfvars"
+    ],
+    "expected_symbols": [
+      "aws_db_instance",
+      "terraform_remote_state"
+    ],
+    "expected_tests": [
+      "tests/test_iac_cloud_provisioning.py"
+    ],
+    "expected_evidence_terms": [
+      "plan diff",
+      "state backend",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "apply without plan",
+      "stateful replace unflagged",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "iac-cloud-provisioning-public-repo-benchmark-anchor",
+    "skill": "iac-cloud-provisioning",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
+    "task": "Anchor a `iac-cloud-provisioning` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
+    "expected_files": [
+      "main.tf",
+      "modules/network/main.tf"
+    ],
+    "expected_symbols": [
+      "aws_db_instance"
+    ],
+    "expected_tests": [
+      "tests/test_iac_cloud_provisioning.py"
+    ],
+    "expected_evidence_terms": [
+      "blast radius",
+      "rollback path",
+      "read-only",
+      "not adoption proof"
+    ],
+    "bad_answer_traps": [
+      "adoption claimed",
+      "benchmark treated as production",
+      "apply without plan"
+    ]
+  },
+  {
+    "id": "iac-cloud-provisioning-deep-weakness-trap",
+    "skill": "iac-cloud-provisioning",
+    "repo_profile": "deep infrastructure suite fixture with source, tests, docs, and an explicit overclaim trap",
+    "task": "Score `iac-cloud-provisioning` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "main.tf",
+      "modules/network/main.tf",
+      "environments/prod.tfvars",
+      ".github/workflows/plan.yml"
+    ],
+    "expected_symbols": [
+      "aws_db_instance",
+      "terraform_remote_state",
+      "lifecycle"
+    ],
+    "expected_tests": [
+      "tests/test_iac_cloud_provisioning.py"
+    ],
+    "expected_evidence_terms": [
+      "plan diff",
+      "state backend",
+      "blast radius",
+      "rollback path",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "apply without plan",
+      "stateful replace unflagged",
+      "secret in state",
+      "max strength claimed early"
+    ]
+  }
+]

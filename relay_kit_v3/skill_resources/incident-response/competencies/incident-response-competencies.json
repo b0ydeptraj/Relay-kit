@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "incident-response",
+  "role": "incident-responder",
+  "category": "incident-response",
+  "core_competencies": [
+    {
+      "id": "incident-response.severity-triage",
+      "label": "Assign severity from user impact and scope.",
+      "evidence_terms": [
+        "severity",
+        "user impact",
+        "scope"
+      ],
+      "archetypes": [
+        "reliability"
+      ]
+    },
+    {
+      "id": "incident-response.stabilize-first",
+      "label": "Mitigate to stop impact before deep diagnosis.",
+      "evidence_terms": [
+        "mitigation",
+        "rollback",
+        "feature flag"
+      ],
+      "archetypes": [
+        "reliability"
+      ]
+    },
+    {
+      "id": "incident-response.communication",
+      "label": "Give a factual status cadence with next-update time.",
+      "evidence_terms": [
+        "status update",
+        "cadence",
+        "impact"
+      ],
+      "archetypes": [
+        "reliability"
+      ]
+    },
+    {
+      "id": "incident-response.timeline",
+      "label": "Capture a timestamped timeline of actions and effects.",
+      "evidence_terms": [
+        "timeline",
+        "timestamp",
+        "effect"
+      ],
+      "archetypes": [
+        "reliability"
+      ]
+    },
+    {
+      "id": "incident-response.blameless-postmortem",
+      "label": "Write a blameless postmortem with owned action items.",
+      "evidence_terms": [
+        "blameless",
+        "postmortem",
+        "action item"
+      ],
+      "archetypes": [
+        "reliability"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "incident-response.debug-before-mitigate",
+      "description": "Roots-cause while users are still down."
+    },
+    {
+      "id": "incident-response.blame-postmortem",
+      "description": "Writes a postmortem that blames a person."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

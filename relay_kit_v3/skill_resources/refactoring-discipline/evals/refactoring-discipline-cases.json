@@ -1,0 +1,93 @@
+[
+  {
+    "id": "refactoring-discipline-battle-read-first",
+    "skill": "refactoring-discipline",
+    "repo_profile": "repo with a tangled module, a passing unit suite, and duplicated logic across files",
+    "task": "handle a refactoring-discipline request, name files first, and identify the proof surface before editing. Use `refactoring-discipline` and cite the first files before advice.",
+    "expected_files": [
+      "src/orders/service.py",
+      "src/orders/legacy.py",
+      "tests/orders/test_service.py"
+    ],
+    "expected_symbols": [
+      "OrderService",
+      "calculate_total",
+      "apply_discount"
+    ],
+    "expected_tests": [
+      "tests/orders/test_service.py"
+    ],
+    "expected_evidence_terms": [
+      "green test net",
+      "characterization test",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "just cleanup",
+      "should behave the same",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "refactoring-discipline-public-repo-benchmark-anchor",
+    "skill": "refactoring-discipline",
+    "repo_profile": "repo with a tangled module, a passing unit suite, and duplicated logic across files",
+    "task": "Run a read-only benchmark-style pass for `refactoring-discipline` and explain what evidence is still missing.",
+    "expected_files": [
+      "src/orders/service.py",
+      "src/orders/legacy.py",
+      "tests/orders/test_service.py"
+    ],
+    "expected_symbols": [
+      "OrderService",
+      "calculate_total",
+      "apply_discount"
+    ],
+    "expected_tests": [
+      "tests/orders/test_service.py"
+    ],
+    "expected_evidence_terms": [
+      "behavior preserved",
+      "atomic commit",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "just cleanup",
+      "should behave the same",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "refactoring-discipline-deep-weakness-trap",
+    "skill": "refactoring-discipline",
+    "repo_profile": "repo with a tangled module, a passing unit suite, and duplicated logic across files",
+    "task": "Score `refactoring-discipline` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "src/orders/service.py",
+      "src/orders/legacy.py",
+      "tests/orders/test_service.py"
+    ],
+    "expected_symbols": [
+      "OrderService",
+      "calculate_total",
+      "apply_discount"
+    ],
+    "expected_tests": [
+      "tests/orders/test_service.py"
+    ],
+    "expected_evidence_terms": [
+      "green test net",
+      "characterization test",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "just cleanup",
+      "should behave the same",
+      "usual checklist"
+    ]
+  }
+]

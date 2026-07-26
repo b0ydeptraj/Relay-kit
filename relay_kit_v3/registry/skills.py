@@ -109,6 +109,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             # Offensive lanes must enter through the authorization gate, never
             # by matching a specialist description directly.
             "offensive-security-engagement",
+                    "mmo-authorization-gate",
         ],
         body=dedent(
             """\
@@ -409,6 +410,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "scrum-master",
             "developer",
             "review-hub",
+                    "llm-app-engineering",
         ],
         body=dedent(
             """\
@@ -514,6 +516,9 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "review-hub",
             "workflow-router",
                     "refactoring-discipline",
+                    "iac-cloud-provisioning",
+            "container-kubernetes-ops",
+            "secrets-management",
         ],
         body=dedent(
             """\
@@ -765,6 +770,9 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "plan-hub",
             "workflow-router",
                     "observability-instrumentation",
+                    "iac-cloud-provisioning",
+            "container-kubernetes-ops",
+            "privacy-compliance",
         ],
         body=dedent(
             """\
@@ -870,6 +878,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "test-hub",
             "qa-governor",
             "review-hub",
+                    "llm-app-engineering",
         ],
         allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
@@ -1574,7 +1583,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Mirror real API dashboards: endpoint groups, status-code filters, origin filters, retry count, duration, cost, and replay-safe request detail.",
             *domain_resource_references("mmo-http-api-automation"),
         ],
-        next_steps=["api-integration", "automation-ops", "mmo-data-harvesting", "policy-guard", "qa-governor"],
+        next_steps=["api-integration", "automation-ops", "mmo-data-harvesting", "policy-guard", "qa-governor", "mmo-authorization-gate"],
         body=dedent(
             """\
             # Mission
@@ -4608,6 +4617,8 @@ DELIVERY_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
             "review-hub",
             "qa-governor",
             "dependency-management",
+                    "secrets-management",
+            "privacy-compliance",
         ],
         allowed_tools=READ_ANALYZE_TOOLS,
         body=dedent(
@@ -4687,6 +4698,293 @@ DELIVERY_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
 }
 
 
+NEW_CAPABILITY_SKILLS: Dict[str, SkillSpec] = {
+    # Capability gaps a "maximum" kit needs: LLM app engineering, cloud/infra,
+    # container ops, secrets, an MMO authorization gate, and privacy/compliance.
+    "llm-app-engineering": SkillSpec(
+        name="llm-app-engineering",
+        description="Use when building an LLM-powered application feature such as prompt and context design, retrieval-augmented generation, tool and function schemas, agent loops, or offline evals, and correctness and cost must be proven rather than assumed.",
+        role="llm-application-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the product behavior the LLM feature must deliver",
+            "available context sources or retrieval corpus",
+            "latency, cost, and accuracy constraints",
+        ],
+        outputs=[
+            "prompt and context contract",
+            "tool or function schemas",
+            "an offline eval set with pass criteria",
+        ],
+        references=[],
+        next_steps=["developer", "secure-code-review", "test-hub", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Build an LLM feature as a measurable system: an explicit prompt/context contract, typed tool schemas, and an offline eval that gates changes -- not a hand-tuned prompt nobody can regress.
+
+            ## Mandatory scope
+            1. Declare the model target and version, the context window budget, and the accuracy/latency/cost ceiling the feature must hold.
+            2. Prompt and context: separate the stable system contract from per-request context; state how context is selected and truncated.
+            3. Retrieval (if any): name the corpus, chunking, embedding model, and the top-k and score threshold; prove relevant chunks actually reach the prompt.
+            4. Tools: define each tool as a typed schema with required fields and a validation path; state what happens when the model returns malformed arguments.
+            5. Agent loop (if any): bound the step count, define the stop condition, and name the failure mode when the loop does not converge.
+            6. Evals: build an offline case set with expected outputs or graders, and a pass threshold that a change must clear before merge.
+
+            ## Evidence contract
+            - model + version + context budget declared
+            - prompt/context contract and truncation rule stated
+            - tool schemas with malformed-argument handling
+            - offline eval set with a numeric pass threshold and the current score
+            - cost-per-request estimate for the chosen model
+
+            ## Failure modes to block
+            - Prompt tuning with no eval to catch regressions.
+            - Retrieval that returns chunks the prompt never actually uses.
+            - Tool calls trusted without validating the model's arguments.
+            - An unbounded agent loop with no stop condition.
+
+            ## Handoff
+            - Hand implementation to `developer`, defensive review of tool/argument handling to `secure-code-review`, and eval wiring to `test-hub`.
+            """
+        ).strip(),
+    ),
+    "iac-cloud-provisioning": SkillSpec(
+        name="iac-cloud-provisioning",
+        description="Use when provisioning or changing cloud infrastructure as code with Terraform, Pulumi, or CloudFormation, including state management, drift detection, plan review, and a safe apply with rollback.",
+        role="infrastructure-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the infrastructure change requested",
+            "current IaC state and provider",
+            "environment and blast-radius constraints",
+        ],
+        outputs=[
+            "reviewed plan diff",
+            "apply and rollback runbook",
+            "drift and state notes",
+        ],
+        references=[],
+        next_steps=["container-kubernetes-ops", "secrets-management", "release-readiness", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Change cloud infrastructure through reviewed, reversible plans -- never console-clicked mutations -- with state and drift kept honest.
+
+            ## Mandatory scope
+            1. Declare the tool and provider (Terraform, Pulumi, CloudFormation) and where state lives, including locking.
+            2. Always run and read a plan/diff before apply; state exactly which resources create, update, replace, or destroy.
+            3. Flag every destroy or replace on a stateful resource (database, volume, load balancer) as high blast-radius and require explicit confirmation.
+            4. Detect drift: compare real state to code before changing anything, and reconcile or document it.
+            5. Define the apply order and the rollback path (previous state, tainted-resource recovery, or a reverse change).
+            6. Keep secrets out of state and code; hand credential material to `secrets-management`.
+
+            ## Evidence contract
+            - tool, provider, and state backend declared
+            - plan diff read, with create/update/replace/destroy counts
+            - blast-radius call-out for any stateful replace or destroy
+            - rollback path written before apply
+
+            ## Failure modes to block
+            - Applying without reading the plan.
+            - A destroy/replace on a stateful resource slipping through unflagged.
+            - Secrets committed into state or variables.
+            - Drift ignored so the next apply does something unexpected.
+
+            ## Handoff
+            - Hand workload packaging to `container-kubernetes-ops`, credentials to `secrets-management`, and the go/no-go to `release-readiness`.
+            """
+        ).strip(),
+    ),
+    "container-kubernetes-ops": SkillSpec(
+        name="container-kubernetes-ops",
+        description="Use when packaging services into containers or operating Kubernetes workloads, including Dockerfiles, image hygiene, manifests, resource limits, probes, rollouts, and cluster troubleshooting.",
+        role="platform-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the service to containerize or the workload to operate",
+            "existing Dockerfile or manifests",
+            "cluster and resource constraints",
+        ],
+        outputs=[
+            "Dockerfile or manifest changes",
+            "rollout and probe configuration",
+            "troubleshooting notes",
+        ],
+        references=[],
+        next_steps=["iac-cloud-provisioning", "secrets-management", "observability-instrumentation", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Ship containers and Kubernetes workloads that start predictably, fail visibly, and roll out without taking traffic down.
+
+            ## Mandatory scope
+            1. Image hygiene: pinned base image, non-root user, minimal layers, no secrets baked in, a reproducible build.
+            2. Manifests: explicit resource requests and limits, liveness and readiness probes that reflect real health, and a restart policy.
+            3. Rollout: a strategy (rolling or blue-green) with surge/unavailable bounds and a defined rollback to the previous revision.
+            4. Config and secrets: config via ConfigMap/env, secrets via a secret store -- never in the image or manifest literal.
+            5. Troubleshooting: read events, logs, and probe status before mutating; name the failing signal, not a guess.
+
+            ## Evidence contract
+            - base image pinned and container runs non-root
+            - resource requests/limits and both probes defined
+            - rollout strategy and rollback revision named
+            - secrets sourced from a store, not the manifest
+
+            ## Failure modes to block
+            - Running as root or baking secrets into the image.
+            - Missing readiness probe, so a rollout sends traffic to a not-ready pod.
+            - No resource limits, so one workload starves the node.
+            - Restarting or deleting pods before reading events and logs.
+
+            ## Handoff
+            - Hand infrastructure to `iac-cloud-provisioning`, secret material to `secrets-management`, and health signals to `observability-instrumentation`.
+            """
+        ).strip(),
+    ),
+    "secrets-management": SkillSpec(
+        name="secrets-management",
+        description="Use when handling secrets, API keys, tokens, or wallet keys across a fleet and you need vaulting, injection, rotation, scoping, and leak response instead of plaintext credentials.",
+        role="secrets-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the secrets or credentials in play",
+            "where they are currently stored and consumed",
+            "rotation and scoping requirements",
+        ],
+        outputs=[
+            "a secret storage and injection plan",
+            "rotation and scoping policy",
+            "a leak-response runbook",
+        ],
+        references=[],
+        next_steps=["iac-cloud-provisioning", "container-kubernetes-ops", "secure-code-review", "review-hub"],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Keep every credential out of source and out of plaintext: vaulted at rest, injected at runtime, scoped to least privilege, and rotatable without downtime.
+
+            ## Mandatory scope
+            1. Inventory: name each secret, where it lives now, and who reads it; flag any that sit in code, config, or logs.
+            2. Storage: move secrets to a vault or platform secret store; the app reads them at runtime, never from a committed file.
+            3. Scoping: grant each consumer the narrowest credential that works; no shared god-tokens across services.
+            4. Rotation: define a rotation interval and a zero-downtime rotation path (dual-key or overlap window).
+            5. Leak response: define detection, immediate revocation, rotation, and blast-radius assessment for an exposed secret.
+
+            ## Evidence contract
+            - secret inventory with current storage location per item
+            - vault/store as the source of truth, injection path named
+            - least-privilege scoping stated per consumer
+            - rotation interval and zero-downtime rotation path
+            - leak-response steps: detect, revoke, rotate, assess
+
+            ## Failure modes to block
+            - A secret left in source control, an env file, or a log line.
+            - One shared token used everywhere so revocation breaks everything.
+            - No rotation path, so a leak means a painful emergency.
+            - Handling the plaintext value directly instead of a reference.
+
+            ## Handoff
+            - This skill never enters credential values itself; it hands entry to the operator. Hand consuming infra to `iac-cloud-provisioning` and `container-kubernetes-ops`, and code-path review to `secure-code-review`.
+            """
+        ).strip(),
+    ),
+    "privacy-compliance": SkillSpec(
+        name="privacy-compliance",
+        description="Use when a workload collects, stores, or transfers personal data and needs a privacy and data-retention gate covering PII minimization, consent or lawful basis, retention limits, and deletion.",
+        role="privacy-reviewer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the data the workload collects or processes",
+            "the stated purpose and legal context",
+            "current storage, sharing, and retention behavior",
+        ],
+        outputs=[
+            "a data inventory with PII classification",
+            "a retention and deletion policy",
+            "a consent and lawful-basis note",
+        ],
+        references=[],
+        next_steps=["data-persistence", "secure-code-review", "secrets-management", "review-hub"],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Treat personal data as a liability to minimize: collect only what the purpose needs, keep it only as long as justified, and be able to delete it on request.
+
+            ## Mandatory scope
+            1. Inventory: enumerate the personal data collected, classify sensitivity (contact, financial, health, biometric, identifier), and name where each field flows.
+            2. Minimization: for every field, state the purpose that justifies it; drop fields no purpose needs.
+            3. Lawful basis and consent: state the basis for processing each category and where consent is captured, if required.
+            4. Retention: set a retention window per category and the mechanism that deletes or anonymizes past it.
+            5. Rights: define how access, correction, and deletion requests are fulfilled, including in backups and downstream copies.
+            6. Transfer: flag any cross-border or third-party transfer and the safeguard that covers it.
+
+            ## Evidence contract
+            - data inventory with per-field sensitivity classification
+            - a stated purpose for every retained field
+            - retention window and deletion mechanism per category
+            - a deletion path that reaches backups and downstream copies
+
+            ## Failure modes to block
+            - Collecting data with no purpose behind it.
+            - Indefinite retention with no deletion mechanism.
+            - A deletion request that leaves copies in backups or a data warehouse.
+            - PII in logs, analytics, or third-party tools without a safeguard.
+
+            ## Handoff
+            - Hand schema and retention enforcement to `data-persistence`, secret handling to `secrets-management`, and code-path review to `secure-code-review`.
+            """
+        ).strip(),
+    ),
+}
+
+
+MMO_AUTHORIZATION_GATE_SKILL: Dict[str, SkillSpec] = {
+    "mmo-authorization-gate": utility_provider_spec(
+        name="mmo-authorization-gate",
+        description="Use when an MMO or automation lane touches a third-party platform and needs an explicit terms-of-service, authorization, and account-risk gate before high-risk actions run.",
+        outputs=[
+            "an authorization verdict appended to workflow-state",
+            "a documented account-risk and ToS assessment",
+        ],
+        references=[
+            "Record the operator's authorization and account ownership before any high-risk action.",
+            "Treat platform terms-of-service and rate limits as hard constraints, not suggestions.",
+        ],
+        next_steps=["policy-guard", "qa-governor", "review-hub"],
+        mission="Gate MMO and automation lanes behind an explicit authorization, account-ownership, and platform-terms check before any high-risk action runs.",
+        boundary=[
+            "Use for lanes that act against a third-party platform on accounts the operator controls.",
+            "This gate records authorization and risk; it does not itself perform the automation.",
+            "It does not override platform terms; unauthorized or ToS-violating actions are refused, not gated.",
+        ],
+        evidence_contract=[
+            "Input must state the platform, the accounts, and who authorizes the action.",
+            "Output must record an explicit authorized/blocked verdict with the reason.",
+            "Block any lane that cannot show account ownership or operator authorization.",
+        ],
+        tasks=[
+            "Name the target platform and the accounts the lane will act on.",
+            "Confirm the operator owns or is authorized to act on those accounts.",
+            "Assess account-risk tier and the platform terms and rate limits that apply.",
+            "Emit an authorized-or-blocked verdict before the lane proceeds.",
+        ],
+        rules=[
+            "No high-risk action proceeds without a recorded authorization verdict.",
+            "Platform terms-of-service and rate limits are hard constraints.",
+            "When ownership or authorization is unclear, fail closed and block the lane.",
+            "Hand the runtime safety scan to policy-guard; this gate owns authorization, not shell/secret risk.",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+    ),
+}
+
+
 ALL_V3_SKILLS: Dict[str, SkillSpec] = {}
 ALL_V3_SKILLS.update(ORCHESTRATOR_SKILLS)
 ALL_V3_SKILLS.update(WORKFLOW_HUB_SKILLS)
@@ -4696,6 +4994,8 @@ ALL_V3_SKILLS.update(DISCIPLINE_UTILITY_SKILLS)
 ALL_V3_SKILLS.update(CLEANUP_SKILLS)
 ALL_V3_SKILLS.update(NATIVE_SUPPORT_SKILLS)
 ALL_V3_SKILLS.update(DELIVERY_SUPPORT_SKILLS)
+ALL_V3_SKILLS.update(NEW_CAPABILITY_SKILLS)
+ALL_V3_SKILLS.update(MMO_AUTHORIZATION_GATE_SKILL)
 ALL_V3_SKILLS.update(OFFENSIVE_TOOL_PACK_SKILLS)
 ALL_V3_SKILLS.update(PUBLIC_ENTRYPOINT_SKILLS)
 

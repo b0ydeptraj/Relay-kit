@@ -1,0 +1,92 @@
+[
+  {
+    "id": "privacy-compliance-battle-read-first",
+    "skill": "privacy-compliance",
+    "repo_profile": "a product repo with a signup form, a user data model, an analytics client, and a data-retention job",
+    "task": "review what personal data a feature collects, justify each field, and name the retention and deletion path. Use `privacy-compliance` and cite the first files before advice.",
+    "expected_files": [
+      "src/models/user.py",
+      "src/signup/form.py",
+      "src/analytics/client.py"
+    ],
+    "expected_symbols": [
+      "User",
+      "capture_event"
+    ],
+    "expected_tests": [
+      "tests/test_privacy_compliance.py"
+    ],
+    "expected_evidence_terms": [
+      "PII classification",
+      "lawful basis",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "collect with no purpose",
+      "indefinite retention",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "privacy-compliance-public-repo-benchmark-anchor",
+    "skill": "privacy-compliance",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
+    "task": "Anchor a `privacy-compliance` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
+    "expected_files": [
+      "src/models/user.py",
+      "src/signup/form.py"
+    ],
+    "expected_symbols": [
+      "User"
+    ],
+    "expected_tests": [
+      "tests/test_privacy_compliance.py"
+    ],
+    "expected_evidence_terms": [
+      "retention window",
+      "deletion path",
+      "read-only",
+      "not adoption proof"
+    ],
+    "bad_answer_traps": [
+      "adoption claimed",
+      "benchmark treated as production",
+      "collect with no purpose"
+    ]
+  },
+  {
+    "id": "privacy-compliance-deep-weakness-trap",
+    "skill": "privacy-compliance",
+    "repo_profile": "deep privacy suite fixture with source, tests, docs, and an explicit overclaim trap",
+    "task": "Score `privacy-compliance` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "src/models/user.py",
+      "src/signup/form.py",
+      "src/analytics/client.py",
+      "jobs/retention.py"
+    ],
+    "expected_symbols": [
+      "User",
+      "capture_event",
+      "purge_expired"
+    ],
+    "expected_tests": [
+      "tests/test_privacy_compliance.py"
+    ],
+    "expected_evidence_terms": [
+      "PII classification",
+      "lawful basis",
+      "retention window",
+      "deletion path",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "collect with no purpose",
+      "indefinite retention",
+      "deletion misses backups",
+      "max strength claimed early"
+    ]
+  }
+]

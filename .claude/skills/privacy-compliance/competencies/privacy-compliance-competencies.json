@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "privacy-compliance",
+  "role": "privacy-reviewer",
+  "category": "privacy",
+  "core_competencies": [
+    {
+      "id": "privacy.data-inventory",
+      "label": "Enumerate personal data and classify each field's sensitivity.",
+      "evidence_terms": [
+        "data inventory",
+        "PII",
+        "sensitivity"
+      ],
+      "archetypes": [
+        "privacy"
+      ]
+    },
+    {
+      "id": "privacy.minimization",
+      "label": "Justify every retained field with a stated purpose; drop the rest.",
+      "evidence_terms": [
+        "minimization",
+        "purpose",
+        "drop field"
+      ],
+      "archetypes": [
+        "privacy"
+      ]
+    },
+    {
+      "id": "privacy.lawful-basis",
+      "label": "State the lawful basis or consent for each category.",
+      "evidence_terms": [
+        "lawful basis",
+        "consent",
+        "category"
+      ],
+      "archetypes": [
+        "privacy"
+      ]
+    },
+    {
+      "id": "privacy.retention",
+      "label": "Set a retention window and a deletion mechanism per category.",
+      "evidence_terms": [
+        "retention window",
+        "deletion",
+        "anonymize"
+      ],
+      "archetypes": [
+        "privacy"
+      ]
+    },
+    {
+      "id": "privacy.rights-reach",
+      "label": "Ensure deletion reaches backups and downstream copies.",
+      "evidence_terms": [
+        "backup",
+        "downstream copy",
+        "deletion path"
+      ],
+      "archetypes": [
+        "privacy"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "privacy.purposeless",
+      "description": "Collecting data with no purpose behind it."
+    },
+    {
+      "id": "privacy.forever",
+      "description": "Indefinite retention with no deletion mechanism."
+    },
+    {
+      "id": "privacy.leaky-delete",
+      "description": "A deletion request that leaves copies in backups or a warehouse."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

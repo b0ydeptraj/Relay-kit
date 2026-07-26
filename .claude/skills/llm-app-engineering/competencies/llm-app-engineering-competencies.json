@@ -1,0 +1,97 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "llm-app-engineering",
+  "role": "llm-application-engineer",
+  "category": "llm-engineering",
+  "core_competencies": [
+    {
+      "id": "llm.prompt-contract",
+      "label": "Separate the stable system contract from per-request context and state truncation.",
+      "evidence_terms": [
+        "prompt contract",
+        "context budget",
+        "truncation"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    },
+    {
+      "id": "llm.retrieval-proof",
+      "label": "Prove retrieved chunks actually reach the prompt at the chosen top-k and threshold.",
+      "evidence_terms": [
+        "top-k",
+        "score threshold",
+        "chunk"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    },
+    {
+      "id": "llm.tool-schema",
+      "label": "Define tools as typed schemas and validate the model's arguments.",
+      "evidence_terms": [
+        "tool schema",
+        "argument validation",
+        "malformed"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    },
+    {
+      "id": "llm.agent-bound",
+      "label": "Bound the agent loop with a step cap and a stop condition.",
+      "evidence_terms": [
+        "step cap",
+        "stop condition",
+        "convergence"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    },
+    {
+      "id": "llm.offline-eval",
+      "label": "Gate changes on an offline eval with a numeric pass threshold.",
+      "evidence_terms": [
+        "offline eval",
+        "pass threshold",
+        "regression"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    },
+    {
+      "id": "llm.cost-budget",
+      "label": "Estimate cost per request against the model and context budget.",
+      "evidence_terms": [
+        "cost per request",
+        "token budget",
+        "model version"
+      ],
+      "archetypes": [
+        "llm-engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "llm.no-eval",
+      "description": "Tuning a prompt with no eval to catch regressions."
+    },
+    {
+      "id": "llm.retrieval-theatre",
+      "description": "Retrieval that returns chunks the prompt never uses."
+    },
+    {
+      "id": "llm.trust-tool-args",
+      "description": "Trusting model tool arguments without validation."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

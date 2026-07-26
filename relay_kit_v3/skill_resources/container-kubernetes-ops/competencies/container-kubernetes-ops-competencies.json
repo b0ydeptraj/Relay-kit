@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "container-kubernetes-ops",
+  "role": "platform-engineer",
+  "category": "platform",
+  "core_competencies": [
+    {
+      "id": "k8s.image-hygiene",
+      "label": "Pin the base image, run non-root, and keep secrets out of the image.",
+      "evidence_terms": [
+        "base image",
+        "non-root",
+        "image hygiene"
+      ],
+      "archetypes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "k8s.probes",
+      "label": "Define liveness and readiness probes that reflect real health.",
+      "evidence_terms": [
+        "readiness probe",
+        "liveness probe",
+        "health"
+      ],
+      "archetypes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "k8s.resource-limits",
+      "label": "Set explicit resource requests and limits.",
+      "evidence_terms": [
+        "requests",
+        "limits",
+        "node pressure"
+      ],
+      "archetypes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "k8s.rollout-rollback",
+      "label": "Define a rollout strategy with a rollback revision.",
+      "evidence_terms": [
+        "rolling update",
+        "rollback",
+        "revision"
+      ],
+      "archetypes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "k8s.read-before-mutate",
+      "label": "Read events, logs, and probe status before mutating pods.",
+      "evidence_terms": [
+        "events",
+        "logs",
+        "probe status"
+      ],
+      "archetypes": [
+        "platform"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "k8s.root-or-secret",
+      "description": "Running as root or baking secrets into the image."
+    },
+    {
+      "id": "k8s.no-readiness",
+      "description": "Missing readiness probe, so a rollout serves not-ready pods."
+    },
+    {
+      "id": "k8s.no-limits",
+      "description": "No resource limits, so one workload starves the node."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}
