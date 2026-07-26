@@ -107,7 +107,7 @@ def test_generated_skill_description_localizes_for_vi_and_unsupported_locale(tmp
     write_runtime_locale(tmp_path, locale="vi", fallback_locale="en")
     emit_core_skills(tmp_path, "codex", "enterprise")
     vi_skill = (tmp_path / ".codex" / "skills" / "developer" / "SKILL.md").read_text(encoding="utf-8")
-    assert "description: Dùng khi planning is ready and code must be changed with controlled scope and evidence." in vi_skill
+    assert 'description: "Dùng khi planning is ready and code must be changed with controlled scope and evidence.' in vi_skill
 
     legacy_policy = runtime_locale_file(tmp_path)
     legacy_policy.parent.mkdir(parents=True, exist_ok=True)
@@ -127,7 +127,7 @@ def test_generated_skill_description_localizes_for_vi_and_unsupported_locale(tmp
     )
     emit_core_skills(tmp_path, "codex", "enterprise")
     fallback_skill = (tmp_path / ".codex" / "skills" / "developer" / "SKILL.md").read_text(encoding="utf-8")
-    assert "description: Use when planning is ready and code must be changed with controlled scope and evidence." in fallback_skill
+    assert 'description: "Use when planning is ready and code must be changed with controlled scope and evidence.' in fallback_skill
 
 
 def test_generated_command_and_agent_surfaces_fallback_for_unsupported_locale(tmp_path: Path) -> None:
