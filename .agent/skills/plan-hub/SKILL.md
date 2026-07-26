@@ -65,3 +65,4 @@ Route to `developer` only when the active story or tech-spec is ready for implem
 - scrum-master
 - developer
 - review-hub
+- llm-app-engineering

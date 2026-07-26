@@ -71,3 +71,6 @@ Hold when the fix expands architecture without plan review, hides data risk, or 
 - review-hub
 - workflow-router
 - refactoring-discipline
+- iac-cloud-provisioning
+- container-kubernetes-ops
+- secrets-management

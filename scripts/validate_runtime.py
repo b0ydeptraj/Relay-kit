@@ -469,6 +469,10 @@ def validate_checked_in_docs() -> None:
 
 def validate_generated_bundle(bundle: str) -> None:
     expected_skills = set(BUNDLES[bundle])
+    # The full runtime bundles also emit the public entrypoint facades, which are
+    # not registry skills and so never appear in BUNDLES.
+    if bundle in {"baseline", "enterprise"}:
+        expected_skills |= set(PUBLIC_ENTRYPOINT_SHIMS)
     temp_dir = stable_temp_dir(REPO_ROOT, f"bundle-{bundle}")
     try:
         run_cli(

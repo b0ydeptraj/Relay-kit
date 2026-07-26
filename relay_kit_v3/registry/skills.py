@@ -4997,7 +4997,10 @@ ALL_V3_SKILLS.update(DELIVERY_SUPPORT_SKILLS)
 ALL_V3_SKILLS.update(NEW_CAPABILITY_SKILLS)
 ALL_V3_SKILLS.update(MMO_AUTHORIZATION_GATE_SKILL)
 ALL_V3_SKILLS.update(OFFENSIVE_TOOL_PACK_SKILLS)
-ALL_V3_SKILLS.update(PUBLIC_ENTRYPOINT_SKILLS)
+# PUBLIC_ENTRYPOINT_SKILLS are deliberately NOT registered: the eight shims are
+# adapter facades emitted by relay_kit_v3.public_entrypoint_facades, not routable
+# registry skills. Keeping them out of ALL_V3_SKILLS is what makes the routing
+# graph, bundles, and catalog exclude them (see test_repo_hardening_gates).
 
 
 def _with_resource_references(skill_name: str, spec: SkillSpec) -> SkillSpec:

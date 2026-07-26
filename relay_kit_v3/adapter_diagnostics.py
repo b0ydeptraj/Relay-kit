@@ -346,8 +346,16 @@ def _parse_frontmatter(path: Path) -> dict[str, str] | None:
         if ":" not in raw:
             continue
         key, value = raw.split(":", 1)
-        fields[key.strip()] = value.strip()
+        fields[key.strip()] = _unquote_scalar(value.strip())
     return fields
+
+
+def _unquote_scalar(value: str) -> str:
+    """Strip a YAML double-quote wrapper so a quoted description compares equal
+    to the plain expected value. Inline lists (``["Read", ...]``) are left alone."""
+    if len(value) >= 2 and value[0] == '"' and value[-1] == '"':
+        return value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    return value
 
 
 def _expected_frontmatter(

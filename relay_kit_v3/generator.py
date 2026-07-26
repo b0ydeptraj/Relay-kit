@@ -8,6 +8,10 @@ from .adapters import ensure_dirs, targets_for
 from .agent_profiles import emit_agent_surfaces
 from .command_registry import emit_command_surfaces
 from .localized_metadata import localized_skill_description, resolve_metadata_locale
+from .public_entrypoint_facades import (
+    PUBLIC_ENTRYPOINT_FACADE_CONTENT,
+    render_public_entrypoint_facade,
+)
 from .registry import (
     ALL_V3_SKILLS,
     BASELINE_APPROVED_DISCIPLINE_SKILLS,
@@ -81,7 +85,8 @@ BUNDLES: Dict[str, List[str]] = {
         list(MMO_AUTHORIZATION_GATE_SKILL.keys()),
         list(DISCIPLINE_UTILITY_SKILLS.keys()),
         list(OFFENSIVE_TOOL_PACK_SKILLS.keys()),
-        list(PUBLIC_ENTRYPOINT_SKILLS.keys()),
+        # Public entrypoint shims are emitted as facades (emit_public_entrypoint_facades),
+        # not as registry skills, so they are intentionally absent from every bundle.
     ),
 }
 
@@ -161,8 +166,29 @@ def emit_core_skills(project_path: Path, ai: str, bundle: str) -> List[Path]:
             write_text(output, render_skill(spec, description_override=localized_description))
             written.append(output)
             written.extend(emit_skill_resources(project_path, rel_target, name))
+    written.extend(emit_public_entrypoint_facades(project_path, relative_targets, bundle))
     written.extend(emit_command_surfaces(project_path, ai))
     written.extend(emit_agent_surfaces(project_path, ai))
+    return written
+
+
+def emit_public_entrypoint_facades(
+    project_path: Path, relative_targets: List[Path], bundle: str
+) -> List[Path]:
+    """Write the public entrypoint facade files.
+
+    Shims are adapter facades, not registry skills, so they are not part of any
+    bundle's skill list. They ship with the full runtime (baseline/enterprise);
+    narrower slices omit them just as they omit the specialist packs.
+    """
+    written: List[Path] = []
+    if bundle not in {"baseline", "enterprise"}:
+        return written
+    for rel_target in relative_targets:
+        for name in sorted(PUBLIC_ENTRYPOINT_FACADE_CONTENT):
+            output = project_path / rel_target / name / "SKILL.md"
+            write_text(output, render_public_entrypoint_facade(name))
+            written.append(output)
     return written
 
 

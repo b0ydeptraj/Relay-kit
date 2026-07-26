@@ -50,3 +50,4 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 - mmo-data-harvesting
 - policy-guard
 - qa-governor
+- mmo-authorization-gate

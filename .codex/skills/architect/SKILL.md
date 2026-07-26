@@ -60,3 +60,6 @@ Include:
 - plan-hub
 - workflow-router
 - observability-instrumentation
+- iac-cloud-provisioning
+- container-kubernetes-ops
+- privacy-compliance

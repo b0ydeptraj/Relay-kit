@@ -94,3 +94,4 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - debug-hub
 - token-economy
 - offensive-security-engagement
+- mmo-authorization-gate

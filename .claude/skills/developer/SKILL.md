@@ -70,3 +70,4 @@ If implementation reveals missing architecture, unclear acceptance criteria, a b
 - test-hub
 - qa-governor
 - review-hub
+- llm-app-engineering

@@ -51,3 +51,5 @@ Turn security from implicit trust into an explicit, evidence-backed defensive re
 - review-hub
 - qa-governor
 - dependency-management
+- secrets-management
+- privacy-compliance
