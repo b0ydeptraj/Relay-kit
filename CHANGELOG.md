@@ -17,10 +17,20 @@ All notable changes to `Relay-kit` are documented here.
 - Public entrypoint shims (`start-here`, `brainstorm`, `build-it`, and peers)
   as thin aliases over the orchestrators and hubs.
 
+- Six capability skills: `llm-app-engineering`, `iac-cloud-provisioning`,
+  `container-kubernetes-ops`, `secrets-management`, `privacy-compliance`, and
+  `mmo-authorization-gate`, each with a full battle-resource pack.
+
 ### Changed
 
 - The skill catalog, README counts, and manifest are derived from the registry;
-  the pack now ships 113 skills across `.claude`, `.agent`, and `.codex`.
+  the pack now ships 119 skills across `.claude`, `.agent`, and `.codex`.
+
+### Removed
+
+- Dead code: the `old_cli.py`/`old_cli_safe.py`/`original_cli.py` monoliths,
+  their one-off schema helpers, the empty `ai_kit_v3` phantom package, and
+  root-level scratch files.
 
 ### Fixed
 
