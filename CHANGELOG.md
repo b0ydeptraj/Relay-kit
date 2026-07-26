@@ -29,8 +29,8 @@ All notable changes to `Relay-kit` are documented here.
 ### Removed
 
 - Dead code: the `old_cli.py`/`old_cli_safe.py`/`original_cli.py` monoliths,
-  their one-off schema helpers, the empty `ai_kit_v3` phantom package, and
-  root-level scratch files.
+  their one-off schema helpers, the empty retired-namespace phantom package,
+  and root-level scratch files.
 
 ### Fixed
 
