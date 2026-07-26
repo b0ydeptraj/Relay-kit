@@ -18,7 +18,7 @@ from scripts.skill_gauntlet import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_SCENARIO_FIXTURES = 90
+EXPECTED_SCENARIO_FIXTURES = 127
 
 
 def run_command(*args: str) -> subprocess.CompletedProcess[str]:
