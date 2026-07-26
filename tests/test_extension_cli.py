@@ -20,7 +20,7 @@ def test_cli_ext_list():
         sys.exit = dummy_exit
         
         try:
-            dispatch("ext", ["list"])
+            dispatch("extension", ["list"])
         except RuntimeError as e:
             assert exit_code == 0
     finally:
