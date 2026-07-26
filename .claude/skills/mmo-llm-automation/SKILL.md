@@ -1,6 +1,6 @@
 ---
 name: mmo-llm-automation
-description: Use when MMO operations need AI-assisted content generation, behavioral variance, Sybil evasion through LLM diversity, or LLM API integration for bulk content tasks.
+description: "Use when MMO operations need AI-assisted content generation, behavioral variance, Sybil evasion through LLM diversity, or LLM API integration for bulk content tasks."
 ---
 
 # Mission

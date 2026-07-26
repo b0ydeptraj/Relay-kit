@@ -3,7 +3,7 @@ Inject PUBLIC_ENTRYPOINT_SKILLS into skills.py and register into ALL_V3_SKILLS
 """
 from pathlib import Path
 
-REPO = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+REPO = Path(__file__).resolve().parents[1]
 skills_path = REPO / "relay_kit_v3" / "registry" / "skills.py"
 block_path = REPO / "scripts" / "entrypoint_block.py"
 

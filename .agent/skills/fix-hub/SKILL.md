@@ -1,6 +1,6 @@
 ---
 name: fix-hub
-description: Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop.
+description: "Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop."
 ---
 
 # Mission
@@ -70,17 +70,4 @@ Hold when the fix expands architecture without plan review, hides data risk, or 
 - test-hub
 - review-hub
 - workflow-router
-- cpp-systems-engineering
-- windows-native-internals
-- advanced-python-engineering
-- binary-stealth-obfuscation
-- edr-evasion-tactics
-- telemetry-blinding
-- process-injection-techniques
-- network-stealth-c2
-- protocol-fingerprint-spoofing
-- antibot-challenge-solving
-- frontend-crypto-reverse
-- desktop-imgui-development
-- desktop-python-ui
-- terminal-operator-ui
+- refactoring-discipline

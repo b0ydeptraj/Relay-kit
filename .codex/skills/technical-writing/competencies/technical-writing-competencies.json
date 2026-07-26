@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "technical-writing",
+  "role": "docs-author",
+  "category": "technical-writing",
+  "core_competencies": [
+    {
+      "id": "technical-writing.audience-task",
+      "label": "Scope the doc to one audience and one task.",
+      "evidence_terms": [
+        "audience",
+        "task",
+        "scope"
+      ],
+      "archetypes": [
+        "docs-product"
+      ]
+    },
+    {
+      "id": "technical-writing.verified-commands",
+      "label": "Verify every command, path, and flag against the repo.",
+      "evidence_terms": [
+        "verified command",
+        "path",
+        "flag"
+      ],
+      "archetypes": [
+        "docs-product"
+      ]
+    },
+    {
+      "id": "technical-writing.task-structure",
+      "label": "Order content quickstart-first, reference-second.",
+      "evidence_terms": [
+        "quickstart",
+        "reference",
+        "structure"
+      ],
+      "archetypes": [
+        "docs-product"
+      ]
+    },
+    {
+      "id": "technical-writing.label-unknowns",
+      "label": "Mark unknowns instead of fabricating behavior.",
+      "evidence_terms": [
+        "unknown",
+        "assumption",
+        "gap"
+      ],
+      "archetypes": [
+        "docs-product"
+      ]
+    },
+    {
+      "id": "technical-writing.staleness",
+      "label": "State ownership and source of truth for currency.",
+      "evidence_terms": [
+        "source of truth",
+        "owner",
+        "staleness"
+      ],
+      "archetypes": [
+        "docs-product"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "technical-writing.fabricated-command",
+      "description": "Documents a command that the code does not have."
+    },
+    {
+      "id": "technical-writing.audience-blend",
+      "description": "Blends audiences so no task is served."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

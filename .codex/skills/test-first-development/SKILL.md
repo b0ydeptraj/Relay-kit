@@ -1,6 +1,6 @@
 ---
 name: test-first-development
-description: Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility.
+description: "Use when implementation should follow a red-green-refactor loop instead of ad-hoc coding. Test-first execution utility."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

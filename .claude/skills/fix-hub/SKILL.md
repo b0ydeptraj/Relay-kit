@@ -1,6 +1,6 @@
 ---
 name: fix-hub
-description: Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop.
+description: "Use when debug-hub has validated findings or when a change request is already sharply bounded. Turn those findings into a minimal implementation path and hand off to the developer loop."
 ---
 
 # Mission
@@ -12,6 +12,18 @@ Convert a known problem into a bounded implementation path that can be executed 
 3. Use `dependency-management` for package, lockfile, toolchain, or environment fixes.
 4. Use `go-service-engineering` or `next-product-frontend` for stack-specific implementation handoff.
 5. Use `test-first-development` when behavior can be captured before the implementation pass.
+6. Offensive fix handoff: when the fix involves native systems or security-sensitive code, route to the matching specialist:
+   - C++ / Win32 / native code -> `cpp-systems-engineering`, `windows-native-internals`
+   - Python scripting / automation -> `advanced-python-engineering`
+   - Binary evasion / obfuscation -> `binary-stealth-obfuscation`
+   - EDR / AV bypass -> `edr-evasion-tactics`, `telemetry-blinding`
+   - Process injection / hollowing -> `process-injection-techniques`
+   - C2 / network stealth -> `network-stealth-c2`
+   - Antibot / fingerprint bypass -> `antibot-challenge-solving`, `protocol-fingerprint-spoofing`
+   - Crypto reverse / signing -> `frontend-crypto-reverse`
+   - Desktop ImGui UI -> `desktop-imgui-development`
+   - Desktop Python UI -> `desktop-python-ui`
+   - Terminal / CLI UI -> `terminal-operator-ui`
 
 ## Evidence contract
 - update the active story or tech-spec with real files, boundaries, and verification steps
@@ -58,3 +70,4 @@ Hold when the fix expands architecture without plan review, hides data risk, or 
 - test-hub
 - review-hub
 - workflow-router
+- refactoring-discipline

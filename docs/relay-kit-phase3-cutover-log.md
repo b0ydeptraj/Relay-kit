@@ -79,18 +79,18 @@ Complete phase-3 cutover with canonical runtime paths and no active compatibilit
 - rollback tag before physical cutover:
   - `git tag -a phase3-pre-batch4-20260414 -m "Rollback point before Batch 4 physical repo rename"`
 - path activation:
-  - `robocopy C:\Users\b0ydeptrai\OneDrive\Documents\python-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit /MIR ...` -> success
+  - `robocopy C:\Users\<user>\OneDrive\Documents\python-kit C:\Users\<user>\OneDrive\Documents\relay-kit /MIR ...` -> success
 - CLI reinstall from new path:
-  - `pipx install --force C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit` -> installed `relay-kit 3.3.0`
+  - `pipx install --force C:\Users\<user>\OneDrive\Documents\relay-kit` -> installed `relay-kit 3.3.0`
 - post-activation gates:
   - `py -3.12 scripts/validate_runtime.py` -> pass
   - `py -3.12 scripts/skill_gauntlet.py . --strict` -> pass
   - `py -3.12 scripts/migration_guard.py . --strict` -> pass
 - real-project smoke (2 projects):
-  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --codex` -> pass
-  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --claude` -> pass
-  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\prompt-genius --antigravity` -> pass
-  - `relay-kit C:\Users\b0ydeptrai\OneDrive\Documents\prompt-genius --generic` -> pass
+  - `relay-kit C:\Users\<user>\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --codex` -> pass
+  - `relay-kit C:\Users\<user>\OneDrive\Documents\relay-kit\apps\python-kit-sales-web --claude` -> pass
+  - `relay-kit C:\Users\<user>\OneDrive\Documents\prompt-genius --antigravity` -> pass
+  - `relay-kit C:\Users\<user>\OneDrive\Documents\prompt-genius --generic` -> pass
 - old-path cleanup completion (2026-04-14 19:58 +07):
   - `handle64.exe ...\python-kit` identified lock holders (`powershell.exe`, `git.exe`)
   - stopped lock-holder PIDs, then `Remove-Item ...\python-kit -Force` -> success

@@ -10,6 +10,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -132,27 +134,82 @@ def assert_contains(path: Path, required_tokens: list[str]) -> None:
         fail(f"{path} is missing expected tokens: {missing}")
 
 
+ALLOWED_FRONTMATTER_KEYS = {"name", "description", "allowed-tools", "license", "metadata"}
+FRONTMATTER_FENCE = re.compile(r"^---\r?\n(.*?)^---\r?\n", re.S | re.M)
+
+
+def skill_files() -> list[Path]:
+    files: list[Path] = []
+    for target in ALL_TARGETS:
+        files.extend(sorted((REPO_ROOT / target).glob("*/SKILL.md")))
+    return files
+
+
+def assert_skill_frontmatter_is_loadable() -> None:
+    """Parse every SKILL.md frontmatter the way the runtime loader does.
+
+    A regex over `description:` (the previous check) happily reads a value out
+    of a block that YAML cannot parse at all -- which is how 21 skills whose
+    unquoted descriptions contained ": " passed this gate while loading with a
+    dead trigger. Parse it for real, and reject keys the loader would drop.
+    """
+    problems: list[str] = []
+    for skill_file in skill_files():
+        rel = skill_file.relative_to(REPO_ROOT).as_posix()
+        raw = skill_file.read_bytes()
+        if raw.startswith(b"\xef\xbb\xbf"):
+            problems.append(f"{rel}: starts with a UTF-8 BOM before the --- fence")
+            continue
+        match = FRONTMATTER_FENCE.match(raw.decode("utf-8"))
+        if match is None:
+            problems.append(f"{rel}: missing --- frontmatter fence")
+            continue
+        try:
+            data = yaml.safe_load(match.group(1))
+        except yaml.YAMLError as error:
+            summary = str(error).splitlines()[0]
+            problems.append(f"{rel}: frontmatter is not valid YAML ({summary})")
+            continue
+        if not isinstance(data, dict):
+            problems.append(f"{rel}: frontmatter must parse to a mapping")
+            continue
+        unknown = sorted(set(data) - ALLOWED_FRONTMATTER_KEYS)
+        if unknown:
+            problems.append(f"{rel}: unsupported frontmatter keys {unknown}")
+        if data.get("name") != skill_file.parent.name:
+            problems.append(f"{rel}: name={data.get('name')!r} does not match its directory")
+        description = data.get("description")
+        if not isinstance(description, str) or not description.strip():
+            problems.append(f"{rel}: missing or non-string description")
+
+    if problems:
+        preview = "\n".join(problems[:15])
+        fail(
+            "SKILL.md frontmatter must be loadable YAML.\n"
+            "A description containing ': ' has to be quoted.\n"
+            f"{preview}"
+        )
+
+
 def assert_skill_descriptions_trigger_first() -> None:
     locale_policy = load_runtime_locale(REPO_ROOT)
     locale_profile = resolve_metadata_locale(locale_policy)
     fallback_locale = str(locale_policy.get("fallback_locale", "en"))
     trigger_prefixes = expected_trigger_prefixes(locale_profile, fallback_locale)
-    skill_roots = [
-        REPO_ROOT / ".claude" / "skills",
-        REPO_ROOT / ".agent" / "skills",
-        REPO_ROOT / ".codex" / "skills",
-    ]
     bad_descriptions: list[str] = []
-    for root in skill_roots:
-        for skill_file in root.rglob("SKILL.md"):
-            content = skill_file.read_text(encoding="utf-8")
-            match = re.search(r"^description:\s*(.+)$", content, re.MULTILINE)
-            if match is None:
-                bad_descriptions.append(f"{skill_file}: missing description")
-                continue
-            description = match.group(1).strip()
-            if not any(description.startswith(prefix) for prefix in trigger_prefixes):
-                bad_descriptions.append(f"{skill_file}: {description}")
+    for skill_file in skill_files():
+        content = skill_file.read_text(encoding="utf-8")
+        match = FRONTMATTER_FENCE.match(content)
+        if match is None:
+            bad_descriptions.append(f"{skill_file}: missing frontmatter")
+            continue
+        data = yaml.safe_load(match.group(1))
+        description = str(data.get("description", "")).strip()
+        if not description:
+            bad_descriptions.append(f"{skill_file}: missing description")
+            continue
+        if not any(description.startswith(prefix) for prefix in trigger_prefixes):
+            bad_descriptions.append(f"{skill_file}: {description}")
     if bad_descriptions:
         preview = "\n".join(bad_descriptions[:10])
         prefixes_text = ", ".join(repr(prefix) for prefix in trigger_prefixes)
@@ -273,21 +330,55 @@ def validate_bundle_integrity() -> None:
 
 
 def validate_skill_graph_integrity() -> None:
-    inbound: dict[str, set[str]] = {name: set() for name in EXPECTED_RUNTIME_SKILLS}
+    """Every skill must be reachable from a layer-1 orchestrator.
+
+    An inbound-degree check (the previous rule) is satisfied by closed islands:
+    a cluster of specialists that only point at each other all have inbound
+    edges and still cannot be routed to. The manifest's own execution rule says
+    to enter through an orchestrator or hub, so reachability from the layer-1
+    roots is the property that actually has to hold. Public entrypoint shims
+    are roots by design and are exempt as targets.
+    """
     broken: list[str] = []
     for skill_name, spec in ALL_V3_SKILLS.items():
         for next_step in spec.next_steps:
             if next_step not in ALL_V3_SKILLS:
                 broken.append(f"{skill_name} -> {next_step}")
-                continue
-            inbound[next_step].add(skill_name)
-
     if broken:
         fail(f"Broken next_steps references: {broken}")
 
-    orphans = sorted(name for name, sources in inbound.items() if not sources)
-    if orphans:
-        fail(f"Unintentional canonical skill orphans: {orphans}")
+    roots = sorted(
+        name
+        for name, spec in ALL_V3_SKILLS.items()
+        if spec.layer == "layer-1-orchestrators"
+    )
+    if not roots:
+        fail("No layer-1 orchestrators found to seed the routing graph")
+
+    reachable = set(roots)
+    queue = list(roots)
+    while queue:
+        current = queue.pop()
+        for next_step in ALL_V3_SKILLS[current].next_steps:
+            if next_step not in reachable:
+                reachable.add(next_step)
+                queue.append(next_step)
+
+    unreachable = sorted(EXPECTED_RUNTIME_SKILLS - reachable - set(PUBLIC_ENTRYPOINT_SHIMS))
+    if unreachable:
+        fail(
+            "Skills unreachable from any layer-1 orchestrator "
+            f"(add an inbound next_steps edge): {unreachable}"
+        )
+
+    # A shim that became a routing target instead of a root is also drift.
+    shim_targets = sorted(
+        name
+        for name in PUBLIC_ENTRYPOINT_SHIMS
+        if any(name in spec.next_steps for spec in ALL_V3_SKILLS.values())
+    )
+    if shim_targets:
+        fail(f"Public entrypoint shims must stay roots, not next_steps targets: {shim_targets}")
 
 
 def validate_repo_hygiene() -> None:
@@ -484,6 +575,7 @@ def main() -> int:
     validate_skill_graph_integrity()
     validate_list_output()
     validate_checked_in_runtime()
+    assert_skill_frontmatter_is_loadable()
     assert_skill_descriptions_trigger_first()
     validate_skill_gauntlet()
     validate_context_continuity_utility()

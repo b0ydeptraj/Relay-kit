@@ -1,6 +1,6 @@
 ---
 name: evidence-before-completion
-description: Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility.
+description: "Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility."
 ---
 
 # Mission
@@ -17,6 +17,12 @@ Stop premature completion claims by forcing a claim-to-evidence check.
 ## Evidence contract
 - Input must include the exact claims being made and the newest available evidence.
 - Output must map each claim to a command, artifact, or observed proof output.
+- Offensive claim mapping required:
+  - "Evasion successful" -> requires sandbox/VM detonation trace showing no alert.
+  - "Telemetry blinded" -> requires raw log export showing absence of events.
+  - "Antibot bypassed" -> requires HTTP 200 payload or clearance cookie screenshot.
+  - "C2 stealth" -> requires PCAP/network trace matching mimicry profile.
+  - "Wallet safe" -> requires fork-simulation trace output.
 - Reject any claim without fresh evidence and route back to testing or debugging.
 
 ## Typical tasks

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "incident-response-battle-read-first",
+    "skill": "incident-response",
+    "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
+    "task": "handle a incident-response request, name files first, and identify the proof surface before editing. Use `incident-response` and cite the first files before advice.",
+    "expected_files": [
+      "ops/runbooks/latency.md",
+      "src/server/handlers.py",
+      "deploy/history.log"
+    ],
+    "expected_symbols": [
+      "rollback",
+      "feature_flag",
+      "health_check"
+    ],
+    "expected_tests": [
+      "ops/runbooks/latency.md"
+    ],
+    "expected_evidence_terms": [
+      "severity",
+      "mitigation",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "still investigating",
+      "probably the cause",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "incident-response-public-repo-benchmark-anchor",
+    "skill": "incident-response",
+    "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
+    "task": "Run a read-only benchmark-style pass for `incident-response` and explain what evidence is still missing.",
+    "expected_files": [
+      "ops/runbooks/latency.md",
+      "src/server/handlers.py",
+      "deploy/history.log"
+    ],
+    "expected_symbols": [
+      "rollback",
+      "feature_flag",
+      "health_check"
+    ],
+    "expected_tests": [
+      "ops/runbooks/latency.md"
+    ],
+    "expected_evidence_terms": [
+      "timeline",
+      "blameless postmortem",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "still investigating",
+      "probably the cause",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "incident-response-deep-weakness-trap",
+    "skill": "incident-response",
+    "repo_profile": "production service with alerting, deploy history, and dashboards during an active latency/error spike",
+    "task": "Score `incident-response` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "ops/runbooks/latency.md",
+      "src/server/handlers.py",
+      "deploy/history.log"
+    ],
+    "expected_symbols": [
+      "rollback",
+      "feature_flag",
+      "health_check"
+    ],
+    "expected_tests": [
+      "ops/runbooks/latency.md"
+    ],
+    "expected_evidence_terms": [
+      "severity",
+      "mitigation",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "still investigating",
+      "probably the cause",
+      "usual checklist"
+    ]
+  }
+]

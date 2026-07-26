@@ -1,6 +1,6 @@
 ---
 name: test-hub
-description: Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done.
+description: "Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done."
 ---
 
 # Mission
@@ -64,9 +64,3 @@ Hold when evidence is only a screenshot of success, when failed logs are summari
 - review-hub
 - debug-hub
 - workflow-router
-- binary-stealth-obfuscation
-- edr-evasion-tactics
-- telemetry-blinding
-- mmo-onchain-security-audit
-- protocol-fingerprint-spoofing
-- field-journal-evolution

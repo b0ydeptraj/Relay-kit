@@ -1,6 +1,6 @@
 ---
 name: field-journal-evolution
-description: Use when a task is complete, a pitfall is found, a new technique is discovered, or a routing gap is identified. Writeback experience to the field journal to evolve skill quality over time.
+description: "Use when a task is complete, a pitfall is found, a new technique is discovered, or a routing gap is identified. Writeback experience to the field journal to evolve skill quality over time."
 ---
 
 # Mission

@@ -7,7 +7,7 @@ Install once. Your agent stops guessing and starts working like an engineer.
 
 [![PyPI](https://img.shields.io/pypi/v/relay-kit?color=4f46e5&label=relay-kit&logo=pypi&logoColor=white)](https://pypi.org/project/relay-kit/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org)
-[![Skills](https://img.shields.io/badge/skills-73%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
+[![Skills](https://img.shields.io/badge/skills-113%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
 [![Adapters](https://img.shields.io/badge/adapters-Claude%20·%20Codex%20·%20Antigravity-8b5cf6)](https://github.com/b0ydeptraj/Relay-kit)
 [![License](https://img.shields.io/badge/license-Proprietary-gray)](LICENSE)
 
@@ -26,7 +26,7 @@ You're using Claude, Codex, or Cursor to build things. But the agent:
 - patches bugs without finding root cause
 - says "done" when nothing is proven
 
-Relay-kit solves this. It installs a structured workflow system into your project — 73 skills that agents actually follow, with built-in proof gates before anything is called done.
+Relay-kit solves this. It installs a structured workflow system into your project — 113 skills that agents actually follow, with built-in proof gates before anything is called done.
 
 ---
 
@@ -86,7 +86,7 @@ Running `relay-kit . --claude` writes structured skills into `.claude/skills/`. 
 
 ```
 your-project/
-├── .claude/skills/          ← 73 SKILL.md files Claude reads
+├── .claude/skills/          ← 113 SKILL.md files Claude reads
 ├── .codex/skills/           ← same for Codex
 ├── .agent/skills/           ← same for Antigravity
 └── .relay-kit/
@@ -138,7 +138,7 @@ Everything lives in your project. No cloud. No API keys required.
 </details>
 
 <details>
-<summary><strong>MMO / Multi-account pack (15 skills)</strong></summary>
+<summary><strong>MMO / Multi-account pack (17 skills)</strong></summary>
 
 Built for multi-account automation, social marketing, and ecommerce at scale.
 
@@ -159,8 +159,13 @@ Built for multi-account automation, social marketing, and ecommerce at scale.
 | `mmo-mobile-app-automation` | Mobile device and emulator automation |
 | `mmo-cloud-operations-automation` | Cloud worker pools, queue, retry, cost guards |
 | `mmo-crypto-wallet-farming` | Multi-wallet DeFi with Sybil-avoidance strategy |
+| `mmo-llm-automation` | LLM-driven content variance and Sybil evasion |
+| `mmo-onchain-security-audit` | On-chain script audit before wallet interaction |
 
 </details>
+
+> The full catalog also ships defensive-security, offensive-security, reverse-engineering, and
+> desktop skills. See [`docs/site/skill-catalog.md`](docs/site/skill-catalog.md) for every skill.
 
 ---
 
@@ -172,11 +177,35 @@ Built for multi-account automation, social marketing, and ecommerce at scale.
 | `--codex` | `.codex/skills/` | OpenAI Codex |
 | `--antigravity` | `.agent/skills/` | Antigravity, custom agents |
 | `--all` | All three | Generate everything at once |
+| `--generic` | `.relay-kit-prompts/` | Any agent that reads prompt files |
 
 All adapters stay in sync. Check parity anytime:
 
 ```bash
 relay-kit adapter diagnose . --adapter all --strict
+```
+
+---
+
+## Bundles & internals
+
+The public `relay-kit` installer is a thin wrapper over `relay_kit.py`, the registry-native
+generator. The installer's `--all` flag maps to `--ai all` on `relay_kit.py`, which writes
+`.claude/skills`, `.agent/skills`, and `.codex/skills` from one source of truth.
+
+Skills are grouped into bundles, selectable with `--bundle`:
+
+| Bundle | Contains |
+|---|---|
+| `core` | Orchestrators + workflow hubs |
+| `orchestration` | Core plus roles and cleanup skills |
+| `runtime` | The full non-enterprise runtime |
+| `baseline` | Runtime plus approved discipline overlays (the default baseline) |
+| `enterprise` | Everything, including the offensive-security and public-entrypoint packs (default) |
+
+```bash
+# Low-level generator, all adapters, baseline bundle
+python relay_kit.py . --ai all --bundle baseline
 ```
 
 ---
@@ -244,6 +273,6 @@ Adds local embedding and tree-sitter symbol lookup.
 
 <div align="center">
 
-**Relay-kit v4 · 73 skills · Claude · Codex · Antigravity**
+**Relay-kit v4 · 113 skills · Claude · Codex · Antigravity**
 
 </div>

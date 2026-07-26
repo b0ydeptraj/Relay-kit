@@ -1,6 +1,6 @@
 ---
 name: browser-fingerprint-engineering
-description: Use when browser-based automation needs to defeat canvas fingerprinting, WebGL fingerprinting, AudioContext fingerprinting, font detection, or behavioral biometrics.
+description: "Use when browser-based automation needs to defeat canvas fingerprinting, WebGL fingerprinting, AudioContext fingerprinting, font detection, or behavioral biometrics."
 ---
 
 # Mission

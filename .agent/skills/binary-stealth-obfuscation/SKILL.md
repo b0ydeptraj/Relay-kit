@@ -1,6 +1,6 @@
 ---
 name: binary-stealth-obfuscation
-description: Use when a binary payload, shellcode, or PE needs to evade static analysis, signature detection, AV/EDR scanning, or YARA rules through obfuscation, packing, or mutation.
+description: "Use when a binary payload, shellcode, or PE needs to evade static analysis, signature detection, AV/EDR scanning, or YARA rules through obfuscation, packing, or mutation."
 ---
 
 # Mission

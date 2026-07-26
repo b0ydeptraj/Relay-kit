@@ -1,6 +1,6 @@
 ---
 name: network-stealth-c2
-description: Use when building or operating C2 infrastructure that needs traffic blending, domain fronting, protocol mimicry, redirectors, or beaconing that evades network detection.
+description: "Use when building or operating C2 infrastructure that needs traffic blending, domain fronting, protocol mimicry, redirectors, or beaconing that evades network detection."
 ---
 
 # Mission

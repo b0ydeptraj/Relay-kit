@@ -1,6 +1,6 @@
 ---
 name: protocol-fingerprint-spoofing
-description: Use when HTTP/HTTPS/TLS traffic needs to spoof or match a specific protocol fingerprint to evade network inspection, bot detection, or TLS fingerprinting (JA3/JA4/HTTP2).
+description: "Use when HTTP/HTTPS/TLS traffic needs to spoof or match a specific protocol fingerprint to evade network inspection, bot detection, or TLS fingerprinting (JA3/JA4/HTTP2)."
 ---
 
 # Mission

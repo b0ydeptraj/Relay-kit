@@ -1,6 +1,6 @@
 ---
 name: mmo-ecommerce-multichannel
-description: Use when MMO ecommerce operations need multi-store listing sync, master SKU management, order routing, inventory deduplication, and automated fulfillment across Shopee, TikTok Shop, Lazada, and similar platforms.
+description: "Use when MMO ecommerce operations need multi-store listing sync, master SKU management, order routing, inventory deduplication, and automated fulfillment across Shopee, TikTok Shop, Lazada, and similar platforms."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

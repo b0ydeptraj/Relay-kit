@@ -1,6 +1,6 @@
 ---
 name: test-hub
-description: Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done.
+description: "Use when implementation exists, after a risky refactor, or whenever confidence is lower than the change impact. Coordinate verification, evidence collection, and residual-risk review before work is called done."
 ---
 
 # Mission
@@ -12,6 +12,12 @@ Turn raw test execution into a real readiness decision.
 3. Use `signal-calibration` when a claim says production-ready, field-tested, commercial-ready, or unusually strong.
 4. Use `token-economy` when long logs or large context need compression without losing failure evidence.
 5. Use `mmo-mobile-app-automation` for device/emulator matrix evidence when mobile MMO flows are under test.
+6. Offensive evidence contracts: when the implementation involves binary, evasion, or bypass work, the qa-report must include:
+   - EDR/AV sandbox result (safe detonation in isolated VM or sandbox)
+   - Telemetry blinding confirmation (no hooks fired, no ETW events leaked)
+   - Network traffic capture for C2 (traffic matches stealth profile)
+   - Antibot bypass: screenshot of challenge page bypassed or HTTP 200 without block
+   - On-chain script: `mmo-onchain-security-audit` verdict before any wallet interaction
 
 ## Evidence contract
 - build the smallest useful matrix that covers acceptance criteria and regression surface

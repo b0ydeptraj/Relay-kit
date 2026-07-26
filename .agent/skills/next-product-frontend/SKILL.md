@@ -1,6 +1,6 @@
 ---
 name: next-product-frontend
-description: Use when work is primarily Next.js product UI or frontend architecture. Plan and implement App Router flows, server and client boundaries, server actions, data fetching, and quality gates for user-facing delivery.
+description: "Use when work is primarily Next.js product UI or frontend architecture. Plan and implement App Router flows, server and client boundaries, server actions, data fetching, and quality gates for user-facing delivery."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -52,5 +52,7 @@ Hold when the plan treats every screen as generic client-side React, skips cache
 ## Likely next step
 - developer
 - ux-structure
+- frontend-design
+- ui-styling
 - accessibility-review
 - review-hub

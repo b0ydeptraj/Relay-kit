@@ -1,6 +1,6 @@
 ---
 name: migration-guard
-description: Use when a naming cutover might leave stale compatibility tokens behind. Enforce token-level cutover policy with a strict fail-closed gate.
+description: "Use when a naming cutover might leave stale compatibility tokens behind. Enforce token-level cutover policy with a strict fail-closed gate."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

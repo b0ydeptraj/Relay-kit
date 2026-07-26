@@ -1,9 +1,10 @@
-﻿usage: relay-kit shell compact [-h] [--cwd CWD] [--timeout TIMEOUT] [--strict]
+usage: relay-kit shell compact [-h] [--cwd CWD] [--timeout TIMEOUT] [--strict]
                                [--json]
-                               [project_path]
+                               [project_path] ...
 
 positional arguments:
   project_path       Project root used for raw evidence logs
+  command            Command to run after --
 
 options:
   -h, --help         show this help message and exit

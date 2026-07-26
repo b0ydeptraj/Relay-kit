@@ -18,49 +18,73 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install test dependencies
-        run: python -m pip install pytest
+      # Install the package itself, not just pytest: the CLI imports pyyaml at
+      # startup, so every CLI-based step below fails without it.
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install -e .
+          python -m pip install pytest pytest-timeout
 
       - name: Validate runtime parity and bundle gating
         run: python scripts/validate_runtime.py
 
+      # Every step below is an independent verification gate. Without
+      # `if: always()` a failure in the first one silently skips the rest, so
+      # the pipeline reports on one gate while claiming to run twelve.
       - name: Run runtime doctor template mode
+        if: always()
         run: python relay_kit_public_cli.py runtime doctor . --strict
 
       - name: Run runtime doctor live mode
+        if: always()
         run: python relay_kit_public_cli.py runtime doctor . --strict --state-mode live
 
       - name: Run migration guard
+        if: always()
         run: python relay_kit_public_cli.py migration guard . --strict
 
+      - name: Run naming guard
+        if: always()
+        run: python scripts/naming_guard.py
+
       - name: Run policy guard
+        if: always()
         run: python relay_kit_public_cli.py policy check . --strict --pack enterprise
 
       - name: Run SRS guard
+        if: always()
         run: python scripts/srs_guard.py . --strict
 
       - name: Run skill gauntlet
+        if: always()
         run: python relay_kit_public_cli.py skill gauntlet . --strict --semantic
 
       - name: Run workflow eval
+        if: always()
         run: python scripts/eval_workflows.py . --strict
 
       - name: Write trusted manifest evidence
+        if: always()
         run: |
           python relay_kit_public_cli.py manifest write .
           python relay_kit_public_cli.py manifest stamp . --issuer ci --channel enterprise
 
       - name: Run public enterprise doctor
+        if: always()
         run: python relay_kit_public_cli.py doctor . --skip-tests --policy-pack enterprise
 
       - name: Run release lane verification
+        if: always()
         run: python relay_kit_public_cli.py release verify .
 
       - name: Build package smoke wheel
+        if: always()
         run: python -m pip wheel . --no-deps -w .tmp/wheelhouse
 
       - name: Run package install smoke
+        if: always()
         run: python scripts/package_smoke.py .
 
       - name: Run runtime smoke tests
+        if: always()
         run: python -m pytest tests -q

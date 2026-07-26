@@ -1,6 +1,6 @@
 ---
 name: vietnamese-product-localization
-description: Use when product output must be localized for Vietnamese users. Produce Vietnamese or bilingual docs, support copy, release notes, and communication artifacts with quality constraints.
+description: "Use when product output must be localized for Vietnamese users. Produce Vietnamese or bilingual docs, support copy, release notes, and communication artifacts with quality constraints."
 ---
 
 # Mission

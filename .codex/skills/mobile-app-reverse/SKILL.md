@@ -1,6 +1,6 @@
 ---
 name: mobile-app-reverse
-description: Use when MMO mobile operations need to reverse-engineer APK or IPA apps: find API endpoints, signing keys, certificate pinning bypass, or replicate app behavior without the app.
+description: "Use when MMO mobile operations need to reverse-engineer APK or IPA apps: find API endpoints, signing keys, certificate pinning bypass, or replicate app behavior without the app."
 ---
 
 # Mission

@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "performance-optimization",
+  "role": "performance-specialist",
+  "category": "performance",
+  "core_competencies": [
+    {
+      "id": "performance.metric-baseline",
+      "label": "Define the metric/workload and capture a baseline.",
+      "evidence_terms": [
+        "baseline",
+        "p95",
+        "workload"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "performance.profile-bottleneck",
+      "label": "Profile to the dominant cost before changing code.",
+      "evidence_terms": [
+        "profiler",
+        "bottleneck",
+        "hot path"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "performance.one-variable",
+      "label": "Change one variable and re-measure attributably.",
+      "evidence_terms": [
+        "one variable",
+        "re-measure",
+        "delta"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "performance.query-and-alloc",
+      "label": "Spot N+1 queries, excess allocations, and I/O waits.",
+      "evidence_terms": [
+        "n+1",
+        "allocation",
+        "io wait"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "performance.regression-guard",
+      "label": "Lock the gain with a benchmark or budget.",
+      "evidence_terms": [
+        "benchmark",
+        "regression",
+        "budget"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "performance.no-baseline",
+      "description": "Claims a speedup with no baseline."
+    },
+    {
+      "id": "performance.microbench-illusion",
+      "description": "Reports a microbenchmark win that the system does not see."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

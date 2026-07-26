@@ -1,6 +1,6 @@
 ---
 name: cook
-description: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist.
+description: "Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist."
 ---
 
 # Mission
@@ -54,4 +54,3 @@ Run the day-to-day loop for one request without letting it skip gates or get stu
 - test-hub
 - review-hub
 - context-continuity
-- offensive-security-engagement

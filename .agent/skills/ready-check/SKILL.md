@@ -1,4 +1,4 @@
-﻿---
+---
 name: ready-check
 description: Use when code exists and you need a real go or no-go decision about readiness or shipability. Public Relay-kit entrypoint for review and QA gating.
 ---

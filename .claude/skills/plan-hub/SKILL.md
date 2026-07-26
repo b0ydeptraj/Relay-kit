@@ -1,6 +1,6 @@
 ---
 name: plan-hub
-description: Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles.
+description: "Use when work is larger than quick-flow or when existing planning artifacts are stale or incomplete. Run the planning chain from brief to prd to architecture to stories without losing context between roles."
 ---
 
 # Mission
@@ -59,6 +59,7 @@ Route to `developer` only when the active story or tech-spec is ready for implem
 - architect
 - go-service-engineering
 - next-product-frontend
+- frontend-design
 - mmo-ecommerce-multichannel
 - mmo-crypto-wallet-farming
 - scrum-master

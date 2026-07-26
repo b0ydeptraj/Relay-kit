@@ -1,6 +1,6 @@
 ---
 name: telemetry-blinding
-description: Use when operations need to suppress, redirect, or corrupt security telemetry: ETW providers, Sysmon, WEF, audit logs, or kernel callbacks.
+description: "Use when operations need to suppress, redirect, or corrupt security telemetry: ETW providers, Sysmon, WEF, audit logs, or kernel callbacks."
 ---
 
 # Mission

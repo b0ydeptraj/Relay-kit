@@ -1,6 +1,6 @@
 ---
 name: process-injection-techniques
-description: Use when a payload needs to run in the context of another process: classic injection, reflective DLL, process hollowing, APC injection, thread hijacking, or shellcode runners.
+description: "Use when a payload needs to run in the context of another process: classic injection, reflective DLL, process hollowing, APC injection, thread hijacking, or shellcode runners."
 ---
 
 # Mission

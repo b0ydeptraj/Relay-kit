@@ -1,6 +1,6 @@
 ---
 name: release-readiness
-description: Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails.
+description: "Use when a lane needs a pre-deploy or post-deploy readiness verdict with explicit smoke signals and rollback guardrails."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 
@@ -51,3 +51,4 @@ Convert release confidence into concrete pre and post deploy evidence instead of
 - review-hub
 - qa-governor
 - workflow-router
+- ci-cd-pipeline

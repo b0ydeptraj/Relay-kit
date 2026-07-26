@@ -1,6 +1,6 @@
 ---
 name: windows-native-internals
-description: Use when work requires Windows-internal knowledge: NT APIs, PEB/TEB, kernel structures, SSDT, ETW, driver interaction, object manager, undocumented syscalls, or memory manager internals.
+description: "Use when work requires Windows-internal knowledge: NT APIs, PEB/TEB, kernel structures, SSDT, ETW, driver interaction, object manager, undocumented syscalls, or memory manager internals."
 ---
 
 # Mission

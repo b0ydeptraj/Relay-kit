@@ -1,0 +1,93 @@
+[
+  {
+    "id": "database-migration-safety-battle-read-first",
+    "skill": "database-migration-safety",
+    "repo_profile": "app repo with an ORM, a migrations directory, and a large hot table in production",
+    "task": "handle a database-migration-safety request, name files first, and identify the proof surface before editing. Use `database-migration-safety` and cite the first files before advice.",
+    "expected_files": [
+      "migrations/0042_add_status.sql",
+      "src/db/models.py",
+      "src/db/backfill.py"
+    ],
+    "expected_symbols": [
+      "add_column",
+      "backfill_status",
+      "create_index_concurrently"
+    ],
+    "expected_tests": [
+      "tests/db/test_migration.py"
+    ],
+    "expected_evidence_terms": [
+      "expand contract",
+      "blocking lock",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "just run the migration",
+      "should be quick",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "database-migration-safety-public-repo-benchmark-anchor",
+    "skill": "database-migration-safety",
+    "repo_profile": "app repo with an ORM, a migrations directory, and a large hot table in production",
+    "task": "Run a read-only benchmark-style pass for `database-migration-safety` and explain what evidence is still missing.",
+    "expected_files": [
+      "migrations/0042_add_status.sql",
+      "src/db/models.py",
+      "src/db/backfill.py"
+    ],
+    "expected_symbols": [
+      "add_column",
+      "backfill_status",
+      "create_index_concurrently"
+    ],
+    "expected_tests": [
+      "tests/db/test_migration.py"
+    ],
+    "expected_evidence_terms": [
+      "backfill batch",
+      "rollback",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "just run the migration",
+      "should be quick",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "database-migration-safety-deep-weakness-trap",
+    "skill": "database-migration-safety",
+    "repo_profile": "app repo with an ORM, a migrations directory, and a large hot table in production",
+    "task": "Score `database-migration-safety` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "migrations/0042_add_status.sql",
+      "src/db/models.py",
+      "src/db/backfill.py"
+    ],
+    "expected_symbols": [
+      "add_column",
+      "backfill_status",
+      "create_index_concurrently"
+    ],
+    "expected_tests": [
+      "tests/db/test_migration.py"
+    ],
+    "expected_evidence_terms": [
+      "expand contract",
+      "blocking lock",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "just run the migration",
+      "should be quick",
+      "usual checklist"
+    ]
+  }
+]

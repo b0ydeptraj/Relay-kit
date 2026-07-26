@@ -1,6 +1,6 @@
 ---
 name: attack-chain-orchestration
-description: Use when planning or orchestrating a multi-phase authorized attack chain: from initial recon through execution, persistence, lateral movement, collection, and cleanup.
+description: "Use when planning or orchestrating a multi-phase authorized attack chain: from initial recon through execution, persistence, lateral movement, collection, and cleanup."
 ---
 
 # Mission

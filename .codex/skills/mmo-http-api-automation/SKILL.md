@@ -1,6 +1,6 @@
 ---
 name: mmo-http-api-automation
-description: Use when MMO workloads are primarily HTTP/API-driven and need endpoint catalog, contract-safe request orchestration, quota handling, redacted logs, and replay-safe execution.
+description: "Use when MMO workloads are primarily HTTP/API-driven and need endpoint catalog, contract-safe request orchestration, quota handling, redacted logs, and replay-safe execution."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -47,5 +47,6 @@ Execute MMO API automation with contract handling that a backend reviewer can re
 ## Likely next step
 - api-integration
 - automation-ops
+- mmo-data-harvesting
 - policy-guard
 - qa-governor

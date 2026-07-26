@@ -1,6 +1,6 @@
 ---
 name: mmo-lowcode-automation
-description: Use when MMO operations rely on no-code or low-code orchestration stacks and need execution history, modular flows, error handlers, and safe deployment controls.
+description: "Use when MMO operations rely on no-code or low-code orchestration stacks and need execution history, modular flows, error handlers, and safe deployment controls."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

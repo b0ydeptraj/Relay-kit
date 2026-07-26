@@ -1,6 +1,6 @@
 ---
 name: mmo-proxy-network-ops
-description: Use when MMO operations need proxy pool management, health monitoring, sticky session assignment, rotation policy, and network-level isolation per account or workflow.
+description: "Use when MMO operations need proxy pool management, health monitoring, sticky session assignment, rotation policy, and network-level isolation per account or workflow."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

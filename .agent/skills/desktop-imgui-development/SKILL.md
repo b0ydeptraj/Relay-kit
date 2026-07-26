@@ -1,6 +1,6 @@
 ---
 name: desktop-imgui-development
-description: Use when building a desktop GUI with Dear ImGui (C++ or bindings): operator panels, real-time dashboards, debug overlays, game cheats UI, or tool UIs embedded in a render loop.
+description: "Use when building a desktop GUI with Dear ImGui (C++ or bindings): operator panels, real-time dashboards, debug overlays, game cheats UI, or tool UIs embedded in a render loop."
 ---
 
 # Mission

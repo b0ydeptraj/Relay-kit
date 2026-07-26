@@ -1,6 +1,6 @@
 ---
 name: repo-map
-description: Use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting. Repo-map utility.
+description: "Use when a hub needs a quick dependency map, file tree slice, or entrypoint overview before acting. Repo-map utility."
 ---
 
 # Mission

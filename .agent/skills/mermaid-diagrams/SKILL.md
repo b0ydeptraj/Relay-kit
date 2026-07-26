@@ -1,6 +1,6 @@
 ---
 name: mermaid-diagrams
-description: Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility.
+description: "Use when architecture, flow, or sequencing should be expressed as a quick mermaid diagram inside an artifact. Diagramming utility."
 ---
 
 # Mission

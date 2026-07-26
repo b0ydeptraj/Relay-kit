@@ -1,6 +1,6 @@
 ---
 name: advanced-python-engineering
-description: Use when Python work requires advanced patterns: async I/O, ctypes/cffi interop, metaprogramming, C extension modules, performance optimization, or large-scale automation architecture.
+description: "Use when Python work requires advanced patterns: async I/O, ctypes/cffi interop, metaprogramming, C extension modules, performance optimization, or large-scale automation architecture."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

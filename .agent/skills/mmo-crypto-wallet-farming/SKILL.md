@@ -1,6 +1,6 @@
 ---
 name: mmo-crypto-wallet-farming
-description: Use when MMO crypto operations need multi-wallet isolation, airdrop task automation, on-chain interaction scripting, and Sybil-avoidance strategy for DeFi and airdrop farming.
+description: "Use when MMO crypto operations need multi-wallet isolation, airdrop task automation, on-chain interaction scripting, and Sybil-avoidance strategy for DeFi and airdrop farming."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -48,6 +48,6 @@ Operate a multi-wallet crypto farming program with strict identity isolation and
 - mmo-identity-infrastructure
 - mmo-proxy-network-ops
 - mmo-http-api-automation
+- mmo-onchain-security-audit
 - policy-guard
 - qa-governor
-- mmo-onchain-security-audit

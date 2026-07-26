@@ -5,7 +5,7 @@ for relay_kit_v3/registry/skills.py -> OFFENSIVE_TOOL_PACK_SKILLS
 import re
 from pathlib import Path
 
-REPO = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+REPO = Path(__file__).resolve().parents[1]
 
 SKILLS = [
     "advanced-python-engineering","antibot-challenge-solving","attack-chain-orchestration",

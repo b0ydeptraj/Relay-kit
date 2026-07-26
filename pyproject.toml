@@ -10,6 +10,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Proprietary" }
 authors = [{ name = "Relay-kit" }]
+dependencies = [
+  "pyyaml>=6,<7",
+]
 
 [project.scripts]
 relay-kit = "relay_kit_public_cli:main"
@@ -45,3 +48,9 @@ relay_kit_v3 = [
 addopts = "-p no:cacheprovider"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+# Backstop against a genuinely hung test (e.g. a doctor->pytest recursion; the
+# real guard for that is doctor.py's PYTEST_CURRENT_TEST check). Kept generous
+# because the readiness/commercial/release tests legitimately shell out to the
+# full gate pipeline and take ~4 minutes.
+timeout = 600
+timeout_method = "thread"

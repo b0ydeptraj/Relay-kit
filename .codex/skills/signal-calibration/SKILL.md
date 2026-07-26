@@ -1,6 +1,6 @@
 ---
 name: signal-calibration
-description: Use when a claim risks being overrated, guessed, or stronger than the available evidence. Calibrate readiness, skill quality, field-tested, production-ready, commercial-ready, backend realism, UI realism, MMO/API realism, or benchmark claims before accepting them.
+description: "Use when a claim risks being overrated, guessed, or stronger than the available evidence. Calibrate readiness, skill quality, field-tested, production-ready, commercial-ready, backend realism, UI realism, MMO/API realism, or benchmark claims before accepting them."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

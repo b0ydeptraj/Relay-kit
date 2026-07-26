@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references.
+description: "Use when planning is ready and code must be changed with controlled scope and evidence. Implement a story or tech-spec using the cleaned execution loop and project-specific support references."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -60,6 +60,10 @@ If implementation reveals missing architecture, unclear acceptance criteria, a b
 - execution-loop
 - go-service-engineering
 - next-product-frontend
+- advanced-python-engineering
+- desktop-python-ui
+- desktop-imgui-development
+- terminal-operator-ui
 - data-persistence
 - dependency-management
 - project-architecture

@@ -1,6 +1,6 @@
 ---
 name: delegation-control
-description: Use when creating subagents or parallel agent lanes is being considered. Decide whether delegation is worth its quota cost, assign reasoning tiers, require bounded context packs, and close completed agents after evidence handoff.
+description: "Use when creating subagents or parallel agent lanes is being considered. Decide whether delegation is worth its quota cost, assign reasoning tiers, require bounded context packs, and close completed agents after evidence handoff."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: impact-radar
-description: Use when planning or review needs explicit blast-radius analysis before touching runtime, adapters, templates, or release-sensitive surfaces.
+description: "Use when planning or review needs explicit blast-radius analysis before touching runtime, adapters, templates, or release-sensitive surfaces."
 ---
 
 # Mission

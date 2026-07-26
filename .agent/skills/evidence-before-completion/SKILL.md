@@ -1,6 +1,6 @@
 ---
 name: evidence-before-completion
-description: Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility.
+description: "Use when a hub or specialist has specific completion claims to verify. Map each claim to fresh proof output before saying work is done, fixed, or ready. Claim-to-evidence utility."
 ---
 
 # Mission

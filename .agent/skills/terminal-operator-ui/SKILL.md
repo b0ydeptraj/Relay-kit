@@ -1,6 +1,6 @@
 ---
 name: terminal-operator-ui
-description: Use when building a rich terminal UI (TUI) for operator control panels, automation dashboards, or CLI tools: Rich, Textual, blessed, curses, prompt_toolkit, or similar.
+description: "Use when building a rich terminal UI (TUI) for operator control panels, automation dashboards, or CLI tools: Rich, Textual, blessed, curses, prompt_toolkit, or similar."
 ---
 
 # Mission

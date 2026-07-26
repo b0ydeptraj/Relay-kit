@@ -1,6 +1,6 @@
 ---
 name: cook
-description: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist.
+description: "Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist."
 ---
 
 # Mission
@@ -17,6 +17,7 @@ Run the day-to-day loop for one request without letting it skip gates or get stu
 - Never jump straight from vague intent to implementation.
 - When evidence is weak, prefer scout-hub, debug-hub, or test-hub over optimistic implementation.
 - When scope shifts, send the lane back through workflow-router.
+- When `workflow-state.engagement_proof` exists or the lane mode is `offensive`, call `offensive-security-engagement` as the first utility before picking any specialist.
 
 ## Role
 - lane-conductor

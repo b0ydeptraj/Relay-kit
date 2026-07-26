@@ -1,6 +1,6 @@
 ---
 name: binary-reverse-methodology
-description: Use when reverse engineering a binary: PE/ELF/Mach-O analysis, disassembly, decompilation, protocol reconstruction, anti-analysis bypass, or understanding undocumented behavior.
+description: "Use when reverse engineering a binary: PE/ELF/Mach-O analysis, disassembly, decompilation, protocol reconstruction, anti-analysis bypass, or understanding undocumented behavior."
 ---
 
 # Mission

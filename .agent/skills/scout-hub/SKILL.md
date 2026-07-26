@@ -1,6 +1,6 @@
 ---
 name: scout-hub
-description: Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues.
+description: "Use when the repo area is unfamiliar, stale, or likely to drift from existing assumptions. Reconnoiter the codebase and refresh living references before planning, debugging, or review work continues."
 ---
 
 # Mission
@@ -68,11 +68,3 @@ Name what became clearer, what is still unknown, which sources may be stale, and
 - debug-hub
 - review-hub
 - workflow-router
-- binary-reverse-methodology
-- malware-analysis-workflows
-- mobile-app-reverse
-- cpp-systems-engineering
-- windows-native-internals
-- frontend-crypto-reverse
-- browser-fingerprint-engineering
-- protocol-fingerprint-spoofing
