@@ -927,11 +927,11 @@ commands:
             action: store_true
             help: Emit machine-readable boundary report
   runtime:
-    handler: relay_kit_v3.cli.runtime.run_runtime
+    handler: relay_kit_v3.cli.runtime.run_runtime_doctor
     help_text: Run Relay-kit runtime diagnostics through portable public commands.
     subcommands:
       doctor:
-        handler: relay_kit_v3.cli.runtime.run_runtime
+        handler: relay_kit_v3.cli.runtime.run_runtime_doctor
         help_text: Detect runtime drift in generated skill surfaces
         args:
           project_path:
