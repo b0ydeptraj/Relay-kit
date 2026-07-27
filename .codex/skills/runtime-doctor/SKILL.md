@@ -1,6 +1,6 @@
 ---
 name: runtime-doctor
-description: Use when runtime integrity may have drifted and you need deterministic diagnostics over adapters, artifacts, and lane state surfaces.
+description: "Use when runtime integrity may have drifted and you need deterministic diagnostics over adapters, artifacts, and lane state surfaces."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

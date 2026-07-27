@@ -1,5 +1,6 @@
-﻿usage: relay-kit context search [-h] --query QUERY [--limit LIMIT]
-                                [--index-file INDEX_FILE] [--json]
+usage: relay-kit context search [-h] --query QUERY [--limit LIMIT]
+                                [--index-file INDEX_FILE]
+                                [--embedding-model EMBEDDING_MODEL] [--json]
                                 [project_path]
 
 positional arguments:
@@ -11,4 +12,7 @@ options:
   --limit LIMIT         Maximum result count
   --index-file INDEX_FILE
                         Optional context index JSON path
+  --embedding-model EMBEDDING_MODEL
+                        Force Tier 1/2 embedding model (e.g., nomic-embed-
+                        text-v1.5, bge-m3)
   --json                Emit machine-readable search results

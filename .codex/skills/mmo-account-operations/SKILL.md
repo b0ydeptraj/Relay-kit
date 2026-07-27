@@ -1,6 +1,6 @@
 ---
 name: mmo-account-operations
-description: Use when MMO account operations need profile inventory, lifecycle automation, health checks, risk segmentation, and recovery runbooks.
+description: "Use when MMO account operations need profile inventory, lifecycle automation, health checks, risk segmentation, and recovery runbooks."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

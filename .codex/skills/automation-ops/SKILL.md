@@ -1,6 +1,6 @@
 ---
 name: automation-ops
-description: Use when the request is workflow automation or operational scripting. Define schedulers, webhooks, runbooks, rollback safety, and dry-run discipline for reliable automation.
+description: "Use when the request is workflow automation or operational scripting. Define schedulers, webhooks, runbooks, rollback safety, and dry-run discipline for reliable automation."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

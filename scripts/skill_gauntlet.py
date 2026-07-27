@@ -11,6 +11,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence
 
+import yaml
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -25,6 +27,19 @@ from relay_kit_v3.runtime_locale import load_runtime_locale
 
 
 RUNTIME_ROOTS = [".claude/skills", ".agent/skills", ".codex/skills"]
+# Public entrypoint aliases are deliberately thin routing shims, not full
+# skills; they carry a plain "Public alias for X" body instead of the standard
+# Mission/Role/... section skeleton, so the required-section gate does not apply.
+PUBLIC_ENTRYPOINT_SHIMS = {
+    "brainstorm",
+    "build-it",
+    "debug-systematically",
+    "prove-it",
+    "ready-check",
+    "review-pr",
+    "start-here",
+    "write-steps",
+}
 REQUIRED_HEADERS = [
     "# Mission",
     "## Role",
@@ -159,9 +174,10 @@ def check_skill_file(path: Path, base: Path, trigger_prefixes: Sequence[str]) ->
             )
         )
 
-    for header in REQUIRED_HEADERS:
-        if header not in content:
-            findings.append(Finding(rel_path, "required-section", f"Missing section: {header}"))
+    if expected_name not in PUBLIC_ENTRYPOINT_SHIMS:
+        for header in REQUIRED_HEADERS:
+            if header not in content:
+                findings.append(Finding(rel_path, "required-section", f"Missing section: {header}"))
 
     if "- TBD" in content or "TBD" in content:
         findings.append(Finding(rel_path, "placeholder", "Contains unresolved placeholder text"))
@@ -170,11 +186,16 @@ def check_skill_file(path: Path, base: Path, trigger_prefixes: Sequence[str]) ->
 
 
 def parse_frontmatter(content: str) -> Dict[str, str] | None:
+    """Parse the leading --- block exactly the way a SKILL.md loader does.
+
+    This deliberately uses a real YAML parser and does *not* tolerate a BOM.
+    An earlier hand-rolled version split on the first colon and stripped a
+    leading BOM, which made it accept 21 files whose descriptions were
+    unquoted scalars containing ": " -- files that fail to load for real.
+    Returning None here surfaces as a gauntlet finding instead of a pass.
+    """
     lines = content.splitlines()
-    if not lines:
-        return None
-    first = lines[0].lstrip("\ufeff").strip()
-    if first != "---":
+    if not lines or lines[0].strip() != "---":
         return None
     end_index = None
     for idx in range(1, len(lines)):
@@ -184,31 +205,20 @@ def parse_frontmatter(content: str) -> Dict[str, str] | None:
     if end_index is None:
         return None
 
-    frontmatter_lines = lines[1:end_index]
-    data: Dict[str, str] = {}
-    i = 0
-    while i < len(frontmatter_lines):
-        raw = frontmatter_lines[i]
-        if ":" not in raw:
-            i += 1
-            continue
-        key, value = raw.split(":", 1)
-        key = key.strip()
-        value = value.strip()
-        if value in {">", ">-", "|", "|-"}:
-            i += 1
-            block: List[str] = []
-            while i < len(frontmatter_lines):
-                next_line = frontmatter_lines[i]
-                if not next_line.startswith((" ", "\t")):
-                    break
-                block.append(next_line.strip())
-                i += 1
-            data[key] = " ".join(block).strip()
-            continue
-        data[key] = value
-        i += 1
-    return data
+    try:
+        data = yaml.safe_load("\n".join(lines[1:end_index]))
+    except yaml.YAMLError:
+        return None
+    if not isinstance(data, dict):
+        return None
+
+    normalized: Dict[str, str] = {}
+    for key, value in data.items():
+        if isinstance(value, list):
+            normalized[str(key)] = "[" + ", ".join(f'"{item}"' for item in value) + "]"
+        elif value is not None:
+            normalized[str(key)] = str(value).strip()
+    return normalized
 
 
 def parse_inline_list(value: str) -> List[str]:

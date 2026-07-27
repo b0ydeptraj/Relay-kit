@@ -1,6 +1,6 @@
 ---
 name: qa-governor
-description: Use when work needs a readiness verdict or implementation confidence is low. Check readiness against acceptance criteria, risk, and regression scope, then write a QA report.
+description: "Use when work needs a readiness verdict or implementation confidence is low. Check readiness against acceptance criteria, risk, and regression scope, then write a QA report."
 ---
 
 # Mission

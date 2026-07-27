@@ -1,6 +1,6 @@
 ---
 name: multimodal-evidence
-description: Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility.
+description: "Use when screenshots, diagrams, rendered UIs, or media artifacts contain important clues. Multimodal evidence utility."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

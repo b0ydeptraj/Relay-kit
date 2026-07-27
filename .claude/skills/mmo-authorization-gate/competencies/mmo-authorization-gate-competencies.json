@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "mmo-authorization-gate",
+  "role": "utility-provider",
+  "category": "mmo-authorization",
+  "core_competencies": [
+    {
+      "id": "mmo-auth.ownership",
+      "label": "Confirm the operator owns or is authorized on the target accounts.",
+      "evidence_terms": [
+        "account ownership",
+        "authorization",
+        "operator"
+      ],
+      "archetypes": [
+        "mmo-authorization"
+      ]
+    },
+    {
+      "id": "mmo-auth.platform-terms",
+      "label": "Treat platform terms-of-service and rate limits as hard constraints.",
+      "evidence_terms": [
+        "platform terms",
+        "rate limit",
+        "hard constraint"
+      ],
+      "archetypes": [
+        "mmo-authorization"
+      ]
+    },
+    {
+      "id": "mmo-auth.risk-tier",
+      "label": "Assess the account-risk tier before high-risk actions.",
+      "evidence_terms": [
+        "risk tier",
+        "high-risk action",
+        "account risk"
+      ],
+      "archetypes": [
+        "mmo-authorization"
+      ]
+    },
+    {
+      "id": "mmo-auth.verdict",
+      "label": "Emit an explicit authorized-or-blocked verdict before the lane proceeds.",
+      "evidence_terms": [
+        "authorized",
+        "blocked",
+        "verdict"
+      ],
+      "archetypes": [
+        "mmo-authorization"
+      ]
+    },
+    {
+      "id": "mmo-auth.fail-closed",
+      "label": "Fail closed when ownership or authorization is unclear.",
+      "evidence_terms": [
+        "fail closed",
+        "unclear",
+        "block"
+      ],
+      "archetypes": [
+        "mmo-authorization"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "mmo-auth.no-ownership",
+      "description": "Proceeding without proof of account ownership."
+    },
+    {
+      "id": "mmo-auth.terms-ignored",
+      "description": "Treating platform terms as suggestions rather than constraints."
+    },
+    {
+      "id": "mmo-auth.no-verdict",
+      "description": "Running a high-risk action with no recorded authorization verdict."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

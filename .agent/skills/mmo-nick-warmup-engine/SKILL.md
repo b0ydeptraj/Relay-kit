@@ -1,6 +1,6 @@
 ---
 name: mmo-nick-warmup-engine
-description: Use when MMO accounts need a structured warmup sequence to build platform trust before high-risk actions, including behavioral scripting, interaction scheduling, and trust-score monitoring.
+description: "Use when MMO accounts need a structured warmup sequence to build platform trust before high-risk actions, including behavioral scripting, interaction scheduling, and trust-score monitoring."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

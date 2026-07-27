@@ -1,6 +1,6 @@
 ---
 name: mmo-cloud-operations-automation
-description: Use when MMO automation runs in cloud infrastructure and needs worker pools, scheduler, queue, retry, idempotency, and cost-guarded operations.
+description: "Use when MMO automation runs in cloud infrastructure and needs worker pools, scheduler, queue, retry, idempotency, and cost-guarded operations."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -49,4 +49,3 @@ Run MMO cloud automation at scale with resilient retries, safe concurrency, and 
 - release-readiness
 - policy-guard
 - qa-governor
-- mmo-llm-automation

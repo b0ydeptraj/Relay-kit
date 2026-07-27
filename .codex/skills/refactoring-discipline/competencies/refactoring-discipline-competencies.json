@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "refactoring-discipline",
+  "role": "refactor-discipline",
+  "category": "refactoring",
+  "core_competencies": [
+    {
+      "id": "refactoring.safety-net",
+      "label": "Require a green test net or add characterization tests first.",
+      "evidence_terms": [
+        "test net",
+        "characterization",
+        "coverage"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "refactoring.small-steps",
+      "label": "Move in small reversible steps with tests each step.",
+      "evidence_terms": [
+        "small step",
+        "reversible",
+        "re-run"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "refactoring.commit-separation",
+      "label": "Keep refactor and behavior changes in separate commits.",
+      "evidence_terms": [
+        "atomic commit",
+        "separate",
+        "behavior change"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "refactoring.contract-preservation",
+      "label": "Preserve signatures, outputs, and side effects.",
+      "evidence_terms": [
+        "public contract",
+        "signature",
+        "side effect"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    },
+    {
+      "id": "refactoring.risk-labeling",
+      "label": "State residual risk when the safety net is thin.",
+      "evidence_terms": [
+        "residual risk",
+        "unverified",
+        "thin coverage"
+      ],
+      "archetypes": [
+        "engineering"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "refactoring.no-net",
+      "description": "Restructures with no passing tests to prove behavior."
+    },
+    {
+      "id": "refactoring.mixed-commit",
+      "description": "Hides a behavior change inside a refactor."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

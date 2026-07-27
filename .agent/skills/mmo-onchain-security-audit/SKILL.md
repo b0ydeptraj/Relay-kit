@@ -1,6 +1,6 @@
 ---
 name: mmo-onchain-security-audit
-description: Use when MMO crypto operations involve on-chain script execution, smart contract interaction, or wallet automation that requires security audit before deployment.
+description: "Use when MMO crypto operations involve on-chain script execution, smart contract interaction, or wallet automation that requires security audit before deployment."
 ---
 
 # Mission

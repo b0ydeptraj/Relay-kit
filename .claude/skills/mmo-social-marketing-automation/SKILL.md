@@ -1,6 +1,6 @@
 ---
 name: mmo-social-marketing-automation
-description: Use when MMO social media or marketing automation needs official API routing, campaign workspace, content calendar, moderation safeguards, and quota-aware execution.
+description: "Use when MMO social media or marketing automation needs official API routing, campaign workspace, content calendar, moderation safeguards, and quota-aware execution."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -53,4 +53,6 @@ Hold when the plan depends on unofficial endpoints, duplicated posting bursts, m
 - growth-marketing
 - automation-ops
 - market-research
+- mmo-content-factory
+- mmo-reup-automation
 - review-hub

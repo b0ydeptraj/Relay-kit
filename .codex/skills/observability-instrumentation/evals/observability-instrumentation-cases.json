@@ -1,0 +1,93 @@
+[
+  {
+    "id": "observability-instrumentation-battle-read-first",
+    "skill": "observability-instrumentation",
+    "repo_profile": "backend service repo with request handlers, a metrics client, and a logging config",
+    "task": "handle a observability-instrumentation request, name files first, and identify the proof surface before editing. Use `observability-instrumentation` and cite the first files before advice.",
+    "expected_files": [
+      "src/server/handlers.py",
+      "src/telemetry/metrics.py",
+      "config/logging.yaml"
+    ],
+    "expected_symbols": [
+      "request_id",
+      "record_latency",
+      "trace_span"
+    ],
+    "expected_tests": [
+      "tests/telemetry/test_metrics.py"
+    ],
+    "expected_evidence_terms": [
+      "RED metrics",
+      "correlation id",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "add more logs",
+      "looks observable",
+      "dashboard exists"
+    ]
+  },
+  {
+    "id": "observability-instrumentation-public-repo-benchmark-anchor",
+    "skill": "observability-instrumentation",
+    "repo_profile": "backend service repo with request handlers, a metrics client, and a logging config",
+    "task": "Run a read-only benchmark-style pass for `observability-instrumentation` and explain what evidence is still missing.",
+    "expected_files": [
+      "src/server/handlers.py",
+      "src/telemetry/metrics.py",
+      "config/logging.yaml"
+    ],
+    "expected_symbols": [
+      "request_id",
+      "record_latency",
+      "trace_span"
+    ],
+    "expected_tests": [
+      "tests/telemetry/test_metrics.py"
+    ],
+    "expected_evidence_terms": [
+      "SLO",
+      "burn rate",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "add more logs",
+      "looks observable",
+      "dashboard exists"
+    ]
+  },
+  {
+    "id": "observability-instrumentation-deep-weakness-trap",
+    "skill": "observability-instrumentation",
+    "repo_profile": "backend service repo with request handlers, a metrics client, and a logging config",
+    "task": "Score `observability-instrumentation` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "src/server/handlers.py",
+      "src/telemetry/metrics.py",
+      "config/logging.yaml"
+    ],
+    "expected_symbols": [
+      "request_id",
+      "record_latency",
+      "trace_span"
+    ],
+    "expected_tests": [
+      "tests/telemetry/test_metrics.py"
+    ],
+    "expected_evidence_terms": [
+      "RED metrics",
+      "correlation id",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "add more logs",
+      "looks observable",
+      "dashboard exists"
+    ]
+  }
+]

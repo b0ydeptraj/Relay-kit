@@ -1,6 +1,6 @@
 ---
 name: mmo-browser-fleet-automation
-description: Use when MMO browser-based operations need profile inventory, session orchestration, deterministic waits, live debug evidence, and anti-flake reliability controls.
+description: "Use when MMO browser-based operations need profile inventory, session orchestration, deterministic waits, live debug evidence, and anti-flake reliability controls."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

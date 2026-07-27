@@ -1,249 +1,170 @@
-<div align="center">
+[English](README.md) | [Tiếng Việt](README.vi.md)
 
-# ⚡ Relay-kit
+# Relay-kit
 
-**A structured skill system for coding agents.**  
-Install once. Your agent stops guessing and starts working like an engineer.
+![Relay-kit runtime skill system](docs/site/assets/relay-kit-hero.svg)
 
-[![PyPI](https://img.shields.io/pypi/v/relay-kit?color=4f46e5&label=relay-kit&logo=pypi&logoColor=white)](https://pypi.org/project/relay-kit/)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org)
-[![Skills](https://img.shields.io/badge/skills-73%20production%20skills-22c55e)](https://github.com/b0ydeptraj/Relay-kit)
-[![Adapters](https://img.shields.io/badge/adapters-Claude%20·%20Codex%20·%20Antigravity-8b5cf6)](https://github.com/b0ydeptraj/Relay-kit)
-[![License](https://img.shields.io/badge/license-Proprietary-gray)](LICENSE)
+Relay-kit is a runtime skill system for teams building with coding agents.
 
-[English](README.md) · [Tiếng Việt](README.vi.md) · [Docs](docs/public-docs-index.md)
+It does not try to make the model magically smarter. It makes the way of working
+more disciplined: a clearer start, skills with contracts, tighter
+plan/build/debug/review, and evidence kept in artifacts instead of only in chat.
 
-</div>
+## Install in 60 seconds
 
----
+Pick the agent you use and copy one block. By default Relay-kit installs the full
+runtime: skills, slash commands, agent profiles, the `.relay-kit/` artifact, and a
+doctor check. You do not need to add `--bundle enterprise`.
 
-## The problem
+### Codex
 
-You're using Claude, Codex, or Cursor to build things. But the agent:
-
-- starts coding before understanding the problem
-- drifts from what you actually approved
-- patches bugs without finding root cause
-- says "done" when nothing is proven
-
-Relay-kit solves this. It installs a structured workflow system into your project — 73 skills that agents actually follow, with built-in proof gates before anything is called done.
-
----
-
-## Quick install
-
-**Claude Code:**
 ```bash
-pip install relay-kit && relay-kit . --claude && relay-kit doctor .
+pip install relay-kit
+relay-kit . --codex
+relay-kit doctor .
 ```
 
-**Codex:**
+### Claude
+
 ```bash
-pip install relay-kit && relay-kit . --codex && relay-kit doctor .
+pip install relay-kit
+relay-kit . --claude
+relay-kit doctor .
 ```
 
-**Antigravity / custom agent:**
+### Antigravity / Agent
+
 ```bash
-pip install relay-kit && relay-kit . --antigravity && relay-kit doctor .
+pip install relay-kit
+relay-kit . --antigravity
+relay-kit doctor .
 ```
 
-**From GitHub (latest build):**
+Use `.` when you are already inside the project you want to set up. To install into
+another folder, replace `.` with the project path.
+
+Pick one adapter per run: `--codex`, `--claude`, or `--antigravity`. Use `--all` when
+you genuinely want to generate all three surfaces at once, which writes
+`.claude/skills`, `.codex/skills`, and `.agent/skills` from one source of truth.
+
+## Install from GitHub source
+
+If PyPI is not available yet, or you want the latest build on `main`:
+
 ```bash
 pipx install "git+https://github.com/b0ydeptraj/Relay-kit.git"
-relay-kit . --claude && relay-kit doctor .
+relay-kit . --codex
+relay-kit doctor .
 ```
 
-> `relay-kit doctor .` verifies the install is healthy. Run it after every update.
+## Why Relay-kit
 
----
+Agent workflows tend to break at the same points:
 
-## How agents use it
+- coding starts before the problem is understood
+- the implementation drifts from what was actually approved
+- bugs get patched without finding the root cause
+- "done" is claimed before there is enough evidence
 
-Eight short names. That's all you need to remember.
+Relay-kit closes those gaps with routing, skill contracts, shared state, readiness
+gates, and a proof audit.
 
-| Type this | What happens |
-|---|---|
-| `start-here` | Agent finds the right path for your request |
-| `brainstorm` | Shapes a rough idea before any code is written |
-| `write-steps` | Slices approved work into verifiable steps |
-| `build-it` | Implements with scope control and evidence |
-| `debug-systematically` | Root-cause debugging — no random patches |
-| `review-pr` | Deliberate PR review before merge |
-| `ready-check` | Real go/no-go verdict with a QA report |
-| `prove-it` | Final evidence check before calling work done |
+## What you get
 
-**For new work:** `start-here` → `brainstorm` → `write-steps` → `build-it` → `ready-check`
+- runtime skills for `.codex/skills`, `.claude/skills`, and `.agent/skills`
+- shared artifacts under `.relay-kit/`
+- `memory-search` to recover past decisions and handoffs
+- `context audit`, `lane audit`, `adapter diagnose`, `command diagnose`, and `agent diagnose`
+- `release-readiness`, `accessibility-review`, `skill-gauntlet`, and `context-continuity`
+- a local context engine for paths, symbols, imports, tests, docs, chunks, call
+  hints, git history, SQLite FTS, active context, and a local MCP, with no API key
+- `battle-audit`, `battle-benchmark`, `skill-battle`, and `competency-battle` to catch
+  generic resources, measure context retrieval, and score each skill against evidence
+- `readiness check` for local governance proof
+- a Pulse report and signal export for quality review
 
-**For bugs:** `start-here` → `debug-systematically` → `build-it` → `ready-check`
+## Core Skill System
 
-**For PRs:** `review-pr` → `ready-check`
+The public front door should be about the strongest part of Relay-kit: routing,
+context, battle proof, adapter governance, and readiness gates.
 
----
+| Runtime layer | Signature skill / command | What it does |
+| --- | --- | --- |
+| Intent routing | `workflow-router`, `repo-map`, `prompt enhance` | turn a short or vague request into a clear ask / scout / act direction with read-first files |
+| Local codebase understanding | `context index`, `context search`, `context related`, `context explain-symbol` | find paths, symbols, tests, docs, config, and active context on the machine, with no API key |
+| Code delivery | `developer`, `fix-hub`, `execution-loop`, `test-first-development` | keep changes small, tested, and anchored to the real repo structure |
+| Debug and review | `debug-hub`, `root-cause-debugging`, `review-hub`, `qa-governor` | go from symptom to evidence, then from evidence to a clear verdict |
+| Engineering specialties | `api-integration`, `data-persistence`, `dependency-management`, `testing-patterns`, `go-service-engineering`, `next-product-frontend` | apply battle-tested competency patterns for backend, frontend, dependencies, and testing |
+| Proof gates | `policy-guard`, `runtime-doctor`, `skill-gauntlet`, `readiness check`, `skill-battle`, `competency-battle` | check adapters, skill behavior, local governance, and claim limits |
 
-## What's installed
-
-Running `relay-kit . --claude` writes structured skills into `.claude/skills/`. Same for `.codex/` and `.agent/`.
-
-```
-your-project/
-├── .claude/skills/          ← 73 SKILL.md files Claude reads
-├── .codex/skills/           ← same for Codex
-├── .agent/skills/           ← same for Antigravity
-└── .relay-kit/
-    ├── contracts/           ← planning and QA contracts
-    ├── state/               ← workflow state across sessions
-    ├── references/          ← skill reference docs
-    └── evidence/            ← gate run history
-```
-
-Everything lives in your project. No cloud. No API keys required.
-
----
-
-## Skill catalog
-
-<details>
-<summary><strong>Core engineering skills (always installed)</strong></summary>
-
-`developer` · `architect` · `pm` · `scrum-master` · `qa-governor`  
-`api-integration` · `data-persistence` · `dependency-management`  
-`testing-patterns` · `go-service-engineering` · `next-product-frontend`  
-`accessibility-review` · `ux-structure` · `frontend-design`
-
-</details>
-
-<details>
-<summary><strong>Workflow hubs (routing backbone)</strong></summary>
-
-`plan-hub` · `fix-hub` · `debug-hub` · `test-hub`  
-`review-hub` · `scout-hub` · `brainstorm-hub`
-
-</details>
-
-<details>
-<summary><strong>Context & memory utilities</strong></summary>
-
-`context-continuity` · `memory-search` · `repo-map`  
-`doc-pointers` · `handoff-context` · `token-economy` · `sequential-thinking`
-
-</details>
-
-<details>
-<summary><strong>Proof & safety gates</strong></summary>
-
-`policy-guard` · `signal-calibration` · `runtime-doctor`  
-`skill-gauntlet` · `evidence-before-completion` · `impact-radar`  
-`migration-guard` · `release-readiness`
-
-</details>
-
-<details>
-<summary><strong>MMO / Multi-account pack (15 skills)</strong></summary>
-
-Built for multi-account automation, social marketing, and ecommerce at scale.
-
-| Skill | For |
-|---|---|
-| `mmo-identity-infrastructure` | Fingerprint profiles + proxy-to-account binding |
-| `mmo-proxy-network-ops` | Proxy pool management, health checks, sticky sessions |
-| `mmo-nick-warmup-engine` | Account warmup — 7 to 14 day behavioral program |
-| `mmo-account-operations` | Account lifecycle, health scoring, recovery |
-| `mmo-browser-fleet-automation` | Browser fleet with anti-flake session controls |
-| `mmo-social-marketing-automation` | Social API campaigns, quota-aware scheduling |
-| `mmo-content-factory` | AI bulk content generation and cross-platform scheduling |
-| `mmo-reup-automation` | Content reup with dedup and rights controls |
-| `mmo-data-harvesting` | UID targeting lists and AI seeding content |
-| `mmo-ecommerce-multichannel` | Shopee / TikTok Shop / Lazada multi-store sync |
-| `mmo-http-api-automation` | Contract-safe API automation with replay-safe logs |
-| `mmo-lowcode-automation` | n8n / Make / no-code workflow operations |
-| `mmo-mobile-app-automation` | Mobile device and emulator automation |
-| `mmo-cloud-operations-automation` | Cloud worker pools, queue, retry, cost guards |
-| `mmo-crypto-wallet-farming` | Multi-wallet DeFi with Sybil-avoidance strategy |
-
-</details>
-
----
+Specialized extension packs still live in the technical catalog, but they are not the
+main README story. See [`docs/site/index.md`](docs/site/index.md) for the full skill
+catalog. The front page should make Relay-kit read as a disciplined runtime skill
+system, not a loose list of skills.
 
 ## Adapter support
 
 | Flag | Output | Works with |
-|---|---|---|
+| --- | --- | --- |
 | `--claude` | `.claude/skills/` | Claude Code |
 | `--codex` | `.codex/skills/` | OpenAI Codex |
 | `--antigravity` | `.agent/skills/` | Antigravity, custom agents |
-| `--all` | All three | Generate everything at once |
+| `--all` | all three | generate everything at once |
+| `--generic` | `.relay-kit-prompts/` | any agent that reads prompt files |
 
-All adapters stay in sync. Check parity anytime:
+## Bundles and internals
+
+The public `relay-kit` installer is a thin wrapper over `relay_kit.py`, the
+registry-native generator. The installer's `--all` flag maps to `--ai all` on
+`relay_kit.py`, which writes every adapter surface from one registry.
+
+Skills are grouped into bundles, selectable with `--bundle`:
+
+| Bundle | Contains |
+| --- | --- |
+| `core` | orchestrators and workflow hubs |
+| `orchestration` | core plus roles and cleanup skills |
+| `runtime` | the full non-enterprise runtime |
+| `baseline` | runtime plus approved discipline overlays |
+| `enterprise` | everything, including the specialized extension packs (default) |
 
 ```bash
-relay-kit adapter diagnose . --adapter all --strict
+python relay_kit.py . --ai all --bundle baseline
 ```
-
----
 
 ## Useful commands
 
 ```bash
-# After install — verify everything is healthy
-relay-kit doctor .
-
-# Check all adapter surfaces match
-relay-kit adapter diagnose . --adapter all --strict
-
-# Full readiness gate
-relay-kit readiness check . --profile enterprise
-
-# Turn a vague request into skill-aware guidance
-relay-kit prompt enhance . --prompt "fix the auth bug"
-
-# Find relevant files without dumping your whole codebase
-relay-kit context search . --query "payment middleware"
-
-# Check for stale context before resuming a long task
-relay-kit context audit . --strict
+relay-kit --list-skills
+relay-kit init /path/to/project --all
+relay-kit manifest write /path/to/project
+relay-kit doctor /path/to/project --policy-pack enterprise
+relay-kit readiness check /path/to/project --profile enterprise --json
 ```
 
----
+When the local gates are clean the verdict is `local-governance-ready-candidate`.
+Attach remote CI, release, support, or user-validation evidence to the readiness
+output when you have it.
 
-## Vietnamese locale
+## Start flow
 
-```bash
-relay-kit locale set . --locale vi
-```
-
-Applies Vietnamese metadata to skill pickers and command surfaces. Routing contracts stay in English.
-
----
-
-## Requirements
-
-- Python 3.10 or higher
-- Works with Claude Code, OpenAI Codex, Antigravity, Cursor, any agent that reads skill files
-
-Optional — local context indexing without API keys:
-
-```bash
-pip install relay-kit[context]
-```
-
-Adds local embedding and tree-sitter symbol lookup.
-
----
+| Goal | Public name | Behind the scenes |
+|---|---|---|
+| find where to start | `start-here` | `workflow-router` |
+| shape an idea | `brainstorm` | `brainstorm-hub` |
+| slice approved work | `write-steps` | `scrum-master` |
+| implement a slice | `build-it` | `developer` |
+| review a branch or PR | `review-pr` | `review-hub` |
+| disciplined debugging | `debug-systematically` | `debug-hub` + `root-cause-debugging` |
+| a real readiness verdict | `ready-check` | `review-hub` + `qa-governor` |
+| force a final proof pass | `prove-it` | `evidence-before-completion` |
 
 ## More docs
 
-- [Start flow walkthrough](docs/relay-kit-start-flow.md)
-- [Debug and review flow](docs/relay-kit-review-flow.md)
-- [Context continuity across sessions](docs/relay-kit-context-continuity.md)
-- [Writing custom skills](docs/how-to-write-skills.md)
-- [Release readiness gate](docs/relay-kit-release-readiness.md)
-- [Full docs index](docs/public-docs-index.md)
+- [`docs/site/index.md`](docs/site/index.md)
+- [`docs/public-docs-index.md`](docs/public-docs-index.md)
+- [`docs/relay-kit-start-flow.md`](docs/relay-kit-start-flow.md)
+- [`docs/relay-kit-review-flow.md`](docs/relay-kit-review-flow.md)
+- [`docs/relay-kit-readiness-check.md`](docs/relay-kit-readiness-check.md)
+- [`docs/how-to-write-skills.md`](docs/how-to-write-skills.md)
 - [Contributing](CONTRIBUTING.md)
-
----
-
-<div align="center">
-
-**Relay-kit v4 · 73 skills · Claude · Codex · Antigravity**
-
-</div>

@@ -8,7 +8,7 @@ This archive mirrors your relay-kit folder structure. It contains:
 
 ## Option A — extract (simplest)
 Extract this zip INTO your relay-kit root:
-  C:\Users\b0ydeptrai\Documents\relay-kit
+  C:\Users\<user>\Documents\relay-kit
 Choose "replace files in destination" when Windows asks. Done.
 
 ## Option B — run the generator (if you have Python)

@@ -2,6 +2,49 @@
 
 All notable changes to `Relay-kit` are documented here.
 
+## 4.0.0
+
+### Added
+
+- Offensive-security tool pack: 23 specialist skills (evasion, reverse
+  engineering, native internals, desktop/TUI) generated across all three
+  adapter surfaces and gated behind `offensive-security-engagement`.
+- Eight engineering-discipline specialists registered into the runtime graph:
+  `ci-cd-pipeline`, `database-migration-safety`, `incident-response`,
+  `observability-instrumentation`, `performance-optimization`,
+  `refactoring-discipline`, `secure-code-review`, `technical-writing`.
+- 10-theme design system under `design-system/` with token build tooling.
+- Public entrypoint shims (`start-here`, `brainstorm`, `build-it`, and peers)
+  as thin aliases over the orchestrators and hubs.
+
+- Six capability skills: `llm-app-engineering`, `iac-cloud-provisioning`,
+  `container-kubernetes-ops`, `secrets-management`, `privacy-compliance`, and
+  `mmo-authorization-gate`, each with a full battle-resource pack.
+
+### Changed
+
+- The skill catalog, README counts, and manifest are derived from the registry;
+  the pack now ships 119 skills across `.claude`, `.agent`, and `.codex`.
+
+### Removed
+
+- Dead code: the `old_cli.py`/`old_cli_safe.py`/`original_cli.py` monoliths,
+  their one-off schema helpers, the empty retired-namespace phantom package,
+  and root-level scratch files.
+
+### Fixed
+
+- SKILL.md frontmatter is now emitted as quoted YAML so descriptions containing
+  a colon load correctly instead of falling back to the body heading; a
+  `yaml.safe_load` gate in CI and `tests/test_skill_frontmatter_valid.py`
+  keep it from regressing.
+- The routing graph is validated by reachability from the layer-1 orchestrators
+  rather than inbound-degree, closing previously unreachable specialist islands.
+- The public CLI declares its `pyyaml` runtime dependency; `relay-kit doctor`
+  no longer recurses into `pytest` from within a test run.
+- Removed committed live-session state and maintainer-local absolute paths from
+  the tracked tree.
+
 ## Next - 3.4.0.dev0
 
 ### Added

@@ -1,6 +1,6 @@
 ---
 name: memory-search
-description: Use when a hub needs past decisions, handoff breadcrumbs, or prior debug evidence from .relay-kit artifacts. Read-only state retrieval utility.
+description: "Use when a hub needs past decisions, handoff breadcrumbs, or prior debug evidence from .relay-kit artifacts. Read-only state retrieval utility."
 ---
 
 # Mission

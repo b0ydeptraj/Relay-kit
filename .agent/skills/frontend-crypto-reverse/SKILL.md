@@ -1,6 +1,6 @@
 ---
 name: frontend-crypto-reverse
-description: Use when web applications use client-side cryptography, obfuscated JS, WASM, or signing parameters that must be reversed to replicate API calls without a browser.
+description: "Use when web applications use client-side cryptography, obfuscated JS, WASM, or signing parameters that must be reversed to replicate API calls without a browser."
 ---
 
 # Mission

@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 def check_roadmap_v5():
-    root = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+    root = Path(__file__).resolve().parents[1]
     
     expected_files = [
         # V5.0

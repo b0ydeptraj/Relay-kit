@@ -1,6 +1,6 @@
 ---
 name: review-hub
-description: Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan.
+description: "Use when artifacts disagree or before final completion claims. Check alignment across requirements, architecture, implementation, and quality evidence, then decide whether to accept, re-slice, debug, or re-plan."
 ---
 
 # Mission
@@ -55,6 +55,7 @@ End with one explicit verdict:
 - runtime-doctor
 - migration-guard
 - skill-evolution
+- field-journal-evolution
 - signal-calibration
 - doc-pointers
 - multimodal-evidence
@@ -65,3 +66,5 @@ End with one explicit verdict:
 - test-hub
 - context-continuity
 - workflow-router
+- secure-code-review
+- technical-writing

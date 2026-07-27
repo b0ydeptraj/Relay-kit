@@ -1,4 +1,4 @@
-﻿---
+---
 name: write-steps
 description: Use when approved work needs to be sliced into small, buildable, verifiable implementation steps. Public Relay-kit entrypoint for implementation slicing.
 ---

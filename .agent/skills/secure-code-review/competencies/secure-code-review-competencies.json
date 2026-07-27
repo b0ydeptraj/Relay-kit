@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "secure-code-review",
+  "role": "security-reviewer",
+  "category": "appsec-review",
+  "core_competencies": [
+    {
+      "id": "appsec-review.input-to-sink",
+      "label": "Trace untrusted input from source to dangerous sink.",
+      "evidence_terms": [
+        "tainted input",
+        "sink",
+        "trust boundary"
+      ],
+      "archetypes": [
+        "web-service"
+      ]
+    },
+    {
+      "id": "appsec-review.authz",
+      "label": "Verify authentication and object-level authorization on state-changing paths.",
+      "evidence_terms": [
+        "authorization",
+        "access control",
+        "identity"
+      ],
+      "archetypes": [
+        "web-service"
+      ]
+    },
+    {
+      "id": "appsec-review.secrets",
+      "label": "Detect hardcoded or logged secrets and unsafe secret handling.",
+      "evidence_terms": [
+        "secret",
+        "credential",
+        "token"
+      ],
+      "archetypes": [
+        "web-service"
+      ]
+    },
+    {
+      "id": "appsec-review.crypto",
+      "label": "Spot weak crypto, weak hashing, and predictable randomness.",
+      "evidence_terms": [
+        "hashing",
+        "encryption",
+        "randomness"
+      ],
+      "archetypes": [
+        "web-service"
+      ]
+    },
+    {
+      "id": "appsec-review.dependency-risk",
+      "label": "Flag known-vulnerable or unpinned dependencies.",
+      "evidence_terms": [
+        "dependency",
+        "CVE",
+        "lockfile"
+      ],
+      "archetypes": [
+        "web-service"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "appsec-review.keyword-flag",
+      "description": "Flags a line on a keyword without proving reachability."
+    },
+    {
+      "id": "appsec-review.authn-not-authz",
+      "description": "Assumes authentication implies authorization."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

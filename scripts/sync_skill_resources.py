@@ -6,7 +6,7 @@ for all 31 skills (23 offensive + 8 entrypoint) that are missing.
 import shutil
 from pathlib import Path
 
-REPO = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+REPO = Path(__file__).resolve().parents[1]
 SRC_BASE = REPO / ".agent" / "skills"
 DST_BASE = REPO / "relay_kit_v3" / "skill_resources"
 

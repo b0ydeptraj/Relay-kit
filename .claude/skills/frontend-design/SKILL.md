@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: Use when the user asks to build web components, pages, or applications and visual quality matters. Create distinctive, production-grade frontend interfaces that avoid generic AI aesthetics.
+description: "Use when the user asks to build web components, pages, or applications and visual quality matters. Create distinctive, production-grade frontend interfaces that avoid generic AI aesthetics."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

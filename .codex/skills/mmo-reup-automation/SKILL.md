@@ -1,6 +1,6 @@
 ---
 name: mmo-reup-automation
-description: Use when controlled MMO reup workflows need operator-run queues, scheduling windows, deduplication, attribution tracking, and policy-safe publishing controls.
+description: "Use when controlled MMO reup workflows need operator-run queues, scheduling windows, deduplication, attribution tracking, and policy-safe publishing controls."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

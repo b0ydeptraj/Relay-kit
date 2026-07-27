@@ -1,0 +1,93 @@
+[
+  {
+    "id": "performance-optimization-battle-read-first",
+    "skill": "performance-optimization",
+    "repo_profile": "service repo with a slow endpoint, a database layer, and a benchmark or load-test harness",
+    "task": "handle a performance-optimization request, name files first, and identify the proof surface before editing. Use `performance-optimization` and cite the first files before advice.",
+    "expected_files": [
+      "src/api/search.py",
+      "src/db/queries.py",
+      "bench/search_bench.py"
+    ],
+    "expected_symbols": [
+      "search_handler",
+      "run_query",
+      "benchmark"
+    ],
+    "expected_tests": [
+      "bench/search_bench.py"
+    ],
+    "expected_evidence_terms": [
+      "baseline p95",
+      "profiler",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "feels faster",
+      "should be quicker",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "performance-optimization-public-repo-benchmark-anchor",
+    "skill": "performance-optimization",
+    "repo_profile": "service repo with a slow endpoint, a database layer, and a benchmark or load-test harness",
+    "task": "Run a read-only benchmark-style pass for `performance-optimization` and explain what evidence is still missing.",
+    "expected_files": [
+      "src/api/search.py",
+      "src/db/queries.py",
+      "bench/search_bench.py"
+    ],
+    "expected_symbols": [
+      "search_handler",
+      "run_query",
+      "benchmark"
+    ],
+    "expected_tests": [
+      "bench/search_bench.py"
+    ],
+    "expected_evidence_terms": [
+      "hot path",
+      "delta",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "feels faster",
+      "should be quicker",
+      "usual checklist"
+    ]
+  },
+  {
+    "id": "performance-optimization-deep-weakness-trap",
+    "skill": "performance-optimization",
+    "repo_profile": "service repo with a slow endpoint, a database layer, and a benchmark or load-test harness",
+    "task": "Score `performance-optimization` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "src/api/search.py",
+      "src/db/queries.py",
+      "bench/search_bench.py"
+    ],
+    "expected_symbols": [
+      "search_handler",
+      "run_query",
+      "benchmark"
+    ],
+    "expected_tests": [
+      "bench/search_bench.py"
+    ],
+    "expected_evidence_terms": [
+      "baseline p95",
+      "profiler",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "feels faster",
+      "should be quicker",
+      "usual checklist"
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 ---
 name: browser-inspector
-description: Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility.
+description: "Use when the active hub needs console, network, DOM, or performance observations from a web flow. Browser evidence utility."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

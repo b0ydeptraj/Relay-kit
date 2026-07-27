@@ -4,7 +4,7 @@ Generate PUBLIC_ENTRYPOINT_SKILLS block for 8 remaining skills
 import re
 from pathlib import Path
 
-REPO = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+REPO = Path(__file__).resolve().parents[1]
 SKILLS = ["brainstorm","build-it","debug-systematically","prove-it","ready-check","review-pr","start-here","write-steps"]
 
 

@@ -1,6 +1,6 @@
 ---
 name: brainstorm-hub
-description: Use when the request is still an idea, an opportunity, or a loosely described improvement. Guide early ideation and rough problem framing before formal planning exists.
+description: "Use when the request is still an idea, an opportunity, or a loosely described improvement. Guide early ideation and rough problem framing before formal planning exists."
 ---
 
 # Mission

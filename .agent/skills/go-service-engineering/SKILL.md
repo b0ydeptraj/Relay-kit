@@ -1,6 +1,6 @@
 ---
 name: go-service-engineering
-description: Use when the request is primarily Go backend service work. Define handler boundary, transaction boundary, persistence, middleware, jobs, caching, and test evidence for Go service delivery.
+description: "Use when the request is primarily Go backend service work. Define handler boundary, transaction boundary, persistence, middleware, jobs, caching, and test evidence for Go service delivery."
 ---
 
 # Mission

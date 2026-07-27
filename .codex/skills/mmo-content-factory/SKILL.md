@@ -1,6 +1,6 @@
 ---
 name: mmo-content-factory
-description: Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale.
+description: "Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -48,5 +48,6 @@ Run a content production pipeline that converts raw assets into platform-optimiz
 - mmo-reup-automation
 - mmo-social-marketing-automation
 - mmo-data-harvesting
+- mmo-llm-automation
 - growth-marketing
 - qa-governor

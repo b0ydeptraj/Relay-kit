@@ -81,16 +81,36 @@ class QuarantineManager:
         self._update_installed_registry(pack_name, LifecycleState.ACTIVE.value, meta)
         return True
 
+    def _installed_entries(self) -> dict:
+        """Return a {name: {state, meta}} map from either registry layout.
+
+        The installed.json template ships as {"schema_version": ..., "installed": []},
+        while the write path stores flat {name: {state, meta}} entries. Normalize both
+        and ignore reserved/non-mapping keys so `list` never crashes on an empty pack set.
+        """
+        data = self._load_installed_registry()
+        wrapped = data.get("installed") if isinstance(data, dict) else None
+        if isinstance(wrapped, list):
+            return {
+                str(item.get("name")): item
+                for item in wrapped
+                if isinstance(item, dict) and item.get("name")
+            }
+        return {
+            name: value
+            for name, value in data.items()
+            if name != "schema_version" and isinstance(value, dict)
+        }
+
     def get_lifecycle_state(self, pack_name: str) -> LifecycleState:
-        installed = self._load_installed_registry()
+        installed = self._installed_entries()
         if pack_name in installed:
             return LifecycleState(installed[pack_name].get("state", "not_found"))
         return LifecycleState.NOT_FOUND
 
     def list_all(self) -> List[QuarantineEntry]:
-        installed = self._load_installed_registry()
         entries = []
-        for name, data in installed.items():
+        for name, data in self._installed_entries().items():
             state = LifecycleState(data.get("state", "not_found"))
             entries.append(QuarantineEntry(name, state, data.get("meta", {})))
         return entries

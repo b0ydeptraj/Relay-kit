@@ -8,16 +8,23 @@ from .adapters import ensure_dirs, targets_for
 from .agent_profiles import emit_agent_surfaces
 from .command_registry import emit_command_surfaces
 from .localized_metadata import localized_skill_description, resolve_metadata_locale
+from .public_entrypoint_facades import (
+    PUBLIC_ENTRYPOINT_FACADE_CONTENT,
+    render_public_entrypoint_facade,
+)
 from .registry import (
     ALL_V3_SKILLS,
     BASELINE_APPROVED_DISCIPLINE_SKILLS,
     BUNDLE_DOC_NAMES,
     CLEANUP_SKILLS,
     CORE_SKILLS,
+    DELIVERY_SUPPORT_SKILLS,
     DISCIPLINE_UTILITY_SKILLS,
     DOC_RENDERERS,
     LEGACY_ROLE_MAP,
+    MMO_AUTHORIZATION_GATE_SKILL,
     NATIVE_SUPPORT_SKILLS,
+    NEW_CAPABILITY_SKILLS,
     OFFENSIVE_TOOL_PACK_SKILLS,
     ORCHESTRATOR_SKILLS,
     PUBLIC_ENTRYPOINT_SKILLS,
@@ -64,8 +71,8 @@ BUNDLES: Dict[str, List[str]] = {
     "utility-providers": list(UTILITY_PROVIDER_SKILLS.keys()),
     "discipline-utilities": list(DISCIPLINE_UTILITY_SKILLS.keys()),
     "runtime-core": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()),
-    "runtime": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()),
-    "baseline": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(BASELINE_APPROVED_DISCIPLINE_SKILLS.keys()),
+    "runtime": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(DELIVERY_SUPPORT_SKILLS.keys()) + list(NEW_CAPABILITY_SKILLS.keys()) + list(MMO_AUTHORIZATION_GATE_SKILL.keys()),
+    "baseline": list(ORCHESTRATOR_SKILLS.keys()) + list(WORKFLOW_HUB_SKILLS.keys()) + list(ROLE_SKILLS.keys()) + list(UTILITY_PROVIDER_SKILLS.keys()) + list(CLEANUP_SKILLS.keys()) + list(NATIVE_SUPPORT_SKILLS.keys()) + list(DELIVERY_SUPPORT_SKILLS.keys()) + list(NEW_CAPABILITY_SKILLS.keys()) + list(MMO_AUTHORIZATION_GATE_SKILL.keys()) + list(BASELINE_APPROVED_DISCIPLINE_SKILLS.keys()),
     "enterprise": unique_names(
         list(ORCHESTRATOR_SKILLS.keys()),
         list(WORKFLOW_HUB_SKILLS.keys()),
@@ -73,9 +80,13 @@ BUNDLES: Dict[str, List[str]] = {
         list(UTILITY_PROVIDER_SKILLS.keys()),
         list(CLEANUP_SKILLS.keys()),
         list(NATIVE_SUPPORT_SKILLS.keys()),
+        list(DELIVERY_SUPPORT_SKILLS.keys()),
+        list(NEW_CAPABILITY_SKILLS.keys()),
+        list(MMO_AUTHORIZATION_GATE_SKILL.keys()),
         list(DISCIPLINE_UTILITY_SKILLS.keys()),
         list(OFFENSIVE_TOOL_PACK_SKILLS.keys()),
-        list(PUBLIC_ENTRYPOINT_SKILLS.keys()),
+        # Public entrypoint shims are emitted as facades (emit_public_entrypoint_facades),
+        # not as registry skills, so they are intentionally absent from every bundle.
     ),
 }
 
@@ -155,8 +166,29 @@ def emit_core_skills(project_path: Path, ai: str, bundle: str) -> List[Path]:
             write_text(output, render_skill(spec, description_override=localized_description))
             written.append(output)
             written.extend(emit_skill_resources(project_path, rel_target, name))
+    written.extend(emit_public_entrypoint_facades(project_path, relative_targets, bundle))
     written.extend(emit_command_surfaces(project_path, ai))
     written.extend(emit_agent_surfaces(project_path, ai))
+    return written
+
+
+def emit_public_entrypoint_facades(
+    project_path: Path, relative_targets: List[Path], bundle: str
+) -> List[Path]:
+    """Write the public entrypoint facade files.
+
+    Shims are adapter facades, not registry skills, so they are not part of any
+    bundle's skill list. They ship with the full runtime (baseline/enterprise);
+    narrower slices omit them just as they omit the specialist packs.
+    """
+    written: List[Path] = []
+    if bundle not in {"baseline", "enterprise"}:
+        return written
+    for rel_target in relative_targets:
+        for name in sorted(PUBLIC_ENTRYPOINT_FACADE_CONTENT):
+            output = project_path / rel_target / name / "SKILL.md"
+            write_text(output, render_public_entrypoint_facade(name))
+            written.append(output)
     return written
 
 

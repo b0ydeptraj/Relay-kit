@@ -1,6 +1,6 @@
 ---
 name: desktop-python-ui
-description: Use when building a desktop Python GUI: PyQt6/PySide6, Tkinter, wxPython, or customtkinter for operator tools, automation dashboards, or config panels.
+description: "Use when building a desktop Python GUI: PyQt6/PySide6, Tkinter, wxPython, or customtkinter for operator tools, automation dashboards, or config panels."
 ---
 
 # Mission

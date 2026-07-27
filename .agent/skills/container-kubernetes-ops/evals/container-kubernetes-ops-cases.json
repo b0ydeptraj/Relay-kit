@@ -1,0 +1,102 @@
+[
+  {
+    "id": "container-kubernetes-ops-battle-read-first",
+    "skill": "container-kubernetes-ops",
+    "repo_profile": "a service repo with a Dockerfile, Kubernetes manifests, a deployment with probes, and a rollout config",
+    "task": "review a container and Kubernetes change, check probes and limits, and name the rollback revision. Use `container-kubernetes-ops` and cite the first files before advice.",
+    "expected_files": [
+      "deploy/manifest.py",
+      "deploy/rollout.py",
+      "deploy/probes.py"
+    ],
+    "expected_symbols": [
+      "build_manifest",
+      "apply_rollout",
+      "readiness_probe"
+    ],
+    "expected_tests": [
+      "tests/test_rollout.py"
+    ],
+    "expected_evidence_terms": [
+      "image hygiene",
+      "readiness probe",
+      "verified",
+      "residual risk",
+      "resource limits",
+      "rollout"
+    ],
+    "bad_answer_traps": [
+      "root container",
+      "usual checklist",
+      "should be fine",
+      "looks production ready"
+    ]
+  },
+  {
+    "id": "container-kubernetes-ops-public-repo-benchmark-anchor",
+    "skill": "container-kubernetes-ops",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
+    "task": "Anchor a `container-kubernetes-ops` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
+    "expected_files": [
+      "deploy/manifest.py",
+      "deploy/rollout.py",
+      "deploy/probes.py"
+    ],
+    "expected_symbols": [
+      "build_manifest",
+      "apply_rollout",
+      "readiness_probe"
+    ],
+    "expected_tests": [
+      "tests/test_rollout.py"
+    ],
+    "expected_evidence_terms": [
+      "resource limits",
+      "rollout rollback",
+      "read-only",
+      "not adoption proof",
+      "rollout",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "adoption claimed",
+      "benchmark treated as production",
+      "root container"
+    ]
+  },
+  {
+    "id": "container-kubernetes-ops-deep-weakness-trap",
+    "skill": "container-kubernetes-ops",
+    "repo_profile": "deep platform suite fixture with source, tests, docs, and an explicit overclaim trap",
+    "task": "Score `container-kubernetes-ops` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "deploy/manifest.py",
+      "deploy/rollout.py",
+      "deploy/probes.py"
+    ],
+    "expected_symbols": [
+      "build_manifest",
+      "apply_rollout",
+      "readiness_probe"
+    ],
+    "expected_tests": [
+      "tests/test_rollout.py"
+    ],
+    "expected_evidence_terms": [
+      "image hygiene",
+      "readiness probe",
+      "resource limits",
+      "rollout rollback",
+      "residual risk",
+      "rollout",
+      "verified"
+    ],
+    "bad_answer_traps": [
+      "root container",
+      "usual checklist",
+      "should be fine",
+      "looks production ready"
+    ]
+  }
+]

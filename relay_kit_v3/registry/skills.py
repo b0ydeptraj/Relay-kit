@@ -106,6 +106,10 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             "plan-hub",
             "debug-hub",
             "token-economy",
+            # Offensive lanes must enter through the authorization gate, never
+            # by matching a specialist description directly.
+            "offensive-security-engagement",
+                    "mmo-authorization-gate",
         ],
         body=dedent(
             """\
@@ -123,7 +127,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
 
             ## Mandatory routing procedure
             1. Read `.relay-kit/contracts/project-context.md` and `.relay-kit/state/workflow-state.md` if they exist.
-            2. Score the request on five axes: ambiguity, breadth of change, architecture risk, operational risk, and coordination cost.
+            2. Score the request on six axes: ambiguity, breadth of change, architecture risk, operational risk, coordination cost, and authorization_risk (presence of offensive/red-team/evasion/injection/stealth/C2 keywords or explicit red-team scope).
             3. Classify complexity:
                - `L0`: single bug or tiny refactor
                - `L1`: small feature or bug cluster
@@ -134,6 +138,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
                - `L0-L1` -> quick-flow
                - `L2-L3` -> product-flow
                - `L4` -> enterprise-flow
+               - `authorization_risk >= medium` -> offensive-flow (call `offensive-security-engagement` as first L3 utility before picking specialist)
             5. Choose the layer-1 entrypoint:
                - use `bootstrap` if state, context, or artifacts are missing
                - use `cook` for one active request in one lane
@@ -142,7 +147,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
                - `scout-hub` when the codebase area is unclear
                - `plan-hub` when planning artifacts are missing or stale
                - `debug-hub` when the request starts from a failure or regression
-            7. Mark the lane mode explicitly as one of: discovery, planning, implementation, or verification.
+            7. Mark the lane mode explicitly as one of: discovery, planning, implementation, verification, or offensive.
             8. When parallel or parked lanes exist, record `depends_on`, `wave_id`, and `resume_condition` in team-board and lane-registry.
             9. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
 
@@ -262,6 +267,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             - Never jump straight from vague intent to implementation.
             - When evidence is weak, prefer scout-hub, debug-hub, or test-hub over optimistic implementation.
             - When scope shifts, send the lane back through workflow-router.
+            - When `workflow-state.engagement_proof` exists or the lane mode is `offensive`, call `offensive-security-engagement` as the first utility before picking any specialist.
             """
         ).strip(),
     ),
@@ -351,6 +357,13 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             3. Use `memory-search` for prior decisions, handoff breadcrumbs, or stale state checks.
             4. Use `project-architecture` when module boundaries or architecture drift matter.
             5. Use `dependency-management` when tooling, lockfiles, or dependency risk affects the lane.
+            6. Offensive recon routing: when the codebase is binary, native, or mobile-focused, pull the matching analysis skill before planning:
+               - Binary / PE / ELF / Mach-O -> `binary-reverse-methodology`
+               - Malware samples / suspicious code -> `malware-analysis-workflows`
+               - APK / IPA / mobile native -> `mobile-app-reverse`
+               - C++ / Win32 / driver code -> `cpp-systems-engineering`, `windows-native-internals`
+               - Web JS / WASM crypto -> `frontend-crypto-reverse`, `browser-fingerprint-engineering`
+               - Network protocol unknown -> `protocol-fingerprint-spoofing`
 
             ## Evidence contract
             - cite concrete paths, commands, modules, or docs instead of broad summaries
@@ -391,11 +404,13 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "architect",
             "go-service-engineering",
             "next-product-frontend",
+            "frontend-design",
             "mmo-ecommerce-multichannel",
             "mmo-crypto-wallet-farming",
             "scrum-master",
             "developer",
             "review-hub",
+                    "llm-app-engineering",
         ],
         body=dedent(
             """\
@@ -444,6 +459,8 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "test-hub",
             "plan-hub",
             "workflow-router",
+                    "performance-optimization",
+            "incident-response",
         ],
         body=dedent(
             """\
@@ -456,6 +473,13 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             3. Use `runtime-doctor` when generated surfaces, adapters, state, or live runtime drift might be involved.
             4. Use `problem-solving` for competing hypotheses and `sequential-thinking` for ordered probes.
             5. Route to `fix-hub` only when the cause and affected surface are bounded.
+            6. Offensive failure routing: when symptoms include EDR detection, bypass failure, injection error, antibot block, or fingerprint mismatch -> route to the matching offensive specialist before proposing fixes:
+               - EDR detection / AV alert -> `edr-evasion-tactics`, `telemetry-blinding`
+               - Injection / hollowing failure -> `process-injection-techniques`
+               - Antibot block / Cloudflare / Datadome -> `antibot-challenge-solving`, `protocol-fingerprint-spoofing`
+               - Fingerprint mismatch / Canvas detected -> `browser-fingerprint-engineering`
+               - Binary detected / signature match -> `binary-stealth-obfuscation`, `malware-analysis-workflows`
+               - Reverse engineering needed -> `binary-reverse-methodology`, `frontend-crypto-reverse`
 
             ## Evidence contract
             - reproduce the issue or mark reproduction as blocked with the missing condition
@@ -491,6 +515,10 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "test-hub",
             "review-hub",
             "workflow-router",
+                    "refactoring-discipline",
+                    "iac-cloud-provisioning",
+            "container-kubernetes-ops",
+            "secrets-management",
         ],
         body=dedent(
             """\
@@ -503,6 +531,18 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             3. Use `dependency-management` for package, lockfile, toolchain, or environment fixes.
             4. Use `go-service-engineering` or `next-product-frontend` for stack-specific implementation handoff.
             5. Use `test-first-development` when behavior can be captured before the implementation pass.
+            6. Offensive fix handoff: when the fix involves native systems or security-sensitive code, route to the matching specialist:
+               - C++ / Win32 / native code -> `cpp-systems-engineering`, `windows-native-internals`
+               - Python scripting / automation -> `advanced-python-engineering`
+               - Binary evasion / obfuscation -> `binary-stealth-obfuscation`
+               - EDR / AV bypass -> `edr-evasion-tactics`, `telemetry-blinding`
+               - Process injection / hollowing -> `process-injection-techniques`
+               - C2 / network stealth -> `network-stealth-c2`
+               - Antibot / fingerprint bypass -> `antibot-challenge-solving`, `protocol-fingerprint-spoofing`
+               - Crypto reverse / signing -> `frontend-crypto-reverse`
+               - Desktop ImGui UI -> `desktop-imgui-development`
+               - Desktop Python UI -> `desktop-python-ui`
+               - Terminal / CLI UI -> `terminal-operator-ui`
 
             ## Evidence contract
             - update the active story or tech-spec with real files, boundaries, and verification steps
@@ -550,6 +590,12 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             3. Use `signal-calibration` when a claim says production-ready, field-tested, commercial-ready, or unusually strong.
             4. Use `token-economy` when long logs or large context need compression without losing failure evidence.
             5. Use `mmo-mobile-app-automation` for device/emulator matrix evidence when mobile MMO flows are under test.
+            6. Offensive evidence contracts: when the implementation involves binary, evasion, or bypass work, the qa-report must include:
+               - EDR/AV sandbox result (safe detonation in isolated VM or sandbox)
+               - Telemetry blinding confirmation (no hooks fired, no ETW events leaked)
+               - Network traffic capture for C2 (traffic matches stealth profile)
+               - Antibot bypass: screenshot of challenge page bypassed or HTTP 200 without block
+               - On-chain script: `mmo-onchain-security-audit` verdict before any wallet interaction
 
             ## Evidence contract
             - build the smallest useful matrix that covers acceptance criteria and regression surface
@@ -580,6 +626,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "runtime-doctor",
             "migration-guard",
             "skill-evolution",
+            "field-journal-evolution",
             "signal-calibration",
             "doc-pointers",
             "multimodal-evidence",
@@ -590,6 +637,8 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             "test-hub",
             "context-continuity",
             "workflow-router",
+                    "secure-code-review",
+            "technical-writing",
         ],
         body=dedent(
             """\
@@ -720,6 +769,10 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "review-hub",
             "plan-hub",
             "workflow-router",
+                    "observability-instrumentation",
+                    "iac-cloud-provisioning",
+            "container-kubernetes-ops",
+            "privacy-compliance",
         ],
         body=dedent(
             """\
@@ -815,12 +868,17 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "execution-loop",
             "go-service-engineering",
             "next-product-frontend",
+            "advanced-python-engineering",
+            "desktop-python-ui",
+            "desktop-imgui-development",
+            "terminal-operator-ui",
             "data-persistence",
             "dependency-management",
             "project-architecture",
             "test-hub",
             "qa-governor",
             "review-hub",
+                    "llm-app-engineering",
         ],
         allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
@@ -945,7 +1003,14 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Collect accessibility and performance evidence before completion claims.",
             *domain_resource_references("next-product-frontend"),
         ],
-        next_steps=["developer", "ux-structure", "accessibility-review", "review-hub"],
+        next_steps=[
+            "developer",
+            "ux-structure",
+            "frontend-design",
+            "ui-styling",
+            "accessibility-review",
+            "review-hub",
+        ],
         body=dedent(
             """\
             # Mission
@@ -1364,7 +1429,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Keep consent, data-use transparency, and account-safety requirements explicit.",
             *domain_resource_references("mmo-social-marketing-automation"),
         ],
-        next_steps=["growth-marketing", "automation-ops", "market-research", "review-hub"],
+        next_steps=["growth-marketing", "automation-ops", "market-research", "mmo-content-factory", "mmo-reup-automation", "review-hub"],
         body=dedent(
             """\
             # Mission
@@ -1518,7 +1583,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Mirror real API dashboards: endpoint groups, status-code filters, origin filters, retry count, duration, cost, and replay-safe request detail.",
             *domain_resource_references("mmo-http-api-automation"),
         ],
-        next_steps=["api-integration", "automation-ops", "policy-guard", "qa-governor"],
+        next_steps=["api-integration", "automation-ops", "mmo-data-harvesting", "policy-guard", "qa-governor", "mmo-authorization-gate"],
         body=dedent(
             """\
             # Mission
@@ -1720,7 +1785,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Publishing windows must be staggered across accounts — never schedule identical content to multiple accounts simultaneously.",
             *domain_resource_references("mmo-content-factory"),
         ],
-        next_steps=["mmo-reup-automation", "mmo-social-marketing-automation", "mmo-data-harvesting", "growth-marketing", "qa-governor"],
+        next_steps=["mmo-reup-automation", "mmo-social-marketing-automation", "mmo-data-harvesting", "mmo-llm-automation", "growth-marketing", "qa-governor"],
         body=dedent(
             """\
             # Mission
@@ -1760,7 +1825,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "Gas cost and capital risk must be explicitly budgeted before any farming campaign starts.",
             *domain_resource_references("mmo-crypto-wallet-farming"),
         ],
-        next_steps=["mmo-identity-infrastructure", "mmo-proxy-network-ops", "mmo-http-api-automation", "policy-guard", "qa-governor"],
+        next_steps=["mmo-identity-infrastructure", "mmo-proxy-network-ops", "mmo-http-api-automation", "mmo-onchain-security-audit", "policy-guard", "qa-governor"],
         body=dedent(
             """\
             # Mission
@@ -1992,7 +2057,7 @@ NATIVE_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
             "Cover both primary storage and auxiliary state like caches, queues, or object stores when relevant.",
             "Document transaction boundary, isolation assumptions, rollback, backfill, and migration risks, not only happy-path structure.",
         ],
-        next_steps=["architect", "developer", "qa-governor", "review-hub"],
+        next_steps=["architect", "developer", "qa-governor", "review-hub", "database-migration-safety"],
         allowed_tools=EDIT_AND_TEST_TOOLS,
         body=dedent(
             """\
@@ -2315,7 +2380,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Use `relay-kit release readiness <project> --phase pre|post` for deterministic checklists and signal evaluation.",
             "Treat `ready-check` as review readiness, not automatic production readiness.",
         ],
-        next_steps=["test-hub", "review-hub", "qa-governor", "workflow-router"],
+        next_steps=["test-hub", "review-hub", "qa-governor", "workflow-router", "ci-cd-pipeline"],
         mission="Convert release confidence into concrete pre and post deploy evidence instead of relying on optimistic completion claims.",
         tasks=[
             "Run a pre-deploy gate for build, tests, migration risk, and rollback plan status.",
@@ -2518,7 +2583,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Use `relay-kit policy check <project> --strict` as the canonical policy gate.",
             "Treat policy findings as release blockers until reviewed by qa-governor or review-hub.",
         ],
-        next_steps=["qa-governor", "review-hub", "fix-hub"],
+        next_steps=["qa-governor", "review-hub", "fix-hub", "offensive-security-engagement"],
         mission="Fail closed on deterministic high-risk agent operation patterns before they reach release or handoff.",
         tasks=[
             "Scan runtime and source surfaces for path traversal, destructive shell commands, hard-coded secrets, and prompt-injection phrases.",
@@ -2530,6 +2595,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Do not treat policy findings as cosmetic lint.",
             "Prefer fixing the risky surface over allowlisting it.",
             "Escalate to review-hub when a finding is intentional but operationally sensitive.",
+            "Cooperation contract with offensive-security-engagement: policy-guard is fail-closed for secrets, shell, and path risk. offensive-security-engagement is fail-open-for-authorized for offensive techniques. When both are active in the same lane, policy-guard runs LAST as a post-execution gate, not as a pre-execution block on authorized offensive actions. Do not block offensive actions that have a valid engagement_proof in workflow-state.",
         ],
         allowed_tools=READ_ANALYZE_TOOLS,
     ),
@@ -2746,6 +2812,12 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
         evidence_contract=[
             "Input must include the exact claims being made and the newest available evidence.",
             "Output must map each claim to a command, artifact, or observed proof output.",
+            "Offensive claim mapping required:\n"
+            '  - "Evasion successful" -> requires sandbox/VM detonation trace showing no alert.\n'
+            '  - "Telemetry blinded" -> requires raw log export showing absence of events.\n'
+            '  - "Antibot bypassed" -> requires HTTP 200 payload or clearance cookie screenshot.\n'
+            '  - "C2 stealth" -> requires PCAP/network trace matching mimicry profile.\n'
+            '  - "Wallet safe" -> requires fork-simulation trace output.',
             "Reject any claim without fresh evidence and route back to testing or debugging.",
         ],
         tasks=[
@@ -3796,6 +3868,17 @@ OFFENSIVE_TOOL_PACK_SKILLS: Dict[str, SkillSpec] = {
             "process-injection-techniques",
             "network-stealth-c2",
             "binary-stealth-obfuscation",
+            # Every offensive/reverse specialist hangs off this gate so that no
+            # lane can reach one without first recording authorization.
+            "telemetry-blinding",
+            "protocol-fingerprint-spoofing",
+            "browser-fingerprint-engineering",
+            "antibot-challenge-solving",
+            "malware-analysis-workflows",
+            "binary-reverse-methodology",
+            "mobile-app-reverse",
+            "frontend-crypto-reverse",
+            "windows-native-internals",
             "policy-guard",
         ],
         body=dedent(
@@ -4217,6 +4300,691 @@ PUBLIC_ENTRYPOINT_SKILLS: Dict[str, SkillSpec] = {
 }
 
 
+DELIVERY_SUPPORT_SKILLS: Dict[str, SkillSpec] = {
+    # Engineering-discipline specialists. These shipped as .claude files
+    # only for one release, which left them invisible to the routing graph
+    # and to adapter parity; they are registered here so both can see them.
+    "ci-cd-pipeline": SkillSpec(
+        name="ci-cd-pipeline",
+        description="Use when designing or fixing build, test, and deploy automation: pipeline stages, caching, required gates, environment promotion, artifact versioning, and rollback triggers.",
+        role="cicd-specialist",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "existing CI config",
+            "build and test commands",
+            "deploy target and environments",
+        ],
+        outputs=[
+            ".relay-kit/references/ci-cd.md",
+            "pipeline config changes",
+            "rollback runbook",
+        ],
+        references=[
+            "Fail closed — a missing or errored gate blocks, it does not warn-and-pass.",
+            "Build the artifact once and promote it; do not rebuild per environment.",
+            "Every deploy path must have a tested rollback.",
+            "Pin the toolchain; floating versions break reproducibility.",
+        ],
+        next_steps=[
+            "release-readiness",
+            "dependency-management",
+            "secure-code-review",
+            "incident-response",
+        ],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Design a deterministic, fail-closed delivery pipeline where every merge is gated by reproducible checks and every deploy has a defined rollback.
+
+            ## Mandatory scope
+            1. Map stages: build, unit, integration, security scan, package, deploy — and which are blocking gates.
+            2. Reproducibility: pinned toolchain, cached dependencies keyed by lockfile hash, deterministic build.
+            3. Required gates: no merge to protected branch without passing gates and required reviews.
+            4. Environment promotion: artifact built once, promoted across environments — never rebuilt per env.
+            5. Rollback: a defined trigger, a tested rollback path, and a versioned previous artifact.
+
+            ## Evidence contract
+            - stage list with blocking vs non-blocking marked
+            - cache key and toolchain pin declared
+            - protected-branch gate rules stated
+            - rollback trigger and path written
+            """
+        ).strip(),
+    ),
+    "database-migration-safety": SkillSpec(
+        name="database-migration-safety",
+        description="Use when a schema or data migration touches a live database: expand/contract sequencing, backfills, index builds, lock analysis, and a tested rollback for zero-downtime changes.",
+        role="db-migration-specialist",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "migration script / schema diff",
+            "table size and traffic profile",
+            "deploy and rollback process",
+        ],
+        outputs=[
+            ".relay-kit/references/db-migration.md",
+            "sequenced migration plan",
+            "rollback and backfill runbook",
+        ],
+        references=[
+            "Never drop or rewrite before the new path is deployed and dual-writing.",
+            "Avoid blocking locks on hot tables — use concurrent/online migration paths.",
+            "Backfills must be batched, throttled, resumable, and idempotent.",
+            "No destructive step without a confirmed backup and a rollback plan.",
+        ],
+        next_steps=[
+            "data-persistence",
+            "release-readiness",
+            "ci-cd-pipeline",
+            "incident-response",
+        ],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Ship schema and data changes without downtime or data loss by sequencing expand-before-contract, analyzing locks, and proving a rollback.
+
+            ## Mandatory scope
+            1. Classify the change: additive (safe), rewriting (locking), or destructive (irreversible) — and treat each accordingly.
+            2. Sequence expand/contract: add new columns/tables and dual-write before removing old ones across separate deploys.
+            3. Analyze locking: check whether the migration takes a blocking lock on a hot table and prefer concurrent/online paths.
+            4. Backfill safely: batch large backfills, throttle, and make them resumable and idempotent.
+            5. Provide a tested rollback or forward-fix, and confirm a backup/point-in-time exists before destructive steps.
+
+            ## Evidence contract
+            - change classified (additive/rewriting/destructive)
+            - expand-contract sequencing described across deploys
+            - lock impact on hot tables assessed
+            - rollback/forward-fix and backup confirmation stated
+            """
+        ).strip(),
+    ),
+    "incident-response": SkillSpec(
+        name="incident-response",
+        description="Use when a production incident is active or just resolved: triage severity, stabilize, communicate status, capture a timeline, and write a blameless postmortem with real action items.",
+        role="incident-responder",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "alert / incident report",
+            "system state, logs, and metrics",
+            "recent changes and deploys",
+        ],
+        outputs=[
+            "incident status updates",
+            "incident timeline",
+            ".relay-kit/references/postmortem-<id>.md",
+        ],
+        references=[
+            "Stabilize before rooting-cause; stop user impact first.",
+            "Keep communication factual — label hypotheses as hypotheses.",
+            "Blameless postmortems focus on systemic factors, never individuals.",
+            "Every action item has an owner and a date, or it is not real.",
+        ],
+        next_steps=[
+            "root-cause-debugging",
+            "observability-instrumentation",
+            "fix-hub",
+            "ci-cd-pipeline",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Drive a production incident from detection to a blameless postmortem: stabilize first, communicate clearly, and convert the timeline into durable fixes.
+
+            ## Mandatory scope
+            1. Assign severity from user impact and scope, and name the incident commander role.
+            2. Stabilize before diagnosing deeply: mitigate (roll back, feature-flag, scale) to stop the bleeding.
+            3. Communicate: a status cadence with impact, current action, and next update time — no speculation as fact.
+            4. Capture a timeline with timestamps: detection, actions, and their effect.
+            5. Write a blameless postmortem: contributing factors, not blame, plus owned, dated action items.
+
+            ## Evidence contract
+            - severity assigned from stated user impact
+            - mitigation taken before deep diagnosis
+            - timeline with timestamps captured
+            - postmortem with blameless framing and owned action items
+            """
+        ).strip(),
+    ),
+    "observability-instrumentation": SkillSpec(
+        name="observability-instrumentation",
+        description="Use when a service needs structured logging, metrics, distributed tracing, health checks, or SLO-backed alerting so failures are diagnosable in production.",
+        role="observability-specialist",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "service code / handlers",
+            "existing logging or metrics setup",
+            "incident or failure context if present",
+        ],
+        outputs=[
+            ".relay-kit/references/observability.md",
+            "instrumentation code changes",
+            "SLO and alert definitions",
+        ],
+        references=[
+            "Instrument to answer a failure question, not to collect everything.",
+            "Never log secrets or PII; redact at the boundary.",
+            "Watch label cardinality — unbounded labels break the metrics backend.",
+            "Alert on user-visible symptoms; keep cause-level signals for debugging.",
+        ],
+        next_steps=[
+            "release-readiness",
+            "incident-response",
+            "performance-optimization",
+            "runtime-doctor",
+        ],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Make a service diagnosable in production by instrumenting logs, metrics, traces, and alerts against explicit failure questions, not vanity dashboards.
+
+            ## Mandatory scope
+            1. Name the top failure questions the instrumentation must answer (latency, error rate, saturation, a specific bug class).
+            2. Structured logging: correlation/request id, level discipline, no secrets/PII in logs.
+            3. Metrics: RED (rate, errors, duration) for request paths and USE for resources; name and label cardinality budget.
+            4. Tracing: span boundaries at service and external-call edges, propagation of trace context.
+            5. SLOs and alerts: define SLI, target, and alert that pages on symptom (burn rate) not on cause noise.
+
+            ## Evidence contract
+            - each signal maps to a named failure question it answers
+            - log/metric/trace field list with a no-PII confirmation
+            - at least one SLI + SLO + alert rule written
+            - cardinality budget stated for metric labels
+            """
+        ).strip(),
+    ),
+    "performance-optimization": SkillSpec(
+        name="performance-optimization",
+        description="Use when latency, throughput, memory, or cost regresses and needs disciplined profiling: measure a baseline, find the real bottleneck, fix the hot path, and prove the gain.",
+        role="performance-specialist",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "hot path or slow endpoint",
+            "profiling access or benchmark harness",
+            "target metric and budget",
+        ],
+        outputs=[
+            ".relay-kit/references/performance.md",
+            "optimized code",
+            "before/after benchmark evidence",
+        ],
+        references=[
+            "Never optimize without a baseline measurement.",
+            "Profile before changing — intuition about hot paths is often wrong.",
+            "Change one variable at a time so the delta is attributable.",
+            "Prove the gain on the same workload; a faster microbenchmark is not a faster system.",
+        ],
+        next_steps=[
+            "observability-instrumentation",
+            "testing-patterns",
+            "review-hub",
+            "runtime-doctor",
+        ],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Fix performance by measurement, not guesswork: establish a baseline, profile to the real bottleneck, change one thing, and prove the delta.
+
+            ## Mandatory scope
+            1. Define the metric and workload: p50/p95/p99 latency, throughput, memory, or cost, under a stated load.
+            2. Capture a baseline measurement before changing anything.
+            3. Profile to locate the dominant cost (CPU, allocations, I/O, N+1 queries, lock contention) — do not assume.
+            4. Change one variable, then re-measure against the same workload.
+            5. Guard against regression: keep or add a benchmark so the gain does not silently erode.
+
+            ## Evidence contract
+            - baseline number with workload and environment stated
+            - profiler evidence identifying the bottleneck
+            - after number from the same workload, with the delta
+            - benchmark or check that locks in the improvement
+            """
+        ).strip(),
+    ),
+    "refactoring-discipline": SkillSpec(
+        name="refactoring-discipline",
+        description="Use when restructuring code without changing behavior: extract, rename, split, or de-duplicate under a green test suite with small reversible steps and a characterization safety net.",
+        role="refactor-discipline",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "target code / smell",
+            "existing test suite",
+            "behavior-preservation requirement",
+        ],
+        outputs=[
+            "refactored code",
+            "added characterization tests if needed",
+            "commit plan separating refactor from behavior",
+        ],
+        references=[
+            "No refactor without a green test net — add characterization tests first if needed.",
+            "Never mix a refactor with a behavior change in one commit.",
+            "Run the suite after each small step, not only at the end.",
+            "If behavior must change, that is not a refactor — route to the developer loop.",
+        ],
+        next_steps=[
+            "test-first-development",
+            "developer",
+            "review-hub",
+            "testing-patterns",
+        ],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Change structure while proving behavior is preserved: lean on a green test net, move in small reversible steps, and keep commits atomic.
+
+            ## Mandatory scope
+            1. Confirm a passing test net covers the target; if coverage is thin, add characterization tests first.
+            2. Separate refactor commits from behavior-change commits — never mix them.
+            3. Move in small reversible steps; run tests after each step.
+            4. Preserve the public contract (signatures, outputs, side effects) unless the task is explicitly to change it.
+            5. State the risk if the safety net is incomplete, and what is unverified.
+
+            ## Evidence contract
+            - test net status before and after (green -> green)
+            - characterization tests added when coverage was thin
+            - refactor and behavior changes kept in separate commits
+            - public contract confirmed unchanged (or the change called out)
+            """
+        ).strip(),
+    ),
+    "secure-code-review": SkillSpec(
+        name="secure-code-review",
+        description="Use when application code needs a defensive security review before merge or release: injection, authn/authz, secrets handling, crypto misuse, SSRF, deserialization, and vulnerable dependencies.",
+        role="security-reviewer",
+        layer="layer-3-utility-providers",
+        inputs=[
+            "diff or changed files",
+            "authoritative artifact / PR",
+            "threat context if provided",
+        ],
+        outputs=[
+            "security review findings appended to review notes or qa-report",
+            "pass or hold verdict with severities",
+        ],
+        references=[
+            "No pass verdict while any critical or high finding is unresolved.",
+            "Trace input-to-sink; do not flag on keyword match alone.",
+            "This is defensive review only — it hardens code, it does not build offensive tooling.",
+            "Hand unresolved findings to fix-hub with explicit acceptance criteria.",
+        ],
+        next_steps=[
+            "fix-hub",
+            "review-hub",
+            "qa-governor",
+            "dependency-management",
+                    "secrets-management",
+            "privacy-compliance",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Turn security from implicit trust into an explicit, evidence-backed defensive review gate over real code paths, not a generic checklist.
+
+            ## Mandatory scope
+            1. Identify the trust boundary: where untrusted input enters (HTTP params, headers, files, queues, env) and where it reaches a sink.
+            2. Check injection sinks: SQL/NoSQL, OS command, template, LDAP, and path traversal — confirm parameterization or safe APIs.
+            3. Check authn/authz: every state-changing route enforces identity and object-level authorization, not just authentication.
+            4. Check secrets: no hardcoded keys/tokens, secrets sourced from env/vault, and no secret logged.
+            5. Check crypto and randomness: no weak hashing for passwords, no ECB, no static IV, CSPRNG for tokens.
+            6. Check dependencies: flag known-vulnerable versions and unpinned critical packages.
+
+            ## Evidence contract
+            - each finding names file:line, the tainted input, and the sink
+            - severity assigned (critical/high/medium/low) with exploitability rationale
+            - a concrete fix or safe-API replacement per finding
+            - pass or hold verdict tied to whether any critical/high finding is unresolved
+            """
+        ).strip(),
+    ),
+    "technical-writing": SkillSpec(
+        name="technical-writing",
+        description="Use when authoring or revising technical documentation: READMEs, API references, runbooks, architecture docs, onboarding guides, or changelogs that must be accurate against the code.",
+        role="docs-author",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "code or feature to document",
+            "existing docs if any",
+            "audience and purpose",
+        ],
+        outputs=[
+            "the documentation artifact (README/runbook/API doc)",
+            "list of verified commands and paths",
+        ],
+        references=[
+            "Never document a command or flag you did not verify against the repo.",
+            "Write for one audience and one task; split docs rather than blending them.",
+            "Label unknowns; do not invent behavior to fill a gap.",
+            "Prefer showing a verified example over describing behavior abstractly.",
+        ],
+        next_steps=[
+            "review-hub",
+            "doc-pointers",
+            "vietnamese-product-localization",
+            "release-readiness",
+        ],
+        allowed_tools=[
+            "Read",
+            "Write",
+            "Edit",
+            "Grep",
+            "Glob",
+        ],
+        body=dedent(
+            """\
+            # Mission
+            Produce documentation that is accurate against the current code, scoped to a named audience and task, and verifiable — not aspirational prose.
+
+            ## Mandatory scope
+            1. Name the audience and the single task the doc must enable (install, integrate, operate, decide).
+            2. Verify every command, path, flag, and code sample against the actual repo before writing it.
+            3. Structure for the task: quickstart first, reference second, rationale last.
+            4. Mark unknowns explicitly rather than inventing behavior.
+            5. State how the doc stays current (owner, source of truth, or generated section).
+
+            ## Evidence contract
+            - audience and enabled task named
+            - every command/path in the doc traced to a real file or verified run
+            - unknowns labeled, not fabricated
+            - staleness/ownership note included
+            """
+        ).strip(),
+    ),
+}
+
+
+NEW_CAPABILITY_SKILLS: Dict[str, SkillSpec] = {
+    # Capability gaps a "maximum" kit needs: LLM app engineering, cloud/infra,
+    # container ops, secrets, an MMO authorization gate, and privacy/compliance.
+    "llm-app-engineering": SkillSpec(
+        name="llm-app-engineering",
+        description="Use when building an LLM-powered application feature such as prompt and context design, retrieval-augmented generation, tool and function schemas, agent loops, or offline evals, and correctness and cost must be proven rather than assumed.",
+        role="llm-application-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the product behavior the LLM feature must deliver",
+            "available context sources or retrieval corpus",
+            "latency, cost, and accuracy constraints",
+        ],
+        outputs=[
+            "prompt and context contract",
+            "tool or function schemas",
+            "an offline eval set with pass criteria",
+        ],
+        references=[],
+        next_steps=["developer", "secure-code-review", "test-hub", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Build an LLM feature as a measurable system: an explicit prompt/context contract, typed tool schemas, and an offline eval that gates changes -- not a hand-tuned prompt nobody can regress.
+
+            ## Mandatory scope
+            1. Declare the model target and version, the context window budget, and the accuracy/latency/cost ceiling the feature must hold.
+            2. Prompt and context: separate the stable system contract from per-request context; state how context is selected and truncated.
+            3. Retrieval (if any): name the corpus, chunking, embedding model, and the top-k and score threshold; prove relevant chunks actually reach the prompt.
+            4. Tools: define each tool as a typed schema with required fields and a validation path; state what happens when the model returns malformed arguments.
+            5. Agent loop (if any): bound the step count, define the stop condition, and name the failure mode when the loop does not converge.
+            6. Evals: build an offline case set with expected outputs or graders, and a pass threshold that a change must clear before merge.
+
+            ## Evidence contract
+            - model + version + context budget declared
+            - prompt/context contract and truncation rule stated
+            - tool schemas with malformed-argument handling
+            - offline eval set with a numeric pass threshold and the current score
+            - cost-per-request estimate for the chosen model
+
+            ## Failure modes to block
+            - Prompt tuning with no eval to catch regressions.
+            - Retrieval that returns chunks the prompt never actually uses.
+            - Tool calls trusted without validating the model's arguments.
+            - An unbounded agent loop with no stop condition.
+
+            ## Handoff
+            - Hand implementation to `developer`, defensive review of tool/argument handling to `secure-code-review`, and eval wiring to `test-hub`.
+            """
+        ).strip(),
+    ),
+    "iac-cloud-provisioning": SkillSpec(
+        name="iac-cloud-provisioning",
+        description="Use when provisioning or changing cloud infrastructure as code with Terraform, Pulumi, or CloudFormation, including state management, drift detection, plan review, and a safe apply with rollback.",
+        role="infrastructure-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the infrastructure change requested",
+            "current IaC state and provider",
+            "environment and blast-radius constraints",
+        ],
+        outputs=[
+            "reviewed plan diff",
+            "apply and rollback runbook",
+            "drift and state notes",
+        ],
+        references=[],
+        next_steps=["container-kubernetes-ops", "secrets-management", "release-readiness", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Change cloud infrastructure through reviewed, reversible plans -- never console-clicked mutations -- with state and drift kept honest.
+
+            ## Mandatory scope
+            1. Declare the tool and provider (Terraform, Pulumi, CloudFormation) and where state lives, including locking.
+            2. Always run and read a plan/diff before apply; state exactly which resources create, update, replace, or destroy.
+            3. Flag every destroy or replace on a stateful resource (database, volume, load balancer) as high blast-radius and require explicit confirmation.
+            4. Detect drift: compare real state to code before changing anything, and reconcile or document it.
+            5. Define the apply order and the rollback path (previous state, tainted-resource recovery, or a reverse change).
+            6. Keep secrets out of state and code; hand credential material to `secrets-management`.
+
+            ## Evidence contract
+            - tool, provider, and state backend declared
+            - plan diff read, with create/update/replace/destroy counts
+            - blast-radius call-out for any stateful replace or destroy
+            - rollback path written before apply
+
+            ## Failure modes to block
+            - Applying without reading the plan.
+            - A destroy/replace on a stateful resource slipping through unflagged.
+            - Secrets committed into state or variables.
+            - Drift ignored so the next apply does something unexpected.
+
+            ## Handoff
+            - Hand workload packaging to `container-kubernetes-ops`, credentials to `secrets-management`, and the go/no-go to `release-readiness`.
+            """
+        ).strip(),
+    ),
+    "container-kubernetes-ops": SkillSpec(
+        name="container-kubernetes-ops",
+        description="Use when packaging services into containers or operating Kubernetes workloads, including Dockerfiles, image hygiene, manifests, resource limits, probes, rollouts, and cluster troubleshooting.",
+        role="platform-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the service to containerize or the workload to operate",
+            "existing Dockerfile or manifests",
+            "cluster and resource constraints",
+        ],
+        outputs=[
+            "Dockerfile or manifest changes",
+            "rollout and probe configuration",
+            "troubleshooting notes",
+        ],
+        references=[],
+        next_steps=["iac-cloud-provisioning", "secrets-management", "observability-instrumentation", "review-hub"],
+        allowed_tools=EDIT_AND_TEST_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Ship containers and Kubernetes workloads that start predictably, fail visibly, and roll out without taking traffic down.
+
+            ## Mandatory scope
+            1. Image hygiene: pinned base image, non-root user, minimal layers, no secrets baked in, a reproducible build.
+            2. Manifests: explicit resource requests and limits, liveness and readiness probes that reflect real health, and a restart policy.
+            3. Rollout: a strategy (rolling or blue-green) with surge/unavailable bounds and a defined rollback to the previous revision.
+            4. Config and secrets: config via ConfigMap/env, secrets via a secret store -- never in the image or manifest literal.
+            5. Troubleshooting: read events, logs, and probe status before mutating; name the failing signal, not a guess.
+
+            ## Evidence contract
+            - base image pinned and container runs non-root
+            - resource requests/limits and both probes defined
+            - rollout strategy and rollback revision named
+            - secrets sourced from a store, not the manifest
+
+            ## Failure modes to block
+            - Running as root or baking secrets into the image.
+            - Missing readiness probe, so a rollout sends traffic to a not-ready pod.
+            - No resource limits, so one workload starves the node.
+            - Restarting or deleting pods before reading events and logs.
+
+            ## Handoff
+            - Hand infrastructure to `iac-cloud-provisioning`, secret material to `secrets-management`, and health signals to `observability-instrumentation`.
+            """
+        ).strip(),
+    ),
+    "secrets-management": SkillSpec(
+        name="secrets-management",
+        description="Use when handling secrets, API keys, tokens, or wallet keys across a fleet and you need vaulting, injection, rotation, scoping, and leak response instead of plaintext credentials.",
+        role="secrets-engineer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the secrets or credentials in play",
+            "where they are currently stored and consumed",
+            "rotation and scoping requirements",
+        ],
+        outputs=[
+            "a secret storage and injection plan",
+            "rotation and scoping policy",
+            "a leak-response runbook",
+        ],
+        references=[],
+        next_steps=["iac-cloud-provisioning", "container-kubernetes-ops", "secure-code-review", "review-hub"],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Keep every credential out of source and out of plaintext: vaulted at rest, injected at runtime, scoped to least privilege, and rotatable without downtime.
+
+            ## Mandatory scope
+            1. Inventory: name each secret, where it lives now, and who reads it; flag any that sit in code, config, or logs.
+            2. Storage: move secrets to a vault or platform secret store; the app reads them at runtime, never from a committed file.
+            3. Scoping: grant each consumer the narrowest credential that works; no shared god-tokens across services.
+            4. Rotation: define a rotation interval and a zero-downtime rotation path (dual-key or overlap window).
+            5. Leak response: define detection, immediate revocation, rotation, and blast-radius assessment for an exposed secret.
+
+            ## Evidence contract
+            - secret inventory with current storage location per item
+            - vault/store as the source of truth, injection path named
+            - least-privilege scoping stated per consumer
+            - rotation interval and zero-downtime rotation path
+            - leak-response steps: detect, revoke, rotate, assess
+
+            ## Failure modes to block
+            - A secret left in source control, an env file, or a log line.
+            - One shared token used everywhere so revocation breaks everything.
+            - No rotation path, so a leak means a painful emergency.
+            - Handling the plaintext value directly instead of a reference.
+
+            ## Handoff
+            - This skill never enters credential values itself; it hands entry to the operator. Hand consuming infra to `iac-cloud-provisioning` and `container-kubernetes-ops`, and code-path review to `secure-code-review`.
+            """
+        ).strip(),
+    ),
+    "privacy-compliance": SkillSpec(
+        name="privacy-compliance",
+        description="Use when a workload collects, stores, or transfers personal data and needs a privacy and data-retention gate covering PII minimization, consent or lawful basis, retention limits, and deletion.",
+        role="privacy-reviewer",
+        layer="layer-4-specialists-and-standalones",
+        inputs=[
+            "the data the workload collects or processes",
+            "the stated purpose and legal context",
+            "current storage, sharing, and retention behavior",
+        ],
+        outputs=[
+            "a data inventory with PII classification",
+            "a retention and deletion policy",
+            "a consent and lawful-basis note",
+        ],
+        references=[],
+        next_steps=["data-persistence", "secure-code-review", "secrets-management", "review-hub"],
+        allowed_tools=READ_ANALYZE_TOOLS,
+        body=dedent(
+            """\
+            # Mission
+            Treat personal data as a liability to minimize: collect only what the purpose needs, keep it only as long as justified, and be able to delete it on request.
+
+            ## Mandatory scope
+            1. Inventory: enumerate the personal data collected, classify sensitivity (contact, financial, health, biometric, identifier), and name where each field flows.
+            2. Minimization: for every field, state the purpose that justifies it; drop fields no purpose needs.
+            3. Lawful basis and consent: state the basis for processing each category and where consent is captured, if required.
+            4. Retention: set a retention window per category and the mechanism that deletes or anonymizes past it.
+            5. Rights: define how access, correction, and deletion requests are fulfilled, including in backups and downstream copies.
+            6. Transfer: flag any cross-border or third-party transfer and the safeguard that covers it.
+
+            ## Evidence contract
+            - data inventory with per-field sensitivity classification
+            - a stated purpose for every retained field
+            - retention window and deletion mechanism per category
+            - a deletion path that reaches backups and downstream copies
+
+            ## Failure modes to block
+            - Collecting data with no purpose behind it.
+            - Indefinite retention with no deletion mechanism.
+            - A deletion request that leaves copies in backups or a data warehouse.
+            - PII in logs, analytics, or third-party tools without a safeguard.
+
+            ## Handoff
+            - Hand schema and retention enforcement to `data-persistence`, secret handling to `secrets-management`, and code-path review to `secure-code-review`.
+            """
+        ).strip(),
+    ),
+}
+
+
+MMO_AUTHORIZATION_GATE_SKILL: Dict[str, SkillSpec] = {
+    "mmo-authorization-gate": utility_provider_spec(
+        name="mmo-authorization-gate",
+        description="Use when an MMO or automation lane touches a third-party platform and needs an explicit terms-of-service, authorization, and account-risk gate before high-risk actions run.",
+        outputs=[
+            "an authorization verdict appended to workflow-state",
+            "a documented account-risk and ToS assessment",
+        ],
+        references=[
+            "Record the operator's authorization and account ownership before any high-risk action.",
+            "Treat platform terms-of-service and rate limits as hard constraints, not suggestions.",
+        ],
+        next_steps=["policy-guard", "qa-governor", "review-hub"],
+        mission="Gate MMO and automation lanes behind an explicit authorization, account-ownership, and platform-terms check before any high-risk action runs.",
+        boundary=[
+            "Use for lanes that act against a third-party platform on accounts the operator controls.",
+            "This gate records authorization and risk; it does not itself perform the automation.",
+            "It does not override platform terms; unauthorized or ToS-violating actions are refused, not gated.",
+        ],
+        evidence_contract=[
+            "Input must state the platform, the accounts, and who authorizes the action.",
+            "Output must record an explicit authorized/blocked verdict with the reason.",
+            "Block any lane that cannot show account ownership or operator authorization.",
+        ],
+        tasks=[
+            "Name the target platform and the accounts the lane will act on.",
+            "Confirm the operator owns or is authorized to act on those accounts.",
+            "Assess account-risk tier and the platform terms and rate limits that apply.",
+            "Emit an authorized-or-blocked verdict before the lane proceeds.",
+        ],
+        rules=[
+            "No high-risk action proceeds without a recorded authorization verdict.",
+            "Platform terms-of-service and rate limits are hard constraints.",
+            "When ownership or authorization is unclear, fail closed and block the lane.",
+            "Hand the runtime safety scan to policy-guard; this gate owns authorization, not shell/secret risk.",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+    ),
+}
+
+
 ALL_V3_SKILLS: Dict[str, SkillSpec] = {}
 ALL_V3_SKILLS.update(ORCHESTRATOR_SKILLS)
 ALL_V3_SKILLS.update(WORKFLOW_HUB_SKILLS)
@@ -4225,8 +4993,14 @@ ALL_V3_SKILLS.update(UTILITY_PROVIDER_SKILLS)
 ALL_V3_SKILLS.update(DISCIPLINE_UTILITY_SKILLS)
 ALL_V3_SKILLS.update(CLEANUP_SKILLS)
 ALL_V3_SKILLS.update(NATIVE_SUPPORT_SKILLS)
+ALL_V3_SKILLS.update(DELIVERY_SUPPORT_SKILLS)
+ALL_V3_SKILLS.update(NEW_CAPABILITY_SKILLS)
+ALL_V3_SKILLS.update(MMO_AUTHORIZATION_GATE_SKILL)
 ALL_V3_SKILLS.update(OFFENSIVE_TOOL_PACK_SKILLS)
-ALL_V3_SKILLS.update(PUBLIC_ENTRYPOINT_SKILLS)
+# PUBLIC_ENTRYPOINT_SKILLS are deliberately NOT registered: the eight shims are
+# adapter facades emitted by relay_kit_v3.public_entrypoint_facades, not routable
+# registry skills. Keeping them out of ALL_V3_SKILLS is what makes the routing
+# graph, bundles, and catalog exclude them (see test_repo_hardening_gates).
 
 
 def _with_resource_references(skill_name: str, spec: SkillSpec) -> SkillSpec:
@@ -4245,21 +5019,39 @@ ALL_V3_SKILLS = {
 }
 
 
+def _render_yaml_scalar(value: str) -> str:
+    """Quote a frontmatter scalar so the block always parses as YAML.
+
+    Descriptions routinely read ``Use when X: Y``. Emitted bare, that colon
+    turns the line into a nested mapping and the whole block fails to load --
+    the loader then falls back to the body's first heading and the skill's
+    routing trigger silently dies.
+    """
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
 def render_skill(spec: SkillSpec, *, description_override: str | None = None) -> str:
     description = description_override if description_override is not None else spec.description
     parts = [
         "---",
         f"name: {spec.name}",
-        f"description: {description}",
+        f"description: {_render_yaml_scalar(description)}",
     ]
-    if spec.paths:
-        parts.append(f"paths: {_render_yaml_inline_list(spec.paths)}")
-    if spec.context:
-        parts.append(f"context: {spec.context}")
     if spec.allowed_tools:
         parts.append(f"allowed-tools: {_render_yaml_inline_list(spec.allowed_tools)}")
+    # paths/context/effort are Relay-kit routing hints, not part of the SKILL.md
+    # schema the runtime recognises. Emitted at the top level they are dropped
+    # at load time; under `metadata` they survive and stay schema-legal.
+    metadata: list[str] = []
+    if spec.paths:
+        metadata.append(f"  paths: {_render_yaml_inline_list(spec.paths)}")
+    if spec.context:
+        metadata.append(f"  context: {_render_yaml_scalar(spec.context)}")
     if spec.effort:
-        parts.append(f"effort: {spec.effort}")
+        metadata.append(f"  effort: {_render_yaml_scalar(spec.effort)}")
+    if metadata:
+        parts.append("metadata:")
+        parts.extend(metadata)
     parts.extend([
         "---",
         "",

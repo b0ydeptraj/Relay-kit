@@ -1,6 +1,6 @@
 ---
 name: antibot-challenge-solving
-description: Use when automation hits bot detection challenges: Cloudflare Turnstile/Bot Fight Mode, Datadome, PerimeterX, reCAPTCHA v2/v3/Enterprise, hCaptcha, or custom JS challenges.
+description: "Use when automation hits bot detection challenges: Cloudflare Turnstile/Bot Fight Mode, Datadome, PerimeterX, reCAPTCHA v2/v3/Enterprise, hCaptcha, or custom JS challenges."
 ---
 
 # Mission

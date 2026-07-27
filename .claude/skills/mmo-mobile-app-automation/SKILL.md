@@ -1,6 +1,6 @@
 ---
 name: mmo-mobile-app-automation
-description: Use when MMO mobile workflows need device inventory, emulator or device automation, stable selectors, app-state control, and repeatable run evidence.
+description: "Use when MMO mobile workflows need device inventory, emulator or device automation, stable selectors, app-state control, and repeatable run evidence."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

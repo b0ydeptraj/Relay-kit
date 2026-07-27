@@ -1,6 +1,6 @@
 ---
 name: market-research
-description: Use when the request needs competitor intelligence, ICP refinement, pricing signal analysis, or market hypothesis validation before execution decisions.
+description: "Use when the request needs competitor intelligence, ICP refinement, pricing signal analysis, or market hypothesis validation before execution decisions."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

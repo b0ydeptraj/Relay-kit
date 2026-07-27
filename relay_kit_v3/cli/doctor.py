@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -116,7 +117,11 @@ def _doctor_commands(project_path: str, skip_tests: bool, policy_pack: str = DEF
         ]
     )
 
-    if not skip_tests and (REPO_ROOT / "tests").exists():
+    # Never launch pytest from inside a pytest run. The doctor is itself
+    # exercised by tests/test_cli_compat.py; without this guard `pytest tests`
+    # re-invokes the doctor, which re-invokes `pytest tests`, ad infinitum.
+    already_in_pytest = "PYTEST_CURRENT_TEST" in os.environ
+    if not skip_tests and not already_in_pytest and (REPO_ROOT / "tests").exists():
         commands.append(("pytest", [sys.executable, "-m", "pytest", "tests", "-q"]))
 
     return commands

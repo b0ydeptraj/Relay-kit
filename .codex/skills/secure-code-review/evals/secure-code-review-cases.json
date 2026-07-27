@@ -1,0 +1,96 @@
+[
+  {
+    "id": "secure-code-review-battle-read-first",
+    "skill": "secure-code-review",
+    "repo_profile": "web service repo with HTTP handlers, a database layer, auth middleware, and a dependency lockfile",
+    "task": "handle a secure-code-review request, name files first, and identify the proof surface before editing. Use `secure-code-review` and cite the first files before advice.",
+    "expected_files": [
+      "src/api/handlers.py",
+      "src/db/queries.py",
+      "src/auth/middleware.py",
+      "requirements.txt"
+    ],
+    "expected_symbols": [
+      "build_query",
+      "require_auth",
+      "current_user"
+    ],
+    "expected_tests": [
+      "tests/security/test_authz.py"
+    ],
+    "expected_evidence_terms": [
+      "tainted input",
+      "injection sink",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "looks safe",
+      "usual checklist",
+      "probably fine"
+    ]
+  },
+  {
+    "id": "secure-code-review-public-repo-benchmark-anchor",
+    "skill": "secure-code-review",
+    "repo_profile": "web service repo with HTTP handlers, a database layer, auth middleware, and a dependency lockfile",
+    "task": "Run a read-only benchmark-style pass for `secure-code-review` and explain what evidence is still missing.",
+    "expected_files": [
+      "src/api/handlers.py",
+      "src/db/queries.py",
+      "src/auth/middleware.py",
+      "requirements.txt"
+    ],
+    "expected_symbols": [
+      "build_query",
+      "require_auth",
+      "current_user"
+    ],
+    "expected_tests": [
+      "tests/security/test_authz.py"
+    ],
+    "expected_evidence_terms": [
+      "object-level authorization",
+      "severity",
+      "read-only",
+      "unverified"
+    ],
+    "bad_answer_traps": [
+      "looks safe",
+      "usual checklist",
+      "probably fine"
+    ]
+  },
+  {
+    "id": "secure-code-review-deep-weakness-trap",
+    "skill": "secure-code-review",
+    "repo_profile": "web service repo with HTTP handlers, a database layer, auth middleware, and a dependency lockfile",
+    "task": "Score `secure-code-review` against a deep case, identify weak evidence, and avoid claiming maximum strength until files, symbols, proof, and residual risk are shown.",
+    "expected_files": [
+      "src/api/handlers.py",
+      "src/db/queries.py",
+      "src/auth/middleware.py",
+      "requirements.txt"
+    ],
+    "expected_symbols": [
+      "build_query",
+      "require_auth",
+      "current_user"
+    ],
+    "expected_tests": [
+      "tests/security/test_authz.py"
+    ],
+    "expected_evidence_terms": [
+      "tainted input",
+      "injection sink",
+      "weak evidence",
+      "claim status",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "looks safe",
+      "usual checklist",
+      "probably fine"
+    ]
+  }
+]

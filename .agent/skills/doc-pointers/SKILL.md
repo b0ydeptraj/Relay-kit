@@ -1,6 +1,6 @@
 ---
 name: doc-pointers
-description: Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility.
+description: "Use when a hub needs exact docs fragments, file paths, or source references before deciding. Stateless docs retrieval utility."
 ---
 
 # Mission

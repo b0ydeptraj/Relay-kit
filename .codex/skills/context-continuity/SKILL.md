@@ -1,6 +1,6 @@
 ---
 name: context-continuity
-description: Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions.
+description: "Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions."
 ---
 
 # Mission
@@ -12,7 +12,6 @@ Preserve lane continuity with explicit artifacts so the next session can continu
 
 ## Typical tasks
 - Run auto continuity at session start/resume so existing checkpoints are rehydrated and missing checkpoints are created.
-- Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.
 - Run checkpoint before likely truncation, compaction, or session break.
 - Run rehydrate at the start of a new thread to restore objective, lane, blockers, and next step.
 - Run handoff when ownership moves across AI, thread, or operator.
@@ -40,7 +39,8 @@ Preserve lane continuity with explicit artifacts so the next session can continu
 - a compact resume brief with explicit next step and open loops
 
 ## Reference skills and rules
-- Use `relay-kit continuity` modes for deterministic continuity artifacts.
+- Use `relay-kit continuity auto <project> --phase start|resume|before-final|handoff` as the default lifecycle gate.
+- Use manual `checkpoint`, `rehydrate`, `handoff`, and `diff-since-last` modes when debugging or forcing a specific continuity action.
 - Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.
 - Open `references/context-continuity-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/context-continuity-good-output.md` and `examples/context-continuity-bad-output.md` to calibrate output quality.

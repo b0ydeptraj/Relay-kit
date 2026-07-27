@@ -1,6 +1,6 @@
 ---
 name: mmo-data-harvesting
-description: Use when MMO operations need structured data collection, lead enrichment, UID targeting list building, or AI-assisted seeding content generation within authorized access boundaries.
+description: "Use when MMO operations need structured data collection, lead enrichment, UID targeting list building, or AI-assisted seeding content generation within authorized access boundaries."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
@@ -51,4 +51,3 @@ Collect, enrich, and structure targeting data for MMO campaigns using authorized
 - mmo-nick-warmup-engine
 - mmo-reup-automation
 - policy-guard
-- frontend-crypto-reverse

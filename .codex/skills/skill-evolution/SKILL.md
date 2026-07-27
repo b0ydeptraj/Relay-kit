@@ -1,10 +1,11 @@
 ---
 name: skill-evolution
-description: Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior.
-paths: ["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"]
-context: fork
+description: "Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
-effort: high
+metadata:
+  paths: ["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"]
+  context: "fork"
+  effort: "high"
 ---
 
 # Mission

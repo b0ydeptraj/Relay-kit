@@ -1,6 +1,6 @@
 ---
 name: edr-evasion-tactics
-description: Use when a payload or tool needs to evade EDR runtime detection: hook bypass, AMSI bypass, ETW patching, direct syscall, or AV memory scanning evasion.
+description: "Use when a payload or tool needs to evade EDR runtime detection: hook bypass, AMSI bypass, ETW patching, direct syscall, or AV memory scanning evasion."
 ---
 
 # Mission

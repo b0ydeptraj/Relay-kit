@@ -1,6 +1,6 @@
 ---
 name: offensive-security-engagement
-description: Use when a request contains offensive, red-team, evasion, injection, stealth, C2, payload, syscall, hollowing, or bypass keywords, or when authorization_risk >= medium. Gate + context provider for all offensive lanes.
+description: "Use when a request contains offensive, red-team, evasion, injection, stealth, C2, payload, syscall, hollowing, or bypass keywords, or when authorization_risk >= medium. Gate + context provider for all offensive lanes."
 ---
 
 # Mission
@@ -52,4 +52,13 @@ Activate authorized offensive context, cache engagement proof, enforce OPSEC ord
 - process-injection-techniques
 - network-stealth-c2
 - binary-stealth-obfuscation
+- telemetry-blinding
+- protocol-fingerprint-spoofing
+- browser-fingerprint-engineering
+- antibot-challenge-solving
+- malware-analysis-workflows
+- binary-reverse-methodology
+- mobile-app-reverse
+- frontend-crypto-reverse
+- windows-native-internals
 - policy-guard

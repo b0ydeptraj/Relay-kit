@@ -1,4 +1,4 @@
-﻿---
+---
 name: debug-systematically
 description: Use when a bug, regression, flaky behavior, or mismatch needs disciplined debugging instead of guessing. Public Relay-kit entrypoint for the debug path.
 ---

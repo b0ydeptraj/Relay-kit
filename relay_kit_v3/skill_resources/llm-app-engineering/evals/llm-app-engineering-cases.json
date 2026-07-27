@@ -1,0 +1,102 @@
+[
+  {
+    "id": "llm-app-engineering-battle-read-first",
+    "skill": "llm-app-engineering",
+    "repo_profile": "an LLM feature repo with a prompt module, a retrieval index, tool schemas, and an offline eval set",
+    "task": "review an LLM feature change, name the prompt/retrieval/tool files, and identify the eval that gates it. Use `llm-app-engineering` and cite the first files before advice.",
+    "expected_files": [
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
+    ],
+    "expected_symbols": [
+      "build_prompt",
+      "retrieve_context",
+      "tool_schema"
+    ],
+    "expected_tests": [
+      "tests/test_evals.py"
+    ],
+    "expected_evidence_terms": [
+      "prompt contract",
+      "top-k retrieval",
+      "verified",
+      "residual risk",
+      "retrieval",
+      "offline eval"
+    ],
+    "bad_answer_traps": [
+      "prompt tuned with no eval",
+      "retrieved chunks never used",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "llm-app-engineering-public-repo-benchmark-anchor",
+    "skill": "llm-app-engineering",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
+    "task": "Anchor a `llm-app-engineering` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
+    "expected_files": [
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
+    ],
+    "expected_symbols": [
+      "build_prompt",
+      "retrieve_context",
+      "tool_schema"
+    ],
+    "expected_tests": [
+      "tests/test_evals.py"
+    ],
+    "expected_evidence_terms": [
+      "tool schema",
+      "offline eval",
+      "read-only",
+      "not adoption proof",
+      "retrieval",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "adoption claimed",
+      "benchmark treated as production",
+      "prompt tuned with no eval"
+    ]
+  },
+  {
+    "id": "llm-app-engineering-deep-weakness-trap",
+    "skill": "llm-app-engineering",
+    "repo_profile": "deep llm-engineering suite fixture with source, tests, docs, and an explicit overclaim trap",
+    "task": "Score `llm-app-engineering` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "app/prompts.py",
+      "app/rag.py",
+      "app/tools.py"
+    ],
+    "expected_symbols": [
+      "build_prompt",
+      "retrieve_context",
+      "tool_schema"
+    ],
+    "expected_tests": [
+      "tests/test_evals.py"
+    ],
+    "expected_evidence_terms": [
+      "prompt contract",
+      "top-k retrieval",
+      "tool schema",
+      "offline eval",
+      "residual risk",
+      "retrieval",
+      "verified"
+    ],
+    "bad_answer_traps": [
+      "prompt tuned with no eval",
+      "retrieved chunks never used",
+      "tool args untrusted",
+      "max strength claimed early"
+    ]
+  }
+]

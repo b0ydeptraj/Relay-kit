@@ -1,6 +1,6 @@
 ---
 name: architect
-description: Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase.
+description: "Use when a prd exists or when a change could alter module boundaries, data flow, security, or operations. Convert requirements into an implementation-ready architecture that fits the existing codebase."
 ---
 
 # Mission
@@ -59,3 +59,7 @@ Include:
 - review-hub
 - plan-hub
 - workflow-router
+- observability-instrumentation
+- iac-cloud-provisioning
+- container-kubernetes-ops
+- privacy-compliance

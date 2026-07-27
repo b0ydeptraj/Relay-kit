@@ -1,6 +1,6 @@
 ---
 name: problem-solving
-description: Use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence. Option-generation and root-cause utility.
+description: "Use when a hub needs hypotheses, trade-offs, or resolution paths grounded in current evidence. Option-generation and root-cause utility."
 ---
 
 # Mission

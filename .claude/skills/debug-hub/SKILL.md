@@ -1,6 +1,6 @@
 ---
 name: debug-hub
-description: Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem.
+description: "Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem."
 ---
 
 # Mission
@@ -12,6 +12,13 @@ Turn a symptom into evidence and a decision, not into random edits.
 3. Use `runtime-doctor` when generated surfaces, adapters, state, or live runtime drift might be involved.
 4. Use `problem-solving` for competing hypotheses and `sequential-thinking` for ordered probes.
 5. Route to `fix-hub` only when the cause and affected surface are bounded.
+6. Offensive failure routing: when symptoms include EDR detection, bypass failure, injection error, antibot block, or fingerprint mismatch -> route to the matching offensive specialist before proposing fixes:
+   - EDR detection / AV alert -> `edr-evasion-tactics`, `telemetry-blinding`
+   - Injection / hollowing failure -> `process-injection-techniques`
+   - Antibot block / Cloudflare / Datadome -> `antibot-challenge-solving`, `protocol-fingerprint-spoofing`
+   - Fingerprint mismatch / Canvas detected -> `browser-fingerprint-engineering`
+   - Binary detected / signature match -> `binary-stealth-obfuscation`, `malware-analysis-workflows`
+   - Reverse engineering needed -> `binary-reverse-methodology`, `frontend-crypto-reverse`
 
 ## Evidence contract
 - reproduce the issue or mark reproduction as blocked with the missing condition
@@ -58,3 +65,5 @@ Hold when the lane is guessing from symptoms, stacking fixes before one failing 
 - test-hub
 - plan-hub
 - workflow-router
+- performance-optimization
+- incident-response

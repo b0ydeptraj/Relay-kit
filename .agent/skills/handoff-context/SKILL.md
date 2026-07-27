@@ -1,6 +1,6 @@
 ---
 name: handoff-context
-description: Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility.
+description: "Use when the next skill needs a tighter, more relevant context handoff than the current artifact already provides. Context-pack utility."
 ---
 
 # Mission

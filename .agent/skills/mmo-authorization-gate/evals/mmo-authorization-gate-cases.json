@@ -1,0 +1,92 @@
+[
+  {
+    "id": "mmo-authorization-gate-battle-read-first",
+    "skill": "mmo-authorization-gate",
+    "repo_profile": "an operator-owned automation repo with an account inventory, an authorization ledger, a platform-terms note, and a risk-tier map",
+    "task": "gate an MMO lane by confirming account ownership and operator authorization before any high-risk action. Use `mmo-authorization-gate` and cite the first files before advice.",
+    "expected_files": [
+      "accounts/inventory.json",
+      "policy/authorization-ledger.json",
+      "docs/platform-terms.md"
+    ],
+    "expected_symbols": [
+      "account_owner",
+      "authorization_record"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_authorization_gate.py"
+    ],
+    "expected_evidence_terms": [
+      "account ownership",
+      "operator authorization",
+      "verified",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "no ownership proof",
+      "terms ignored",
+      "usual checklist",
+      "should be fine"
+    ]
+  },
+  {
+    "id": "mmo-authorization-gate-public-repo-benchmark-anchor",
+    "skill": "mmo-authorization-gate",
+    "repo_profile": "safe public repo benchmark clone; shallow, read-only, no install, no build",
+    "task": "Anchor a `mmo-authorization-gate` answer to concrete files in a read-only benchmark clone without claiming adoption proof.",
+    "expected_files": [
+      "accounts/inventory.json",
+      "policy/authorization-ledger.json"
+    ],
+    "expected_symbols": [
+      "account_owner"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_authorization_gate.py"
+    ],
+    "expected_evidence_terms": [
+      "platform terms",
+      "risk tier",
+      "read-only",
+      "not adoption proof"
+    ],
+    "bad_answer_traps": [
+      "adoption claimed",
+      "benchmark treated as production",
+      "no ownership proof"
+    ]
+  },
+  {
+    "id": "mmo-authorization-gate-deep-weakness-trap",
+    "skill": "mmo-authorization-gate",
+    "repo_profile": "deep mmo-authorization suite fixture with source, tests, docs, and an explicit overclaim trap",
+    "task": "Score `mmo-authorization-gate` against a deep case, name weak evidence, and avoid claiming maximum strength until files, symbols, tests, and residual risk are proven.",
+    "expected_files": [
+      "accounts/inventory.json",
+      "policy/authorization-ledger.json",
+      "docs/platform-terms.md",
+      "policy/risk-tiers.json"
+    ],
+    "expected_symbols": [
+      "account_owner",
+      "authorization_record",
+      "risk_tier"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_authorization_gate.py"
+    ],
+    "expected_evidence_terms": [
+      "account ownership",
+      "operator authorization",
+      "platform terms",
+      "risk tier",
+      "residual risk"
+    ],
+    "bad_answer_traps": [
+      "no ownership proof",
+      "terms ignored",
+      "high-risk without verdict",
+      "max strength claimed early"
+    ]
+  }
+]

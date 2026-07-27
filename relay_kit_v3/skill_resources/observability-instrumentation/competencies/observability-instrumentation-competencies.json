@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "observability-instrumentation",
+  "role": "observability-specialist",
+  "category": "observability",
+  "core_competencies": [
+    {
+      "id": "observability.failure-questions",
+      "label": "Anchor instrumentation to explicit failure questions.",
+      "evidence_terms": [
+        "failure question",
+        "diagnose",
+        "symptom"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "observability.structured-logging",
+      "label": "Emit correlated structured logs without secrets/PII.",
+      "evidence_terms": [
+        "correlation id",
+        "structured log",
+        "redaction"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "observability.metrics-red-use",
+      "label": "Define RED/USE metrics with a cardinality budget.",
+      "evidence_terms": [
+        "RED metrics",
+        "USE",
+        "cardinality"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "observability.tracing",
+      "label": "Set span boundaries and propagate trace context.",
+      "evidence_terms": [
+        "span",
+        "trace context",
+        "propagation"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    },
+    {
+      "id": "observability.slo-alerting",
+      "label": "Write SLIs, SLOs, and symptom-based burn-rate alerts.",
+      "evidence_terms": [
+        "SLI",
+        "SLO",
+        "burn rate"
+      ],
+      "archetypes": [
+        "backend-service"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "observability.vanity-dashboard",
+      "description": "Builds dashboards that answer no failure question."
+    },
+    {
+      "id": "observability.cardinality-blowup",
+      "description": "Adds unbounded metric labels."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

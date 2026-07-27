@@ -10,7 +10,7 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO = Path(r"C:\Users\b0ydeptrai\Documents\relay-kit")
+REPO = Path(__file__).resolve().parents[1]
 
 ALL_31 = [
     # 23 offensive

@@ -34,10 +34,14 @@ def test_enterprise_bundle_extends_baseline_with_full_discipline_utilities() -> 
 def test_skill_evolution_frontmatter_uses_claude_activation_patterns() -> None:
     rendered = render_skill(ALL_V3_SKILLS["skill-evolution"])
 
+    # paths/context/effort are not part of the Claude Code SKILL.md schema, so
+    # they are emitted under `metadata:` (the only recognized extension key)
+    # rather than at the top level, where the loader would drop them.
+    assert "metadata:" in rendered
     assert 'paths: ["**/SKILL.md", "relay_kit_v3/registry/skills.py", "docs/relay-kit-skill-*.md"]' in rendered
-    assert "context: fork" in rendered
+    assert 'context: "fork"' in rendered
     assert 'allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]' in rendered
-    assert "effort: high" in rendered
+    assert 'effort: "high"' in rendered
 
 
 def test_enterprise_bundle_emits_governance_docs_and_all_references() -> None:

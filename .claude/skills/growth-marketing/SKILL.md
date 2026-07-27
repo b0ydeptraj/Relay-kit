@@ -1,6 +1,6 @@
 ---
 name: growth-marketing
-description: Use when the request is growth or marketing execution. Produce positioning, campaign plans, launch checklist, funnel metrics, and quality checks tied to product goals.
+description: "Use when the request is growth or marketing execution. Produce positioning, campaign plans, launch checklist, funnel metrics, and quality checks tied to product goals."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

@@ -1,0 +1,85 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "iac-cloud-provisioning",
+  "role": "infrastructure-engineer",
+  "category": "infrastructure",
+  "core_competencies": [
+    {
+      "id": "iac.plan-before-apply",
+      "label": "Read the plan diff and state create/update/replace/destroy counts before apply.",
+      "evidence_terms": [
+        "plan diff",
+        "replace",
+        "destroy"
+      ],
+      "archetypes": [
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "iac.state-discipline",
+      "label": "Name the state backend and locking; keep state honest against drift.",
+      "evidence_terms": [
+        "state backend",
+        "lock",
+        "drift"
+      ],
+      "archetypes": [
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "iac.blast-radius",
+      "label": "Flag any stateful replace or destroy as high blast-radius.",
+      "evidence_terms": [
+        "blast radius",
+        "stateful",
+        "replace"
+      ],
+      "archetypes": [
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "iac.rollback-path",
+      "label": "Define the rollback path before apply.",
+      "evidence_terms": [
+        "rollback",
+        "previous state",
+        "reverse change"
+      ],
+      "archetypes": [
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "iac.no-secret-in-state",
+      "label": "Keep secrets out of state and variables.",
+      "evidence_terms": [
+        "secret",
+        "state",
+        "variable"
+      ],
+      "archetypes": [
+        "infrastructure"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "iac.blind-apply",
+      "description": "Applying without reading the plan."
+    },
+    {
+      "id": "iac.silent-destroy",
+      "description": "A destroy or replace on a stateful resource slipping through unflagged."
+    },
+    {
+      "id": "iac.secret-in-state",
+      "description": "Secrets committed into state or variables."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}

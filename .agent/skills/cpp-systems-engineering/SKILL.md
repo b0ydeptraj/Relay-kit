@@ -1,6 +1,6 @@
 ---
 name: cpp-systems-engineering
-description: Use when implementing or debugging C++ systems code: Windows/Linux native, RAII, memory management, Win32 API, COM, WTL, STL, multithreading, performance-critical paths, or driver-adjacent code.
+description: "Use when implementing or debugging C++ systems code: Windows/Linux native, RAII, memory management, Win32 API, COM, WTL, STL, multithreading, performance-critical paths, or driver-adjacent code."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

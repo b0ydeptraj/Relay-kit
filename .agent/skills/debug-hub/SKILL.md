@@ -1,6 +1,6 @@
 ---
 name: debug-hub
-description: Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem.
+description: "Use when work starts from a regression, flaky behavior, or an unexplained mismatch between expected and actual behavior. Triage failures, collect evidence, and decide whether the issue is a bug, a test problem, or a planning problem."
 ---
 
 # Mission
@@ -65,14 +65,5 @@ Hold when the lane is guessing from symptoms, stacking fixes before one failing 
 - test-hub
 - plan-hub
 - workflow-router
-- edr-evasion-tactics
-- telemetry-blinding
-- process-injection-techniques
-- antibot-challenge-solving
-- protocol-fingerprint-spoofing
-- browser-fingerprint-engineering
-- binary-stealth-obfuscation
-- binary-reverse-methodology
-- malware-analysis-workflows
-- frontend-crypto-reverse
-- field-journal-evolution
+- performance-optimization
+- incident-response

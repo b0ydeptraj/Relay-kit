@@ -1,6 +1,6 @@
 ---
 name: token-economy
-description: Use when context is large and the lane needs deterministic token budgeting, context packing, and signal retention checks before execution.
+description: "Use when context is large and the lane needs deterministic token budgeting, context packing, and signal retention checks before execution."
 allowed-tools: ["Read", "Grep", "Glob", "Bash"]
 ---
 

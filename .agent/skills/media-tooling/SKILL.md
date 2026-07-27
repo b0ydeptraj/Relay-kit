@@ -1,6 +1,6 @@
 ---
 name: media-tooling
-description: Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility.
+description: "Use when screenshots, assets, or content files need transformation or evidence extraction for the current lane. Media handling utility."
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 

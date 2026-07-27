@@ -1,0 +1,81 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "database-migration-safety",
+  "role": "db-migration-specialist",
+  "category": "db-migration",
+  "core_competencies": [
+    {
+      "id": "db-migration.change-class",
+      "label": "Classify additive vs rewriting vs destructive changes.",
+      "evidence_terms": [
+        "additive",
+        "destructive",
+        "rewriting"
+      ],
+      "archetypes": [
+        "data-store"
+      ]
+    },
+    {
+      "id": "db-migration.expand-contract",
+      "label": "Sequence expand-contract with dual-write across deploys.",
+      "evidence_terms": [
+        "expand contract",
+        "dual write",
+        "sequence"
+      ],
+      "archetypes": [
+        "data-store"
+      ]
+    },
+    {
+      "id": "db-migration.lock-analysis",
+      "label": "Assess locking and prefer concurrent/online paths.",
+      "evidence_terms": [
+        "blocking lock",
+        "concurrent",
+        "online"
+      ],
+      "archetypes": [
+        "data-store"
+      ]
+    },
+    {
+      "id": "db-migration.safe-backfill",
+      "label": "Batch, throttle, and make backfills idempotent/resumable.",
+      "evidence_terms": [
+        "backfill batch",
+        "throttle",
+        "idempotent"
+      ],
+      "archetypes": [
+        "data-store"
+      ]
+    },
+    {
+      "id": "db-migration.rollback-backup",
+      "label": "Confirm rollback and backup before destructive steps.",
+      "evidence_terms": [
+        "rollback",
+        "backup",
+        "point in time"
+      ],
+      "archetypes": [
+        "data-store"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "db-migration.contract-before-expand",
+      "description": "Removes the old path before the new one is live."
+    },
+    {
+      "id": "db-migration.unbatched-backfill",
+      "description": "Runs a backfill that saturates the database."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-07-26T00:00:00+00:00"
+}
