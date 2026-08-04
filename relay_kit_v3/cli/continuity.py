@@ -6,7 +6,7 @@ from relay_kit_v3.cli.utils import _run_script_main
 
 
 def run_continuity(args: argparse.Namespace) -> int:
-    from scripts import context_continuity
+    from relay_kit_v3.scripts import context_continuity
 
     continuity_argv = [args.action, args.project_path]
     if getattr(args, "json", False):

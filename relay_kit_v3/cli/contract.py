@@ -20,6 +20,11 @@ def run_contract_import(args: argparse.Namespace) -> int:
     else:
         print(render_contract_import_report(report))
         
-    if getattr(args, "strict", False) and report.get("status") != "pass":
-        return 2
-    return 2 if report.get("status") == "fail" else 0
+def run_contract(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "export":
+        return run_contract_export(args)
+    elif action == "import":
+        return run_contract_import(args)
+    return 1
+

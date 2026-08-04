@@ -21,7 +21,7 @@ from relay_kit_v3.signal_calibration import build_report as build_signal_calibra
 from relay_kit_v3.support_request import DEFAULT_OUTPUT as DEFAULT_SUPPORT_REQUEST_OUTPUT
 from relay_kit_v3.token_economy import build_token_audit
 from relay_kit_v3.delegation_control import build_delegation_audit
-from scripts import eval_workflows
+from relay_kit_v3.scripts import eval_workflows
 
 
 SCHEMA_VERSION = "relay-kit.pulse-report.v1"

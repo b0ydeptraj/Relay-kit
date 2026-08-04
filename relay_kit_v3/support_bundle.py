@@ -14,7 +14,7 @@ from relay_kit_v3.policy_packs import DEFAULT_POLICY_PACK, get_policy_pack
 from relay_kit_v3.release_lane import build_release_lane_report
 from relay_kit_v3.temp_paths import temp_dir
 from relay_kit_v3.upgrade import build_upgrade_report, inspect_manifest
-from scripts import eval_workflows, policy_guard
+from relay_kit_v3.scripts import eval_workflows, policy_guard
 
 
 SCHEMA_VERSION = "relay-kit.support-bundle.v1"

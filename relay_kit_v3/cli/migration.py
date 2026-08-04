@@ -8,7 +8,7 @@ from relay_kit_v3.cli.utils import _run_script_main
 def run_migration(args: argparse.Namespace) -> int:
     if args.action != "guard":
         return 2
-    from scripts import naming_guard
+    from relay_kit_v3.scripts import naming_guard
 
     guard_argv = [args.project_path]
     if args.strict:

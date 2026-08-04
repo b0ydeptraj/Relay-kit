@@ -8,7 +8,7 @@ from relay_kit_v3.cli.utils import _run_script_main
 def run_accessibility(args: argparse.Namespace) -> int:
     if args.action != "review":
         return 2
-    from scripts import accessibility_review
+    from relay_kit_v3.scripts import accessibility_review
 
     review_argv = [args.project_path]
     for option_name in ("surface", "report_file", "output_file"):

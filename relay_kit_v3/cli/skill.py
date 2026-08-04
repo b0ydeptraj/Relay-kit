@@ -2,7 +2,7 @@ import argparse
 from relay_kit_v3.cli.utils import _run_script_main
 
 def run_skill_gauntlet(args: argparse.Namespace) -> int:
-    from scripts import skill_gauntlet
+    from relay_kit_v3.scripts import skill_gauntlet
 
     gauntlet_argv = [args.project_path]
     if getattr(args, "json", False):
@@ -14,3 +14,10 @@ def run_skill_gauntlet(args: argparse.Namespace) -> int:
     if getattr(args, "scenario_fixtures", None):
         gauntlet_argv.extend(["--scenario-fixtures", args.scenario_fixtures])
     return _run_script_main(skill_gauntlet, "skill_gauntlet.py", gauntlet_argv)
+
+def run_skill(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "gauntlet":
+        return run_skill_gauntlet(args)
+    return 1
+

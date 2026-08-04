@@ -12,7 +12,7 @@ def run_policy(args: argparse.Namespace) -> int:
             print(f"- {name}: {pack.description}")
         return 0
     if args.action == "check":
-        from scripts import policy_guard
+        from relay_kit_v3.scripts import policy_guard
 
         policy_argv = [args.project_path, "--pack", args.pack]
         if args.strict:

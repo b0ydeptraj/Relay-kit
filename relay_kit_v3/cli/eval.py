@@ -158,7 +158,7 @@ def run_eval(args: argparse.Namespace) -> int:
 
     if args.action != "run":
         return 2
-    from scripts import eval_workflows
+    from relay_kit_v3.scripts import eval_workflows
 
     eval_argv = [args.project_path]
     if args.scenario_fixtures:

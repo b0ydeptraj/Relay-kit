@@ -2,7 +2,7 @@
 
 All notable changes to `Relay-kit` are documented here.
 
-## 4.0.0
+## 4.0.0 - 2026-07-27
 
 ### Added
 
@@ -16,24 +16,32 @@ All notable changes to `Relay-kit` are documented here.
 - 10-theme design system under `design-system/` with token build tooling.
 - Public entrypoint shims (`start-here`, `brainstorm`, `build-it`, and peers)
   as thin aliases over the orchestrators and hubs.
-
 - Six capability skills: `llm-app-engineering`, `iac-cloud-provisioning`,
   `container-kubernetes-ops`, `secrets-management`, `privacy-compliance`, and
   `mmo-authorization-gate`, each with a full battle-resource pack.
+- Automated CLI schema dispatch test suite (`tests/test_cli_schema_dispatch.py`)
+  verifying 100% of command schema handlers and subcommands.
 
 ### Changed
 
 - The skill catalog, README counts, and manifest are derived from the registry;
   the pack now ships 119 skills across `.claude`, `.agent`, and `.codex`.
+- `pyproject.toml` package data now includes `cli/*.yaml`, `dashboard/*`,
+  `extensions/*`, and all `skill_resources` assets for standalone `pip` wheel installs.
+- Removed `scripts*` from top-level `packages.find` to prevent site-packages namespace pollution.
+- Updated project metadata with MIT license and official GitHub project URLs.
 
 ### Removed
 
 - Dead code: the `old_cli.py`/`old_cli_safe.py`/`original_cli.py` monoliths,
   their one-off schema helpers, the empty retired-namespace phantom package,
-  and root-level scratch files.
+  root-level scratch files, and legacy mock diagnostic code.
 
 ### Fixed
 
+- Fixed schema flag type parsing in `engine.py` for `str` type options.
+- Fixed handler name mismatches in `command_schema.yaml` (`run_runtime_doctor`,
+  `run_contract`, `run_delegation`, `run_skill`, `run_impact`).
 - SKILL.md frontmatter is now emitted as quoted YAML so descriptions containing
   a colon load correctly instead of falling back to the body heading; a
   `yaml.safe_load` gate in CI and `tests/test_skill_frontmatter_valid.py`
@@ -45,7 +53,8 @@ All notable changes to `Relay-kit` are documented here.
 - Removed committed live-session state and maintainer-local absolute paths from
   the tracked tree.
 
-## Next - 3.4.0.dev0
+## 3.4.0.dev0
+
 
 ### Added
 

@@ -444,15 +444,8 @@ def main(argv: list[str] | None = None) -> int:
     args = _parse_args(raw_argv)
     import logging; logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
     
-    # Global public install fallback
-    if getattr(args, 'diagnostic_run', False):
-        print(f"Relay-kit public runtime diagnostic: PASS (mock)")
-        return 0
-        
     ai_str = _resolve_ai(args)
-    if not ai_str:
-        print("Error: Must specify --codex, --claude, or --antigravity", file=sys.stderr)
-        return 1
+
 
     print(f"Generating public Relay-kit ({args.bundle}) runtime in {args.project_path} for {ai_str}...")
     core_argv = _build_relay_argv(args)

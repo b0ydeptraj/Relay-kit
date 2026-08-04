@@ -75,3 +75,18 @@ def run_delegation_capabilities(args: argparse.Namespace) -> int:
     if getattr(args, "strict", False) and report.get("status") != "pass":
         return 1
     return 0
+
+def run_delegation(args: argparse.Namespace) -> int:
+    action = getattr(args, "action", None)
+    if action == "plan":
+        return run_delegation_plan(args)
+    elif action == "audit":
+        return run_delegation_audit(args)
+    elif action == "close-completed":
+        return run_delegation_close_completed(args)
+    elif action == "record-usage":
+        return run_delegation_record_usage(args)
+    elif action == "capabilities":
+        return run_delegation_capabilities(args)
+    return 1
+

@@ -27,6 +27,8 @@ def _apply_schema_to_parser(parser: argparse.ArgumentParser, schema: dict, dest_
             kwargs["type"] = int
         elif kwargs.get("type") == "float":
             kwargs["type"] = float
+        elif kwargs.get("type") == "str":
+            kwargs["type"] = str
         if kwargs.get("nargs") == "REMAINDER":
             kwargs["nargs"] = argparse.REMAINDER
         parser.add_argument(flag_name, **kwargs)

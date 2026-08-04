@@ -8,7 +8,7 @@ from relay_kit_v3.release_lane import build_release_lane_report, render_release_
 
 def run_release(args: argparse.Namespace) -> int:
     if args.action == "readiness":
-        from scripts import release_readiness
+        from relay_kit_v3.scripts import release_readiness
 
         readiness_argv = [args.project_path, "--phase", args.phase]
         if args.signals_file:
