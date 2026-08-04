@@ -53,10 +53,16 @@ All notable changes to `Relay-kit` are documented here.
 - Removed committed live-session state and maintainer-local absolute paths from
   the tracked tree.
 
-## 3.4.0.dev0
-
+## v3.4.1 - 2026-05-08
 
 ### Added
+
+- Pulse publication and support request visibility signals.
+- 28 production/team workflow eval scenarios.
+- OTLP export support in readiness diagnostics.
+
+## v3.4.0 - 2026-05-01
+
 
 - Added Pulse publication-plan visibility and a `relay.publication.ready`
   signal export metric for package release dashboards.

@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
 
       - name: Install package and test dependencies
         run: |
@@ -34,7 +35,6 @@ jobs:
 
   validate-runtime:
     name: Full Runtime Verification Gate
-    needs: fast-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,6 +44,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install package and test dependencies
         run: |
@@ -101,7 +102,7 @@ jobs:
 
       - name: Build package smoke wheel
         if: always()
-        run: python -m pip wheel . -w .tmp/wheelhouse
+        run: python -m pip wheel . --no-deps -w .tmp/wheelhouse
 
       - name: Run package install smoke
         if: always()
