@@ -10,6 +10,8 @@ Make completion a deliberate alignment check, not just a feeling that enough has
 - Do requirements, architecture, and implementation still describe the same change?
 - Does quality evidence actually cover the promised behavior and regression surface?
 - Is the active lane done, or is it merely unblocked enough to continue elsewhere?
+- **Challenger Gate (Adversarial Check)**: What can be cut or simplified? Does the change introduce speculative abstractions or unneeded complexity?
+- **Zero-Yap & Hygiene Audit**: Are there oversized, obvious comments (`[YAP]`) or padded boilerplate (`[FLUFF]`) that must be purged before merge?
 
 ## Output contract
 End with one explicit verdict:
@@ -22,6 +24,7 @@ End with one explicit verdict:
 ## Review handling discipline
 - Verify external review feedback against the codebase before accepting it.
 - Prefer one review item at a time when feedback changes code or requirements.
+- Enforce Subtraction Audit (`.relay-kit/references/subtraction-audit.md`): favor removing dead paths over adding defensive wrappers.
 - If the lane is complete, route through branch-completion discipline before treating it as finished.
 
 ## Role

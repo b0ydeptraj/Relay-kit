@@ -26,6 +26,11 @@ Turn confident-sounding claims into calibrated proof levels so Relay-kit does no
 ## Typical tasks
 - Classify claims as proven, partially-proven, inferred, unsupported, or contradicted.
 - Map skill quality claims to proof audit, real-world eval, skill-battle, competency-battle, or battle-audit evidence.
+- Detect and flag communication & code fluff penalty cards:
+  - `[YAP]`: Obvious, bloated comments or explanations that restate the trivial.
+  - `[FLUFF]`: Padding words, excessive defensive abstractions without handling.
+  - `[LOAD-FAIL]`: Claim made when the underlying rule/spec was never in context.
+  - `[COMPLY-FAIL]`: Context contained the rule/spec but the output blatantly ignored it.
 - Downgrade fixture-backed claims to validated instead of field-tested.
 - Detect public copy or operator answers that imply stronger evidence than Relay-kit actually has.
 - Name the smallest next verification needed to make the claim safe.
@@ -34,6 +39,7 @@ Turn confident-sounding claims into calibrated proof levels so Relay-kit does no
 - Confidence is not proof.
 - Benchmark evidence is not adoption evidence.
 - Validated is not field-tested.
+- Reject [YAP] and [FLUFF] output before approving signal readiness.
 - If evidence class is unclear, block the claim instead of smoothing it over.
 - Keep Relay-kit-owned terminology; do not call this a confusion matrix.
 
