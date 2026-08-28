@@ -461,7 +461,7 @@ def test_workflow_eval_detects_baseline_regression(tmp_path: Path) -> None:
 
 
 def test_public_cli_eval_run_uses_workflow_eval(monkeypatch, capsys) -> None:
-    from scripts import eval_workflows
+    from relay_kit_v3.scripts import eval_workflows
 
     def fake_run_workflow_eval(args):  # noqa: ANN001
         assert "--min-route-margin" in args

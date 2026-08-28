@@ -69,6 +69,9 @@ ALLOWED_RUNTIME_SCRIPT_IMPORTERS = {
     "relay_kit_v3.cli.release",
     "relay_kit_v3.cli.runtime",
     "relay_kit_v3.cli.skill",
+    "relay_kit_v3.scripts.eval_workflows",
+    "relay_kit_v3.scripts.migration_guard",
+    "relay_kit_v3.scripts.refresh_skill_battle_resources",
     "relay_kit_v3.pulse",
     "relay_kit_v3.support_bundle",
 }
