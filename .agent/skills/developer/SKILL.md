@@ -22,7 +22,7 @@ Turn an approved story or tech-spec into code and evidence without reopening sol
 12. Hand off to `test-hub` or `qa-governor` with the test evidence actually collected.
 
 ## Escalation
-If implementation reveals missing architecture, unclear acceptance criteria, a bigger-than-expected change surface, or the need for parallel sub-work, stop and route back through `review-hub` or `workflow-router`.
+If implementation reveals missing architecture, unclear acceptance criteria, or a bigger-than-expected change surface, stop and route back through `review-hub` or `workflow-router`.
 
 ## Role
 - implementation
@@ -49,7 +49,7 @@ If implementation reveals missing architecture, unclear acceptance criteria, a b
 - If a test-first loop is not practical, say why before coding and name the alternative failing signal you will use.
 - Prefer the smallest diff that fixes the failing reproduction; name rollback notes and one edge case before completion.
 - Default to plain ASCII in source code, comments, identifiers, test names, placeholder copy, and sample data unless the repo or product explicitly requires non-ASCII content.
-- If tasks are truly independent and the platform supports collaboration, follow `.relay-kit/docs/parallel-execution.md` before using subagent-style execution.
+- Do not create parallel lanes or subagents; keep independent work as sequential checkpoints in one context.
 - Open `references/developer-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/developer-good-output.md` and `examples/developer-bad-output.md` to calibrate output quality.
 - Use `evals/developer-cases.json` as the minimum scenario set for behavior regression checks.

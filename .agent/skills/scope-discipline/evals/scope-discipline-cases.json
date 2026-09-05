@@ -1,0 +1,35 @@
+[
+  {
+    "id": "scope-discipline-minimum-contract",
+    "skill": "scope-discipline",
+    "repo_profile": "small feature with an existing implementation and one failing test",
+    "task": "Decide whether a wrapper and dependency are needed before fixing the failing behavior.",
+    "expected_files": ["src/parser.py", "tests/test_parser.py"],
+    "expected_symbols": ["parse", "test_missing_case"],
+    "expected_tests": ["tests/test_parser.py"],
+    "expected_evidence_terms": ["minimum complete contract", "required", "stopping rule"],
+    "bad_answer_traps": ["future-proof abstraction", "add a dependency without evidence"]
+  },
+  {
+    "id": "scope-discipline-reasoning-budget",
+    "skill": "scope-discipline",
+    "repo_profile": "bounded coding task with a clear acceptance test",
+    "task": "Choose whether to add repeated reasoning or a second agent to a one-file fix.",
+    "expected_files": ["src/service.py", "tests/test_service.py"],
+    "expected_symbols": ["handle", "test_handle"],
+    "expected_tests": ["tests/test_service.py"],
+    "expected_evidence_terms": ["token cost", "single Sol", "defer"],
+    "bad_answer_traps": ["parallelize by default", "increase budget by default"]
+  },
+  {
+    "id": "scope-discipline-safety-exception",
+    "skill": "scope-discipline",
+    "repo_profile": "security-sensitive change with mandatory controls",
+    "task": "Trim optional complexity without removing the required safety and verification gates.",
+    "expected_files": ["policy.yaml", "tests/test_policy.py"],
+    "expected_symbols": ["check_policy", "test_policy"],
+    "expected_tests": ["tests/test_policy.py"],
+    "expected_evidence_terms": ["safety", "correctness", "verification"],
+    "bad_answer_traps": ["remove safety gate for brevity", "claim completion without proof"]
+  }
+]

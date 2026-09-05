@@ -49,8 +49,6 @@ Activate authorized offensive context, cache engagement proof, enforce OPSEC ord
 - attack-chain-orchestration
 - cpp-systems-engineering
 - edr-evasion-tactics
-- kernel-driver-evasion
-- hardware-assisted-re
 - process-injection-techniques
 - network-stealth-c2
 - binary-stealth-obfuscation
@@ -63,5 +61,4 @@ Activate authorized offensive context, cache engagement proof, enforce OPSEC ord
 - mobile-app-reverse
 - frontend-crypto-reverse
 - windows-native-internals
-- offensive-domain-unlock
 - policy-guard

@@ -32,14 +32,13 @@ If `.relay-kit/context/index.json` exists, treat graph hits as candidate files t
 5. Choose the layer-1 entrypoint:
    - use `bootstrap` if state, context, or artifacts are missing
    - use `cook` for one active request in one lane
-   - use `team` if more than one lane, owner, or branch of work must be coordinated
+   - use `cook` for the single active lane; keep work sequential under one Sol context
 6. Choose the first layer-2 hub:
    - `scout-hub` when the codebase area is unclear
    - `plan-hub` when planning artifacts are missing or stale
    - `debug-hub` when the request starts from a failure or regression
 7. Mark the lane mode explicitly as one of: discovery, planning, implementation, verification, or offensive.
-8. When parallel or parked lanes exist, record `depends_on`, `wave_id`, and `resume_condition` in team-board and lane-registry.
-9. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
+8. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
 
 ## Escalation rules
 Escalate immediately when:
@@ -62,13 +61,11 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - short or ambiguous user prompt
 - .relay-kit/contracts/project-context.md (if present)
 - .relay-kit/state/workflow-state.md (if present)
-- .relay-kit/state/team-board.md (if present)
 
 ## Outputs
 - .relay-kit/state/workflow-state.md
 - prompt enhancement summary when the user request is short or unclear
 - .relay-kit/contracts/tech-spec.md or product-brief.md kickoff
-- .relay-kit/state/team-board.md when parallel lanes are needed
 
 ## Reference skills and rules
 - Prefer existing project-context over assumptions.
@@ -76,7 +73,7 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - When `.relay-kit/context/index.json` exists, use local context graph hits before broad repo scans.
 - Prompt enhancement is not a semantic context engine, expert guarantee, or production-readiness claim.
 - Escalate from quick-flow to product-flow whenever hidden complexity appears.
-- Hand off to bootstrap when base artifacts are missing, to cook for a single request, and to team when multiple lanes must move in parallel.
+- Hand off to bootstrap when base artifacts are missing and to cook for the single active request.
 - If session continuity is weak, run context-continuity checkpoint or rehydrate before routing deeper work.
 - For existing codebases, prefer scout-hub plus repo-map before planning when dependency boundaries are still unclear.
 - Open `references/workflow-router-operator-contract.md` when scope, evidence, or operator safety is unclear.
@@ -87,11 +84,11 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 ## Likely next step
 - bootstrap
 - cook
-- team
 - context-continuity
 - scout-hub
 - plan-hub
 - debug-hub
 - token-economy
+- scope-discipline
 - offensive-security-engagement
 - mmo-authorization-gate

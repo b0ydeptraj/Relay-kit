@@ -33,11 +33,11 @@
   "id": "developer-implementation-ready",
   "prompt": "Use developer because the approved story is implementation-ready. Read the story, edit code in one controlled slice, run the execution loop, collect test evidence, and update workflow-state.",
   "expected_skill": "developer",
-  "expected_terms": [
+ "expected_terms": [
    "code",
    "test evidence",
    "workflow-state"
-  ]
+ ]
  },
  {
   "id": "test-hub-risky-implementation",
@@ -291,12 +291,12 @@
  },
  {
   "id": "bootstrap-missing-runtime-state",
-  "prompt": "Use bootstrap when starting a repo lane and workflow-state or project-context is missing or stale. Initialize or refresh the shared Relay-kit runtime, record artifacts, and create team-board if the request may split into lanes.",
+  "prompt": "Use bootstrap when starting a repo lane and workflow-state or project-context is missing or stale. Initialize or refresh the shared Relay-kit runtime and record the current artifacts for one sequential lane.",
   "expected_skill": "bootstrap",
   "expected_terms": [
    "workflow-state",
    "project-context",
-   "team-board"
+   "artifacts"
   ]
  },
  {
@@ -407,16 +407,6 @@
    "unfamiliar",
    "stale",
    "living references"
-  ]
- },
- {
-  "id": "team-parallel-lanes-coordination",
-  "prompt": "Use team when work must proceed in parallel across multiple lanes. Coordinate owners, lane locks, handoffs, and avoid agents stepping on each other.",
-  "expected_skill": "team",
-  "expected_terms": [
-   "parallel",
-   "lanes",
-   "coordinate"
   ]
  },
  {
@@ -557,16 +547,6 @@
    "checkpoint",
    "handoff",
    "diff"
-  ]
- },
- {
-  "id": "team-lane-health-audit",
-  "prompt": "Use team when multi-lane state needs lane locks, depends_on, wave_id, resume_condition, merge order, and a relay-kit lane audit before parallel work continues.",
-  "expected_skill": "team",
-  "expected_terms": [
-   "depends_on",
-   "wave_id",
-   "resume_condition"
   ]
  },
  {
@@ -899,17 +879,16 @@
    "human-review"
   ]
  },
- {
-  "id": "delegation-control-quota-reasoning-lifecycle",
-  "prompt": "Use delegation-control before spawning subagents to choose medium reasoning by default, prove independent bounded lanes, enforce token quota and lock scope, create per-agent context packs, and close completed agents only after handoff evidence.",
-  "expected_skill": "delegation-control",
+{
+  "id": "scope-discipline-minimum-contract",
+  "prompt": "Use scope-discipline when a bounded fix risks adding wrappers, dependencies, repeated reasoning, or parallel lanes. Define the minimum complete contract, subtract optional complexity, and set a stopping rule.",
+  "expected_skill": "scope-discipline",
   "expected_terms": [
-   "medium reasoning",
-   "quota",
-   "context pack",
-   "handoff"
+   "minimum complete contract",
+   "subtract",
+   "stopping rule"
   ]
- },
+},
  {
   "id": "ci-cd-pipeline-route-scenario",
   "prompt": "Use when designing or fixing build, test, and deploy automation: pipeline stages, caching, required gates, environment promotion, artifact versioning, and rollback triggers.",

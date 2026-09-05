@@ -20,7 +20,7 @@ Route to `developer` only when the active story or tech-spec is ready for implem
 - Prefer small, verifiable slices over broad task bundles.
 - Every story or quick spec should name what will prove it is done.
 - If the work spans unrelated subsystems, split the plan before implementation starts.
-- Include dependency metadata (`depends_on`, parallel-safe yes/no, first verification command) so execution can run in controlled waves.
+- Include dependency metadata and the first verification command so execution stays bounded.
 - If slicing yields zero executable stories, block and escalate instead of declaring planning complete.
 
 ## Role

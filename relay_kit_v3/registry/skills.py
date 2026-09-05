@@ -85,27 +85,27 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
         description="Use when a request arrives, the user asks what to do next, or scope or complexity is unclear. Route a request through the right delivery track, choose the active orchestrator or hub, keep workflow-state current, and turn short or ambiguous prompts into file-aware working guidance.",
         role="routing-kernel",
         layer="layer-1-orchestrators",
-        inputs=["user request", "short or ambiguous user prompt", ".relay-kit/contracts/project-context.md (if present)", ".relay-kit/state/workflow-state.md (if present)", ".relay-kit/state/team-board.md (if present)"],
-        outputs=[".relay-kit/state/workflow-state.md", "prompt enhancement summary when the user request is short or unclear", ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff", ".relay-kit/state/team-board.md when parallel lanes are needed"],
+        inputs=["user request", "short or ambiguous user prompt", ".relay-kit/contracts/project-context.md (if present)", ".relay-kit/state/workflow-state.md (if present)"],
+        outputs=[".relay-kit/state/workflow-state.md", "prompt enhancement summary when the user request is short or unclear", ".relay-kit/contracts/tech-spec.md or product-brief.md kickoff"],
         references=[
             "Prefer existing project-context over assumptions.",
             "For short prompts, expand intent into recommended skill, read-first context, required evidence, and an ask-or-act decision.",
             "When `.relay-kit/context/index.json` exists, use local context graph hits before broad repo scans.",
             "Prompt enhancement is not a semantic context engine, expert guarantee, or production-readiness claim.",
             "Escalate from quick-flow to product-flow whenever hidden complexity appears.",
-            "Hand off to bootstrap when base artifacts are missing, to cook for a single request, and to team when multiple lanes must move in parallel.",
+            "Hand off to bootstrap when base artifacts are missing and to cook for the single active request.",
             "If session continuity is weak, run context-continuity checkpoint or rehydrate before routing deeper work.",
             "For existing codebases, prefer scout-hub plus repo-map before planning when dependency boundaries are still unclear.",
         ],
         next_steps=[
             "bootstrap",
             "cook",
-            "team",
             "context-continuity",
             "scout-hub",
             "plan-hub",
             "debug-hub",
             "token-economy",
+            "scope-discipline",
             # Offensive lanes must enter through the authorization gate, never
             # by matching a specialist description directly.
             "offensive-security-engagement",
@@ -142,14 +142,13 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             5. Choose the layer-1 entrypoint:
                - use `bootstrap` if state, context, or artifacts are missing
                - use `cook` for one active request in one lane
-               - use `team` if more than one lane, owner, or branch of work must be coordinated
+               - use `cook` for the single active lane; keep work sequential under one Sol context
             6. Choose the first layer-2 hub:
                - `scout-hub` when the codebase area is unclear
                - `plan-hub` when planning artifacts are missing or stale
                - `debug-hub` when the request starts from a failure or regression
             7. Mark the lane mode explicitly as one of: discovery, planning, implementation, verification, or offensive.
-            8. When parallel or parked lanes exist, record `depends_on`, `wave_id`, and `resume_condition` in team-board and lane-registry.
-            9. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
+            8. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
 
             ## Escalation rules
             Escalate immediately when:
@@ -169,14 +168,14 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
         role="session-bootstrap",
         layer="layer-1-orchestrators",
         inputs=["repo root", ".relay-kit/ runtime folders if present", "current request"],
-        outputs=[".relay-kit/state/workflow-state.md", ".relay-kit/contracts/project-context.md", ".relay-kit/state/team-board.md when parallel work is expected"],
+        outputs=[".relay-kit/state/workflow-state.md", ".relay-kit/contracts/project-context.md"],
         references=[
             "Prefer lightweight initialization over speculative planning.",
             "If the codebase is unfamiliar, route immediately to scout-hub after bootstrapping.",
             "Do not invent project-context facts; mark unknowns and hand off to scout-hub.",
             "Use context-continuity rehydrate when resuming across thread or session boundaries.",
         ],
-        next_steps=["workflow-router", "scout-hub", "cook", "team", "context-continuity"],
+        next_steps=["workflow-router", "scout-hub", "cook", "context-continuity"],
         body=dedent(
             """\
             # Mission
@@ -185,7 +184,7 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             ## Mandatory setup
             1. Ensure `.relay-kit/state/workflow-state.md` exists and records the current request.
             2. Ensure `.relay-kit/contracts/project-context.md` exists. If facts are missing, create a skeletal version with explicit unknowns.
-            3. If the request is likely to branch into more than one lane, create or refresh `.relay-kit/state/team-board.md`.
+            3. Keep the active work in one sequential lane under the primary Sol context.
             4. Record which artifacts already exist and which ones must be refreshed.
             5. If the repo area is not well understood, route next to `scout-hub`.
 
@@ -193,47 +192,6 @@ ORCHESTRATOR_SKILLS: Dict[str, SkillSpec] = {
             - Bootstrap does not do deep planning.
             - Bootstrap does not declare work ready; it only makes later work safer.
             - When in doubt, prefer creating the minimal state needed to hand off cleanly.
-            """
-        ).strip(),
-    ),
-    "team": SkillSpec(
-        name="team",
-        description="Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other.",
-        role="meta-orchestrator",
-        layer="layer-1-orchestrators",
-        inputs=[".relay-kit/state/workflow-state.md", ".relay-kit/state/team-board.md", "active artifacts and blockers"],
-        outputs=[".relay-kit/state/team-board.md", ".relay-kit/state/workflow-state.md"],
-        references=[
-            "Shared artifacts beat chat summaries; update the artifact before handing off.",
-            "Assign one owner skill per lane and name merge order explicitly.",
-            "Use cook inside a lane, not as a replacement for team.",
-            "Use `.relay-kit/docs/parallel-execution.md` to decide when work is independent enough to split safely.",
-            "Require context-continuity handoff packs when ownership shifts across sessions or AIs.",
-            "Prefer wave-based execution: parallel inside a wave, strict dependency gate between waves.",
-            "Run `relay-kit lane audit <project> --strict --json` before trusting a multi-lane handoff.",
-        ],
-        next_steps=["delegation-control", "cook", "plan-hub", "scout-hub", "debug-hub", "review-hub", "context-continuity"],
-        body=dedent(
-            """\
-            # Mission
-            Coordinate parallel work while preserving one authoritative source of truth for each artifact.
-
-            ## Mandatory behavior
-            1. Maintain `.relay-kit/state/team-board.md` with lanes, owners, active artifacts, blockers, and merge order.
-            2. Split work only when lanes are independent enough to avoid editing the same artifact section at the same time.
-            3. Use `cook` to drive each active lane, but keep final merge and priority decisions here.
-            4. If one lane uncovers architecture or scope drift, update workflow-state and notify all affected lanes.
-            5. Park lanes that are blocked instead of letting them thrash.
-            6. Record lock scope and handoff status whenever a lane changes ownership or pauses.
-            7. For each lane, record `depends_on`, `wave_id`, and `resume_condition`, then only advance to the next wave after current-wave verification gates pass.
-            8. Run `relay-kit lane audit <project> --strict --json` before claiming multi-lane state is safe.
-            9. Route through `delegation-control` before creating subagents; medium reasoning is the default and low reasoning requires a proven mechanical task.
-
-            ## Do not do this
-            - Do not let two lanes silently diverge on the same acceptance criteria.
-            - Do not keep lane state only in memory.
-            - Do not parallelize before a quick scout when the codebase area is unfamiliar.
-            - Do not close a lane as done when no artifact delta or verification evidence exists.
             """
         ).strip(),
     ),
@@ -431,7 +389,7 @@ WORKFLOW_HUB_SKILLS: Dict[str, SkillSpec] = {
             - Prefer small, verifiable slices over broad task bundles.
             - Every story or quick spec should name what will prove it is done.
             - If the work spans unrelated subsystems, split the plan before implementation starts.
-            - Include dependency metadata (`depends_on`, parallel-safe yes/no, first verification command) so execution can run in controlled waves.
+            - Include dependency metadata and the first verification command so execution stays bounded.
             - If slicing yields zero executable stories, block and escalate instead of declaring planning complete.
             """
         ).strip(),
@@ -842,7 +800,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             - Explicit about what must be tested.
             - Explicit about which upstream documents it depends on.
             - Explicit about the first verification command or evidence expected after implementation.
-            - Explicit about execution wave placement if parallel work is expected.
+            - Explicit about the next sequential execution step.
             """
         ).strip(),
     ),
@@ -861,7 +819,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             "If a test-first loop is not practical, say why before coding and name the alternative failing signal you will use.",
             "Prefer the smallest diff that fixes the failing reproduction; name rollback notes and one edge case before completion.",
             "Default to plain ASCII in source code, comments, identifiers, test names, placeholder copy, and sample data unless the repo or product explicitly requires non-ASCII content.",
-            "If tasks are truly independent and the platform supports collaboration, follow `.relay-kit/docs/parallel-execution.md` before using subagent-style execution.",
+            "Do not create parallel lanes or subagents; keep independent work as sequential checkpoints in one context.",
         ],
         next_steps=[
             "test-first-development",
@@ -901,7 +859,7 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
             12. Hand off to `test-hub` or `qa-governor` with the test evidence actually collected.
 
             ## Escalation
-            If implementation reveals missing architecture, unclear acceptance criteria, a bigger-than-expected change surface, or the need for parallel sub-work, stop and route back through `review-hub` or `workflow-router`.
+            If implementation reveals missing architecture, unclear acceptance criteria, or a bigger-than-expected change surface, stop and route back through `review-hub` or `workflow-router`.
             """
         ).strip(),
     ),
@@ -2629,38 +2587,6 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         ],
         allowed_tools=READ_ANALYZE_TOOLS,
     ),
-    "delegation-control": utility_provider_spec(
-        name="delegation-control",
-        description="Use when creating subagents or parallel agent lanes is being considered. Decide whether delegation is worth its quota cost, assign reasoning tiers, require bounded context packs, and close completed agents after evidence handoff.",
-        outputs=[
-            "delegation plan and quota decision under .relay-kit/delegation",
-            "append-only delegation lifecycle events under .relay-kit/state/delegation-ledger.jsonl",
-            "adapter capability and enforcement status",
-        ],
-        references=[
-            "Medium reasoning is the normal default; low is allowed only for proven mechanical, low-risk work.",
-            "Prefer no subagent when the main agent can complete the bounded task safely.",
-            "Use token-economy to create a separate context pack for every approved subagent.",
-            "Close completed agents only after handoff evidence is recorded; preserve ledger and raw evidence.",
-        ],
-        next_steps=["team", "token-economy", "context-continuity", "review-hub", "qa-governor"],
-        mission="Control subagent cost and lifecycle without pretending every adapter exposes the same spawn, reasoning, usage, or close controls.",
-        tasks=[
-            "Record the reasoning tier decision and use medium default unless evidence justifies low or high.",
-            "Reject unnecessary spawn requests and approve only bounded delegation with an artifact, quota and lock scope, return condition, and verification.",
-            "Create and retain the context pack path for each approved subagent.",
-            "Keep concurrent and high-reasoning subagents within policy limits.",
-            "Record advisory versus enforced adapter capabilities and actual token usage only when reported.",
-            "Close completed agents only with handoff evidence and close reason, then perform evidence-preserving close of temporary context packs.",
-        ],
-        rules=[
-            "Enforce no unnecessary spawn: do not create subagents merely because a task is large.",
-            "Do not lower reasoning solely because quota is nearly exhausted.",
-            "Do not call an adapter control enforced unless runtime capability evidence exists.",
-            "Do not delete lifecycle ledger or handoff evidence during cleanup.",
-        ],
-        allowed_tools=READ_ANALYZE_TOOLS,
-    ),
     "context-continuity": utility_provider_spec(
         name="context-continuity",
         description="Use when work needs reliable continuity across long chats, new threads, AI switches, or resume-after-gap sessions.",
@@ -2673,7 +2599,7 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
             "Use manual `checkpoint`, `rehydrate`, `handoff`, and `diff-since-last` modes when debugging or forcing a specific continuity action.",
             "Context continuity complements `handoff-context`; it does not replace authoritative contracts and state.",
         ],
-        next_steps=["workflow-router", "cook", "team", "handoff-context", "review-hub"],
+        next_steps=["workflow-router", "cook", "handoff-context", "review-hub"],
         mission="Preserve lane continuity with explicit artifacts so the next session can continue safely without replaying full chat history.",
         tasks=[
             "Run auto continuity at session start/resume so existing checkpoints are rehydrated and missing checkpoints are created.",
@@ -2699,9 +2625,9 @@ UTILITY_PROVIDER_SKILLS: Dict[str, SkillSpec] = {
         references=[
             "Minimize irrelevant context.",
             "Package only what the receiving skill needs to act safely.",
-            "Use context-continuity when the handoff must survive thread, model, or session boundaries.",
+            "Use context-continuity when the handoff must survive a session boundary.",
         ],
-        next_steps=["workflow-router", "team", "cook", "developer", "context-continuity"],
+        next_steps=["workflow-router", "cook", "developer", "context-continuity"],
         mission="Prepare the smallest complete context pack for the next handoff.",
         tasks=[
             "Select the minimum set of files, artifacts, and rules the receiving skill actually needs.",
@@ -2833,6 +2759,45 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
             "If a code-change claim has zero file delta and zero verification output, mark it invalid unless the lane explicitly recorded a no-code outcome.",
         ],
     ),
+    "scope-discipline": utility_provider_spec(
+        name="scope-discipline",
+        description="Use when a task risks over-engineering, unnecessary abstraction, repeated reasoning, or scope growth. Apply a minimum-complete-contract check before adding complexity.",
+        outputs=[
+            "a minimum-complete-contract decision in the active artifact",
+            "a keep/remove/defer list for proposed complexity",
+            "a smallest useful verification plan",
+        ],
+        references=[
+            "Prefer the smallest change that satisfies the stated acceptance criteria.",
+            "Treat extra abstractions, wrappers, agents, dependencies, and documentation as costs requiring evidence.",
+            "Use evidence-before-completion for the final claim; this skill only controls scope and complexity.",
+        ],
+        next_steps=["developer", "test-hub", "review-hub", "qa-governor"],
+        mission="Prevent over-engineering by proving each added unit of complexity earns its maintenance and token cost.",
+        boundary=[
+            "Use before widening a design, adding an abstraction, increasing a reasoning budget, or introducing orchestration.",
+            "Do not block necessary safety, correctness, accessibility, or compliance controls.",
+            "Do not replace architecture or readiness review when those decisions are explicitly required.",
+        ],
+        evidence_contract=[
+            "Input must name the acceptance criteria, current implementation surface, and proposed complexity.",
+            "Output must classify each proposed addition as required, justified, deferred, or removed with one evidence reason.",
+            "Output must include a stopping rule and the cheapest verification that can falsify the minimal design.",
+        ],
+        tasks=[
+            "Write the minimum complete contract in one or two sentences.",
+            "List existing code, tools, skills, or state that already satisfies part of the request.",
+            "Subtract wrappers, abstractions, dependencies, repeated prompts, and parallel lanes unless a concrete gap remains.",
+            "Set a bounded reasoning and verification budget proportional to risk; stop when the contract and proof pass.",
+        ],
+        rules=[
+            "No new abstraction without a named caller, invariant, or failing test that needs it.",
+            "No extra agent, loop, or research pass when the primary Sol context can complete the next bounded step.",
+            "Do not trade correctness for brevity; preserve raw failure evidence and hard safety gates.",
+            "When uncertain, defer optional complexity and record the trigger that would justify revisiting it.",
+        ],
+        allowed_tools=READ_ANALYZE_TOOLS,
+    ),
     "skill-evolution": utility_provider_spec(
         name="skill-evolution",
         description="Use when creating, upgrading, reviewing, or pruning a Relay-kit SKILL.md. Audit trigger descriptions, paths frontmatter, allowed tools, handoff contract, and scenario fixtures before changing skill behavior.",
@@ -2883,6 +2848,7 @@ DISCIPLINE_UTILITY_SKILLS: Dict[str, SkillSpec] = {
 BASELINE_APPROVED_DISCIPLINE_SKILLS: Dict[str, SkillSpec] = {
     "root-cause-debugging": DISCIPLINE_UTILITY_SKILLS["root-cause-debugging"],
     "evidence-before-completion": DISCIPLINE_UTILITY_SKILLS["evidence-before-completion"],
+    "scope-discipline": DISCIPLINE_UTILITY_SKILLS["scope-discipline"],
 }
 
 

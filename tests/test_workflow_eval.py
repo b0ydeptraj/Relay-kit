@@ -21,7 +21,7 @@ from scripts.eval_workflows import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_DEFAULT_SCENARIOS = 127
+EXPECTED_DEFAULT_SCENARIOS = 125
 EXPECTED_PROFILED_SUPPORT_SCENARIOS = len(PROFILED_SUPPORT_EVIDENCE_TERMS) * 2
 
 
@@ -100,7 +100,7 @@ def test_workflow_eval_reports_pass_rate_and_top_routes() -> None:
     assert payload["results"][0]["evidence_coverage"] == 1.0
 
 
-def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
+def test_workflow_eval_default_suite_covers_production_skills() -> None:
     result = run_command("scripts/eval_workflows.py", ".", "--strict", "--json")
 
     assert result.returncode == 0, result.stdout + result.stderr
@@ -142,7 +142,6 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
         "ui-styling",
         "aesthetic",
         "token-economy",
-        "delegation-control",
         "accessibility-review",
         "policy-guard",
         "impact-radar",
@@ -161,7 +160,7 @@ def test_workflow_eval_default_suite_covers_production_team_skills() -> None:
         "brainstorm-hub",
         "execution-loop",
         "scout-hub",
-        "team",
+        "scope-discipline",
         "testing-patterns",
         "doc-pointers",
         "handoff-context",

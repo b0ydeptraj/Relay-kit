@@ -2,6 +2,7 @@
 """Forwarding shim for relay_kit_v3.scripts.eval_workflows."""
 import sys
 from relay_kit_v3.scripts import eval_workflows
+from relay_kit_v3.scripts.eval_workflows import *  # noqa: F401,F403 - compatibility shim
 
 if __name__ == "__main__":
     if hasattr(eval_workflows, "main"):

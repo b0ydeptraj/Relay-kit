@@ -50,6 +50,5 @@ Preserve lane continuity with explicit artifacts so the next session can continu
 ## Likely next step
 - workflow-router
 - cook
-- team
 - handoff-context
 - review-hub

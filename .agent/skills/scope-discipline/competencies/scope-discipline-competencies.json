@@ -1,0 +1,19 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "scope-discipline",
+  "role": "utility-provider",
+  "category": "scope-control",
+  "core_competencies": [
+    {"id": "scope-control.minimum-contract", "label": "State the minimum complete contract.", "evidence_terms": ["minimum", "contract"], "archetypes": ["bounded-change"]},
+    {"id": "scope-control.subtraction", "label": "Find removable complexity before adding code.", "evidence_terms": ["subtract", "remove"], "archetypes": ["refactor"]},
+    {"id": "scope-control.cost-awareness", "label": "Account for token, maintenance, dependency, and coordination cost.", "evidence_terms": ["token", "cost"], "archetypes": ["agent-work"]},
+    {"id": "scope-control.stopping-rule", "label": "Set a concrete stopping rule tied to proof.", "evidence_terms": ["stop", "verification"], "archetypes": ["implementation"]},
+    {"id": "scope-control.safety-preservation", "label": "Preserve mandatory safety and correctness controls.", "evidence_terms": ["safety", "correctness"], "archetypes": ["high-risk"]}
+  ],
+  "failure_traps": [
+    {"id": "scope-control.future-proofing", "description": "Adds abstractions for hypothetical future scope without present evidence."},
+    {"id": "scope-control.brevity-over-safety", "description": "Removes required controls or failure evidence to make the change smaller."}
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "scope decision is validated only when acceptance criteria, current surface, and stopping rule are explicit."
+}

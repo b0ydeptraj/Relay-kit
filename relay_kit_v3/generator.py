@@ -39,12 +39,10 @@ from .registry import (
     render_lane_registry,
     render_skill,
     render_support_reference,
-    render_team_board,
     render_workflow_state,
 )
 from .runtime_locale import ensure_runtime_locale, load_runtime_locale
 from .srs_policy import ensure_srs_policy
-from .delegation_control import ensure_policy as ensure_delegation_policy
 from relay_kit_compat import (
     CANONICAL_ARTIFACT_ROOT,
     mirrored_generic_paths,
@@ -202,8 +200,6 @@ def emit_contracts(project_path: Path, bundle: str) -> List[Path]:
         output = project_path / contract.path
         if contract.name == "workflow-state":
             content = render_workflow_state()
-        elif contract.name == "team-board":
-            content = render_team_board()
         elif contract.name == "lane-registry":
             content = render_lane_registry()
         elif contract.name == "handoff-log":
@@ -216,8 +212,6 @@ def emit_contracts(project_path: Path, bundle: str) -> List[Path]:
     written.append(policy_path)
     locale_path = ensure_runtime_locale(project_path)
     written.append(locale_path)
-    delegation_policy_path = ensure_delegation_policy(project_path)
-    written.append(delegation_policy_path)
     return written
 
 
@@ -254,7 +248,7 @@ def _render_folder_structure() -> str:
 Recommended runtime layout:
 
 - `.relay-kit/contracts/` -> stable artifact contracts shared across roles and hubs
-- `.relay-kit/state/` -> workflow-state, team-board, lane-registry, handoff-log, runtime-locale policy, and other runtime breadcrumbs
+- `.relay-kit/state/` -> workflow-state, lane-registry, handoff-log, runtime-locale policy, and other runtime breadcrumbs
 - `.relay-kit/references/` -> living support references for architecture, APIs, persistence, testing, security, observability, and performance
 - `.relay-kit/docs/` -> topology docs, migration notes, gating rules, and orchestration rules
 - `.claude/skills/`, `.agent/skills/`, `.codex/skills/` -> adapter-specific runtime skill folders
@@ -289,7 +283,7 @@ def _render_native_support_map() -> str:
 def _render_enterprise_bundle() -> str:
     return """# enterprise-bundle
 
-The `enterprise` bundle is the paid/team governance profile.
+The `enterprise` bundle is the governance profile.
 
 It starts from the baseline runtime and adds the full discipline utility set, including `test-first-development`.
 

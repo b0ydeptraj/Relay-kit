@@ -36,24 +36,6 @@
   ]
  },
  {
-  "id": "team-real-world-contract",
-  "skill": "team",
-  "task": "Use team for a production-shaped Relay-kit lane: Use when work must proceed in parallel, when planning and implementation overlap, or when one lane is blocked and another can move. Coordinate multi-lane or multi-session work without letting agents step on each other. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
-  "required_artifacts": [
-   ".relay-kit/state/team-board.md",
-   ".relay-kit/state/workflow-state.md"
-  ],
-  "required_evidence": [
-   ".relay-kit/state/team-board.md",
-   ".relay-kit/state/workflow-state.md"
-  ],
-  "pass_rubric": [
-   "Shared artifacts beat chat summaries; update the artifact before handing off.",
-   "Assign one owner skill per lane and name merge order explicitly.",
-   "cook"
-  ]
- },
- {
   "id": "cook-real-world-contract",
   "skill": "cook",
   "task": "Use cook for a production-shaped Relay-kit lane: Use when one active request already has routing and state, and needs the next solid handoff. Drive that request forward with the right hub or specialist. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
@@ -1302,28 +1284,27 @@
    "segmentation"
   ]
  },
- {
-  "id": "delegation-control-real-world-contract",
-  "skill": "delegation-control",
-  "task": "Use delegation-control for a production-shaped Relay-kit lane before creating subagents. The operator must classify complexity, keep medium as the normal reasoning tier, prove that delegated work is independent and bounded, enforce quota and lock scope, create a task-specific context pack, and close the subagent only after handoff evidence is recorded.",
+{
+  "id": "scope-discipline-real-world-contract",
+  "skill": "scope-discipline",
+  "task": "Use scope-discipline for a production-shaped bounded change. The operator must identify the minimum complete contract, inspect existing code before adding abstractions, keep the primary Sol context sequential, and preserve required safety and verification gates.",
   "required_artifacts": [
-   ".relay-kit/state/delegation-policy.json",
-   ".relay-kit/state/delegation-ledger.jsonl",
-   ".relay-kit/delegation/plans"
+   ".relay-kit/state/workflow-state.md",
+   "scope-discipline decision appended to the active artifact"
   ],
   "required_evidence": [
-   "reasoning tier decision",
-   "quota and lock scope",
-   "context pack path",
-   "handoff evidence and close reason"
+   "acceptance criteria",
+   "current implementation surface",
+   "stopping rule",
+   "verification result"
   ],
   "pass_rubric": [
-   "medium default",
-   "no unnecessary spawn",
-   "bounded delegation",
-   "evidence-preserving close"
+   "minimum complete contract",
+   "removed optional complexity",
+   "single Sol",
+   "safety preserved"
   ]
- },
+},
  {
   "id": "ci-cd-pipeline-real-world-contract",
   "skill": "ci-cd-pipeline",

@@ -30,7 +30,6 @@ layers:
   layer_1_orchestrators:
     - workflow-router
     - bootstrap
-    - team
     - cook
   layer_2_workflow_hubs:
     - brainstorm-hub
@@ -70,6 +69,7 @@ layers:
     - root-cause-debugging
     - test-first-development
     - evidence-before-completion
+    - scope-discipline
     - skill-evolution
     - field-journal-evolution
   layer_4_specialists_and_standalones:
@@ -134,7 +134,7 @@ bundles:
     - baseline is the current baseline.
     - runtime is the full non-enterprise runtime bundle.
     - core and orchestration remain available as narrower deterministic runtime slices.
-    - enterprise is the paid/team governance bundle with the full discipline utility set.
+    - enterprise is the governance bundle with the full discipline utility set.
     - discipline-utilities remains optional until a future baseline absorbs approved skills.
 
 adapter_runtime:

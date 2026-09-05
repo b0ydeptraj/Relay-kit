@@ -9,7 +9,7 @@ Prepare the runtime so later steps have an authoritative baseline instead of rel
 ## Mandatory setup
 1. Ensure `.relay-kit/state/workflow-state.md` exists and records the current request.
 2. Ensure `.relay-kit/contracts/project-context.md` exists. If facts are missing, create a skeletal version with explicit unknowns.
-3. If the request is likely to branch into more than one lane, create or refresh `.relay-kit/state/team-board.md`.
+3. Keep the active work in one sequential lane under the primary Sol context.
 4. Record which artifacts already exist and which ones must be refreshed.
 5. If the repo area is not well understood, route next to `scout-hub`.
 
@@ -32,7 +32,6 @@ Prepare the runtime so later steps have an authoritative baseline instead of rel
 ## Outputs
 - .relay-kit/state/workflow-state.md
 - .relay-kit/contracts/project-context.md
-- .relay-kit/state/team-board.md when parallel work is expected
 
 ## Reference skills and rules
 - Prefer lightweight initialization over speculative planning.
@@ -48,5 +47,4 @@ Prepare the runtime so later steps have an authoritative baseline instead of rel
 - workflow-router
 - scout-hub
 - cook
-- team
 - context-continuity

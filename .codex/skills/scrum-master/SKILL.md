@@ -32,7 +32,7 @@ Each story must include:
 - Explicit about what must be tested.
 - Explicit about which upstream documents it depends on.
 - Explicit about the first verification command or evidence expected after implementation.
-- Explicit about execution wave placement if parallel work is expected.
+- Explicit about the next sequential execution step.
 
 ## Role
 - delivery

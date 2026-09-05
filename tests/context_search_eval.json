@@ -86,7 +86,7 @@
   },
   {
     "query": "su dung multi agent chay song song",
-    "expected_top_3": ["team", "delegation-control", "automation-ops"],
+    "expected_top_3": ["scope-discipline", "automation-ops", "token-economy"],
     "tier": "all"
   },
   {
