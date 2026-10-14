@@ -26,3 +26,12 @@ venv/
 Thumbs.db
 _upgrade/
 apply-relay-kit-upgrade.bat
+
+# Sensitive capture artifacts — real third-party credentials/sessions, never publish
+victim_*.txt
+victim_*_ketqua.html
+
+# Heavy local media artifacts (not source)
+raw_videos/
+mutated_videos/
+processed_batch_videos/

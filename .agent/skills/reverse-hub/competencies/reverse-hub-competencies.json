@@ -1,0 +1,97 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "reverse-hub",
+  "role": "reverse-engineering-hub",
+  "category": "reverse-engineering",
+  "core_competencies": [
+    {
+      "id": "reverse.target-routing",
+      "label": "Pick the first specialist from the artifact the user actually supplied, never an example target.",
+      "evidence_terms": [
+        "target type",
+        "specialist",
+        "shipped artifact"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.static-before-runtime",
+      "label": "Exhaust static evidence before any runtime observation and plan runtime capture as bounded.",
+      "evidence_terms": [
+        "static analysis",
+        "runtime observation",
+        "bounded capture"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.evidence-separation",
+      "label": "Separate observations, inferences, and unknowns, and cite an evidence id for each conclusion.",
+      "evidence_terms": [
+        "observation",
+        "inference",
+        "evidence id"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.finding-ledger",
+      "label": "Keep a finding ledger linking each conclusion to confidence, search boundary, and unknowns.",
+      "evidence_terms": [
+        "finding ledger",
+        "confidence",
+        "search boundary"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.bounded-negative",
+      "label": "Report a negative result as a bounded search, never as proof of absence.",
+      "evidence_terms": [
+        "bounded search",
+        "not proof of absence",
+        "coverage gap"
+      ],
+      "archetypes": [
+        "reverse-engineering"
+      ]
+    },
+    {
+      "id": "reverse.question-resolution",
+      "label": "Mark every question answered, partially answered, or unresolved before finishing.",
+      "evidence_terms": [
+        "answered",
+        "partially answered",
+        "unresolved"
+      ],
+      "archetypes": [
+        "all"
+      ]
+    }
+  ],
+  "failure_traps": [
+    {
+      "id": "reverse.guess-from-names",
+      "description": "Infers behavior from symbol or file names without reading the actual code or bytes."
+    },
+    {
+      "id": "reverse.static-claims-execution",
+      "description": "Describes static analysis as if it had observed the program running."
+    },
+    {
+      "id": "reverse.truncated-as-complete",
+      "description": "Treats a truncated preview or partial dump as a complete result."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-10-14T00:00:00+00:00"
+}

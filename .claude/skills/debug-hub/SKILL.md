@@ -18,7 +18,7 @@ Turn a symptom into evidence and a decision, not into random edits.
    - Antibot block / Cloudflare / Datadome -> `antibot-challenge-solving`, `protocol-fingerprint-spoofing`
    - Fingerprint mismatch / Canvas detected -> `browser-fingerprint-engineering`
    - Binary detected / signature match -> `binary-stealth-obfuscation`, `malware-analysis-workflows`
-   - Reverse engineering needed -> `binary-reverse-methodology`, `frontend-crypto-reverse`
+   - Reverse engineering needed (shipped binary, decompilation, or runtime-only behavior) -> `reverse-hub`
 
 ## Evidence contract
 - reproduce the issue or mark reproduction as blocked with the missing condition
@@ -61,6 +61,7 @@ Hold when the lane is guessing from symptoms, stacking fixes before one failing 
 - sequential-thinking
 - memory-search
 - runtime-doctor
+- reverse-hub
 - fix-hub
 - test-hub
 - plan-hub

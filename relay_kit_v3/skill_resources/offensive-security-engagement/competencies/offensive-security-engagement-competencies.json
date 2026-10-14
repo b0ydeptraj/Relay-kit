@@ -2,84 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "offensive-security-engagement",
   "role": "engagement-gate",
-  "category": "offensive",
+  "category": "policy-security",
   "core_competencies": [
     {
-      "id": "offensive.authorization-gate",
-      "label": "Block all offensive work until engagement proof is cached.",
+      "id": "policy-security.policy-rule-map",
+      "label": "Map policy, rule, allowlist, and blocked operation surfaces.",
       "evidence_terms": [
-        "authorization",
-        "engagement",
-        "proof"
+        "policy",
+        "rule",
+        "allowlist"
       ],
       "archetypes": [
-        "offensive"
+        "security-policy"
       ]
     },
     {
-      "id": "offensive.attack-mapping",
-      "label": "Map every offensive task to ATT&CK phase.",
+      "id": "policy-security.secret-scope",
+      "label": "Detect secret, token, and permission-scope risk.",
       "evidence_terms": [
-        "ATT&CK",
-        "phase",
-        "mapping"
+        "secret",
+        "token",
+        "permission"
       ],
       "archetypes": [
-        "offensive"
+        "security-policy",
+        "api-client"
       ]
     },
     {
-      "id": "offensive.risk-annotation",
-      "label": "Annotate risk tier before specialist execution.",
+      "id": "policy-security.fail-closed",
+      "label": "Fail closed on high-risk shell, path, prompt, or release actions.",
       "evidence_terms": [
-        "risk",
-        "tier",
-        "annotation"
+        "fail closed",
+        "blocked",
+        "risk"
       ],
       "archetypes": [
-        "offensive"
+        "security-policy"
       ]
     },
     {
-      "id": "offensive.scope-enforcement",
-      "label": "Enforce engagement scope boundaries on every lane.",
+      "id": "policy-security.audit-evidence",
+      "label": "Tie findings to static check, audit, or trusted manifest evidence.",
       "evidence_terms": [
-        "scope",
-        "boundary",
-        "in-scope"
+        "audit",
+        "manifest",
+        "static check"
       ],
       "archetypes": [
-        "offensive"
+        "security-policy"
       ]
     },
     {
-      "id": "offensive.handoff-discipline",
-      "label": "Return control to calling hub after caching proof.",
+      "id": "policy-security.exception-review",
+      "label": "Escalate intentional exceptions with owner and residual risk.",
       "evidence_terms": [
-        "handoff",
-        "return",
-        "hub"
+        "exception",
+        "owner",
+        "residual risk"
       ],
       "archetypes": [
-        "offensive"
+        "security-policy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "offensive.no-auth",
-      "description": "Proceeding with offensive techniques without engagement proof."
+      "id": "policy-security.policy-warning-only",
+      "description": "Reports policy risk without blocking or escalation path."
     },
     {
-      "id": "offensive.no-attack-map",
-      "description": "Skipping ATT&CK phase mapping."
-    },
-    {
-      "id": "offensive.lane-ownership",
-      "description": "Taking ownership of the lane instead of returning to hub."
+      "id": "policy-security.secret-blind-review",
+      "description": "Ignores token, secret, or permission scope evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.043377+00:00"
+  "generated_at": "2026-10-14T15:15:27.666987+00:00"
 }

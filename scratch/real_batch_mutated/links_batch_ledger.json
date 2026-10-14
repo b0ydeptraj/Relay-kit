@@ -1,0 +1,75 @@
+{
+  "source_file": "C:\\Users\\Hiep\\Documents\\Relay-kit\\scratch\\test_real_links.txt",
+  "total": 2,
+  "success": 2,
+  "failed": 0,
+  "preset": "balanced",
+  "records": [
+    {
+      "status": "MUTATION_SUCCESS",
+      "preset": "balanced",
+      "input": {
+        "path": "C:\\Users\\Hiep\\Documents\\Relay-kit\\raw_videos\\theinthanaung344_7690205817089379604_foryou_fyp.mp4",
+        "md5": "c959c0ae6c6eee3b20cda69ed934f972",
+        "sha256": "84f1bf02e77534948488cf3b50bc5842efc46ef56ea34f6b8bcd7e06c00be226",
+        "duration": 24.82,
+        "resolution": "720x1280",
+        "size_bytes": 1556263
+      },
+      "output": {
+        "path": "C:\\Users\\Hiep\\Documents\\Relay-kit\\scratch\\real_batch_mutated\\theinthanaung344_7690205817089379604_foryou_fyp_mutated.mp4",
+        "md5": "18c1da3ce7a3c2c23fd0e0904695c339",
+        "sha256": "615d9848c85e5289c2ed52b344b39fe2f4258470a84181dbd83710f0771178be",
+        "duration": 23.86,
+        "resolution": "684x1216",
+        "size_bytes": 6989655
+      },
+      "filters_applied": {
+        "speed": 1.04,
+        "crop_percent": 2.5,
+        "mirror_horizontal": true,
+        "contrast": 1.04,
+        "saturation": 1.05,
+        "sharpness": true,
+        "micro_noise": false,
+        "audio_tempo": 1.04,
+        "audio_pitch": 1.025
+      },
+      "elapsed_seconds": 1.99,
+      "hash_verified": true
+    },
+    {
+      "status": "MUTATION_SUCCESS",
+      "preset": "balanced",
+      "input": {
+        "path": "C:\\Users\\Hiep\\Documents\\Relay-kit\\raw_videos\\tiktok_7106594312292453675_how_many_frogs_did_you_find_check_out_tiktoks_Mine.mp4",
+        "md5": "56ca6df75df02034aaff9f2c528edb8d",
+        "sha256": "1b0f83a46f508d1455ed2383664a7aa951f0e2175ae7dbac38a4681109128e98",
+        "duration": 24.4,
+        "resolution": "576x1024",
+        "size_bytes": 3288875
+      },
+      "output": {
+        "path": "C:\\Users\\Hiep\\Documents\\Relay-kit\\scratch\\real_batch_mutated\\tiktok_7106594312292453675_how_many_frogs_did_you_find_check_out_tiktoks_Mine_mutated.mp4",
+        "md5": "9f6a26e1448f83501097569d8b77ec02",
+        "sha256": "6de8f00d54efa9773c30685578339487e2c3e68630acabe3d1615d51fbfef68a",
+        "duration": 23.47,
+        "resolution": "546x972",
+        "size_bytes": 6054716
+      },
+      "filters_applied": {
+        "speed": 1.04,
+        "crop_percent": 2.5,
+        "mirror_horizontal": true,
+        "contrast": 1.04,
+        "saturation": 1.05,
+        "sharpness": true,
+        "micro_noise": false,
+        "audio_tempo": 1.04,
+        "audio_pitch": 1.025
+      },
+      "elapsed_seconds": 1.57,
+      "hash_verified": true
+    }
+  ]
+}

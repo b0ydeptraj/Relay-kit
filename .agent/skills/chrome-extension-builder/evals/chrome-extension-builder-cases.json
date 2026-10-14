@@ -1,0 +1,35 @@
+[
+  {
+    "id": "chrome-extension-builder-scaffold-eval",
+    "skill": "chrome-extension-builder",
+    "repo_profile": "Chromium Manifest V3 extension repository with service worker, content scripts, popup, and automated tests",
+    "task": "Build a hardened Chrome Manifest V3 extension for automated web interactions with CSP bypass and zero busy-polling.",
+    "expected_files": [
+      "manifest.json",
+      "background.js",
+      "content.js",
+      "popup.html"
+    ],
+    "expected_symbols": [
+      "MutationObserver",
+      "AbortController",
+      "chrome.runtime.onMessage"
+    ],
+    "expected_tests": [
+      "tests/extension.test.cjs"
+    ],
+    "expected_evidence_terms": [
+      "Manifest V3",
+      "service worker",
+      "MutationObserver",
+      "CSP bypass",
+      "isTrusted"
+    ],
+    "bad_answer_traps": [
+      "manifest_version 2",
+      "setInterval polling",
+      "window global pollution",
+      "unhandled worker teardown"
+    ]
+  }
+]

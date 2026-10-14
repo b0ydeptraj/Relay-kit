@@ -2,84 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "telemetry-blinding",
   "role": "telemetry-specialist",
-  "category": "evasion",
+  "category": "policy-security",
   "core_competencies": [
     {
-      "id": "evasion.provider-enumeration",
-      "label": "Enumerate all active ETW providers before blinding.",
+      "id": "policy-security.policy-rule-map",
+      "label": "Map policy, rule, allowlist, and blocked operation surfaces.",
       "evidence_terms": [
-        "ETW",
-        "provider",
-        "enumerate"
-      ],
-      "archetypes": [
-        "evasion"
-      ]
-    },
-    {
-      "id": "evasion.amsi-bypass",
-      "label": "Bypass AMSI without detectable memory patches.",
-      "evidence_terms": [
-        "AMSI",
-        "AmsiScanBuffer",
-        "patch"
-      ],
-      "archetypes": [
-        "evasion"
-      ]
-    },
-    {
-      "id": "evasion.verification",
-      "label": "Verify telemetry is actually suppressed after blinding.",
-      "evidence_terms": [
-        "verify",
-        "event",
-        "suppressed"
-      ],
-      "archetypes": [
-        "evasion"
-      ]
-    },
-    {
-      "id": "evasion.sysmon-evasion",
-      "label": "Evade Sysmon rules for process and network events.",
-      "evidence_terms": [
-        "Sysmon",
+        "policy",
         "rule",
-        "process"
+        "allowlist"
       ],
       "archetypes": [
-        "evasion"
+        "security-policy"
       ]
     },
     {
-      "id": "evasion.eventlog-clearing",
-      "label": "Clear or filter Windows event log entries selectively.",
+      "id": "policy-security.secret-scope",
+      "label": "Detect secret, token, and permission-scope risk.",
       "evidence_terms": [
-        "event log",
-        "clear",
-        "filter"
+        "secret",
+        "token",
+        "permission"
       ],
       "archetypes": [
-        "evasion"
+        "security-policy",
+        "api-client"
+      ]
+    },
+    {
+      "id": "policy-security.fail-closed",
+      "label": "Fail closed on high-risk shell, path, prompt, or release actions.",
+      "evidence_terms": [
+        "fail closed",
+        "blocked",
+        "risk"
+      ],
+      "archetypes": [
+        "security-policy"
+      ]
+    },
+    {
+      "id": "policy-security.audit-evidence",
+      "label": "Tie findings to static check, audit, or trusted manifest evidence.",
+      "evidence_terms": [
+        "audit",
+        "manifest",
+        "static check"
+      ],
+      "archetypes": [
+        "security-policy"
+      ]
+    },
+    {
+      "id": "policy-security.exception-review",
+      "label": "Escalate intentional exceptions with owner and residual risk.",
+      "evidence_terms": [
+        "exception",
+        "owner",
+        "residual risk"
+      ],
+      "archetypes": [
+        "security-policy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "evasion.partial-blind",
-      "description": "Only blinding some telemetry providers while others report."
+      "id": "policy-security.policy-warning-only",
+      "description": "Reports policy risk without blocking or escalation path."
     },
     {
-      "id": "evasion.no-verify",
-      "description": "Not verifying telemetry suppression after patching."
-    },
-    {
-      "id": "evasion.detectable-clear",
-      "description": "Clearing event logs in detectable way (log of log clearing)."
+      "id": "policy-security.secret-blind-review",
+      "description": "Ignores token, secret, or permission scope evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.084303+00:00"
+  "generated_at": "2026-10-14T15:15:27.671989+00:00"
 }

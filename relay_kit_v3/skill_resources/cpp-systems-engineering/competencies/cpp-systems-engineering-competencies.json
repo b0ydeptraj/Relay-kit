@@ -2,84 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "cpp-systems-engineering",
   "role": "cpp-specialist",
-  "category": "engineering",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "engineering.api-error-check",
-      "label": "Check return values for every Win32/NT API call.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "GetLastError",
-        "NTSTATUS",
-        "return value"
+        "client",
+        "endpoint",
+        "request",
+        "response"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "engineering.memory-safety",
-      "label": "Prevent leaks and UAF in manual memory management.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "RAII",
-        "leak",
-        "use-after-free"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "engineering"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "engineering.abi-correctness",
-      "label": "Use correct calling conventions and struct alignment.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "stdcall",
-        "cdecl",
-        "alignment"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "engineering"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "engineering.handle-discipline",
-      "label": "Properly close handles and release resources in all exit paths.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "CloseHandle",
-        "RAII",
-        "destructor"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "engineering.exception-safety",
-      "label": "Ensure exception safety in constructors and destructors.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "exception",
-        "noexcept",
-        "destructor"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "engineering.unchecked-api",
-      "description": "Ignoring return values from system API calls."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "engineering.memory-leak",
-      "description": "Allocating without corresponding deallocation path."
-    },
-    {
-      "id": "engineering.handle-leak",
-      "description": "Failing to close handles in all exit paths."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.900853+00:00"
+  "generated_at": "2026-10-14T15:15:27.657568+00:00"
 }

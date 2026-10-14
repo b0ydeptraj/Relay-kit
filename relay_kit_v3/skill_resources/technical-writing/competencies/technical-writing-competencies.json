@@ -2,80 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "technical-writing",
   "role": "docs-author",
-  "category": "technical-writing",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "technical-writing.audience-task",
-      "label": "Scope the doc to one audience and one task.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "audience",
-        "task",
+        "client",
+        "endpoint",
+        "request",
+        "response"
+      ],
+      "archetypes": [
+        "backend-api",
+        "api-client"
+      ]
+    },
+    {
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
+      "evidence_terms": [
+        "auth",
+        "token",
         "scope"
       ],
       "archetypes": [
-        "docs-product"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "technical-writing.verified-commands",
-      "label": "Verify every command, path, and flag against the repo.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "verified command",
-        "path",
-        "flag"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "docs-product"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "technical-writing.task-structure",
-      "label": "Order content quickstart-first, reference-second.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "quickstart",
-        "reference",
-        "structure"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "docs-product"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "technical-writing.label-unknowns",
-      "label": "Mark unknowns instead of fabricating behavior.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "unknown",
-        "assumption",
-        "gap"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "docs-product"
-      ]
-    },
-    {
-      "id": "technical-writing.staleness",
-      "label": "State ownership and source of truth for currency.",
-      "evidence_terms": [
-        "source of truth",
-        "owner",
-        "staleness"
-      ],
-      "archetypes": [
-        "docs-product"
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "technical-writing.fabricated-command",
-      "description": "Documents a command that the code does not have."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "technical-writing.audience-blend",
-      "description": "Blends audiences so no task is served."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.671989+00:00"
 }

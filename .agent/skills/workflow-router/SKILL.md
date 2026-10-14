@@ -37,6 +37,7 @@ If `.relay-kit/context/index.json` exists, treat graph hits as candidate files t
    - `scout-hub` when the codebase area is unclear
    - `plan-hub` when planning artifacts are missing or stale
    - `debug-hub` when the request starts from a failure or regression
+   - `reverse-hub` when the claim depends on a shipped binary, a decompilation, or runtime behavior the source does not establish
 7. Mark the lane mode explicitly as one of: discovery, planning, implementation, verification, or offensive.
 8. When parallel or parked lanes exist, record `depends_on`, `wave_id`, and `resume_condition` in team-board and lane-registry.
 9. Update `.relay-kit/state/workflow-state.md` with the chosen track, orchestrator, hub, exact next skill, and any blockers.
@@ -92,6 +93,7 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - scout-hub
 - plan-hub
 - debug-hub
+- reverse-hub
 - token-economy
 - offensive-security-engagement
 - mmo-authorization-gate

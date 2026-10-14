@@ -2,84 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "mmo-authorization-gate",
   "role": "utility-provider",
-  "category": "mmo-authorization",
+  "category": "mmo-safe-ops",
   "core_competencies": [
     {
-      "id": "mmo-auth.ownership",
-      "label": "Confirm the operator owns or is authorized on the target accounts.",
+      "id": "mmo-safe-ops.profile-inventory",
+      "label": "Maintain profile, account, device, and session inventory.",
       "evidence_terms": [
-        "account ownership",
-        "authorization",
-        "operator"
+        "profile",
+        "account",
+        "session"
       ],
       "archetypes": [
-        "mmo-authorization"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "mmo-auth.platform-terms",
-      "label": "Treat platform terms-of-service and rate limits as hard constraints.",
+      "id": "mmo-safe-ops.quota-dedupe",
+      "label": "Use quotas, dedupe keys, and pacing controls.",
       "evidence_terms": [
-        "platform terms",
-        "rate limit",
-        "hard constraint"
+        "quota",
+        "dedupe",
+        "pacing"
       ],
       "archetypes": [
-        "mmo-authorization"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "mmo-auth.risk-tier",
-      "label": "Assess the account-risk tier before high-risk actions.",
+      "id": "mmo-safe-ops.policy-safe-api",
+      "label": "Prefer official APIs and policy-safe execution boundaries.",
       "evidence_terms": [
-        "risk tier",
-        "high-risk action",
-        "account risk"
+        "official api",
+        "policy",
+        "scope"
       ],
       "archetypes": [
-        "mmo-authorization"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "mmo-auth.verdict",
-      "label": "Emit an explicit authorized-or-blocked verdict before the lane proceeds.",
+      "id": "mmo-safe-ops.operator-ledger",
+      "label": "Record redacted logs, run queues, and operator decisions.",
       "evidence_terms": [
-        "authorized",
-        "blocked",
-        "verdict"
+        "ledger",
+        "queue",
+        "redacted"
       ],
       "archetypes": [
-        "mmo-authorization"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "mmo-auth.fail-closed",
-      "label": "Fail closed when ownership or authorization is unclear.",
+      "id": "mmo-safe-ops.manual-review-gate",
+      "label": "Escalate risky or ambiguous actions to manual review.",
       "evidence_terms": [
-        "fail closed",
-        "unclear",
-        "block"
+        "manual review",
+        "risk",
+        "approval"
       ],
       "archetypes": [
-        "mmo-authorization"
+        "mmo-safe-ops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "mmo-auth.no-ownership",
-      "description": "Proceeding without proof of account ownership."
+      "id": "mmo-safe-ops.platform-risk-blindness",
+      "description": "Ignores platform policy, consent, or quota boundaries."
     },
     {
-      "id": "mmo-auth.terms-ignored",
-      "description": "Treating platform terms as suggestions rather than constraints."
-    },
-    {
-      "id": "mmo-auth.no-verdict",
-      "description": "Running a high-risk action with no recorded authorization verdict."
+      "id": "mmo-safe-ops.bulk-action-without-ledger",
+      "description": "Designs bulk operations without audit or rollback evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.663986+00:00"
 }

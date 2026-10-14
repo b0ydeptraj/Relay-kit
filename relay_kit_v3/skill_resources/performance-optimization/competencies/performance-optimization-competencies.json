@@ -2,80 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "performance-optimization",
   "role": "performance-specialist",
-  "category": "performance",
+  "category": "context-continuity",
   "core_competencies": [
     {
-      "id": "performance.metric-baseline",
-      "label": "Define the metric/workload and capture a baseline.",
+      "id": "context-continuity.state-retrieval",
+      "label": "Find current state, prior decisions, and handoff breadcrumbs.",
       "evidence_terms": [
-        "baseline",
-        "p95",
-        "workload"
+        "state",
+        "memory",
+        "handoff"
       ],
       "archetypes": [
-        "backend-service"
+        "long-running-lane"
       ]
     },
     {
-      "id": "performance.profile-bottleneck",
-      "label": "Profile to the dominant cost before changing code.",
+      "id": "context-continuity.freshness-check",
+      "label": "Separate current evidence from stale or historical context.",
       "evidence_terms": [
-        "profiler",
-        "bottleneck",
-        "hot path"
+        "freshness",
+        "stale",
+        "current"
       ],
       "archetypes": [
-        "backend-service"
+        "long-running-lane"
       ]
     },
     {
-      "id": "performance.one-variable",
-      "label": "Change one variable and re-measure attributably.",
+      "id": "context-continuity.context-pack",
+      "label": "Pack only task-relevant files, evidence, and constraints.",
       "evidence_terms": [
-        "one variable",
-        "re-measure",
-        "delta"
+        "context pack",
+        "relevant",
+        "constraints"
       ],
       "archetypes": [
-        "backend-service"
+        "large-context"
       ]
     },
     {
-      "id": "performance.query-and-alloc",
-      "label": "Spot N+1 queries, excess allocations, and I/O waits.",
+      "id": "context-continuity.token-budget",
+      "label": "Preserve raw-required evidence while compressing low-signal context.",
       "evidence_terms": [
-        "n+1",
-        "allocation",
-        "io wait"
+        "token",
+        "raw-required",
+        "compress"
       ],
       "archetypes": [
-        "backend-service"
+        "large-context"
       ]
     },
     {
-      "id": "performance.regression-guard",
-      "label": "Lock the gain with a benchmark or budget.",
+      "id": "context-continuity.resume-safety",
+      "label": "Resume without losing the newest user request or active lane.",
       "evidence_terms": [
-        "benchmark",
-        "regression",
-        "budget"
+        "resume",
+        "newest request",
+        "active lane"
       ],
       "archetypes": [
-        "backend-service"
+        "long-running-lane"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "performance.no-baseline",
-      "description": "Claims a speedup with no baseline."
+      "id": "context-continuity.stale-state-resume",
+      "description": "Continues from stale state while ignoring newer user input."
     },
     {
-      "id": "performance.microbench-illusion",
-      "description": "Reports a microbenchmark win that the system does not see."
+      "id": "context-continuity.context-dump",
+      "description": "Dumps too much context instead of selecting task-relevant evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.667985+00:00"
 }

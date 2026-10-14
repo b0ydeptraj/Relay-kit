@@ -2,80 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "ci-cd-pipeline",
   "role": "cicd-specialist",
-  "category": "ci-cd",
+  "category": "automation-ops",
   "core_competencies": [
     {
-      "id": "ci-cd.stage-gates",
-      "label": "Define blocking gates on protected branches.",
+      "id": "automation-ops.scheduler-queue",
+      "label": "Map scheduler, queue, worker, and trigger ownership.",
       "evidence_terms": [
-        "blocking gate",
-        "required check",
-        "protected branch"
+        "scheduler",
+        "queue",
+        "worker"
       ],
       "archetypes": [
-        "delivery-pipeline"
+        "automation-worker",
+        "ci-devops"
       ]
     },
     {
-      "id": "ci-cd.reproducible-build",
-      "label": "Pin toolchain and cache by lockfile hash for reproducible builds.",
+      "id": "automation-ops.dry-run-rollback",
+      "label": "Require dry-run and rollback evidence before enabling automation.",
       "evidence_terms": [
-        "toolchain pin",
-        "cache key",
-        "reproducible"
-      ],
-      "archetypes": [
-        "delivery-pipeline"
-      ]
-    },
-    {
-      "id": "ci-cd.artifact-promotion",
-      "label": "Build once and promote a versioned artifact across environments.",
-      "evidence_terms": [
-        "artifact",
-        "promotion",
-        "version"
-      ],
-      "archetypes": [
-        "delivery-pipeline"
-      ]
-    },
-    {
-      "id": "ci-cd.rollback",
-      "label": "Define a tested rollback trigger and path.",
-      "evidence_terms": [
+        "dry-run",
         "rollback",
-        "trigger",
-        "previous version"
+        "enable"
       ],
       "archetypes": [
-        "delivery-pipeline"
+        "automation-worker"
       ]
     },
     {
-      "id": "ci-cd.fail-closed",
-      "label": "Keep the pipeline fail-closed on missing or errored gates.",
+      "id": "automation-ops.idempotent-retry",
+      "label": "Design idempotency, dedupe, retry, and backoff behavior.",
       "evidence_terms": [
-        "fail closed",
-        "block",
-        "gate error"
+        "idempotency",
+        "dedupe",
+        "retry"
       ],
       "archetypes": [
-        "delivery-pipeline"
+        "automation-worker"
+      ]
+    },
+    {
+      "id": "automation-ops.execution-history",
+      "label": "Record execution logs, run ids, and operator-visible status.",
+      "evidence_terms": [
+        "execution history",
+        "run id",
+        "status"
+      ],
+      "archetypes": [
+        "automation-worker"
+      ]
+    },
+    {
+      "id": "automation-ops.operator-runbook",
+      "label": "Produce runbook, ownership, and failure handling.",
+      "evidence_terms": [
+        "runbook",
+        "owner",
+        "failure"
+      ],
+      "archetypes": [
+        "automation-worker",
+        "ci-devops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "ci-cd.warn-and-pass",
-      "description": "Treats a broken gate as a warning instead of a block."
+      "id": "automation-ops.automation-without-dry-run",
+      "description": "Enables automation without dry-run or rollback evidence."
     },
     {
-      "id": "ci-cd.rebuild-per-env",
-      "description": "Rebuilds instead of promoting one artifact."
+      "id": "automation-ops.queue-without-idempotency",
+      "description": "Designs queues without dedupe or replay safety."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.657568+00:00"
 }

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "reverse-hub-emitted-artifact-vs-source",
+    "skill": "reverse-hub",
+    "repo_profile": "Relay-kit public repo where the shipped adapter skills are generated artifacts, not the registry source",
+    "task": "Treat the generated adapter SKILL.md as a shipped artifact and determine what the generator actually emits versus what the registry source claims. Use `reverse-hub`, cite the source files first, and separate observation from inference.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_v3/generator.py",
+      "tests/test_skill_resources.py"
+    ],
+    "expected_symbols": [
+      "SkillSpec",
+      "emit_core_skills"
+    ],
+    "expected_tests": [
+      "tests/test_skill_resources.py"
+    ],
+    "expected_evidence_terms": [
+      "observation",
+      "inference",
+      "evidence id",
+      "unresolved"
+    ],
+    "bad_answer_traps": [
+      "guess from the skill name",
+      "assume the artifact matches the source",
+      "it should be fine"
+    ]
+  },
+  {
+    "id": "reverse-hub-surface-compare",
+    "skill": "reverse-hub",
+    "repo_profile": "Relay-kit repo with a registry and a derived topology that must agree across emitted surfaces",
+    "task": "Compare what the registry declares against what the topology wiring exposes and identify any drift. Use `reverse-hub` to route the compare and keep a finding ledger with confidence and search boundary.",
+    "expected_files": [
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_v3/registry/topology.py"
+    ],
+    "expected_symbols": [
+      "ALL_V3_SKILLS",
+      "WORKFLOW_HUB_SKILLS"
+    ],
+    "expected_tests": [
+      "tests/test_repo_hardening_gates.py"
+    ],
+    "expected_evidence_terms": [
+      "finding ledger",
+      "confidence",
+      "search boundary",
+      "inference"
+    ],
+    "bad_answer_traps": [
+      "nothing drifted",
+      "proof it is gone",
+      "looks the same"
+    ]
+  },
+  {
+    "id": "reverse-hub-static-only-discipline",
+    "skill": "reverse-hub",
+    "repo_profile": "Relay-kit repo analyzed statically only, no runtime execution of the generated runtime",
+    "task": "Determine from the public CLI source whether a bundle emits a given surface, without running it. Use `reverse-hub` static routing and report any negative result as a bounded search, not as proof of absence.",
+    "expected_files": [
+      "relay_kit_public_cli.py",
+      "tests/test_repo_hardening_gates.py"
+    ],
+    "expected_symbols": [
+      "main"
+    ],
+    "expected_tests": [
+      "tests/test_repo_hardening_gates.py"
+    ],
+    "expected_evidence_terms": [
+      "static analysis",
+      "bounded search",
+      "not proof of absence",
+      "unresolved"
+    ],
+    "bad_answer_traps": [
+      "it never emits anything",
+      "observed it running",
+      "ran it to confirm"
+    ]
+  }
+]

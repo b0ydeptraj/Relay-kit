@@ -2,80 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "database-migration-safety",
   "role": "db-migration-specialist",
-  "category": "db-migration",
+  "category": "data-persistence",
   "core_competencies": [
     {
-      "id": "db-migration.change-class",
-      "label": "Classify additive vs rewriting vs destructive changes.",
+      "id": "data-persistence.schema-model",
+      "label": "Map schema, model, repository, and storage ownership.",
       "evidence_terms": [
-        "additive",
-        "destructive",
-        "rewriting"
+        "schema",
+        "model",
+        "repository"
       ],
       "archetypes": [
-        "data-store"
+        "database-heavy"
       ]
     },
     {
-      "id": "db-migration.expand-contract",
-      "label": "Sequence expand-contract with dual-write across deploys.",
+      "id": "data-persistence.transaction-boundary",
+      "label": "Identify transaction, isolation, rollback, and consistency boundaries.",
       "evidence_terms": [
-        "expand contract",
-        "dual write",
-        "sequence"
-      ],
-      "archetypes": [
-        "data-store"
-      ]
-    },
-    {
-      "id": "db-migration.lock-analysis",
-      "label": "Assess locking and prefer concurrent/online paths.",
-      "evidence_terms": [
-        "blocking lock",
-        "concurrent",
-        "online"
-      ],
-      "archetypes": [
-        "data-store"
-      ]
-    },
-    {
-      "id": "db-migration.safe-backfill",
-      "label": "Batch, throttle, and make backfills idempotent/resumable.",
-      "evidence_terms": [
-        "backfill batch",
-        "throttle",
-        "idempotent"
-      ],
-      "archetypes": [
-        "data-store"
-      ]
-    },
-    {
-      "id": "db-migration.rollback-backup",
-      "label": "Confirm rollback and backup before destructive steps.",
-      "evidence_terms": [
+        "transaction",
         "rollback",
-        "backup",
-        "point in time"
+        "consistency"
       ],
       "archetypes": [
-        "data-store"
+        "database-heavy"
+      ]
+    },
+    {
+      "id": "data-persistence.migration-safety",
+      "label": "Check migration path, reversibility, and data backfill risk.",
+      "evidence_terms": [
+        "migration",
+        "backfill",
+        "reversible"
+      ],
+      "archetypes": [
+        "database-heavy"
+      ]
+    },
+    {
+      "id": "data-persistence.cache-index-query",
+      "label": "Inspect cache invalidation, indexes, and query behavior.",
+      "evidence_terms": [
+        "cache",
+        "index",
+        "query"
+      ],
+      "archetypes": [
+        "database-heavy",
+        "backend-api"
+      ]
+    },
+    {
+      "id": "data-persistence.persistence-test-anchor",
+      "label": "Find tests or fixtures proving persistence behavior.",
+      "evidence_terms": [
+        "test",
+        "fixture",
+        "database"
+      ],
+      "archetypes": [
+        "database-heavy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "db-migration.contract-before-expand",
-      "description": "Removes the old path before the new one is live."
+      "id": "data-persistence.schema-only-review",
+      "description": "Reviews schema shape without transaction or migration evidence."
     },
     {
-      "id": "db-migration.unbatched-backfill",
-      "description": "Runs a backfill that saturates the database."
+      "id": "data-persistence.query-claim-without-test",
+      "description": "Claims data behavior without test, fixture, or query proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.658562+00:00"
 }

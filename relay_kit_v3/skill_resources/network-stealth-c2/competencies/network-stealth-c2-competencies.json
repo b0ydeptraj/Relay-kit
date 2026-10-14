@@ -2,85 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "network-stealth-c2",
   "role": "c2-specialist",
-  "category": "offensive",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "offensive.beacon-discipline",
-      "label": "Configure beacon with jitter and sleep variation.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "beacon",
-        "jitter",
-        "sleep"
+        "client",
+        "endpoint",
+        "request",
+        "response"
       ],
       "archetypes": [
-        "offensive"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "offensive.traffic-blending",
-      "label": "Blend C2 traffic with legitimate protocols.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "HTTPS",
-        "DNS",
-        "CDN",
-        "blend"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "offensive"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "offensive.redirector-chain",
-      "label": "Use redirector chain to hide true C2 server.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "redirector",
-        "proxy",
-        "CDN"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "offensive"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "offensive.protocol-mimicry",
-      "label": "Mimic legitimate protocol traffic patterns.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "mimicry",
-        "HTTP",
-        "pattern"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "offensive"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "offensive.operator-security",
-      "label": "Protect operator infrastructure from attribution.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "attribution",
-        "VPN",
-        "opsec"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "offensive"
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "offensive.fixed-interval",
-      "description": "Fixed beacon interval without jitter."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "offensive.direct-c2",
-      "description": "Direct connection to C2 server without redirectors."
-    },
-    {
-      "id": "offensive.plaintext-channel",
-      "description": "Using unencrypted C2 communication channel."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.032648+00:00"
+  "generated_at": "2026-10-14T15:15:27.666987+00:00"
 }

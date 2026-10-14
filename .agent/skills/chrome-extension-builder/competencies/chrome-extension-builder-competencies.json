@@ -1,0 +1,68 @@
+{
+  "schema_version": "relay-kit.skill-competency.v1",
+  "skill": "chrome-extension-builder",
+  "role": "chrome-extension-architect",
+  "category": "browser-extension-engineering",
+  "core_competencies": [
+    {
+      "id": "browser-extension.mv3-compliance",
+      "label": "Implement Manifest V3 service workers, minimal permissions, and keep-alive handling.",
+      "evidence_terms": [
+        "Manifest V3",
+        "service worker",
+        "permissions"
+      ],
+      "archetypes": [
+        "browser-extension-engineering"
+      ]
+    },
+    {
+      "id": "browser-extension.zero-polling-dom",
+      "label": "Build reactive DOM selector waiting using scoped MutationObserver engines.",
+      "evidence_terms": [
+        "MutationObserver",
+        "observer",
+        "reactive"
+      ],
+      "archetypes": [
+        "browser-extension-engineering"
+      ]
+    },
+    {
+      "id": "browser-extension.iframe-rpc",
+      "label": "Orchestrate cross-origin iframe communication via structured postMessage RPC.",
+      "evidence_terms": [
+        "postMessage",
+        "iframe",
+        "cross-origin"
+      ],
+      "archetypes": [
+        "browser-extension-engineering"
+      ]
+    },
+    {
+      "id": "browser-extension.is-trusted-cdp",
+      "label": "Dispatch genuine isTrusted input events via chrome.debugger CDP bridge.",
+      "evidence_terms": [
+        "isTrusted",
+        "debugger",
+        "CDP"
+      ],
+      "archetypes": [
+        "browser-extension-engineering"
+      ]
+    },
+    {
+      "id": "browser-extension.checkpoint-state",
+      "label": "Persist and recover execution state machine across tab reloads and navigations.",
+      "evidence_terms": [
+        "checkpoint",
+        "state machine",
+        "resume"
+      ],
+      "archetypes": [
+        "browser-extension-engineering"
+      ]
+    }
+  ]
+}

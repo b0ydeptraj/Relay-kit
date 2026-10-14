@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "RelayKit MMO Fleet Operator",
+  "version": "1.0.0",
+  "description": "Enterprise MMO automation extension: In-frame RPC, token/cookie extraction, CDP isTrusted click emulation, and MutationObserver runner.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Relay MMO Fleet Operator"
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "activeTab",
+    "scripting",
+    "webNavigation"
+  ],
+  "optional_permissions": [
+    "debugger"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["sniffer_inject.js"],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["sniffer_inject.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

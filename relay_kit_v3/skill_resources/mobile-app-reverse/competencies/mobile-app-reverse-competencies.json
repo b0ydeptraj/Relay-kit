@@ -2,86 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "mobile-app-reverse",
   "role": "mobile-reverse-specialist",
-  "category": "reverse-engineering",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "reverse.manifest-analysis",
-      "label": "Analyze AndroidManifest.xml/Info.plist before code.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "manifest",
-        "permissions",
-        "components"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.ssl-bypass",
-      "label": "Bypass SSL pinning for traffic interception.",
-      "evidence_terms": [
-        "SSL",
-        "pinning",
-        "Frida",
-        "proxy"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.api-mapping",
-      "label": "Map all API endpoints from decompiled code.",
-      "evidence_terms": [
-        "API",
+        "client",
         "endpoint",
-        "URL",
-        "request"
+        "request",
+        "response"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "reverse.root-detection-bypass",
-      "label": "Bypass root/jailbreak detection checks.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "root",
-        "jailbreak",
-        "detection"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "reverse.signing-key-extract",
-      "label": "Extract signing keys or certificate from app bundle.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "signing",
-        "key",
-        "certificate"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "api-client",
+        "automation-worker"
+      ]
+    },
+    {
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
+      "evidence_terms": [
+        "idempotency",
+        "webhook",
+        "replay"
+      ],
+      "archetypes": [
+        "backend-api",
+        "commerce-api"
+      ]
+    },
+    {
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
+      "evidence_terms": [
+        "contract test",
+        "integration test",
+        "fixture"
+      ],
+      "archetypes": [
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "reverse.skip-manifest",
-      "description": "Diving into code without analyzing app manifest."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "reverse.incomplete-api",
-      "description": "Missing API endpoints in extraction."
-    },
-    {
-      "id": "reverse.no-root-bypass",
-      "description": "Not bypassing root detection before analysis."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.015920+00:00"
+  "generated_at": "2026-10-14T15:15:27.666987+00:00"
 }

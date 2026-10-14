@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "privacy-compliance",
   "role": "privacy-reviewer",
-  "category": "privacy",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "privacy.data-inventory",
-      "label": "Enumerate personal data and classify each field's sensitivity.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "data inventory",
-        "PII",
-        "sensitivity"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "privacy"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "privacy.minimization",
-      "label": "Justify every retained field with a stated purpose; drop the rest.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "minimization",
-        "purpose",
-        "drop field"
+        "ask",
+        "act",
+        "scout"
       ],
       "archetypes": [
-        "privacy"
+        "orchestrator",
+        "repo-analysis"
       ]
     },
     {
-      "id": "privacy.lawful-basis",
-      "label": "State the lawful basis or consent for each category.",
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
       "evidence_terms": [
-        "lawful basis",
-        "consent",
-        "category"
+        "state",
+        "handoff",
+        "evidence"
       ],
       "archetypes": [
-        "privacy"
+        "long-running-lane"
       ]
     },
     {
-      "id": "privacy.retention",
-      "label": "Set a retention window and a deletion mechanism per category.",
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
       "evidence_terms": [
-        "retention window",
-        "deletion",
-        "anonymize"
+        "ownership",
+        "parallel",
+        "boundary"
       ],
       "archetypes": [
-        "privacy"
+        "multi-agent"
       ]
     },
     {
-      "id": "privacy.rights-reach",
-      "label": "Ensure deletion reaches backups and downstream copies.",
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
       "evidence_terms": [
-        "backup",
-        "downstream copy",
-        "deletion path"
+        "verified",
+        "residual risk",
+        "missing evidence"
       ],
       "archetypes": [
-        "privacy"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "privacy.purposeless",
-      "description": "Collecting data with no purpose behind it."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "privacy.forever",
-      "description": "Indefinite retention with no deletion mechanism."
-    },
-    {
-      "id": "privacy.leaky-delete",
-      "description": "A deletion request that leaves copies in backups or a warehouse."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.667985+00:00"
 }

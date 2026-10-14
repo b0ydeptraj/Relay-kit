@@ -1,0 +1,86 @@
+[
+  {
+    "id": "reverse-hub-electron-feature-trace",
+    "skill": "reverse-hub",
+    "repo_profile": "shipped Electron desktop app delivered as an app.asar with no source repository available",
+    "task": "Explain how the app builds the clipboard payload when the user copies a block. Use `reverse-hub` to route the ASAR target and cite the extracted entry point before explaining behavior.",
+    "expected_files": [
+      "app.asar",
+      "main.js",
+      "preload.js"
+    ],
+    "expected_symbols": [
+      "clipboard",
+      "writeText"
+    ],
+    "expected_tests": [
+      "tests/test_skill_resources.py"
+    ],
+    "expected_evidence_terms": [
+      "entry point",
+      "observation",
+      "evidence id",
+      "unresolved"
+    ],
+    "bad_answer_traps": [
+      "guess from the function name",
+      "assume it runs the code",
+      "it probably just copies text"
+    ]
+  },
+  {
+    "id": "reverse-hub-native-version-compare",
+    "skill": "reverse-hub",
+    "repo_profile": "two shipped native PE builds of the same tool, old and new, with no debug symbols",
+    "task": "Identify what changed in the license-check path between the two builds. Use `reverse-hub` to route to the native specialist and keep a finding ledger with confidence and search boundary.",
+    "expected_files": [
+      "old/app.exe",
+      "new/app.exe"
+    ],
+    "expected_symbols": [
+      "validateLicense",
+      "CheckSignature"
+    ],
+    "expected_tests": [
+      "tests/test_skill_resources.py"
+    ],
+    "expected_evidence_terms": [
+      "finding ledger",
+      "inference",
+      "bounded search",
+      "confidence"
+    ],
+    "bad_answer_traps": [
+      "nothing changed",
+      "proof it is gone",
+      "looks the same"
+    ]
+  },
+  {
+    "id": "reverse-hub-static-only-discipline",
+    "skill": "reverse-hub",
+    "repo_profile": "single stripped ELF binary, static analysis only, no sandbox or execution allowed",
+    "task": "Determine whether the binary contacts a hardcoded host. Use `reverse-hub` static routing and report the negative result as bounded, not as proof of absence.",
+    "expected_files": [
+      "sample.elf"
+    ],
+    "expected_symbols": [
+      "connect",
+      "getaddrinfo"
+    ],
+    "expected_tests": [
+      "tests/test_skill_resources.py"
+    ],
+    "expected_evidence_terms": [
+      "static analysis",
+      "bounded search",
+      "not proof of absence",
+      "unresolved"
+    ],
+    "bad_answer_traps": [
+      "it never connects anywhere",
+      "observed it connecting",
+      "ran it to confirm"
+    ]
+  }
+]

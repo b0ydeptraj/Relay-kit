@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "container-kubernetes-ops",
   "role": "platform-engineer",
-  "category": "platform",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "k8s.image-hygiene",
-      "label": "Pin the base image, run non-root, and keep secrets out of the image.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "base image",
-        "non-root",
-        "image hygiene"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "platform"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "k8s.probes",
-      "label": "Define liveness and readiness probes that reflect real health.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "readiness probe",
-        "liveness probe",
-        "health"
+        "ask",
+        "act",
+        "scout"
       ],
       "archetypes": [
-        "platform"
+        "orchestrator",
+        "repo-analysis"
       ]
     },
     {
-      "id": "k8s.resource-limits",
-      "label": "Set explicit resource requests and limits.",
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
       "evidence_terms": [
-        "requests",
-        "limits",
-        "node pressure"
+        "state",
+        "handoff",
+        "evidence"
       ],
       "archetypes": [
-        "platform"
+        "long-running-lane"
       ]
     },
     {
-      "id": "k8s.rollout-rollback",
-      "label": "Define a rollout strategy with a rollback revision.",
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
       "evidence_terms": [
-        "rolling update",
-        "rollback",
-        "revision"
+        "ownership",
+        "parallel",
+        "boundary"
       ],
       "archetypes": [
-        "platform"
+        "multi-agent"
       ]
     },
     {
-      "id": "k8s.read-before-mutate",
-      "label": "Read events, logs, and probe status before mutating pods.",
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
       "evidence_terms": [
-        "events",
-        "logs",
-        "probe status"
+        "verified",
+        "residual risk",
+        "missing evidence"
       ],
       "archetypes": [
-        "platform"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "k8s.root-or-secret",
-      "description": "Running as root or baking secrets into the image."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "k8s.no-readiness",
-      "description": "Missing readiness probe, so a rollout serves not-ready pods."
-    },
-    {
-      "id": "k8s.no-limits",
-      "description": "No resource limits, so one workload starves the node."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.657568+00:00"
 }

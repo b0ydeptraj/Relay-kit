@@ -2,80 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "incident-response",
   "role": "incident-responder",
-  "category": "incident-response",
+  "category": "research-product",
   "core_competencies": [
     {
-      "id": "incident-response.severity-triage",
-      "label": "Assign severity from user impact and scope.",
+      "id": "research-product.source-triangulation",
+      "label": "Use multiple sources or artifacts before making a claim.",
       "evidence_terms": [
-        "severity",
-        "user impact",
-        "scope"
+        "source",
+        "artifact",
+        "evidence"
       ],
       "archetypes": [
-        "reliability"
+        "docs-product",
+        "unknown-domain"
       ]
     },
     {
-      "id": "incident-response.stabilize-first",
-      "label": "Mitigate to stop impact before deep diagnosis.",
+      "id": "research-product.audience-fit",
+      "label": "Adapt output to the user, buyer, operator, or maintainer audience.",
       "evidence_terms": [
-        "mitigation",
-        "rollback",
-        "feature flag"
+        "audience",
+        "user",
+        "operator"
       ],
       "archetypes": [
-        "reliability"
+        "docs-product"
       ]
     },
     {
-      "id": "incident-response.communication",
-      "label": "Give a factual status cadence with next-update time.",
+      "id": "research-product.decision-criteria",
+      "label": "State decision criteria, tradeoffs, and confidence.",
       "evidence_terms": [
-        "status update",
-        "cadence",
-        "impact"
+        "criteria",
+        "tradeoff",
+        "confidence"
       ],
       "archetypes": [
-        "reliability"
+        "planning"
       ]
     },
     {
-      "id": "incident-response.timeline",
-      "label": "Capture a timestamped timeline of actions and effects.",
+      "id": "research-product.claim-boundary",
+      "label": "Label unknowns, stale facts, and unverified assumptions.",
       "evidence_terms": [
-        "timeline",
-        "timestamp",
-        "effect"
+        "unknown",
+        "unverified",
+        "assumption"
       ],
       "archetypes": [
-        "reliability"
+        "all"
       ]
     },
     {
-      "id": "incident-response.blameless-postmortem",
-      "label": "Write a blameless postmortem with owned action items.",
+      "id": "research-product.actionable-output",
+      "label": "Produce next actions, artifacts, or acceptance criteria.",
       "evidence_terms": [
-        "blameless",
-        "postmortem",
-        "action item"
+        "next action",
+        "artifact",
+        "acceptance"
       ],
       "archetypes": [
-        "reliability"
+        "planning"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "incident-response.debug-before-mitigate",
-      "description": "Roots-cause while users are still down."
+      "id": "research-product.unsupported-market-claim",
+      "description": "Makes a market/product claim without evidence."
     },
     {
-      "id": "incident-response.blame-postmortem",
-      "description": "Writes a postmortem that blames a person."
+      "id": "research-product.generic-persona-output",
+      "description": "Produces persona or plan text without decision criteria."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.661556+00:00"
 }

@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "antibot-challenge-solving",
   "role": "antibot-specialist",
-  "category": "evasion",
+  "category": "automation-ops",
   "core_competencies": [
     {
-      "id": "evasion.challenge-classification",
-      "label": "Classify challenge type before attempting solution.",
+      "id": "automation-ops.scheduler-queue",
+      "label": "Map scheduler, queue, worker, and trigger ownership.",
       "evidence_terms": [
-        "challenge",
-        "CAPTCHA",
-        "JS challenge"
+        "scheduler",
+        "queue",
+        "worker"
       ],
       "archetypes": [
-        "evasion"
+        "automation-worker",
+        "ci-devops"
       ]
     },
     {
-      "id": "evasion.solver-strategy",
-      "label": "Select appropriate solver based on challenge analysis.",
+      "id": "automation-ops.dry-run-rollback",
+      "label": "Require dry-run and rollback evidence before enabling automation.",
       "evidence_terms": [
-        "solver",
-        "strategy",
-        "fallback"
+        "dry-run",
+        "rollback",
+        "enable"
       ],
       "archetypes": [
-        "evasion"
+        "automation-worker"
       ]
     },
     {
-      "id": "evasion.token-extraction",
-      "label": "Extract and validate challenge response tokens.",
+      "id": "automation-ops.idempotent-retry",
+      "label": "Design idempotency, dedupe, retry, and backoff behavior.",
       "evidence_terms": [
-        "token",
-        "response",
-        "validation"
+        "idempotency",
+        "dedupe",
+        "retry"
       ],
       "archetypes": [
-        "evasion"
+        "automation-worker"
       ]
     },
     {
-      "id": "evasion.behavioral-timing",
-      "label": "Match human-like timing patterns to avoid behavioral detection.",
+      "id": "automation-ops.execution-history",
+      "label": "Record execution logs, run ids, and operator-visible status.",
       "evidence_terms": [
-        "timing",
-        "delay",
-        "human"
+        "execution history",
+        "run id",
+        "status"
       ],
       "archetypes": [
-        "evasion"
+        "automation-worker"
       ]
     },
     {
-      "id": "evasion.fingerprint-consistency",
-      "label": "Maintain consistent fingerprint during challenge solving.",
+      "id": "automation-ops.operator-runbook",
+      "label": "Produce runbook, ownership, and failure handling.",
       "evidence_terms": [
-        "fingerprint",
-        "canvas",
-        "WebGL"
+        "runbook",
+        "owner",
+        "failure"
       ],
       "archetypes": [
-        "evasion"
+        "automation-worker",
+        "ci-devops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "evasion.brute-force",
-      "description": "Attempting brute force without analyzing the challenge type."
+      "id": "automation-ops.automation-without-dry-run",
+      "description": "Enables automation without dry-run or rollback evidence."
     },
     {
-      "id": "evasion.no-fallback",
-      "description": "No fallback strategy when primary solver fails."
-    },
-    {
-      "id": "evasion.static-selectors",
-      "description": "Using hardcoded CSS selectors that break with DOM changes."
+      "id": "automation-ops.queue-without-idempotency",
+      "description": "Designs queues without dedupe or replay safety."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.834335+00:00"
+  "generated_at": "2026-10-14T15:15:27.655557+00:00"
 }

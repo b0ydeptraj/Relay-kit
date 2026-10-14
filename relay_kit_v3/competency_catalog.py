@@ -249,10 +249,25 @@ TEMPLATES: dict[str, CompetencyTemplate] = {
             ("bulk-action-without-ledger", "Designs bulk operations without audit or rollback evidence."),
         ),
     ),
+    "reverse-engineering": CompetencyTemplate(
+        "reverse-engineering",
+        (
+            ("target-routing", "Pick the specialist from the supplied artifact type, never an example target.", ("target type", "specialist", "shipped artifact"), ("codebase", "security-policy")),
+            ("static-before-runtime", "Exhaust static evidence before any runtime observation and bound the capture.", ("static analysis", "runtime observation", "bounded capture"), ("codebase",)),
+            ("evidence-separation", "Separate observations, inferences, and unknowns, and cite an evidence id per conclusion.", ("observation", "inference", "evidence id"), ("all",)),
+            ("finding-ledger", "Keep a ledger linking each conclusion to confidence, search boundary, and unknowns.", ("finding ledger", "confidence", "search boundary"), ("codebase",)),
+            ("bounded-negative", "Report a negative result as a bounded search, not as proof of absence.", ("bounded search", "not proof of absence", "coverage gap"), ("security-policy", "all")),
+        ),
+        (
+            ("guess-from-names", "Infers behavior from symbol or file names without reading the code or bytes."),
+            ("static-claims-execution", "Describes static analysis as if it had observed the program running."),
+        ),
+    ),
 }
 
 
 SKILL_CATEGORY_OVERRIDES: dict[str, str] = {
+    "reverse-hub": "reverse-engineering",
     "api-integration": "api-integration",
     "data-persistence": "data-persistence",
     "automation-ops": "automation-ops",

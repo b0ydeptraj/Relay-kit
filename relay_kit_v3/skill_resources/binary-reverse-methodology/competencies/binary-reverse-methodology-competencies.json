@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "binary-reverse-methodology",
   "role": "reverse-engineer",
-  "category": "reverse-engineering",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "reverse.static-first",
-      "label": "Perform static analysis before dynamic analysis.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "static",
-        "disassembly",
-        "strings"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "reverse.function-map",
-      "label": "Map function boundaries and call graph before deep analysis.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "function",
-        "call graph",
+        "ask",
+        "act",
+        "scout"
+      ],
+      "archetypes": [
+        "orchestrator",
+        "repo-analysis"
+      ]
+    },
+    {
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
+      "evidence_terms": [
+        "state",
+        "handoff",
+        "evidence"
+      ],
+      "archetypes": [
+        "long-running-lane"
+      ]
+    },
+    {
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
+      "evidence_terms": [
+        "ownership",
+        "parallel",
         "boundary"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "multi-agent"
       ]
     },
     {
-      "id": "reverse.hypothesis-driven",
-      "label": "Form and test hypotheses about binary behavior.",
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
       "evidence_terms": [
-        "hypothesis",
-        "test",
-        "verify"
+        "verified",
+        "residual risk",
+        "missing evidence"
       ],
       "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.anti-analysis",
-      "label": "Identify and neutralize anti-analysis techniques.",
-      "evidence_terms": [
-        "anti-debug",
-        "obfuscation",
-        "packing"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.protocol-reconstruction",
-      "label": "Reconstruct network protocol or data format from binary.",
-      "evidence_terms": [
-        "protocol",
-        "format",
-        "struct"
-      ],
-      "archetypes": [
-        "reverse-engineering"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "reverse.dynamic-first",
-      "description": "Jumping to dynamic analysis without static analysis context."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "reverse.guess-without-evidence",
-      "description": "Guessing binary behavior without disassembly evidence."
-    },
-    {
-      "id": "reverse.ignore-anti-analysis",
-      "description": "Not checking for anti-analysis techniques before debugging."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.853018+00:00"
+  "generated_at": "2026-10-14T15:15:27.655557+00:00"
 }

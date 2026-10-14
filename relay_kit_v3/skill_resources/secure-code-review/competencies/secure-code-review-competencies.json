@@ -2,80 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "secure-code-review",
   "role": "security-reviewer",
-  "category": "appsec-review",
+  "category": "policy-security",
   "core_competencies": [
     {
-      "id": "appsec-review.input-to-sink",
-      "label": "Trace untrusted input from source to dangerous sink.",
+      "id": "policy-security.policy-rule-map",
+      "label": "Map policy, rule, allowlist, and blocked operation surfaces.",
       "evidence_terms": [
-        "tainted input",
-        "sink",
-        "trust boundary"
+        "policy",
+        "rule",
+        "allowlist"
       ],
       "archetypes": [
-        "web-service"
+        "security-policy"
       ]
     },
     {
-      "id": "appsec-review.authz",
-      "label": "Verify authentication and object-level authorization on state-changing paths.",
-      "evidence_terms": [
-        "authorization",
-        "access control",
-        "identity"
-      ],
-      "archetypes": [
-        "web-service"
-      ]
-    },
-    {
-      "id": "appsec-review.secrets",
-      "label": "Detect hardcoded or logged secrets and unsafe secret handling.",
+      "id": "policy-security.secret-scope",
+      "label": "Detect secret, token, and permission-scope risk.",
       "evidence_terms": [
         "secret",
-        "credential",
-        "token"
+        "token",
+        "permission"
       ],
       "archetypes": [
-        "web-service"
+        "security-policy",
+        "api-client"
       ]
     },
     {
-      "id": "appsec-review.crypto",
-      "label": "Spot weak crypto, weak hashing, and predictable randomness.",
+      "id": "policy-security.fail-closed",
+      "label": "Fail closed on high-risk shell, path, prompt, or release actions.",
       "evidence_terms": [
-        "hashing",
-        "encryption",
-        "randomness"
+        "fail closed",
+        "blocked",
+        "risk"
       ],
       "archetypes": [
-        "web-service"
+        "security-policy"
       ]
     },
     {
-      "id": "appsec-review.dependency-risk",
-      "label": "Flag known-vulnerable or unpinned dependencies.",
+      "id": "policy-security.audit-evidence",
+      "label": "Tie findings to static check, audit, or trusted manifest evidence.",
       "evidence_terms": [
-        "dependency",
-        "CVE",
-        "lockfile"
+        "audit",
+        "manifest",
+        "static check"
       ],
       "archetypes": [
-        "web-service"
+        "security-policy"
+      ]
+    },
+    {
+      "id": "policy-security.exception-review",
+      "label": "Escalate intentional exceptions with owner and residual risk.",
+      "evidence_terms": [
+        "exception",
+        "owner",
+        "residual risk"
+      ],
+      "archetypes": [
+        "security-policy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "appsec-review.keyword-flag",
-      "description": "Flags a line on a keyword without proving reachability."
+      "id": "policy-security.policy-warning-only",
+      "description": "Reports policy risk without blocking or escalation path."
     },
     {
-      "id": "appsec-review.authn-not-authz",
-      "description": "Assumes authentication implies authorization."
+      "id": "policy-security.secret-blind-review",
+      "description": "Ignores token, secret, or permission scope evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T15:15:27.670987+00:00"
 }

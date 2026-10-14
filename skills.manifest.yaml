@@ -37,6 +37,7 @@ layers:
     - scout-hub
     - plan-hub
     - debug-hub
+    - reverse-hub
     - fix-hub
     - test-hub
     - review-hub

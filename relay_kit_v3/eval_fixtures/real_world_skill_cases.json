@@ -1952,5 +1952,25 @@
    "edr-evasion-tactics",
    "telemetry-blinding"
   ]
+ },
+ {
+  "id": "reverse-hub-real-world-contract",
+  "skill": "reverse-hub",
+  "task": "Use reverse-hub for a production-shaped Relay-kit lane: Use when a claim depends on a shipped binary or package, a decompilation, passive runtime evidence, or behavior the available source does not establish. Route reverse-engineering across native, managed, Electron/JavaScript, mobile, firmware, browser, and network-capture targets, pick the right specialist, and keep every conclusion anchored to evidence and stated limitations. The operator must produce concrete artifacts, evidence, and a next-step handoff without relying on popularity or vague claims.",
+  "required_artifacts": [
+   ".relay-kit/contracts/investigation-notes.md with a finding ledger",
+   "answered/partial/unresolved verdict per question",
+   "handoff to a reverse specialist or back to debug-hub/fix-hub"
+  ],
+  "required_evidence": [
+   ".relay-kit/contracts/investigation-notes.md with a finding ledger",
+   "answered/partial/unresolved verdict per question",
+   "handoff to a reverse specialist or back to debug-hub/fix-hub"
+  ],
+  "pass_rubric": [
+   "Skip reverse-hub for ordinary source-repository architecture analysis; use scout-hub and the normal read-first tools when the source already answers the question.",
+   "Prefer static evidence; use runtime observation only when static analysis cannot answer the open question.",
+   "binary-reverse-methodology"
+  ]
  }
 ]

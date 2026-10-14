@@ -2,84 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "attack-chain-orchestration",
   "role": "attack-chain-planner",
-  "category": "offensive",
+  "category": "data-persistence",
   "core_competencies": [
     {
-      "id": "offensive.phase-ordering",
-      "label": "Follow ATT&CK kill chain ordering strictly.",
+      "id": "data-persistence.schema-model",
+      "label": "Map schema, model, repository, and storage ownership.",
       "evidence_terms": [
-        "ATT&CK",
-        "kill chain",
-        "phase"
+        "schema",
+        "model",
+        "repository"
       ],
       "archetypes": [
-        "offensive"
+        "database-heavy"
       ]
     },
     {
-      "id": "offensive.opsec-gates",
-      "label": "Enforce OPSEC checks between phase transitions.",
+      "id": "data-persistence.transaction-boundary",
+      "label": "Identify transaction, isolation, rollback, and consistency boundaries.",
       "evidence_terms": [
-        "OPSEC",
-        "transition",
-        "gate"
+        "transaction",
+        "rollback",
+        "consistency"
       ],
       "archetypes": [
-        "offensive"
+        "database-heavy"
       ]
     },
     {
-      "id": "offensive.evidence-chain",
-      "label": "Maintain evidence chain across all phases.",
+      "id": "data-persistence.migration-safety",
+      "label": "Check migration path, reversibility, and data backfill risk.",
       "evidence_terms": [
-        "evidence",
-        "chain",
-        "artifact"
+        "migration",
+        "backfill",
+        "reversible"
       ],
       "archetypes": [
-        "offensive"
+        "database-heavy"
       ]
     },
     {
-      "id": "offensive.authorization-first",
-      "label": "Verify engagement proof before any offensive action.",
+      "id": "data-persistence.cache-index-query",
+      "label": "Inspect cache invalidation, indexes, and query behavior.",
       "evidence_terms": [
-        "authorization",
-        "proof",
-        "scope"
+        "cache",
+        "index",
+        "query"
       ],
       "archetypes": [
-        "offensive"
+        "database-heavy",
+        "backend-api"
       ]
     },
     {
-      "id": "offensive.cleanup-planning",
-      "label": "Plan cleanup and removal for each phase.",
+      "id": "data-persistence.persistence-test-anchor",
+      "label": "Find tests or fixtures proving persistence behavior.",
       "evidence_terms": [
-        "cleanup",
-        "removal",
-        "persistence"
+        "test",
+        "fixture",
+        "database"
       ],
       "archetypes": [
-        "offensive"
+        "database-heavy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "offensive.skip-recon",
-      "description": "Skipping reconnaissance phase before initial access."
+      "id": "data-persistence.schema-only-review",
+      "description": "Reviews schema shape without transaction or migration evidence."
     },
     {
-      "id": "offensive.no-opsec-gate",
-      "description": "No OPSEC validation between attack phases."
-    },
-    {
-      "id": "offensive.no-cleanup-plan",
-      "description": "No cleanup or removal plan for deployed artifacts."
+      "id": "data-persistence.query-claim-without-test",
+      "description": "Claims data behavior without test, fixture, or query proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.849269+00:00"
+  "generated_at": "2026-10-14T15:15:27.655557+00:00"
 }

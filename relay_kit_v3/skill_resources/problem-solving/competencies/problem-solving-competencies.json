@@ -29,18 +29,6 @@
       ]
     },
     {
-      "id": "problem-solving.constraint-reconciliation",
-      "label": "Build competing models when artifacts, counts, order, or human workflow cues disagree.",
-      "evidence_terms": [
-        "competing models",
-        "constraints",
-        "workflow cues"
-      ],
-      "archetypes": [
-        "all"
-      ]
-    },
-    {
       "id": "debugging.affected-surface",
       "label": "Map affected files, tests, and downstream behavior.",
       "evidence_terms": [
@@ -85,13 +73,9 @@
     {
       "id": "debugging.broad-debug-checklist",
       "description": "Returns a generic checklist instead of file-specific evidence."
-    },
-    {
-      "id": "problem-solving.single-model-reconciliation",
-      "description": "Treats the first diff, extraction, or metric mismatch as final instead of testing a workflow-level explanation."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-05-19T07:37:18.868527+00:00"
+  "generated_at": "2026-10-14T15:15:27.667985+00:00"
 }

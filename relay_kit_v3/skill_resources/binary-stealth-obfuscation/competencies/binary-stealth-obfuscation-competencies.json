@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "binary-stealth-obfuscation",
   "role": "obfuscation-specialist",
-  "category": "evasion",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "evasion.entropy-control",
-      "label": "Control binary entropy to avoid statistical detection.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "entropy",
-        "histogram",
-        "section"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "evasion"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "evasion.signature-mutation",
-      "label": "Mutate signatures to evade pattern matching.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "signature",
-        "mutation",
-        "YARA"
+        "ask",
+        "act",
+        "scout"
       ],
       "archetypes": [
-        "evasion"
+        "orchestrator",
+        "repo-analysis"
       ]
     },
     {
-      "id": "evasion.av-testing",
-      "label": "Test against AV engines before deployment.",
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
       "evidence_terms": [
-        "AV",
-        "test",
-        "detection rate"
+        "state",
+        "handoff",
+        "evidence"
       ],
       "archetypes": [
-        "evasion"
+        "long-running-lane"
       ]
     },
     {
-      "id": "evasion.import-obfuscation",
-      "label": "Obfuscate import table to avoid API-based detection.",
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
       "evidence_terms": [
-        "import",
-        "IAT",
-        "hash"
+        "ownership",
+        "parallel",
+        "boundary"
       ],
       "archetypes": [
-        "evasion"
+        "multi-agent"
       ]
     },
     {
-      "id": "evasion.string-encryption",
-      "label": "Encrypt or encode strings to avoid string-based detection.",
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
       "evidence_terms": [
-        "string",
-        "encrypt",
-        "XOR"
+        "verified",
+        "residual risk",
+        "missing evidence"
       ],
       "archetypes": [
-        "evasion"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "evasion.high-entropy",
-      "description": "Producing high-entropy output that triggers statistical detection."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "evasion.untested-payload",
-      "description": "Deploying without AV/EDR testing."
-    },
-    {
-      "id": "evasion.clear-imports",
-      "description": "Leaving IAT intact exposing suspicious API calls."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.867985+00:00"
+  "generated_at": "2026-10-14T15:15:27.656570+00:00"
 }

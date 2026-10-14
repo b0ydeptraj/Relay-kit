@@ -2,86 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "protocol-fingerprint-spoofing",
   "role": "protocol-fingerprint-specialist",
-  "category": "evasion",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "evasion.ja3-match",
-      "label": "Match JA3/JA4 fingerprint to target client exactly.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "JA3",
-        "JA4",
-        "cipher",
-        "extension"
+        "client",
+        "endpoint",
+        "request",
+        "response"
       ],
       "archetypes": [
-        "evasion"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "evasion.http2-consistency",
-      "label": "Ensure HTTP/2 settings match target browser.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "SETTINGS",
-        "WINDOW_UPDATE",
-        "PRIORITY"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "evasion"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "evasion.tls-extension-order",
-      "label": "Maintain correct TLS extension ordering.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "extension",
-        "order",
-        "SNI",
-        "ALPN"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "evasion"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "evasion.alpn-selection",
-      "label": "Configure ALPN negotiation to match target profile.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "ALPN",
-        "h2",
-        "http/1.1"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "evasion"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "evasion.session-ticket",
-      "label": "Handle TLS session tickets consistently with target.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "session",
-        "ticket",
-        "resumption"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "evasion"
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "evasion.cipher-mismatch",
-      "description": "Cipher suite order doesn't match target JA3 hash."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "evasion.missing-extension",
-      "description": "Missing TLS extensions that target client sends."
-    },
-    {
-      "id": "evasion.alpn-mismatch",
-      "description": "ALPN negotiation differs from target browser behavior."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.067826+00:00"
+  "generated_at": "2026-10-14T15:15:27.668989+00:00"
 }

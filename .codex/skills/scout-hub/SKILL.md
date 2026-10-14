@@ -12,7 +12,7 @@ Gather the minimum reliable context the next lane needs so nobody plans or fixes
 3. Use `memory-search` for prior decisions, handoff breadcrumbs, or stale state checks.
 4. Use `project-architecture` when module boundaries or architecture drift matter.
 5. Use `dependency-management` when tooling, lockfiles, or dependency risk affects the lane.
-6. Offensive recon routing: when the codebase is binary, native, or mobile-focused, pull the matching analysis skill before planning:
+6. Offensive recon routing: when the codebase is binary, native, or mobile-focused, pull the matching analysis skill before planning. When the question depends on a shipped artifact, a decompilation, or runtime behavior the source does not establish, route to `reverse-hub` and let it pick the specialist:
    - Binary / PE / ELF / Mach-O -> `binary-reverse-methodology`
    - Malware samples / suspicious code -> `malware-analysis-workflows`
    - APK / IPA / mobile native -> `mobile-app-reverse`
@@ -66,5 +66,6 @@ Name what became clearer, what is still unknown, which sources may be stale, and
 - dependency-management
 - plan-hub
 - debug-hub
+- reverse-hub
 - review-hub
 - workflow-router
