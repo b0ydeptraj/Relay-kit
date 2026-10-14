@@ -25,34 +25,29 @@ Design, build, and harden production-grade Chrome Extensions (Manifest V3) for a
 - verified postMessage origin validation on all iframe communication endpoints
 
 ## Role
-- chrome-extension-architect
+- builder-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- target web platform URL and interaction requirements
-- automation task definition, selector targets, or network endpoints
-- anti-bot or security constraints (CSP, iframe embedding, isTrusted checks)
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- production-hardened extension package (manifest.json, background.js, content.js, popup UI, iframe bridge)
-- zero-dependency test suite (tests/extension.test.cjs)
-- operator execution runbook and architecture verification evidence
+- .relay-kit/contracts/investigation-notes.md with chrome-extension-builder findings
+- answered/partial/unresolved verdict with evidence
 
 ## Reference skills and rules
-- Enforce Manifest V3 compliance and service worker reconnect resilience via `references/manifest-v3-hardened-architecture.md`.
-- Escalate to genuine isTrusted event dispatching when bypassing protected web forms via `references/is-trusted-cdp-bridge.md`.
-- Eliminate CPU-thrashing busy polling by deploying reactive DOM observers via `references/mutation-observer-engine.md`.
-- Implement persistent state machine checkpointing across tab reloads and navigations via `references/checkpoint-recovery.md`.
-- Review operator safety, evidence standards, and battle profile via `references/chrome-extension-builder-operator-contract.md`.
-- Calibrate output quality against `examples/chrome-extension-builder-good-output.md` and `examples/chrome-extension-builder-bad-output.md`.
-- Use `evals/chrome-extension-builder-cases.json` for behavior regression evaluations.
-- Check covered capabilities, failure traps, and domain policies via `competencies/chrome-extension-builder-competencies.json`.
+- Route anything outside chrome-extension-builder's scope back through `workflow-router` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/chrome-extension-builder-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/chrome-extension-builder-good-output.md` and `examples/chrome-extension-builder-bad-output.md` to calibrate output quality.
+- Use `evals/chrome-extension-builder-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/chrome-extension-builder-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-browser-fleet-automation
-- antibot-challenge-solving
-- frontend-crypto-reverse
-- policy-guard
-- qa-governor
+- chrome-extension-builder
+- workflow-router

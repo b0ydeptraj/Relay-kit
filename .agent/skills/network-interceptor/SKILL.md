@@ -1,8 +1,11 @@
 ---
 name: network-interceptor
-description: "Capture, analyze, and replay network traffic between app and license/API servers. Uses mitmproxy for capture and built-in analysis for endpoint discovery, OAuth detection, and token extraction."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs network interceptor: Capture, analyze, and replay network traffic between app and license/API servers. Uses mitmproxy for capture and built-in analysis for endpoint discovery, OAuth detection, and token extraction."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Capture, analyze, and replay network traffic between app and license/API servers.
 
 # Network Interceptor
 
@@ -84,3 +87,32 @@ Generates standalone Python `requests` script to replay any captured request.
 | Ignore non-HTTP protocols | Some license servers use raw TCP/gRPC |
 | Miss OAuth flows | Look for /authorize, /token, /callback patterns |
 | Skip response bodies | License responses contain feature flags and expiry |
+
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with network-interceptor findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside network-interceptor's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/network-interceptor-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/network-interceptor-good-output.md` and `examples/network-interceptor-bad-output.md` to calibrate output quality.
+- Use `evals/network-interceptor-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/network-interceptor-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- network-interceptor
+- offensive-security-engagement
+- workflow-router

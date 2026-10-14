@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "waf-bypass-toolkit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web"
+    ],
+    "expected_tests": [
+      "tests/test_waf_bypass_toolkit.py"
+    ],
+    "expected_evidence_terms": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "waf-bypass-toolkit-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `waf-bypass-toolkit` to a Relay-kit lane: Use when web application attacks are blocked by WAF (Cloudflare, Akamai, AWS WAF, F5, ModSecurity). Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "waf-bypass-toolkit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web"
+    ],
+    "expected_tests": [
+      "tests/test_waf_bypass_toolkit.py"
+    ],
+    "expected_evidence_terms": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "waf-bypass-toolkit-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `waf-bypass-toolkit` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "waf-bypass-toolkit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web"
+    ],
+    "expected_tests": [
+      "tests/test_waf_bypass_toolkit.py"
+    ],
+    "expected_evidence_terms": [
+      "waf",
+      "bypass",
+      "toolkit",
+      "web",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "waf-bypass-toolkit-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `waf-bypass-toolkit` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

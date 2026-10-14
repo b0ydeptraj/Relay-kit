@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "rust-binary-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_rust_binary_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "rust-binary-analyzer-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `rust-binary-analyzer` to a Relay-kit lane: Use when a lane needs rust binary analyzer: Analyze Rust native binaries — demangle symbols, extract panic paths to reconstruct module map, . Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "rust-binary-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_rust_binary_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "rust-binary-analyzer-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `rust-binary-analyzer` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "rust-binary-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_rust_binary_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "rust",
+      "binary",
+      "analyzer",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "rust-binary-analyzer-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `rust-binary-analyzer` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

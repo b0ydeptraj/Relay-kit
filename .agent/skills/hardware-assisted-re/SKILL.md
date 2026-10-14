@@ -1,6 +1,7 @@
 ---
 name: hardware-assisted-re
 description: "Use when analysis or evasion needs hypervisor-level (Ring -1) techniques: EPT hooking / NPT hooking (memory cloaking / page shadowing) on Intel VT-x AND AMD-V/SVM, hardware breakpoints via DR registers, VMEXIT storm mitigation, or bypassing integrity checkers (BattlEye, Vanguard, EAC) that validate code pages from kernel level."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
 # Mission
@@ -152,35 +153,30 @@ INVLPGA [addr], ecx  // Invalidate single page in ASID context — use instead o
 - Tested environment: Bare metal preferred (note: AMD nested SVM limited on some VMware versions)
 
 ## Role
-- hypervisor-re-specialist
+- reverse-engineering-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- target Windows build
-- anti-cheat / integrity checker product
-- engagement_proof
-- hardware (bare metal preferred; note nested VT-x limitation)
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- EPT hook implementation (or reference to Hvpp-based implementation)
-- Hardware breakpoint handler
-- HVCI compatibility report
-- Cleanup routine (unhook EPT, reset DRx, disable VMX)
+- .relay-kit/contracts/investigation-notes.md with hardware-assisted-re findings
+- answered/partial/unresolved verdict with evidence
 
 ## Reference skills and rules
-- Always check HVCI status before attempting kernel code modification or EPT/NPT hooks on kernel pages.
-- EPT/NPT hooks on user-mode pages do NOT require HVCI bypass — scope accordingly.
-- **Intel VT-x ≠ AMD-V**: Always detect CPU vendor (`CPUID.0:EBX` = 'GenuineIntel' or 'AuthenticAMD') and branch to correct init path.
-- Never implement full VMX/SVM from scratch — use Hvpp (Intel) or SimpleSvm (AMD) skeleton and extend.
-- VMEXIT rate must be profiled before deployment; > 500k/sec on target thread = detectable.
-- Document nested VT-x/SVM limitations clearly if running inside VMware/Hyper-V.
-- Reference: Intel SDM Vol. 3C (VMX), AMD APM Vol. 2 (SVM), Tandasat's Hvpp (Intel), tandasat/SimpleSvm (AMD).
+- Route anything outside hardware-assisted-re's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/hardware-assisted-re-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/hardware-assisted-re-good-output.md` and `examples/hardware-assisted-re-bad-output.md` to calibrate output quality.
+- Use `evals/hardware-assisted-re-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/hardware-assisted-re-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- kernel-driver-evasion
-- edr-evasion-tactics
-- binary-reverse-methodology
-- windows-native-internals
-- field-journal-evolution
+- hardware-assisted-re
+- reverse-hub
+- workflow-router

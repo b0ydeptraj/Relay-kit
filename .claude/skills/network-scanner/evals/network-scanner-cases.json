@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "network-scanner",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "scanner",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_scanner.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "scanner",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-scanner-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `network-scanner` to a Relay-kit lane: Use when a lane needs network scanner: Run authorized network reconnaissance with Nmap on Windows (or Linux). Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "network-scanner",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "scanner",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_scanner.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "scanner",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-scanner-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `network-scanner` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "network-scanner",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "scanner",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_scanner.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "scanner",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-scanner-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `network-scanner` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

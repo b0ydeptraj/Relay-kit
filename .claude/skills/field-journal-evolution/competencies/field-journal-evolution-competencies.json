@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "field-journal-evolution",
   "role": "knowledge-writeback",
-  "category": "meta",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "meta.evidence-gating",
-      "label": "Never write journal entry without evidence reference.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "evidence",
-        "ref",
-        "hash"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "meta"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "meta.no-auto-promote",
-      "label": "Never auto-promote entries; require human approval.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "candidate",
-        "promote",
-        "human"
+        "ask",
+        "act",
+        "scout"
       ],
       "archetypes": [
-        "meta"
+        "orchestrator",
+        "repo-analysis"
       ]
     },
     {
-      "id": "meta.dedup-check",
-      "label": "Check for duplicate patterns before capturing.",
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
       "evidence_terms": [
-        "duplicate",
-        "existing",
-        "signature"
+        "state",
+        "handoff",
+        "evidence"
       ],
       "archetypes": [
-        "meta"
+        "long-running-lane"
       ]
     },
     {
-      "id": "meta.confidence-labeling",
-      "label": "Label confidence level explicitly on every entry.",
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
       "evidence_terms": [
-        "confidence",
-        "low",
-        "medium"
+        "ownership",
+        "parallel",
+        "boundary"
       ],
       "archetypes": [
-        "meta"
+        "multi-agent"
       ]
     },
     {
-      "id": "meta.pattern-classification",
-      "label": "Classify entry as pitfall, technique, routing-gap, or discovery.",
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
       "evidence_terms": [
-        "pitfall",
-        "technique",
-        "routing-gap"
+        "verified",
+        "residual risk",
+        "missing evidence"
       ],
       "archetypes": [
-        "meta"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "meta.no-evidence",
-      "description": "Writing journal entry without evidence_ref."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "meta.auto-promote",
-      "description": "Automatically promoting entry without human approval."
-    },
-    {
-      "id": "meta.wrong-classification",
-      "description": "Misclassifying entry type causing incorrect retrieval."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.942840+00:00"
+  "generated_at": "2026-10-14T16:30:29.299744+00:00"
 }

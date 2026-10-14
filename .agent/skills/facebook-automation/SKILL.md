@@ -4,6 +4,9 @@ description: "Use when automating Facebook operations: Page management, Group au
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when automating Facebook operations: Page management, Group automation, Marketplace listing, Ads management, lead generation, friend/follow farming, and content scheduling.
+
 # Facebook Automation
 
 > Full-stack Facebook automation: pages, groups, marketplace, ads, and engagement.
@@ -22,13 +25,30 @@ Automate Facebook operations across accounts with rate limit awareness and anti-
 | Group joins | 5 | 15 |
 
 ## Role
-- facebook-automation-operator
+- mmo-automation-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with facebook-automation findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside facebook-automation's scope back through `mmo-authorization-gate` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/facebook-automation-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/facebook-automation-good-output.md` and `examples/facebook-automation-bad-output.md` to calibrate output quality.
+- Use `evals/facebook-automation-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/facebook-automation-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- mmo-anti-detection-browser
-- mmo-proxy-network-ops
-- mmo-content-factory
-- mmo-social-marketing-automation
+- facebook-automation
+- mmo-authorization-gate
+- workflow-router

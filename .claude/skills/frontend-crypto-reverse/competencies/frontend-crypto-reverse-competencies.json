@@ -2,85 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "frontend-crypto-reverse",
   "role": "crypto-reverse-specialist",
-  "category": "reverse-engineering",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "reverse.deobfuscation",
-      "label": "Systematically deobfuscate JavaScript before analysis.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "deobfuscate",
-        "AST",
-        "control flow"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.algorithm-id",
-      "label": "Identify cryptographic algorithm from implementation patterns.",
-      "evidence_terms": [
-        "algorithm",
-        "HMAC",
-        "AES",
-        "RSA"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.key-extraction",
-      "label": "Extract signing keys and rotation schedule.",
-      "evidence_terms": [
-        "key",
-        "rotation",
-        "extraction"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.wasm-analysis",
-      "label": "Analyze WASM modules for crypto logic.",
-      "evidence_terms": [
-        "WASM",
-        "binary",
-        "module"
-      ],
-      "archetypes": [
-        "reverse-engineering"
-      ]
-    },
-    {
-      "id": "reverse.replay-verification",
-      "label": "Verify signing logic by replaying captured requests.",
-      "evidence_terms": [
-        "replay",
+        "client",
+        "endpoint",
         "request",
-        "verify"
+        "response"
       ],
       "archetypes": [
-        "reverse-engineering"
+        "backend-api",
+        "api-client"
+      ]
+    },
+    {
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
+      "evidence_terms": [
+        "auth",
+        "token",
+        "scope"
+      ],
+      "archetypes": [
+        "api-client",
+        "security-policy"
+      ]
+    },
+    {
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
+      "evidence_terms": [
+        "retry",
+        "backoff",
+        "rate limit"
+      ],
+      "archetypes": [
+        "api-client",
+        "automation-worker"
+      ]
+    },
+    {
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
+      "evidence_terms": [
+        "idempotency",
+        "webhook",
+        "replay"
+      ],
+      "archetypes": [
+        "backend-api",
+        "commerce-api"
+      ]
+    },
+    {
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
+      "evidence_terms": [
+        "contract test",
+        "integration test",
+        "fixture"
+      ],
+      "archetypes": [
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "reverse.assumed-algo",
-      "description": "Assuming crypto algorithm without evidence from code."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "reverse.no-replay",
-      "description": "Not testing replayed requests to verify signing logic."
-    },
-    {
-      "id": "reverse.missed-key-rotation",
-      "description": "Not accounting for key rotation schedule."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.952485+00:00"
+  "generated_at": "2026-10-14T16:30:29.300879+00:00"
 }

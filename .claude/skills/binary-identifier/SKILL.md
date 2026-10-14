@@ -1,8 +1,11 @@
 ---
 name: binary-identifier
-description: Fingerprint binary executables to identify programming languages, compilers, packers, and obfuscators. Uses signature scanning (PE sections, strings, function names) to determine the technology stack.
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs binary identifier: Fingerprint binary executables to identify programming languages, compilers, packers, and obfuscators. Uses signature scanning (PE sections, strings, function names) to determine the technology stack."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Fingerprint binary executables to identify programming languages, compilers, packers, and obfuscators.
 
 # Binary Identifier Skill
 
@@ -79,3 +82,32 @@ Based on the identification results:
 | Start decrypting without identifying the language | Different languages use different encryption libraries |
 | Assume all Python apps use Nuitka | PyInstaller is equally common and requires different tools |
 | Skip the identification step | Identifying a packer like UPX saves hours of reverse engineering |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with binary-identifier findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside binary-identifier's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/binary-identifier-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/binary-identifier-good-output.md` and `examples/binary-identifier-bad-output.md` to calibrate output quality.
+- Use `evals/binary-identifier-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/binary-identifier-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- binary-identifier
+- reverse-hub
+- workflow-router

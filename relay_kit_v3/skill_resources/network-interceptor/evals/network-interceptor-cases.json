@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "network-interceptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_interceptor.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-interceptor-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `network-interceptor` to a Relay-kit lane: Use when a lane needs network interceptor: Capture, analyze, and replay network traffic between app and license/API servers. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "network-interceptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_interceptor.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-interceptor-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `network-interceptor` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "network-interceptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_network_interceptor.py"
+    ],
+    "expected_evidence_terms": [
+      "network",
+      "interceptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "network-interceptor-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `network-interceptor` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

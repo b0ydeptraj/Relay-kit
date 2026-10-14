@@ -1,34 +1,21 @@
-# chrome-extension-builder Operator Contract
+# chrome-extension-builder operator contract
 
-Primary role: chrome-extension-architect
-Layer: layer-4-specialists-and-standalones
-Battle family: chrome-extension-mv3-automation
+## Scope
+`chrome-extension-builder` is a layer-4 builder specialist. Use when designing, building, or hardening production-grade Chrome/Chromium extensions (Manifest V3) for browser automation, DOM/iframe injection, network interception, anti-detection bypass, or workflow acceleration.
 
-Use this skill when developing, refactoring, hardening, or auditing Chromium-based extensions (Manifest V3) for automation, scraping, or in-page security tooling.
+Enter it only for work that matches that scope; route anything broader back through `workflow-router` or `workflow-router` so the lane keeps a single owner.
 
-## Concrete Battle Profile
+## Authorization
+This specialist runs only against artifacts and targets the operator is authorized to analyze or test. When ownership or authorization is unclear, fail closed and hand the decision to `workflow-router` before any action that changes state outside the workspace.
 
-- Repo profile: Chromium Manifest V3 extension repository with service worker, content scripts, popup, iframe injectors, and automated tests.
-- First files to inspect: `manifest.json`, `background.js`, `content.js`, `popup.html`, `tests/`
-- Symbols or named surfaces to confirm: `chrome.runtime.sendMessage`, `chrome.storage`, `MutationObserver`, `AbortController`, `postMessage`
-- Evidence terms that should appear in a strong answer: Manifest V3, Service Worker lifecycle, CSP proxying, MutationObserver, isTrusted emulation, checkpoint recovery
+## Evidence rules
+- Anchor every conclusion to a concrete file, offset, command, or captured output, not to a guess from a name.
+- Separate what was observed from what was inferred, and name what is still unknown.
+- Report a search that found nothing as bounded to what it covered, never as proof of absence.
+- Do not claim a result is confirmed without the command output, log, or artifact that proves it.
 
-## Working Loop
+## Hold conditions
+Hold and route back when the only basis for a claim is a filename or symbol, when a capture was truncated, or when the lane would act outside the authorized target.
 
-1. Restate the user task as a verifiable extension architecture requirement.
-2. Check `manifest.json` permissions and script injection boundaries before recommending DOM or network logic.
-3. Enforce `AbortController` cancellation and MutationObserver waiting for all in-page interactions.
-4. Route cross-origin or external API traffic through the background worker to satisfy host CSP.
-5. Provide automated test proof with zero-dependency `node:test` runners.
-
-## Failure Modes To Block
-
-- Using deprecated Manifest V2 patterns (`background.scripts` array, `webRequestBlocking`).
-- Using busy-polling loops (`setInterval` every 200ms) that thrash multi-tab fleet CPU.
-- Leaking global variables onto the target page's `window` object.
-- Blind `time.sleep()` without `AbortSignal` cancellation tokens.
-- Claiming an extension works without headless or unit test verification.
-- Querying single-host URLs when handling SSO platforms (e.g. exporting YouTube without Google cookies).
-- Passing leading dots in `chrome.cookies.set` `domain` parameter or ignoring `hostOnly` / `__Host-` specs.
-- Performing unbounded cursor sweeps on IndexedDB without store filtering, causing OOM crashes on real user profiles with gigabytes of message history.
-- Dumping multi-megabyte JSON strings directly into extension popup `<textarea>` elements without memory caching or payload size limits.
+## Exit
+End with the concrete finding, the evidence behind it, the residual unknowns, and the next skill (`workflow-router`, `workflow-router`, or a sibling specialist) that should continue.

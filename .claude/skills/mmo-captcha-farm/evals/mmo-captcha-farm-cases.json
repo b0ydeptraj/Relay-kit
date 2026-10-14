@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "mmo-captcha-farm",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_captcha_farm.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-captcha-farm-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `mmo-captcha-farm` to a Relay-kit lane: Use when MMO automation hits CAPTCHA at scale: manage CAPTCHA solving farm with multiple API keys, rate optimization, cost tracking, and fai. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "mmo-captcha-farm",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_captcha_farm.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-captcha-farm-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `mmo-captcha-farm` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "mmo-captcha-farm",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_captcha_farm.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "captcha",
+      "farm",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-captcha-farm-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `mmo-captcha-farm` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

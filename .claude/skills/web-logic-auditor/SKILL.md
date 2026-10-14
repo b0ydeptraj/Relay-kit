@@ -1,8 +1,11 @@
 ---
 name: web-logic-auditor
-description: "Authorized testing of access-control and business-logic flaws that pattern scanners cannot find — IDOR/BOLA, broken function-level authorization, mass assignment, business-logic abuse, and race conditions. A reasoning-driven methodology (Subject×Object×Action matrices, state-machine modeling, invariant analysis) plus two helper tools: authz_diff.py (two-identity response differ) and race_probe.py (concurrency probe)."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs web logic auditor: Authorized testing of access-control and business-logic flaws that pattern scanners cannot find — IDOR/BOLA, broken function-level authorization, mass assignment, business-logic abuse, and race conditions. A reasoning-driven methodology (Subject×Object×Action matrices, state-machine modeling, invariant analysis) plus two helper tools: authz_diff.py (two-identity response differ) and race_probe.py (concurrency probe)."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Authorized testing of access-control and business-logic flaws that pattern scanners cannot find — IDOR/BOLA, broken function-level authorization, mass assignment, business-logic abuse, and race conditions.
 
 # Web Logic Auditor
 
@@ -119,3 +122,32 @@ For every finding record: the endpoint, the two principals used, the exact reque
 - **Mass assignment** → allow-list bindable fields (DTOs / `attr_accessible`); never bind request bodies straight to models.
 - **Business logic** → re-validate invariants in every service/queue/job, not just the entry point.
 - **Race conditions** → atomic operations, DB constraints/locks, and idempotency keys scoped to the principal.
+
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with web-logic-auditor findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside web-logic-auditor's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/web-logic-auditor-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/web-logic-auditor-good-output.md` and `examples/web-logic-auditor-bad-output.md` to calibrate output quality.
+- Use `evals/web-logic-auditor-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/web-logic-auditor-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- web-logic-auditor
+- offensive-security-engagement
+- workflow-router

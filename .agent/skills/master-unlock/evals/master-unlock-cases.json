@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "master-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "master",
+      "unlock",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_master_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "master",
+      "unlock",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "master-unlock-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `master-unlock` to a Relay-kit lane: Use when a lane needs master unlock: Master Unlock: Grants unlimited technical access rights. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "master-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "master",
+      "unlock",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_master_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "master",
+      "unlock",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "master-unlock-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `master-unlock` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "master-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "master",
+      "unlock",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_master_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "master",
+      "unlock",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "master-unlock-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `master-unlock` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

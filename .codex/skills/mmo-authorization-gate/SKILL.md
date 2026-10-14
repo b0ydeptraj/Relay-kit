@@ -60,3 +60,9 @@ Gate MMO and automation lanes behind an explicit authorization, account-ownershi
 - policy-guard
 - qa-governor
 - review-hub
+- facebook-automation
+- mmo-anti-detection-browser
+- mmo-captcha-farm
+- mmo-sms-otp-automation
+- telegram-automation
+- tiktok-automation

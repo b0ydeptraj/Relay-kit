@@ -1,8 +1,11 @@
 ---
 name: dotnet-keygen
-description: "Extract license validation algorithms from decompiled .NET source and generate keygens. Supports common license libraries (Cryptlex, LimeLM, custom), serial format detection, and crypto parameter extraction (RSA/AES/HMAC)."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs dotnet keygen: Extract license validation algorithms from decompiled .NET source and generate keygens. Supports common license libraries (Cryptlex, LimeLM, custom), serial format detection, and crypto parameter extraction (RSA/AES/HMAC)."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Extract license validation algorithms from decompiled.
 
 # .NET Keygen
 
@@ -112,3 +115,32 @@ python keygen.py --features pro --expiry 2030-12-31
 | Generate keys without testing | Always validate generated keys against extracted algorithm |
 | Ignore online validation | Some apps check key locally AND online — need both |
 | Miss obfuscated string constants | Use dotnet-decompiler with de4dot first |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with dotnet-keygen findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside dotnet-keygen's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/dotnet-keygen-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/dotnet-keygen-good-output.md` and `examples/dotnet-keygen-bad-output.md` to calibrate output quality.
+- Use `evals/dotnet-keygen-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/dotnet-keygen-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- dotnet-keygen
+- reverse-hub
+- workflow-router

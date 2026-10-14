@@ -2,80 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "refactoring-discipline",
   "role": "refactor-discipline",
-  "category": "refactoring",
+  "category": "frontend-product",
   "core_competencies": [
     {
-      "id": "refactoring.safety-net",
-      "label": "Require a green test net or add characterization tests first.",
+      "id": "frontend-product.route-component-boundary",
+      "label": "Map route, component, server/client, and data boundaries.",
       "evidence_terms": [
-        "test net",
-        "characterization",
-        "coverage"
+        "route",
+        "component",
+        "boundary"
       ],
       "archetypes": [
-        "engineering"
+        "frontend-app"
       ]
     },
     {
-      "id": "refactoring.small-steps",
-      "label": "Move in small reversible steps with tests each step.",
+      "id": "frontend-product.state-error-loading",
+      "label": "Handle state, error, loading, and empty states.",
       "evidence_terms": [
-        "small step",
-        "reversible",
-        "re-run"
+        "state",
+        "error",
+        "loading"
       ],
       "archetypes": [
-        "engineering"
+        "frontend-app"
       ]
     },
     {
-      "id": "refactoring.commit-separation",
-      "label": "Keep refactor and behavior changes in separate commits.",
+      "id": "frontend-product.visual-accessibility",
+      "label": "Check visual quality, accessibility, and responsive behavior.",
       "evidence_terms": [
-        "atomic commit",
-        "separate",
-        "behavior change"
+        "visual",
+        "accessibility",
+        "responsive"
       ],
       "archetypes": [
-        "engineering"
+        "frontend-app"
       ]
     },
     {
-      "id": "refactoring.contract-preservation",
-      "label": "Preserve signatures, outputs, and side effects.",
+      "id": "frontend-product.frontend-test-anchor",
+      "label": "Find component, smoke, or end-to-end test evidence.",
       "evidence_terms": [
-        "public contract",
-        "signature",
-        "side effect"
+        "component test",
+        "smoke",
+        "e2e"
       ],
       "archetypes": [
-        "engineering"
+        "frontend-app"
       ]
     },
     {
-      "id": "refactoring.risk-labeling",
-      "label": "State residual risk when the safety net is thin.",
+      "id": "frontend-product.ux-flow-evidence",
+      "label": "Tie UI choices to the user workflow and information hierarchy.",
       "evidence_terms": [
-        "residual risk",
-        "unverified",
-        "thin coverage"
+        "workflow",
+        "hierarchy",
+        "user"
       ],
       "archetypes": [
-        "engineering"
+        "frontend-app",
+        "docs-product"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "refactoring.no-net",
-      "description": "Restructures with no passing tests to prove behavior."
+      "id": "frontend-product.pretty-without-flow",
+      "description": "Optimizes visual surface without proving the workflow works."
     },
     {
-      "id": "refactoring.mixed-commit",
-      "description": "Hides a behavior change inside a refactor."
+      "id": "frontend-product.responsive-claim-without-check",
+      "description": "Claims responsive/accessibility quality without evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T16:30:29.312619+00:00"
 }

@@ -1,8 +1,11 @@
 ---
 name: vm-and-bytecode-reverse
-description: "Reverse engineer custom virtual machines and proprietary bytecode (dispatcher loops, opcode tables, VM protectors, .pyc/CIL/JVM/Lua bytecode). Activate when the binary is a thin native shell around an interpreter."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs vm and bytecode reverse: Reverse engineer custom virtual machines and proprietary bytecode (dispatcher loops, opcode tables, VM protectors, .pyc/CIL/JVM/Lua bytecode). Activate when the binary is a thin native shell around an interpreter."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Reverse engineer custom virtual machines and proprietary bytecode (dispatcher loops, opcode tables, VM protectors,.
 
 # VM & Bytecode Reverse Engineering
 
@@ -125,3 +128,32 @@ Heuristic: VM protectors push lots of context onto the stack at function entry (
   🧪 Emulator      : (tùy chọn) emu.py
   ▶ Tiếp           : symbolic-execution-tools (giải input) hoặc binary-patcher (vá handler)
 ```
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with vm-and-bytecode-reverse findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside vm-and-bytecode-reverse's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/vm-and-bytecode-reverse-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/vm-and-bytecode-reverse-good-output.md` and `examples/vm-and-bytecode-reverse-bad-output.md` to calibrate output quality.
+- Use `evals/vm-and-bytecode-reverse-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/vm-and-bytecode-reverse-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- vm-and-bytecode-reverse
+- reverse-hub
+- workflow-router

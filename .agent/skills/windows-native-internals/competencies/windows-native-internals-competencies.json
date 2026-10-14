@@ -2,84 +2,85 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "windows-native-internals",
   "role": "windows-internals-specialist",
-  "category": "engineering",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "engineering.struct-versioning",
-      "label": "Verify struct offsets against target OS build number.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "PEB",
-        "offset",
-        "build number"
+        "client",
+        "endpoint",
+        "request",
+        "response"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "engineering.fallback-path",
-      "label": "Provide fallback when undocumented API changes.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "fallback",
-        "documented",
-        "alternative"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "engineering"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "engineering.version-gating",
-      "label": "Gate behavior on OS version/build number.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "version",
-        "build",
-        "IsWindows10OrGreater"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "engineering"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "engineering.handle-inheritance",
-      "label": "Understand handle inheritance and duplication semantics.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "handle",
-        "inheritance",
-        "DuplicateHandle"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "engineering.wow64-awareness",
-      "label": "Account for WoW64 differences in 32-bit on 64-bit Windows.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "WoW64",
-        "32-bit",
-        "64-bit"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "engineering"
+        "backend-api"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "engineering.wrong-offset",
-      "description": "Using struct offset from wrong OS version."
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
     },
     {
-      "id": "engineering.no-fallback",
-      "description": "No fallback path for undocumented API."
-    },
-    {
-      "id": "engineering.wow64-blind",
-      "description": "Ignoring WoW64 differences when targeting both architectures."
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:57.056043+00:00"
+  "generated_at": "2026-10-14T16:30:29.316181+00:00"
 }

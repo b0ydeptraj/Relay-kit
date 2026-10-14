@@ -1,8 +1,11 @@
 ---
 name: dotnet-patcher
-description: "Patch .NET assemblies to bypass license checks — IL bytecode patching, method replacement, strong name removal, anti-tamper NOP. Works on raw bytes without requiring dnlib/Mono.Cecil at runtime."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs dotnet patcher: Patch .NET assemblies to bypass license checks — IL bytecode patching, method replacement, strong name removal, anti-tamper NOP. Works on raw bytes without requiring dnlib/Mono.Cecil at runtime."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Patch.
 
 # .NET Patcher
 
@@ -128,3 +131,32 @@ Checks:
 | Skip anti-tamper check | NOP `<Module>.cctor` if it contains integrity checks |
 | Patch only one check | Scan for ALL license checks — apps often have multiple |
 | Ignore Costura.Fody DLLs | Extract and patch embedded license DLLs too |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with dotnet-patcher findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside dotnet-patcher's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/dotnet-patcher-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/dotnet-patcher-good-output.md` and `examples/dotnet-patcher-bad-output.md` to calibrate output quality.
+- Use `evals/dotnet-patcher-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/dotnet-patcher-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- dotnet-patcher
+- reverse-hub
+- workflow-router

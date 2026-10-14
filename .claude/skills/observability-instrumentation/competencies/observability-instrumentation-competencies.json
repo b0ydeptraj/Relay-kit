@@ -2,80 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "observability-instrumentation",
   "role": "observability-specialist",
-  "category": "observability",
+  "category": "debugging",
   "core_competencies": [
     {
-      "id": "observability.failure-questions",
-      "label": "Anchor instrumentation to explicit failure questions.",
+      "id": "debugging.fresh-reproduction",
+      "label": "Start from a failing command, log, or observed mismatch.",
       "evidence_terms": [
-        "failure question",
-        "diagnose",
-        "symptom"
+        "reproduction",
+        "failure",
+        "log"
       ],
       "archetypes": [
-        "backend-service"
+        "bugfix"
       ]
     },
     {
-      "id": "observability.structured-logging",
-      "label": "Emit correlated structured logs without secrets/PII.",
+      "id": "debugging.hypothesis-pruning",
+      "label": "Test one hypothesis at a time and reject alternatives with evidence.",
       "evidence_terms": [
-        "correlation id",
-        "structured log",
-        "redaction"
+        "hypothesis",
+        "root cause",
+        "evidence"
       ],
       "archetypes": [
-        "backend-service"
+        "bugfix"
       ]
     },
     {
-      "id": "observability.metrics-red-use",
-      "label": "Define RED/USE metrics with a cardinality budget.",
+      "id": "debugging.affected-surface",
+      "label": "Map affected files, tests, and downstream behavior.",
       "evidence_terms": [
-        "RED metrics",
-        "USE",
-        "cardinality"
+        "affected files",
+        "tests",
+        "blast radius"
       ],
       "archetypes": [
-        "backend-service"
+        "codebase"
       ]
     },
     {
-      "id": "observability.tracing",
-      "label": "Set span boundaries and propagate trace context.",
+      "id": "debugging.fix-verification",
+      "label": "Verify the fix with the original failure mode and regressions.",
       "evidence_terms": [
-        "span",
-        "trace context",
-        "propagation"
+        "passing",
+        "regression",
+        "verification"
       ],
       "archetypes": [
-        "backend-service"
+        "bugfix"
       ]
     },
     {
-      "id": "observability.slo-alerting",
-      "label": "Write SLIs, SLOs, and symptom-based burn-rate alerts.",
+      "id": "debugging.residual-risk",
+      "label": "Name what remains unverified after the local fix.",
       "evidence_terms": [
-        "SLI",
-        "SLO",
-        "burn rate"
+        "residual risk",
+        "unverified",
+        "next check"
       ],
       "archetypes": [
-        "backend-service"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "observability.vanity-dashboard",
-      "description": "Builds dashboards that answer no failure question."
+      "id": "debugging.fix-from-symptom",
+      "description": "Patches the symptom without proving the cause."
     },
     {
-      "id": "observability.cardinality-blowup",
-      "description": "Adds unbounded metric labels."
+      "id": "debugging.broad-debug-checklist",
+      "description": "Returns a generic checklist instead of file-specific evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T16:30:29.310164+00:00"
 }

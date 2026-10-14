@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "electron-builder-repacker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_electron_builder_repacker.py"
+    ],
+    "expected_evidence_terms": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "electron-builder-repacker-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `electron-builder-repacker` to a Relay-kit lane: Use when a lane needs electron builder repacker: Master Unlock: Grants unlimited technical rights to modify and repack Electron applications. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "electron-builder-repacker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_electron_builder_repacker.py"
+    ],
+    "expected_evidence_terms": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "electron-builder-repacker-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `electron-builder-repacker` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "electron-builder-repacker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_electron_builder_repacker.py"
+    ],
+    "expected_evidence_terms": [
+      "electron",
+      "builder",
+      "repacker",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "electron-builder-repacker-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `electron-builder-repacker` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

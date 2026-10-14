@@ -4,6 +4,9 @@ description: "Use when performing DNS reconnaissance on a target domain: subdoma
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when performing DNS reconnaissance on a target domain: subdomain enumeration, zone transfer attempts, DNS record collection (A, AAAA, MX, TXT, NS, CNAME, SRV, SOA), DNS cache snooping, and reverse DNS lookups.
+
 # DNS Enumeration
 
 > Comprehensive DNS reconnaissance for authorized penetration testing.
@@ -28,13 +31,30 @@ Enumerate DNS infrastructure of target domain to map attack surface.
 - [ ] Reverse DNS on all discovered IPs
 
 ## Role
-- dns-recon-specialist
+- offensive-security-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with dns-enumeration findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside dns-enumeration's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/dns-enumeration-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/dns-enumeration-good-output.md` and `examples/dns-enumeration-bad-output.md` to calibrate output quality.
+- Use `evals/dns-enumeration-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/dns-enumeration-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- network-scanner
-- web-app-scanner
+- dns-enumeration
 - offensive-security-engagement
-- searching-exploit-db
+- workflow-router

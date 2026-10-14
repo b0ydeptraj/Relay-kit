@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "mmo-sms-otp-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_sms_otp_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-sms-otp-automation-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `mmo-sms-otp-automation` to a Relay-kit lane: Use when MMO operations need SMS OTP verification at scale: receive SMS for account registration/verification via virtual number services (5. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "mmo-sms-otp-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_sms_otp_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-sms-otp-automation-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `mmo-sms-otp-automation` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "mmo-sms-otp-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation"
+    ],
+    "expected_tests": [
+      "tests/test_mmo_sms_otp_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "mmo",
+      "sms",
+      "otp",
+      "automation",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "mmo-sms-otp-automation-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `mmo-sms-otp-automation` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

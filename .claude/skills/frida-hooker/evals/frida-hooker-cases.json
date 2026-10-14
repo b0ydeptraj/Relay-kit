@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "frida-hooker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_frida_hooker.py"
+    ],
+    "expected_evidence_terms": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "frida-hooker-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `frida-hooker` to a Relay-kit lane: Use when a lane needs frida hooker: Generate and inject Frida hooks for dynamic instrumentation — license bypass, SSL pinning bypass, functi. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "frida-hooker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_frida_hooker.py"
+    ],
+    "expected_evidence_terms": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "frida-hooker-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `frida-hooker` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "frida-hooker",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_frida_hooker.py"
+    ],
+    "expected_evidence_terms": [
+      "frida",
+      "hooker",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "frida-hooker-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `frida-hooker` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

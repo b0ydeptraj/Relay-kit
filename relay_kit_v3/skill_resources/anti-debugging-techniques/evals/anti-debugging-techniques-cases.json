@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "anti-debugging-techniques",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_anti_debugging_techniques.py"
+    ],
+    "expected_evidence_terms": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "anti-debugging-techniques-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `anti-debugging-techniques` to a Relay-kit lane: Use when a lane needs anti debugging techniques: Anti-debug detection and bypass for protected binaries. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "anti-debugging-techniques",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_anti_debugging_techniques.py"
+    ],
+    "expected_evidence_terms": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "anti-debugging-techniques-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `anti-debugging-techniques` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "anti-debugging-techniques",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_anti_debugging_techniques.py"
+    ],
+    "expected_evidence_terms": [
+      "anti",
+      "debugging",
+      "techniques",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "anti-debugging-techniques-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `anti-debugging-techniques` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

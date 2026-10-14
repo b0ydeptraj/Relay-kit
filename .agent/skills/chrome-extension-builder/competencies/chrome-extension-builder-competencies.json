@@ -1,68 +1,86 @@
 {
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "chrome-extension-builder",
-  "role": "chrome-extension-architect",
-  "category": "browser-extension-engineering",
+  "role": "builder-specialist",
+  "category": "api-integration",
   "core_competencies": [
     {
-      "id": "browser-extension.mv3-compliance",
-      "label": "Implement Manifest V3 service workers, minimal permissions, and keep-alive handling.",
+      "id": "api-integration.client-endpoint-contract",
+      "label": "Map client, endpoint, and request/response contracts.",
       "evidence_terms": [
-        "Manifest V3",
-        "service worker",
-        "permissions"
+        "client",
+        "endpoint",
+        "request",
+        "response"
       ],
       "archetypes": [
-        "browser-extension-engineering"
+        "backend-api",
+        "api-client"
       ]
     },
     {
-      "id": "browser-extension.zero-polling-dom",
-      "label": "Build reactive DOM selector waiting using scoped MutationObserver engines.",
+      "id": "api-integration.auth-scope",
+      "label": "Check auth, token, permission, and secret handling.",
       "evidence_terms": [
-        "MutationObserver",
-        "observer",
-        "reactive"
+        "auth",
+        "token",
+        "scope"
       ],
       "archetypes": [
-        "browser-extension-engineering"
+        "api-client",
+        "security-policy"
       ]
     },
     {
-      "id": "browser-extension.iframe-rpc",
-      "label": "Orchestrate cross-origin iframe communication via structured postMessage RPC.",
+      "id": "api-integration.retry-rate-limit",
+      "label": "Handle retry, backoff, timeout, and rate-limit behavior.",
       "evidence_terms": [
-        "postMessage",
-        "iframe",
-        "cross-origin"
+        "retry",
+        "backoff",
+        "rate limit"
       ],
       "archetypes": [
-        "browser-extension-engineering"
+        "api-client",
+        "automation-worker"
       ]
     },
     {
-      "id": "browser-extension.is-trusted-cdp",
-      "label": "Dispatch genuine isTrusted input events via chrome.debugger CDP bridge.",
+      "id": "api-integration.idempotency",
+      "label": "Protect writes, webhooks, and replayed requests with idempotency.",
       "evidence_terms": [
-        "isTrusted",
-        "debugger",
-        "CDP"
+        "idempotency",
+        "webhook",
+        "replay"
       ],
       "archetypes": [
-        "browser-extension-engineering"
+        "backend-api",
+        "commerce-api"
       ]
     },
     {
-      "id": "browser-extension.checkpoint-state",
-      "label": "Persist and recover execution state machine across tab reloads and navigations.",
+      "id": "api-integration.contract-test-anchor",
+      "label": "Find or require contract, integration, or fixture evidence.",
       "evidence_terms": [
-        "checkpoint",
-        "state machine",
-        "resume"
+        "contract test",
+        "integration test",
+        "fixture"
       ],
       "archetypes": [
-        "browser-extension-engineering"
+        "backend-api"
       ]
     }
-  ]
+  ],
+  "failure_traps": [
+    {
+      "id": "api-integration.checklist-without-contract",
+      "description": "Mentions API advice without naming the contract surface."
+    },
+    {
+      "id": "api-integration.retry-without-idempotency",
+      "description": "Adds retry language without replay or idempotency evidence."
+    }
+  ],
+  "unknown_domain_policy": "scout_first_without_expert_claim",
+  "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
+  "generated_at": "2026-10-14T16:30:29.291968+00:00"
 }

@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "vm-and-bytecode-reverse",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_vm_and_bytecode_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "vm-and-bytecode-reverse-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `vm-and-bytecode-reverse` to a Relay-kit lane: Use when a lane needs vm and bytecode reverse: Reverse engineer custom virtual machines and proprietary bytecode (dispatcher loops, opcode t. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "vm-and-bytecode-reverse",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_vm_and_bytecode_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "vm-and-bytecode-reverse-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `vm-and-bytecode-reverse` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "vm-and-bytecode-reverse",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_vm_and_bytecode_reverse.py"
+    ],
+    "expected_evidence_terms": [
+      "bytecode",
+      "reverse",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "vm-and-bytecode-reverse-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `vm-and-bytecode-reverse` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

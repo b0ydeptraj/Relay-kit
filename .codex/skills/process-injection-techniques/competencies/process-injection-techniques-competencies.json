@@ -2,85 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "process-injection-techniques",
   "role": "injection-specialist",
-  "category": "offensive",
+  "category": "context-continuity",
   "core_competencies": [
     {
-      "id": "offensive.arch-check",
-      "label": "Verify target process architecture before injection.",
+      "id": "context-continuity.state-retrieval",
+      "label": "Find current state, prior decisions, and handoff breadcrumbs.",
       "evidence_terms": [
-        "x86",
-        "x64",
-        "WoW64",
-        "architecture"
+        "state",
+        "memory",
+        "handoff"
       ],
       "archetypes": [
-        "offensive"
+        "long-running-lane"
       ]
     },
     {
-      "id": "offensive.cleanup-on-fail",
-      "label": "Clean up allocated resources if injection fails.",
+      "id": "context-continuity.freshness-check",
+      "label": "Separate current evidence from stale or historical context.",
       "evidence_terms": [
-        "cleanup",
-        "VirtualFreeEx",
-        "handle"
+        "freshness",
+        "stale",
+        "current"
       ],
       "archetypes": [
-        "offensive"
+        "long-running-lane"
       ]
     },
     {
-      "id": "offensive.alloc-stealth",
-      "label": "Use stealthy memory allocation patterns.",
+      "id": "context-continuity.context-pack",
+      "label": "Pack only task-relevant files, evidence, and constraints.",
       "evidence_terms": [
-        "MEM_COMMIT",
-        "PAGE_READWRITE",
-        "RWX"
+        "context pack",
+        "relevant",
+        "constraints"
       ],
       "archetypes": [
-        "offensive"
+        "large-context"
       ]
     },
     {
-      "id": "offensive.technique-selection",
-      "label": "Select injection technique based on target process protections.",
+      "id": "context-continuity.token-budget",
+      "label": "Preserve raw-required evidence while compressing low-signal context.",
       "evidence_terms": [
-        "technique",
-        "PPL",
-        "Protected Process"
+        "token",
+        "raw-required",
+        "compress"
       ],
       "archetypes": [
-        "offensive"
+        "large-context"
       ]
     },
     {
-      "id": "offensive.pid-validation",
-      "label": "Validate target PID exists and is accessible before injection.",
+      "id": "context-continuity.resume-safety",
+      "label": "Resume without losing the newest user request or active lane.",
       "evidence_terms": [
-        "PID",
-        "OpenProcess",
-        "ACCESS_DENIED"
+        "resume",
+        "newest request",
+        "active lane"
       ],
       "archetypes": [
-        "offensive"
+        "long-running-lane"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "offensive.arch-mismatch",
-      "description": "Injecting into process with wrong architecture."
+      "id": "context-continuity.stale-state-resume",
+      "description": "Continues from stale state while ignoring newer user input."
     },
     {
-      "id": "offensive.no-cleanup",
-      "description": "Leaving allocated memory on injection failure."
-    },
-    {
-      "id": "offensive.rwx-allocation",
-      "description": "Using RWX allocation that triggers security alerts."
+      "id": "context-continuity.context-dump",
+      "description": "Dumps too much context instead of selecting task-relevant evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.051761+00:00"
+  "generated_at": "2026-10-14T16:30:29.312619+00:00"
 }

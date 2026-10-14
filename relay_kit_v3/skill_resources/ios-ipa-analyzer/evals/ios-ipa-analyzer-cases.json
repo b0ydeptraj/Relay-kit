@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "ios-ipa-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing"
+    ],
+    "expected_tests": [
+      "tests/test_ios_ipa_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ios-ipa-analyzer-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `ios-ipa-analyzer` to a Relay-kit lane: Use when analyzing iOS IPA files for reverse engineering, security research, or app analysis. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "ios-ipa-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing"
+    ],
+    "expected_tests": [
+      "tests/test_ios_ipa_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ios-ipa-analyzer-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `ios-ipa-analyzer` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "ios-ipa-analyzer",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing"
+    ],
+    "expected_tests": [
+      "tests/test_ios_ipa_analyzer.py"
+    ],
+    "expected_evidence_terms": [
+      "ios",
+      "ipa",
+      "analyzer",
+      "analyzing",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ios-ipa-analyzer-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `ios-ipa-analyzer` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

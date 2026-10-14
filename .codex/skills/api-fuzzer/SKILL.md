@@ -4,6 +4,9 @@ description: "Use when fuzzing REST/GraphQL/gRPC APIs for vulnerabilities: IDOR,
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when fuzzing REST/GraphQL/gRPC APIs for vulnerabilities: IDOR, mass assignment, authentication bypass, injection, business logic flaws, rate limit bypass, and parameter pollution.
+
 # API Fuzzer
 
 > Automated API security testing via intelligent fuzzing of endpoints.
@@ -37,12 +40,30 @@ Discover API security vulnerabilities through automated parameter fuzzing and bo
 - remediation recommendation provided
 
 ## Role
-- api-security-tester
+- offensive-security-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with api-fuzzer findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside api-fuzzer's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/api-fuzzer-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/api-fuzzer-good-output.md` and `examples/api-fuzzer-bad-output.md` to calibrate output quality.
+- Use `evals/api-fuzzer-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/api-fuzzer-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- web-logic-auditor
-- web-app-scanner
+- api-fuzzer
 - offensive-security-engagement
+- workflow-router

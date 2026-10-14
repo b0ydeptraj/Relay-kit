@@ -2,96 +2,81 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "llm-app-engineering",
   "role": "llm-application-engineer",
-  "category": "llm-engineering",
+  "category": "data-persistence",
   "core_competencies": [
     {
-      "id": "llm.prompt-contract",
-      "label": "Separate the stable system contract from per-request context and state truncation.",
+      "id": "data-persistence.schema-model",
+      "label": "Map schema, model, repository, and storage ownership.",
       "evidence_terms": [
-        "prompt contract",
-        "context budget",
-        "truncation"
+        "schema",
+        "model",
+        "repository"
       ],
       "archetypes": [
-        "llm-engineering"
+        "database-heavy"
       ]
     },
     {
-      "id": "llm.retrieval-proof",
-      "label": "Prove retrieved chunks actually reach the prompt at the chosen top-k and threshold.",
+      "id": "data-persistence.transaction-boundary",
+      "label": "Identify transaction, isolation, rollback, and consistency boundaries.",
       "evidence_terms": [
-        "top-k",
-        "score threshold",
-        "chunk"
+        "transaction",
+        "rollback",
+        "consistency"
       ],
       "archetypes": [
-        "llm-engineering"
+        "database-heavy"
       ]
     },
     {
-      "id": "llm.tool-schema",
-      "label": "Define tools as typed schemas and validate the model's arguments.",
+      "id": "data-persistence.migration-safety",
+      "label": "Check migration path, reversibility, and data backfill risk.",
       "evidence_terms": [
-        "tool schema",
-        "argument validation",
-        "malformed"
+        "migration",
+        "backfill",
+        "reversible"
       ],
       "archetypes": [
-        "llm-engineering"
+        "database-heavy"
       ]
     },
     {
-      "id": "llm.agent-bound",
-      "label": "Bound the agent loop with a step cap and a stop condition.",
+      "id": "data-persistence.cache-index-query",
+      "label": "Inspect cache invalidation, indexes, and query behavior.",
       "evidence_terms": [
-        "step cap",
-        "stop condition",
-        "convergence"
+        "cache",
+        "index",
+        "query"
       ],
       "archetypes": [
-        "llm-engineering"
+        "database-heavy",
+        "backend-api"
       ]
     },
     {
-      "id": "llm.offline-eval",
-      "label": "Gate changes on an offline eval with a numeric pass threshold.",
+      "id": "data-persistence.persistence-test-anchor",
+      "label": "Find tests or fixtures proving persistence behavior.",
       "evidence_terms": [
-        "offline eval",
-        "pass threshold",
-        "regression"
+        "test",
+        "fixture",
+        "database"
       ],
       "archetypes": [
-        "llm-engineering"
-      ]
-    },
-    {
-      "id": "llm.cost-budget",
-      "label": "Estimate cost per request against the model and context budget.",
-      "evidence_terms": [
-        "cost per request",
-        "token budget",
-        "model version"
-      ],
-      "archetypes": [
-        "llm-engineering"
+        "database-heavy"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "llm.no-eval",
-      "description": "Tuning a prompt with no eval to catch regressions."
+      "id": "data-persistence.schema-only-review",
+      "description": "Reviews schema shape without transaction or migration evidence."
     },
     {
-      "id": "llm.retrieval-theatre",
-      "description": "Retrieval that returns chunks the prompt never uses."
-    },
-    {
-      "id": "llm.trust-tool-args",
-      "description": "Trusting model tool arguments without validation."
+      "id": "data-persistence.query-claim-without-test",
+      "description": "Claims data behavior without test, fixture, or query proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T16:30:29.300879+00:00"
 }

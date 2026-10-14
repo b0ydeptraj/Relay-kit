@@ -2,84 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "desktop-imgui-development",
   "role": "imgui-specialist",
-  "category": "engineering",
+  "category": "debugging",
   "core_competencies": [
     {
-      "id": "engineering.render-loop",
-      "label": "Implement non-blocking render loop with proper frame timing.",
+      "id": "debugging.fresh-reproduction",
+      "label": "Start from a failing command, log, or observed mismatch.",
       "evidence_terms": [
-        "frame",
-        "vsync",
-        "delta time"
+        "reproduction",
+        "failure",
+        "log"
       ],
       "archetypes": [
-        "engineering"
+        "bugfix"
       ]
     },
     {
-      "id": "engineering.overlay-transparency",
-      "label": "Configure transparent overlay with click-through.",
+      "id": "debugging.hypothesis-pruning",
+      "label": "Test one hypothesis at a time and reject alternatives with evidence.",
       "evidence_terms": [
-        "overlay",
-        "transparent",
-        "passthrough"
+        "hypothesis",
+        "root cause",
+        "evidence"
       ],
       "archetypes": [
-        "engineering"
+        "bugfix"
       ]
     },
     {
-      "id": "engineering.imgui-state",
-      "label": "Manage ImGui widget state and ID stack correctly.",
+      "id": "debugging.affected-surface",
+      "label": "Map affected files, tests, and downstream behavior.",
       "evidence_terms": [
-        "ID",
-        "PushID",
-        "state"
+        "affected files",
+        "tests",
+        "blast radius"
       ],
       "archetypes": [
-        "engineering"
+        "codebase"
       ]
     },
     {
-      "id": "engineering.backend-init",
-      "label": "Initialize backend (D3D/GL) and clean up in all paths.",
+      "id": "debugging.fix-verification",
+      "label": "Verify the fix with the original failure mode and regressions.",
       "evidence_terms": [
-        "backend",
-        "D3D11",
-        "OpenGL"
+        "passing",
+        "regression",
+        "verification"
       ],
       "archetypes": [
-        "engineering"
+        "bugfix"
       ]
     },
     {
-      "id": "engineering.hotkey-system",
-      "label": "Implement configurable hotkey system for operator control.",
+      "id": "debugging.residual-risk",
+      "label": "Name what remains unverified after the local fix.",
       "evidence_terms": [
-        "hotkey",
-        "VK",
-        "toggle"
+        "residual risk",
+        "unverified",
+        "next check"
       ],
       "archetypes": [
-        "engineering"
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "engineering.blocking-render",
-      "description": "Blocking the render loop with synchronous operations."
+      "id": "debugging.fix-from-symptom",
+      "description": "Patches the symptom without proving the cause."
     },
     {
-      "id": "engineering.no-cleanup",
-      "description": "Missing ImGui/backend cleanup on shutdown."
-    },
-    {
-      "id": "engineering.id-collision",
-      "description": "Widget ID collisions causing incorrect state."
+      "id": "debugging.broad-debug-checklist",
+      "description": "Returns a generic checklist instead of file-specific evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.901762+00:00"
+  "generated_at": "2026-10-14T16:30:29.291968+00:00"
 }

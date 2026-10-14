@@ -5075,6 +5075,23 @@ ALL_V3_SKILLS.update(DELIVERY_SUPPORT_SKILLS)
 ALL_V3_SKILLS.update(NEW_CAPABILITY_SKILLS)
 ALL_V3_SKILLS.update(MMO_AUTHORIZATION_GATE_SKILL)
 ALL_V3_SKILLS.update(OFFENSIVE_TOOL_PACK_SKILLS)
+# Late import (SkillSpec is defined above): the extension pack registers the
+# committed offensive/mmo/builder adapter skills as layer-4 specialists so the
+# runtime, catalog, and parity gates treat them as first-class registry skills.
+from relay_kit_v3.registry.extension_pack_skills import (  # noqa: E402
+    EXTENSION_PACK_SKILLS,
+    EXTENSION_PACK_GATE_ROUTING,
+)
+ALL_V3_SKILLS.update(EXTENSION_PACK_SKILLS)
+# Route each gate/hub to its extension skills so they are reachable from a
+# layer-1 orchestrator (validate_runtime reachability gate), not just inbound.
+for _gate, _members in EXTENSION_PACK_GATE_ROUTING.items():
+    _spec = ALL_V3_SKILLS.get(_gate)
+    if _spec is not None:
+        ALL_V3_SKILLS[_gate] = replace(
+            _spec,
+            next_steps=list(dict.fromkeys(list(_spec.next_steps) + list(_members))),
+        )
 # PUBLIC_ENTRYPOINT_SKILLS are deliberately NOT registered: the eight shims are
 # adapter facades emitted by relay_kit_v3.public_entrypoint_facades, not routable
 # registry skills. Keeping them out of ALL_V3_SKILLS is what makes the routing

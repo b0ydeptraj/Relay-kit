@@ -4,6 +4,9 @@ description: "Use when reverse engineering Go (Golang) binaries. Recover functio
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when reverse engineering Go (Golang) binaries.
+
 # Go Binary Reverser
 
 > Recover Go binary structure: packages, functions, goroutines, and embedded data.
@@ -35,13 +38,30 @@ Ghidra: load + go-loader script → auto-rename functions
 ```
 
 ## Role
-- go-reverse-engineer
+- reverse-engineering-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with go-binary-reverser findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside go-binary-reverser's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/go-binary-reverser-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/go-binary-reverser-good-output.md` and `examples/go-binary-reverser-bad-output.md` to calibrate output quality.
+- Use `evals/go-binary-reverser-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/go-binary-reverser-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- binary-identifier
-- binary-protection-bypass
-- binary-patcher
-- ida-nuitka-reconstructor
+- go-binary-reverser
+- reverse-hub
+- workflow-router

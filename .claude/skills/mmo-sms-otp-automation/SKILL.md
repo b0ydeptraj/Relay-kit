@@ -4,6 +4,9 @@ description: "Use when MMO operations need SMS OTP verification at scale: receiv
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when MMO operations need SMS OTP verification at scale: receive SMS for account registration/verification via virtual number services (5sim, sms-activate, smspva, getsmscode).
+
 # SMS OTP Automation for MMO
 
 > Rent virtual phone numbers and receive OTPs automatically at scale.
@@ -34,23 +37,30 @@ Automate phone number rental and SMS OTP reception for account registration work
 - banned/used numbers logged to avoid re-rental
 
 ## Role
-- sms-otp-operator
+- mmo-automation-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- target platform name
-- country preference
-- SMS API key (SMSAPI_KEY env var)
-- SMS service choice
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- virtual number + OTP pairs
-- cost log
-- failed number blacklist
+- .relay-kit/contracts/investigation-notes.md with mmo-sms-otp-automation findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside mmo-sms-otp-automation's scope back through `mmo-authorization-gate` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/mmo-sms-otp-automation-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/mmo-sms-otp-automation-good-output.md` and `examples/mmo-sms-otp-automation-bad-output.md` to calibrate output quality.
+- Use `evals/mmo-sms-otp-automation-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/mmo-sms-otp-automation-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-account-operations
-- mmo-identity-infrastructure
-- mmo-anti-detection-browser
+- mmo-sms-otp-automation
+- mmo-authorization-gate
+- workflow-router

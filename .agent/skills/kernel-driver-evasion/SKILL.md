@@ -1,6 +1,7 @@
 ---
 name: kernel-driver-evasion
 description: "Use when a payload needs Ring 0 evasion: BYOVD (Bring Your Own Vulnerable Driver), DKOM (Direct Kernel Object Manipulation), kernel callback suppression (ObRegisterCallbacks, PsSetCreateProcessNotifyRoutine), DSE bypass, PatchGuard (KPP) timer disarm, or PPL (Protected Process Light) bypass via EPROCESS .Protection field."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
 # Mission
@@ -109,38 +110,30 @@ typedef struct _PS_PROTECTION {
 - Tested on: Windows build version documented (19041 / 22000 / 22621 / 22631)
 
 ## Role
-- kernel-evasion-specialist
+- offensive-security-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- target Windows build (e.g., 22631.4169)
-- EDR product to suppress (name + PPL signer type if known)
-- engagement_proof
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- BYOVD loader implementation (C++ / C)
-- DKOM hide-process implementation
-- Callback suppression implementation
-- PPL strip routine
-- KPP-safe write zone analysis
-- Cleanup routine
+- .relay-kit/contracts/investigation-notes.md with kernel-driver-evasion findings
+- answered/partial/unresolved verdict with evidence
 
 ## Reference skills and rules
-- Never hardcode kernel structure offsets; always resolve dynamically or use version-conditional guards.
-- LOLDrivers check mandatory before choosing a VD: https://www.loldrivers.io/
-- KPP safe zone = callback array zeroing + EPROCESS field manipulation. KPP unsafe = SSDT patch, .text modification.
-- DSE bypass via `ci.dll!g_CiEnabled` patch is PatchGuard-hostile on Win10 21H2+ — prefer kdmapper approach.
-- PPL .Protection offset varies by build — always WinDbg-verify before hardcoding.
-- Document PatchGuard implications explicitly before any kernel memory write.
+- Route anything outside kernel-driver-evasion's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/kernel-driver-evasion-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/kernel-driver-evasion-good-output.md` and `examples/kernel-driver-evasion-bad-output.md` to calibrate output quality.
+- Use `evals/kernel-driver-evasion-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/kernel-driver-evasion-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- hardware-assisted-re
-- edr-evasion-tactics
-- telemetry-blinding
-- process-injection-techniques
-- windows-native-internals
-- field-journal-evolution
-
-
+- kernel-driver-evasion
+- offensive-security-engagement
+- workflow-router

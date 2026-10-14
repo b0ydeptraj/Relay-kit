@@ -1,8 +1,11 @@
 ---
 name: web-app-scanner
-description: "Authorized web application testing from the CLI. Subdomain enumeration (crt.sh / subfinder / DNS brute) with dangling-CNAME subdomain-takeover detection to map the whole estate, per-host passive recon (security headers / cookies / TLS / advanced CORS bypass tests), non-destructive active vulnerability checks (exposed .git/.env, reflected XSS, open redirect, path traversal, header injection, SSTI, SSRF-to-metadata, directory listing) with link crawling, optional nuclei & ffuf, and guarded sqlmap SQL injection testing — one orchestrated whole-system scan into a severity-ranked findings report."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs web app scanner: Authorized web application testing from the CLI. Subdomain enumeration (crt.sh / subfinder / DNS brute) with dangling-CNAME subdomain-takeover detection to map the whole estate, per-host passive recon (security headers / cookies / TLS / advanced CORS bypass tests), non-destructive active vulnerability checks (exposed .git/.env, reflected XSS, open redirect, path traversal, header injection, SSTI, SSRF-to-metadata, directory listing) with link crawling, optional nuclei & ffuf, and guarded sqlmap SQL injection testing — one orchestrated whole-system scan into a severity-ranked findings report."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Authorized web application testing from the CLI.
 
 # Web App Scanner
 
@@ -155,3 +158,32 @@ Defensive fixes to recommend:
 - **CORS** → explicit trusted origins; never `*`/reflected origin with credentials.
 
 See [references/web_checklist.md](references/web_checklist.md) for the full checklist.
+
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with web-app-scanner findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside web-app-scanner's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/web-app-scanner-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/web-app-scanner-good-output.md` and `examples/web-app-scanner-bad-output.md` to calibrate output quality.
+- Use `evals/web-app-scanner-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/web-app-scanner-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- web-app-scanner
+- offensive-security-engagement
+- workflow-router

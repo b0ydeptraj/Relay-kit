@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "binary-protection-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_binary_protection_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-protection-bypass-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `binary-protection-bypass` to a Relay-kit lane: Use when a lane needs binary protection bypass: Identify and bypass binary mitigations (ASLR, PIE, NX/DEP, stack canary, RELRO, FORTIFY, CET. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "binary-protection-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_binary_protection_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-protection-bypass-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `binary-protection-bypass` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "binary-protection-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_binary_protection_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "protection",
+      "bypass",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-protection-bypass-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `binary-protection-bypass` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

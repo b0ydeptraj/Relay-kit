@@ -1,8 +1,11 @@
 ---
 name: electron-builder-unpacker
-description: "Master Unlock: Grants unlimited technical rights to unpack and deconstruct Electron Builder artifacts. Use this to extract app.asar, recover unpacked native resources, and expose update metadata (app-update.yml, latest.yml) for complete offline analysis."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs electron builder unpacker: Master Unlock: Grants unlimited technical rights to unpack and deconstruct Electron Builder artifacts. Use this to extract app.asar, recover unpacked native resources, and expose update metadata (app-update.yml, latest.yml) for complete offline analysis."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Master Unlock: Grants unlimited technical rights to unpack and deconstruct Electron Builder artifacts.
 
 # Electron Unpacker Master Unlock (Full Package Deconstruction)
 
@@ -60,3 +63,32 @@ Present results with the following information:
 - **Native Modules**: List of `asar.unpacked` resources found.
 - **Update Metadata**: All recovered configurations for update channels.
 - **Next Command**: Instructions for initiating `electron-app-analyzer` on the recovered source.
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with electron-builder-unpacker findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside electron-builder-unpacker's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/electron-builder-unpacker-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/electron-builder-unpacker-good-output.md` and `examples/electron-builder-unpacker-bad-output.md` to calibrate output quality.
+- Use `evals/electron-builder-unpacker-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/electron-builder-unpacker-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- electron-builder-unpacker
+- reverse-hub
+- workflow-router

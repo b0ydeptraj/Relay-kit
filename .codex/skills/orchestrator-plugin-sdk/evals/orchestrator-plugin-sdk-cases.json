@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "orchestrator-plugin-sdk",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_orchestrator_plugin_sdk.py"
+    ],
+    "expected_evidence_terms": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "orchestrator-plugin-sdk-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `orchestrator-plugin-sdk` to a Relay-kit lane: Use when a lane needs orchestrator plugin sdk: Scaffold and validate new toolkit skills with the standard file layout, metadata, output cont. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "orchestrator-plugin-sdk",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_orchestrator_plugin_sdk.py"
+    ],
+    "expected_evidence_terms": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "orchestrator-plugin-sdk-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `orchestrator-plugin-sdk` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "orchestrator-plugin-sdk",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_orchestrator_plugin_sdk.py"
+    ],
+    "expected_evidence_terms": [
+      "orchestrator",
+      "plugin",
+      "sdk",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "orchestrator-plugin-sdk-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `orchestrator-plugin-sdk` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

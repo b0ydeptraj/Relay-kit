@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "binary-identifier",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_binary_identifier.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-identifier-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `binary-identifier` to a Relay-kit lane: Use when a lane needs binary identifier: Fingerprint binary executables to identify programming languages, compilers, packers, and obfuscato. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "binary-identifier",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_binary_identifier.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-identifier-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `binary-identifier` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "binary-identifier",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_binary_identifier.py"
+    ],
+    "expected_evidence_terms": [
+      "binary",
+      "identifier",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "binary-identifier-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `binary-identifier` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

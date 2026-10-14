@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "kernel-driver-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload"
+    ],
+    "expected_tests": [
+      "tests/test_kernel_driver_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "kernel-driver-evasion-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `kernel-driver-evasion` to a Relay-kit lane: Use when a payload needs Ring 0 evasion: BYOVD (Bring Your Own Vulnerable Driver), DKOM (Direct Kernel Object Manipulation), kernel callback. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "kernel-driver-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload"
+    ],
+    "expected_tests": [
+      "tests/test_kernel_driver_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "kernel-driver-evasion-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `kernel-driver-evasion` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "kernel-driver-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload"
+    ],
+    "expected_tests": [
+      "tests/test_kernel_driver_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "kernel",
+      "driver",
+      "evasion",
+      "payload",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "kernel-driver-evasion-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `kernel-driver-evasion` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

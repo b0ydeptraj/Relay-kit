@@ -2,84 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "edr-evasion-tactics",
   "role": "edr-evasion-specialist",
-  "category": "evasion",
+  "category": "context-continuity",
   "core_competencies": [
     {
-      "id": "evasion.syscall-correctness",
-      "label": "Use correct syscall numbers for target OS version.",
+      "id": "context-continuity.state-retrieval",
+      "label": "Find current state, prior decisions, and handoff breadcrumbs.",
       "evidence_terms": [
-        "syscall",
-        "SSN",
-        "version"
+        "state",
+        "memory",
+        "handoff"
       ],
       "archetypes": [
-        "evasion"
+        "long-running-lane"
       ]
     },
     {
-      "id": "evasion.unhook-completeness",
-      "label": "Unhook all monitored APIs, not just common ones.",
+      "id": "context-continuity.freshness-check",
+      "label": "Separate current evidence from stale or historical context.",
       "evidence_terms": [
-        "unhook",
-        "ntdll",
-        "IAT"
+        "freshness",
+        "stale",
+        "current"
       ],
       "archetypes": [
-        "evasion"
+        "long-running-lane"
       ]
     },
     {
-      "id": "evasion.etw-blinding",
-      "label": "Blind ETW without detectable patching artifacts.",
+      "id": "context-continuity.context-pack",
+      "label": "Pack only task-relevant files, evidence, and constraints.",
       "evidence_terms": [
-        "ETW",
-        "patch",
-        "blind"
+        "context pack",
+        "relevant",
+        "constraints"
       ],
       "archetypes": [
-        "evasion"
+        "large-context"
       ]
     },
     {
-      "id": "evasion.callback-removal",
-      "label": "Remove security product callbacks from kernel list.",
+      "id": "context-continuity.token-budget",
+      "label": "Preserve raw-required evidence while compressing low-signal context.",
       "evidence_terms": [
-        "callback",
-        "kernel",
-        "PsSetCreateProcessNotifyRoutine"
+        "token",
+        "raw-required",
+        "compress"
       ],
       "archetypes": [
-        "evasion"
+        "large-context"
       ]
     },
     {
-      "id": "evasion.stack-spoofing",
-      "label": "Spoof call stack to avoid stack-based detection.",
+      "id": "context-continuity.resume-safety",
+      "label": "Resume without losing the newest user request or active lane.",
       "evidence_terms": [
-        "stack",
-        "spoof",
-        "return address"
+        "resume",
+        "newest request",
+        "active lane"
       ],
       "archetypes": [
-        "evasion"
+        "long-running-lane"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "evasion.wrong-ssn",
-      "description": "Using wrong syscall service number for the target OS build."
+      "id": "context-continuity.stale-state-resume",
+      "description": "Continues from stale state while ignoring newer user input."
     },
     {
-      "id": "evasion.partial-unhook",
-      "description": "Unhooking only common APIs while leaving others monitored."
-    },
-    {
-      "id": "evasion.detectable-etw",
-      "description": "ETW patch leaves detectable byte sequence."
+      "id": "context-continuity.context-dump",
+      "description": "Dumps too much context instead of selecting task-relevant evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.934262+00:00"
+  "generated_at": "2026-10-14T16:30:29.298035+00:00"
 }

@@ -4,6 +4,9 @@ description: "Use when a red team payload needs to evade antivirus static detect
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when a red team payload needs to evade antivirus static detection.
+
 # AV Payload Builder
 
 > Build AV-evading payload wrappers and loaders for authorized red team engagements.
@@ -38,13 +41,30 @@ Transform raw shellcode or tools into AV-evading payloads using multiple evasion
 - cleanup: payload deleted from target after test
 
 ## Role
-- av-evasion-payload-specialist
+- offensive-security-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with av-payload-builder findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside av-payload-builder's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/av-payload-builder-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/av-payload-builder-good-output.md` and `examples/av-payload-builder-bad-output.md` to calibrate output quality.
+- Use `evals/av-payload-builder-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/av-payload-builder-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- edr-evasion-tactics
-- binary-stealth-obfuscation
-- sandbox-evasion
-- process-injection-techniques
+- av-payload-builder
+- offensive-security-engagement
+- workflow-router

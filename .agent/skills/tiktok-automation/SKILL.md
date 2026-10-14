@@ -4,6 +4,9 @@ description: "Use when automating TikTok operations at scale: account management
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when automating TikTok operations at scale: account management, content posting, engagement automation (likes/follows/comments/views), TikTok Shop management, live stream automation, hashtag research, and analytics tracking.
+
 # TikTok Automation
 
 > Full-stack TikTok automation: accounts, content, engagement, shop, and analytics.
@@ -43,24 +46,30 @@ Automate TikTok operations across multiple accounts with anti-detection and plat
 - Method C: Official Creator API (limited features, no engagement)
 
 ## Role
-- tiktok-automation-operator
+- mmo-automation-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- accounts.json (cookie sessions or credentials)
-- content/ directory (videos, captions, hashtags)
-- proxy_pool.txt
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- engagement_log.jsonl
-- account_health.json
-- analytics_report.json
+- .relay-kit/contracts/investigation-notes.md with tiktok-automation findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside tiktok-automation's scope back through `mmo-authorization-gate` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/tiktok-automation-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/tiktok-automation-good-output.md` and `examples/tiktok-automation-bad-output.md` to calibrate output quality.
+- Use `evals/tiktok-automation-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/tiktok-automation-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-anti-detection-browser
-- mmo-proxy-network-ops
-- mmo-content-factory
-- mmo-nick-warmup-engine
-- mmo-reup-automation
+- tiktok-automation
+- mmo-authorization-gate
+- workflow-router

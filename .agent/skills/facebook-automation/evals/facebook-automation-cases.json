@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "facebook-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_facebook_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "facebook-automation-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `facebook-automation` to a Relay-kit lane: Use when automating Facebook operations: Page management, Group automation, Marketplace listing, Ads management, lead generation, friend/fol. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "facebook-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_facebook_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "facebook-automation-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `facebook-automation` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "facebook-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_facebook_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "facebook",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "facebook-automation-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `facebook-automation` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

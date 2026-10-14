@@ -1,8 +1,11 @@
 ---
 name: pyinstaller-unpacker
-description: "Fully automated PyInstaller extraction and decompilation pipeline. Extracts .pyc from onefile/onedir bundles, fixes headers, and batch-decompiles with pycdc/uncompyle6/decompile3 fallback chain."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs pyinstaller unpacker: Fully automated PyInstaller extraction and decompilation pipeline. Extracts .pyc from onefile/onedir bundles, fixes headers, and batch-decompiles with pycdc/uncompyle6/decompile3 fallback chain."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Fully automated PyInstaller extraction and decompilation pipeline.
 
 # PyInstaller Unpacker & Decompiler
 
@@ -152,3 +155,32 @@ grep -rn "api_key\|secret\|password\|token\|license" decompiled/
 | Use only one decompiler | Version-aware fallback chain catches more files |
 | Ignore PYZ archive | It contains all imported modules — often more interesting than main script |
 | Decompile without knowing Python version | Magic bytes differ per version — wrong header = wrong output |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with pyinstaller-unpacker findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside pyinstaller-unpacker's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/pyinstaller-unpacker-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/pyinstaller-unpacker-good-output.md` and `examples/pyinstaller-unpacker-bad-output.md` to calibrate output quality.
+- Use `evals/pyinstaller-unpacker-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/pyinstaller-unpacker-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- pyinstaller-unpacker
+- reverse-hub
+- workflow-router

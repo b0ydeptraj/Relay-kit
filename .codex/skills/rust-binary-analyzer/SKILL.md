@@ -1,8 +1,11 @@
 ---
 name: rust-binary-analyzer
-description: "Analyze Rust native binaries — demangle symbols, extract panic paths to reconstruct module map, detect frameworks (Tauri/Actix/Rocket/Axum), locate license validation logic."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs rust binary analyzer: Analyze Rust native binaries — demangle symbols, extract panic paths to reconstruct module map, detect frameworks (Tauri/Actix/Rocket/Axum), locate license validation logic."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Analyze Rust native binaries — demangle symbols, extract panic paths to reconstruct module map, detect frameworks (Tauri/Actix/Rocket/Axum), locate license validation logic.
 
 # Rust Binary Analyzer
 
@@ -35,26 +38,31 @@ python rust-binary-analyzer/scripts/analyze_rust.py target.exe --out output/rust
 python rust-binary-analyzer/scripts/analyze_rust.py target.exe --json output/rust_info.json
 ```
 
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
 ## Outputs
+- .relay-kit/contracts/investigation-notes.md with rust-binary-analyzer findings
+- answered/partial/unresolved verdict with evidence
 
-| File | Content |
-|------|---------|
-| `rust_info.json` | Full analysis: symbols, panic paths, framework, license targets |
-| `demangled_symbols.txt` | All demangled Rust symbols |
-| `module_tree.txt` | Reconstructed source module hierarchy |
-| `license_targets.txt` | Functions likely related to licensing |
+## Reference skills and rules
+- Route anything outside rust-binary-analyzer's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/rust-binary-analyzer-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/rust-binary-analyzer-good-output.md` and `examples/rust-binary-analyzer-bad-output.md` to calibrate output quality.
+- Use `evals/rust-binary-analyzer-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/rust-binary-analyzer-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
-## When to use
-
-- `binary-identifier` reports **Rust** language
-- Target contains `.rs:` panic strings or `_RN`/`_ZN` mangled symbols
-- Tauri desktop app (chains into `tauri-unpacker`)
-
-## Anti-patterns
-
-| Mistake | Fix |
-|---------|-----|
-| Trying to decompile Rust to source | Rust → native; use IDA/Ghidra for code, this skill for metadata |
-| Ignoring panic strings | Panic paths reveal the full source tree — always extract first |
-| Skipping symbol demangling | Mangled names are unreadable; demangling reveals crate::module::function |
-| Missing Tauri frontend | If framework=Tauri, chain `tauri-unpacker` to get the JS/HTML |
+## Likely next step
+- rust-binary-analyzer
+- reverse-hub
+- workflow-router

@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "memory-dumper",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_memory_dumper.py"
+    ],
+    "expected_evidence_terms": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "memory-dumper-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `memory-dumper` to a Relay-kit lane: Use when a lane needs memory dumper: Dump process memory and scan for secrets, license keys, decryption keys, tokens, and crypto artifacts. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "memory-dumper",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_memory_dumper.py"
+    ],
+    "expected_evidence_terms": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "memory-dumper-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `memory-dumper` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "memory-dumper",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_memory_dumper.py"
+    ],
+    "expected_evidence_terms": [
+      "memory",
+      "dumper",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "memory-dumper-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `memory-dumper` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

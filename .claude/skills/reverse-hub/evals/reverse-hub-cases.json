@@ -1,57 +1,57 @@
 [
   {
-    "id": "reverse-hub-electron-feature-trace",
+    "id": "reverse-hub-emitted-artifact-vs-source",
     "skill": "reverse-hub",
-    "repo_profile": "shipped Electron desktop app delivered as an app.asar with no source repository available",
-    "task": "Explain how the app builds the clipboard payload when the user copies a block. Use `reverse-hub` to route the ASAR target and cite the extracted entry point before explaining behavior.",
+    "repo_profile": "Relay-kit public repo where the shipped adapter skills are generated artifacts, not the registry source",
+    "task": "Treat the generated adapter SKILL.md as a shipped artifact and determine what the generator actually emits versus what the registry source claims. Use `reverse-hub`, cite the source files first, and separate observation from inference.",
     "expected_files": [
-      "app.asar",
-      "main.js",
-      "preload.js"
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_v3/generator.py",
+      "tests/test_skill_resources.py"
     ],
     "expected_symbols": [
-      "clipboard",
-      "writeText"
+      "SkillSpec",
+      "emit_core_skills"
     ],
     "expected_tests": [
       "tests/test_skill_resources.py"
     ],
     "expected_evidence_terms": [
-      "entry point",
       "observation",
+      "inference",
       "evidence id",
       "unresolved"
     ],
     "bad_answer_traps": [
-      "guess from the function name",
-      "assume it runs the code",
-      "it probably just copies text"
+      "guess from the skill name",
+      "assume the artifact matches the source",
+      "it should be fine"
     ]
   },
   {
-    "id": "reverse-hub-native-version-compare",
+    "id": "reverse-hub-surface-compare",
     "skill": "reverse-hub",
-    "repo_profile": "two shipped native PE builds of the same tool, old and new, with no debug symbols",
-    "task": "Identify what changed in the license-check path between the two builds. Use `reverse-hub` to route to the native specialist and keep a finding ledger with confidence and search boundary.",
+    "repo_profile": "Relay-kit repo with a registry and a derived topology that must agree across emitted surfaces",
+    "task": "Compare what the registry declares against what the topology wiring exposes and identify any drift. Use `reverse-hub` to route the compare and keep a finding ledger with confidence and search boundary.",
     "expected_files": [
-      "old/app.exe",
-      "new/app.exe"
+      "relay_kit_v3/registry/skills.py",
+      "relay_kit_v3/registry/topology.py"
     ],
     "expected_symbols": [
-      "validateLicense",
-      "CheckSignature"
+      "ALL_V3_SKILLS",
+      "WORKFLOW_HUB_SKILLS"
     ],
     "expected_tests": [
-      "tests/test_skill_resources.py"
+      "tests/test_repo_hardening_gates.py"
     ],
     "expected_evidence_terms": [
       "finding ledger",
-      "inference",
-      "bounded search",
-      "confidence"
+      "confidence",
+      "search boundary",
+      "inference"
     ],
     "bad_answer_traps": [
-      "nothing changed",
+      "nothing drifted",
       "proof it is gone",
       "looks the same"
     ]
@@ -59,17 +59,17 @@
   {
     "id": "reverse-hub-static-only-discipline",
     "skill": "reverse-hub",
-    "repo_profile": "single stripped ELF binary, static analysis only, no sandbox or execution allowed",
-    "task": "Determine whether the binary contacts a hardcoded host. Use `reverse-hub` static routing and report the negative result as bounded, not as proof of absence.",
+    "repo_profile": "Relay-kit repo analyzed statically only, no runtime execution of the generated runtime",
+    "task": "Determine from the public CLI source whether a bundle emits a given surface, without running it. Use `reverse-hub` static routing and report any negative result as a bounded search, not as proof of absence.",
     "expected_files": [
-      "sample.elf"
+      "relay_kit_public_cli.py",
+      "tests/test_repo_hardening_gates.py"
     ],
     "expected_symbols": [
-      "connect",
-      "getaddrinfo"
+      "main"
     ],
     "expected_tests": [
-      "tests/test_skill_resources.py"
+      "tests/test_repo_hardening_gates.py"
     ],
     "expected_evidence_terms": [
       "static analysis",
@@ -78,8 +78,8 @@
       "unresolved"
     ],
     "bad_answer_traps": [
-      "it never connects anywhere",
-      "observed it connecting",
+      "it never emits anything",
+      "observed it running",
       "ran it to confirm"
     ]
   }

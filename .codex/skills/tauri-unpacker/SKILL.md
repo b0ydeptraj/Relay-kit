@@ -1,8 +1,11 @@
 ---
 name: tauri-unpacker
-description: "Unpack Tauri desktop apps — extract embedded web assets (HTML/JS/CSS), Tauri config, IPC command map, and frontend license logic."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs tauri unpacker: Unpack Tauri desktop apps — extract embedded web assets (HTML/JS/CSS), Tauri config, IPC command map, and frontend license logic."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Unpack Tauri desktop apps — extract embedded web assets (HTML/JS/CSS), Tauri config, IPC command map, and frontend license logic.
 
 # Tauri App Unpacker
 
@@ -45,31 +48,31 @@ python tauri-unpacker/scripts/unpack_tauri.py app.exe --out output/tauri-unpacke
 python tauri-unpacker/scripts/analyze_tauri.py output/tauri-unpacked --out output/tauri-analysis
 ```
 
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
 ## Outputs
+- .relay-kit/contracts/investigation-notes.md with tauri-unpacker findings
+- answered/partial/unresolved verdict with evidence
 
-| File | Content |
-|------|---------|
-| `assets/` | Extracted HTML, JS, CSS, images |
-| `tauri_config.json` | Embedded Tauri configuration |
-| `tauri_analysis.json` | IPC commands, event listeners, API endpoints, license logic |
+## Reference skills and rules
+- Route anything outside tauri-unpacker's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/tauri-unpacker-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/tauri-unpacker-good-output.md` and `examples/tauri-unpacker-bad-output.md` to calibrate output quality.
+- Use `evals/tauri-unpacker-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/tauri-unpacker-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
-## When to use
-
-- `binary-identifier` or `rust-binary-analyzer` reports **Tauri** framework
-- Target directory contains a Tauri app bundle
-- `.exe` with embedded web assets (HTML/JS/CSS in binary data)
-
-## Chain targets
-
-After extraction, chain:
-- `javascript-deobfuscator` → deobfuscate extracted JS
-- `electron-app-analyzer` → reuse secret/endpoint scanning (works on any JS)
-
-## Anti-patterns
-
-| Mistake | Fix |
-|---------|-----|
-| Only analysing the Rust backend | Frontend JS often has license UI, API keys, validation |
-| Skipping brotli decompression | Tauri compresses assets with brotli — must decompress |
-| Ignoring IPC commands | `invoke()` calls reveal backend API surface |
-| Missing Tauri config | Config has CSP, allowed APIs, window settings — security-relevant |
+## Likely next step
+- tauri-unpacker
+- reverse-hub
+- workflow-router

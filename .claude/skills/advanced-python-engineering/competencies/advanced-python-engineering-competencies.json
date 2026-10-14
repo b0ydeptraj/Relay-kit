@@ -2,96 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "advanced-python-engineering",
   "role": "python-specialist",
-  "category": "engineering",
+  "category": "automation-ops",
   "core_competencies": [
     {
-      "id": "engineering.async-discipline",
-      "label": "Declare async model and identify cancellation points.",
+      "id": "automation-ops.scheduler-queue",
+      "label": "Map scheduler, queue, worker, and trigger ownership.",
       "evidence_terms": [
-        "asyncio",
-        "trio",
-        "cancellation"
+        "scheduler",
+        "queue",
+        "worker"
       ],
       "archetypes": [
-        "engineering"
+        "automation-worker",
+        "ci-devops"
       ]
     },
     {
-      "id": "engineering.interop-safety",
-      "label": "Document ctypes/cffi signatures with original C headers.",
+      "id": "automation-ops.dry-run-rollback",
+      "label": "Require dry-run and rollback evidence before enabling automation.",
       "evidence_terms": [
-        "ctypes",
-        "cffi",
-        "calling convention"
+        "dry-run",
+        "rollback",
+        "enable"
       ],
       "archetypes": [
-        "engineering"
+        "automation-worker"
       ]
     },
     {
-      "id": "engineering.error-hierarchy",
-      "label": "Define recoverable vs fatal exception hierarchy.",
+      "id": "automation-ops.idempotent-retry",
+      "label": "Design idempotency, dedupe, retry, and backoff behavior.",
       "evidence_terms": [
-        "exception",
-        "recoverable",
-        "fatal"
+        "idempotency",
+        "dedupe",
+        "retry"
       ],
       "archetypes": [
-        "engineering"
+        "automation-worker"
       ]
     },
     {
-      "id": "engineering.dependency-pins",
-      "label": "Pin all external dependency versions.",
+      "id": "automation-ops.execution-history",
+      "label": "Record execution logs, run ids, and operator-visible status.",
       "evidence_terms": [
-        "version",
-        "pin",
-        "requirements"
+        "execution history",
+        "run id",
+        "status"
       ],
       "archetypes": [
-        "engineering"
+        "automation-worker"
       ]
     },
     {
-      "id": "engineering.type-hints",
-      "label": "Use type hints on all public interfaces.",
+      "id": "automation-ops.operator-runbook",
+      "label": "Produce runbook, ownership, and failure handling.",
       "evidence_terms": [
-        "type hint",
-        "annotation",
-        "mypy"
+        "runbook",
+        "owner",
+        "failure"
       ],
       "archetypes": [
-        "engineering"
-      ]
-    },
-    {
-      "id": "engineering.test-coverage",
-      "label": "Verify implementation with focused unit and integration tests.",
-      "evidence_terms": [
-        "test",
-        "coverage",
-        "pytest"
-      ],
-      "archetypes": [
-        "engineering"
+        "automation-worker",
+        "ci-devops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "engineering.mixed-async-sync",
-      "description": "Mixed async and sync I/O in the same call chain without explicit bridging."
+      "id": "automation-ops.automation-without-dry-run",
+      "description": "Enables automation without dry-run or rollback evidence."
     },
     {
-      "id": "engineering.floating-deps",
-      "description": "Floating dependency versions causing reproducibility failures."
-    },
-    {
-      "id": "engineering.no-type-hints",
-      "description": "Missing type hints on public API surfaces."
+      "id": "automation-ops.queue-without-idempotency",
+      "description": "Designs queues without dedupe or replay safety."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.817761+00:00"
+  "generated_at": "2026-10-14T16:30:29.285883+00:00"
 }

@@ -2,84 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "mmo-onchain-security-audit",
   "role": "onchain-auditor",
-  "category": "security",
+  "category": "mmo-safe-ops",
   "core_competencies": [
     {
-      "id": "security.reentrancy-check",
-      "label": "Check for reentrancy vulnerabilities in all external calls.",
+      "id": "mmo-safe-ops.profile-inventory",
+      "label": "Maintain profile, account, device, and session inventory.",
       "evidence_terms": [
-        "reentrancy",
-        "external call",
-        "state change"
+        "profile",
+        "account",
+        "session"
       ],
       "archetypes": [
-        "security"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "security.access-control",
-      "label": "Verify access control on all privileged functions.",
+      "id": "mmo-safe-ops.quota-dedupe",
+      "label": "Use quotas, dedupe keys, and pacing controls.",
       "evidence_terms": [
-        "onlyOwner",
-        "modifier",
-        "access"
+        "quota",
+        "dedupe",
+        "pacing"
       ],
       "archetypes": [
-        "security"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "security.gas-analysis",
-      "label": "Analyze gas costs and potential DoS through gas exhaustion.",
+      "id": "mmo-safe-ops.policy-safe-api",
+      "label": "Prefer official APIs and policy-safe execution boundaries.",
       "evidence_terms": [
-        "gas",
-        "loop",
-        "DoS"
+        "official api",
+        "policy",
+        "scope"
       ],
       "archetypes": [
-        "security"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "security.integer-safety",
-      "label": "Check for integer overflow/underflow in arithmetic operations.",
+      "id": "mmo-safe-ops.operator-ledger",
+      "label": "Record redacted logs, run queues, and operator decisions.",
       "evidence_terms": [
-        "overflow",
-        "underflow",
-        "SafeMath"
+        "ledger",
+        "queue",
+        "redacted"
       ],
       "archetypes": [
-        "security"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "security.event-logging",
-      "label": "Verify critical state changes emit events for transparency.",
+      "id": "mmo-safe-ops.manual-review-gate",
+      "label": "Escalate risky or ambiguous actions to manual review.",
       "evidence_terms": [
-        "event",
-        "emit",
-        "log"
+        "manual review",
+        "risk",
+        "approval"
       ],
       "archetypes": [
-        "security"
+        "mmo-safe-ops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "security.missed-reentrancy",
-      "description": "Missing reentrancy check on external call."
+      "id": "mmo-safe-ops.platform-risk-blindness",
+      "description": "Ignores platform policy, consent, or quota boundaries."
     },
     {
-      "id": "security.no-access-control",
-      "description": "Privileged function without access control modifier."
-    },
-    {
-      "id": "security.unchecked-arithmetic",
-      "description": "Integer arithmetic without overflow protection."
+      "id": "mmo-safe-ops.bulk-action-without-ledger",
+      "description": "Designs bulk operations without audit or rollback evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:56.002058+00:00"
+  "generated_at": "2026-10-14T16:30:29.304072+00:00"
 }

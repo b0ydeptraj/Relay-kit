@@ -1,8 +1,11 @@
 ---
 name: memory-dumper
-description: "Dump process memory and scan for secrets, license keys, decryption keys, tokens, and crypto artifacts. Cross-platform: comsvcs.dll / MiniDumpWriteDump on Windows, /proc/mem on Linux."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs memory dumper: Dump process memory and scan for secrets, license keys, decryption keys, tokens, and crypto artifacts. Cross-platform: comsvcs.dll / MiniDumpWriteDump on Windows, /proc/mem on Linux."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Dump process memory and scan for secrets, license keys, decryption keys, tokens, and crypto artifacts.
 
 # Memory Dumper
 
@@ -118,3 +121,32 @@ python scripts/scan_memory.py dumps/target.dmp --cross-ref asar_strings.txt --ou
 | Dump after app exits | Dump while app is running with license active |
 | Skip cross-referencing | Compare memory strings with static analysis output |
 | Use only one dump method | Try comsvcs.dll first, fallback to ProcDump or API |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with memory-dumper findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside memory-dumper's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/memory-dumper-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/memory-dumper-good-output.md` and `examples/memory-dumper-bad-output.md` to calibrate output quality.
+- Use `evals/memory-dumper-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/memory-dumper-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- memory-dumper
+- reverse-hub
+- workflow-router

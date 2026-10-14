@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "tiktok-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_tiktok_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "tiktok-automation-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `tiktok-automation` to a Relay-kit lane: Use when automating TikTok operations at scale: account management, content posting, engagement automation (likes/follows/comments/views), T. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "tiktok-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_tiktok_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "tiktok-automation-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `tiktok-automation` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "tiktok-automation",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations"
+    ],
+    "expected_tests": [
+      "tests/test_tiktok_automation.py"
+    ],
+    "expected_evidence_terms": [
+      "tiktok",
+      "automation",
+      "automating",
+      "operations",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "tiktok-automation-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `tiktok-automation` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

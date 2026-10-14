@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "sbom-supply-chain-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor"
+    ],
+    "expected_tests": [
+      "tests/test_sbom_supply_chain_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sbom-supply-chain-auditor-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `sbom-supply-chain-auditor` to a Relay-kit lane: Use when a lane needs sbom supply chain auditor: Audit dependency manifests and lockfiles for SBOM extraction, risky install scripts, unpinn. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "sbom-supply-chain-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor"
+    ],
+    "expected_tests": [
+      "tests/test_sbom_supply_chain_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sbom-supply-chain-auditor-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `sbom-supply-chain-auditor` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "sbom-supply-chain-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor"
+    ],
+    "expected_tests": [
+      "tests/test_sbom_supply_chain_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "sbom",
+      "supply",
+      "chain",
+      "auditor",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sbom-supply-chain-auditor-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `sbom-supply-chain-auditor` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

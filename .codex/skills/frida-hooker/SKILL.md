@@ -1,8 +1,11 @@
 ---
 name: frida-hooker
-description: "Generate and inject Frida hooks for dynamic instrumentation — license bypass, SSL pinning bypass, function tracing, crypto interception, anti-debug bypass. Supports attach and spawn modes."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs frida hooker: Generate and inject Frida hooks for dynamic instrumentation — license bypass, SSL pinning bypass, function tracing, crypto interception, anti-debug bypass. Supports attach and spawn modes."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Generate and inject Frida hooks for dynamic instrumentation — license bypass, SSL pinning bypass, function tracing, crypto interception, anti-debug bypass.
 
 # Frida Hooker
 
@@ -114,3 +117,32 @@ Requires: `pip install frida-tools`
 | Hook too many functions at once | Start with targeted hooks, expand gradually |
 | Forget to handle exceptions in hooks | Always wrap hook body in try/catch |
 | Spawn without `--pause` when needed | Use spawn+resume for early hooks |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with frida-hooker findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside frida-hooker's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/frida-hooker-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/frida-hooker-good-output.md` and `examples/frida-hooker-bad-output.md` to calibrate output quality.
+- Use `evals/frida-hooker-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/frida-hooker-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- frida-hooker
+- reverse-hub
+- workflow-router

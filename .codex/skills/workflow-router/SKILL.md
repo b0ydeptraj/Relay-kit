@@ -97,3 +97,5 @@ Never end with vague advice. Always name the next skill, the artifact it should 
 - token-economy
 - offensive-security-engagement
 - mmo-authorization-gate
+- chrome-extension-builder
+- orchestrator-plugin-sdk

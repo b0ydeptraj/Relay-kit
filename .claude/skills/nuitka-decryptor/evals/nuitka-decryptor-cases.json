@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "nuitka-decryptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_nuitka_decryptor.py"
+    ],
+    "expected_evidence_terms": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "nuitka-decryptor-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `nuitka-decryptor` to a Relay-kit lane: Use when a lane needs nuitka decryptor: Reverse engineer and decrypt Nuitka-compiled Python applications. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "nuitka-decryptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_nuitka_decryptor.py"
+    ],
+    "expected_evidence_terms": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "nuitka-decryptor-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `nuitka-decryptor` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "nuitka-decryptor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_nuitka_decryptor.py"
+    ],
+    "expected_evidence_terms": [
+      "nuitka",
+      "decryptor",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "nuitka-decryptor-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `nuitka-decryptor` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "ssl-pinning-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile"
+    ],
+    "expected_tests": [
+      "tests/test_ssl_pinning_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ssl-pinning-bypass-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `ssl-pinning-bypass` to a Relay-kit lane: Use when mobile or desktop app SSL certificate pinning blocks MITM traffic interception. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "ssl-pinning-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile"
+    ],
+    "expected_tests": [
+      "tests/test_ssl_pinning_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ssl-pinning-bypass-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `ssl-pinning-bypass` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "ssl-pinning-bypass",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile"
+    ],
+    "expected_tests": [
+      "tests/test_ssl_pinning_bypass.py"
+    ],
+    "expected_evidence_terms": [
+      "ssl",
+      "pinning",
+      "bypass",
+      "mobile",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ssl-pinning-bypass-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `ssl-pinning-bypass` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

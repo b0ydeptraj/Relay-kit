@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "license-robustness-audit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "license",
+      "robustness",
+      "audit",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_license_robustness_audit.py"
+    ],
+    "expected_evidence_terms": [
+      "license",
+      "robustness",
+      "audit",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "license-robustness-audit-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `license-robustness-audit` to a Relay-kit lane: Use when a lane needs license robustness audit: Defensive audit of a license/entitlement/activation mechanism on software you own or are aut. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "license-robustness-audit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "license",
+      "robustness",
+      "audit",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_license_robustness_audit.py"
+    ],
+    "expected_evidence_terms": [
+      "license",
+      "robustness",
+      "audit",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "license-robustness-audit-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `license-robustness-audit` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "license-robustness-audit",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "license",
+      "robustness",
+      "audit",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_license_robustness_audit.py"
+    ],
+    "expected_evidence_terms": [
+      "license",
+      "robustness",
+      "audit",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "license-robustness-audit-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `license-robustness-audit` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

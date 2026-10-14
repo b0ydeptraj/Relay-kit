@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "sandbox-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware"
+    ],
+    "expected_tests": [
+      "tests/test_sandbox_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sandbox-evasion-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `sandbox-evasion` to a Relay-kit lane: Use when a payload or malware sample needs to evade automated sandbox analysis (Any. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "sandbox-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware"
+    ],
+    "expected_tests": [
+      "tests/test_sandbox_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sandbox-evasion-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `sandbox-evasion` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "sandbox-evasion",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware"
+    ],
+    "expected_tests": [
+      "tests/test_sandbox_evasion.py"
+    ],
+    "expected_evidence_terms": [
+      "sandbox",
+      "evasion",
+      "payload",
+      "malware",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "sandbox-evasion-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `sandbox-evasion` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

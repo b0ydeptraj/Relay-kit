@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "web-logic-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "web",
+      "logic",
+      "auditor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_web_logic_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "web",
+      "logic",
+      "auditor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "web-logic-auditor-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `web-logic-auditor` to a Relay-kit lane: Use when a lane needs web logic auditor: Authorized testing of access-control and business-logic flaws that pattern scanners cannot find — I. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "web-logic-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "web",
+      "logic",
+      "auditor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_web_logic_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "web",
+      "logic",
+      "auditor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "web-logic-auditor-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `web-logic-auditor` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "web-logic-auditor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "web",
+      "logic",
+      "auditor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_web_logic_auditor.py"
+    ],
+    "expected_evidence_terms": [
+      "web",
+      "logic",
+      "auditor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "web-logic-auditor-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `web-logic-auditor` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

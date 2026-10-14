@@ -1,7 +1,11 @@
 ---
 name: sbom-supply-chain-auditor
-description: Audit dependency manifests and lockfiles for SBOM extraction, risky install scripts, unpinned versions, remote/git dependency sources, dependency-confusion and typosquat/known-malicious package names, lockfile integrity gaps, copyleft license risk, and secret-like values.
+description: "Use when a lane needs sbom supply chain auditor: Audit dependency manifests and lockfiles for SBOM extraction, risky install scripts, unpinned versions, remote/git dependency sources, dependency-confusion and typosquat/known-malicious package names, lockfile integrity gaps, copyleft license risk, and secret-like values."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Audit dependency manifests and lockfiles for SBOM extraction, risky install scripts, unpinned versions, remote/git dependency sources, dependency-confusion and typosquat/known-malicious package names, lockfile integrity gaps, copyleft license risk, and secret-like values.
 
 # SBOM Supply Chain Auditor
 
@@ -28,12 +32,31 @@ Use after source recovery or on application repos to identify dependency and sup
 
 > Heuristic, not a CVE feed. Typosquat/known-malicious lists are a curated subset — pair with a vulnerability database for full coverage.
 
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
 ## Outputs
+- .relay-kit/contracts/investigation-notes.md with sbom-supply-chain-auditor findings
+- answered/partial/unresolved verdict with evidence
 
-- `findings.json`
-- `REPORT.md`
+## Reference skills and rules
+- Route anything outside sbom-supply-chain-auditor's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/sbom-supply-chain-auditor-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/sbom-supply-chain-auditor-good-output.md` and `examples/sbom-supply-chain-auditor-bad-output.md` to calibrate output quality.
+- Use `evals/sbom-supply-chain-auditor-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/sbom-supply-chain-auditor-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
-## Anti-Patterns
-
-- Do not claim CVE coverage without integrating a vulnerability database.
-- Do not auto-update dependencies from this skill.
+## Likely next step
+- sbom-supply-chain-auditor
+- offensive-security-engagement
+- workflow-router

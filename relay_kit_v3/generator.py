@@ -21,6 +21,7 @@ from .registry import (
     DELIVERY_SUPPORT_SKILLS,
     DISCIPLINE_UTILITY_SKILLS,
     DOC_RENDERERS,
+    EXTENSION_PACK_SKILLS,
     LEGACY_ROLE_MAP,
     MMO_AUTHORIZATION_GATE_SKILL,
     NATIVE_SUPPORT_SKILLS,
@@ -85,6 +86,7 @@ BUNDLES: Dict[str, List[str]] = {
         list(MMO_AUTHORIZATION_GATE_SKILL.keys()),
         list(DISCIPLINE_UTILITY_SKILLS.keys()),
         list(OFFENSIVE_TOOL_PACK_SKILLS.keys()),
+        list(EXTENSION_PACK_SKILLS.keys()),
         # Public entrypoint shims are emitted as facades (emit_public_entrypoint_facades),
         # not as registry skills, so they are intentionally absent from every bundle.
     ),

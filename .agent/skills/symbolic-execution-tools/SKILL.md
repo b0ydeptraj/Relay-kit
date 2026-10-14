@@ -1,8 +1,11 @@
 ---
 name: symbolic-execution-tools
-description: "Symbolic execution and constraint solving with angr, Z3, Unicorn, and Qiling. Activate when license logic, crackmes, or VM input puzzles need automated path exploration and input synthesis."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs symbolic execution tools: Symbolic execution and constraint solving with angr, Z3, Unicorn, and Qiling. Activate when license logic, crackmes, or VM input puzzles need automated path exploration and input synthesis."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Symbolic execution and constraint solving with angr, Z3, Unicorn, and Qiling.
 
 # Symbolic Execution Tools
 
@@ -183,3 +186,32 @@ Good for malware/firmware where OS calls matter and you don't want to keep porti
 ▶  Tiếp:
    binary-patcher (vá vĩnh viễn) hoặc writerpro-pentest (sinh keygen từ ràng buộc).
 ```
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with symbolic-execution-tools findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside symbolic-execution-tools's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/symbolic-execution-tools-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/symbolic-execution-tools-good-output.md` and `examples/symbolic-execution-tools-bad-output.md` to calibrate output quality.
+- Use `evals/symbolic-execution-tools-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/symbolic-execution-tools-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- symbolic-execution-tools
+- reverse-hub
+- workflow-router

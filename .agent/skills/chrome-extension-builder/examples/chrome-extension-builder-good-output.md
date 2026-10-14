@@ -1,21 +1,16 @@
-# chrome-extension-builder Good Output Example
+# chrome-extension-builder - strong example
 
-## User Request
-"Create a hardened Chrome extension that automates answering questions on a protected LMS web portal and handles cross-origin embedded YouTube videos."
+**Request:** a scoped, authorized task that matches `chrome-extension-builder`.
 
-## Expected Good Output Structure
+**Response shape that passes the contract:**
 
-1. **Architecture Boundary Statement**:
-   - Identifies Manifest V3 compliance requirements.
-   - Declares isolated world vs main world boundaries.
-   - Implements background service worker proxying to avoid host CSP restrictions.
+Scope check: the target matches `chrome-extension-builder` (use when designing, building, or hardening production-grade chrome/chromium extensions (manifest v3) for browser automation, dom/iframe injection, network interception, anti-detection bypass, or workflow acceleration); staying in this lane, not widening it.
 
-2. **Source Artifacts**:
-   - **`manifest.json`**: Minimal permissions (`storage`, exact host permissions, `all_frames: true` for video embeds).
-   - **`background.js`**: Resilient message handling, transient error retry support, off-page network routing.
-   - **`content.js`**: Zero-polling `MutationObserver` selector waiting, `AbortController` signal pipeline, bounded timeouts (15s skip for non-critical steps).
-   - **`youtube-frame.js`**: Cross-origin `postMessage` RPC bridge, autoplay bypass (`muted`, `volume=0`), resilient seek.
+Findings, each anchored to evidence:
+- observation: a concrete artifact/command result tied to chrome, extension, builder, cited by path or output id.
+- inference: what the observation implies, marked as inference, with a confidence level.
+- unknown: what was not covered, stated as a bounded gap rather than a certainty.
 
-3. **Verifiable Test Proof**:
-   - Executes unit tests using standard `node --test tests/*.test.cjs`.
-   - Produces passing test output with zero skipped or failed assertions.
+Verdict: the question is answered, partially answered, or unresolved - stated explicitly, with the residual risk and the next skill (`workflow-router` or a sibling) that should continue.
+
+Nothing is called confirmed without the command output or artifact that proves it.

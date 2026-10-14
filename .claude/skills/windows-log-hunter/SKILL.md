@@ -1,8 +1,11 @@
 ---
 name: windows-log-hunter
-description: "Blue-team CLI threat hunt over Windows Event Logs. Sweeps high-signal security events (failed logons, new accounts/services, cleared logs, PowerShell, Sysmon) via native PowerShell or Hayabusa/Sigma, and produces a triaged findings report."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs windows log hunter: Blue-team CLI threat hunt over Windows Event Logs. Sweeps high-signal security events (failed logons, new accounts/services, cleared logs, PowerShell, Sysmon) via native PowerShell or Hayabusa/Sigma, and produces a triaged findings report."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Blue-team CLI threat hunt over Windows Event Logs.
 
 # Windows Log Hunter
 
@@ -109,3 +112,32 @@ python windows-log-hunter\scripts\parse_findings.py output\hunt\events.json --ki
 4. Correlate suspicious **4104 PowerShell** and **4688 process** events against the timestamps above.
 
 All output is for **defensive** response: containment, account review, persistence removal, and detection tuning.
+
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with windows-log-hunter findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside windows-log-hunter's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/windows-log-hunter-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/windows-log-hunter-good-output.md` and `examples/windows-log-hunter-bad-output.md` to calibrate output quality.
+- Use `evals/windows-log-hunter-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/windows-log-hunter-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- windows-log-hunter
+- offensive-security-engagement
+- workflow-router

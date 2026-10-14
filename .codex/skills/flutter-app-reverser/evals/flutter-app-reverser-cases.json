@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "flutter-app-reverser",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse"
+    ],
+    "expected_tests": [
+      "tests/test_flutter_app_reverser.py"
+    ],
+    "expected_evidence_terms": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "flutter-app-reverser-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `flutter-app-reverser` to a Relay-kit lane: Use when reverse engineering Flutter apps (Android APK or iOS IPA). Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "flutter-app-reverser",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse"
+    ],
+    "expected_tests": [
+      "tests/test_flutter_app_reverser.py"
+    ],
+    "expected_evidence_terms": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "flutter-app-reverser-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `flutter-app-reverser` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "flutter-app-reverser",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse"
+    ],
+    "expected_tests": [
+      "tests/test_flutter_app_reverser.py"
+    ],
+    "expected_evidence_terms": [
+      "flutter",
+      "app",
+      "reverser",
+      "reverse",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "flutter-app-reverser-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `flutter-app-reverser` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

@@ -4,6 +4,9 @@ description: "Use when MMO automation hits CAPTCHA at scale: manage CAPTCHA solv
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when MMO automation hits CAPTCHA at scale: manage CAPTCHA solving farm with multiple API keys, rate optimization, cost tracking, and failover between services (2captcha, CapMonster, AntiCaptcha, DeathByCaptcha).
+
 # CAPTCHA Farm Management
 
 > Manage a pool of CAPTCHA solving API keys with rate limits, cost tracking, and failover.
@@ -34,23 +37,30 @@ Maximize CAPTCHA solving throughput while minimizing cost and API key ban risk a
 - failover events logged with reason
 
 ## Role
-- captcha-farm-operator
+- mmo-automation-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- captcha_api_keys.json (service → key list)
-- target CAPTCHA type
-- volume target (solves/hour)
-- budget cap
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- solve_log.jsonl (timestamp, service, type, elapsed, cost, success)
-- key_health_report.json (balance, rate, ban_status per key)
-- throughput_report.json
+- .relay-kit/contracts/investigation-notes.md with mmo-captcha-farm findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside mmo-captcha-farm's scope back through `mmo-authorization-gate` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/mmo-captcha-farm-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/mmo-captcha-farm-good-output.md` and `examples/mmo-captcha-farm-bad-output.md` to calibrate output quality.
+- Use `evals/mmo-captcha-farm-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/mmo-captcha-farm-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- antibot-challenge-solving
-- mmo-browser-fleet-automation
-- mmo-account-operations
+- mmo-captcha-farm
+- mmo-authorization-gate
+- workflow-router

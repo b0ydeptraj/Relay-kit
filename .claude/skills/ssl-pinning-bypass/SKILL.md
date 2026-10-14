@@ -4,6 +4,9 @@ description: "Use when mobile or desktop app SSL certificate pinning blocks MITM
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when mobile or desktop app SSL certificate pinning blocks MITM traffic interception.
+
 # SSL Pinning Bypass
 
 > Bypass certificate pinning in mobile and desktop apps for authorized traffic analysis.
@@ -35,13 +38,30 @@ Intercept HTTPS traffic from apps with SSL pinning by dynamically patching the p
 - sample intercepted request documented
 
 ## Role
-- ssl-pinning-specialist
+- reverse-engineering-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with ssl-pinning-bypass findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside ssl-pinning-bypass's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/ssl-pinning-bypass-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/ssl-pinning-bypass-good-output.md` and `examples/ssl-pinning-bypass-bad-output.md` to calibrate output quality.
+- Use `evals/ssl-pinning-bypass-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/ssl-pinning-bypass-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- frida-hooker
-- android-apk-pentester
-- mobile-app-reverse
-- network-interceptor
+- ssl-pinning-bypass
+- reverse-hub
+- workflow-router

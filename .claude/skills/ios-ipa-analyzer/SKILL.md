@@ -4,6 +4,9 @@ description: "Use when analyzing iOS IPA files for reverse engineering, security
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when analyzing iOS IPA files for reverse engineering, security research, or app analysis.
+
 # iOS IPA Analyzer
 
 > Static analysis of iOS IPA application packages.
@@ -28,13 +31,30 @@ Analyze iOS IPA files to understand app structure, identify security issues, and
 - [ ] URL schemes registered
 
 ## Role
-- ios-security-researcher
+- reverse-engineering-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with ios-ipa-analyzer findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside ios-ipa-analyzer's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/ios-ipa-analyzer-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/ios-ipa-analyzer-good-output.md` and `examples/ios-ipa-analyzer-bad-output.md` to calibrate output quality.
+- Use `evals/ios-ipa-analyzer-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/ios-ipa-analyzer-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- ssl-pinning-bypass
-- mobile-app-reverse
-- frida-hooker
-- android-apk-pentester
+- ios-ipa-analyzer
+- reverse-hub
+- workflow-router

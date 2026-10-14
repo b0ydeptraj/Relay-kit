@@ -1,8 +1,11 @@
 ---
 name: binary-patcher
-description: Expert methodology for binary patching and bypass development. Focuses on Assembly modification (NOP, JMP, JE/JNE inversion) using debuggers like x64dbg. Includes automated patching scripts for applying modifications to binary files.
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs binary patcher: Expert methodology for binary patching and bypass development. Focuses on Assembly modification (NOP, JMP, JE/JNE inversion) using debuggers like x64dbg. Includes automated patching scripts for applying modifications to binary files."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Expert methodology for binary patching and bypass development.
 
 # Binary Patcher Skill
 
@@ -99,3 +102,32 @@ python scripts\apply_patch.py laragon.exe --patch 0x61C14 7505 9090 --out cracke
 | Patch without verification | Always check the "Original Hex" matches before applying a patch |
 | Modify sizes | Ensure `PATCH_HEX` is the same byte length as `ORIGINAL_HEX` (use `90` for padding) |
 | Forget the File Offset | x64dbg shows memory addresses (VA); you need file offsets for permanent patching |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with binary-patcher findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside binary-patcher's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/binary-patcher-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/binary-patcher-good-output.md` and `examples/binary-patcher-bad-output.md` to calibrate output quality.
+- Use `evals/binary-patcher-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/binary-patcher-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- binary-patcher
+- reverse-hub
+- workflow-router

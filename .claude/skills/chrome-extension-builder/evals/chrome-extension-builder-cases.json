@@ -1,35 +1,92 @@
 [
   {
-    "id": "chrome-extension-builder-scaffold-eval",
     "skill": "chrome-extension-builder",
-    "repo_profile": "Chromium Manifest V3 extension repository with service worker, content scripts, popup, and automated tests",
-    "task": "Build a hardened Chrome Manifest V3 extension for automated web interactions with CSP bypass and zero busy-polling.",
     "expected_files": [
-      "manifest.json",
-      "background.js",
-      "content.js",
-      "popup.html"
+      "relay_kit_v3/registry/extension_pack_skills.py"
     ],
     "expected_symbols": [
-      "MutationObserver",
-      "AbortController",
-      "chrome.runtime.onMessage"
+      "chrome",
+      "extension",
+      "builder",
+      "designing"
     ],
     "expected_tests": [
-      "tests/extension.test.cjs"
+      "tests/test_chrome_extension_builder.py"
     ],
     "expected_evidence_terms": [
-      "Manifest V3",
-      "service worker",
-      "MutationObserver",
-      "CSP bypass",
-      "isTrusted"
+      "chrome",
+      "extension",
+      "builder",
+      "designing",
+      "evidence"
     ],
     "bad_answer_traps": [
-      "manifest_version 2",
-      "setInterval polling",
-      "window global pollution",
-      "unhandled worker teardown"
-    ]
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "chrome-extension-builder-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `chrome-extension-builder` to a Relay-kit lane: Use when designing, building, or hardening production-grade Chrome/Chromium extensions (Manifest V3) for browser automation, DOM/iframe inje. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "chrome-extension-builder",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "chrome",
+      "extension",
+      "builder",
+      "designing"
+    ],
+    "expected_tests": [
+      "tests/test_chrome_extension_builder.py"
+    ],
+    "expected_evidence_terms": [
+      "chrome",
+      "extension",
+      "builder",
+      "designing",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "chrome-extension-builder-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `chrome-extension-builder` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "chrome-extension-builder",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "chrome",
+      "extension",
+      "builder",
+      "designing"
+    ],
+    "expected_tests": [
+      "tests/test_chrome_extension_builder.py"
+    ],
+    "expected_evidence_terms": [
+      "chrome",
+      "extension",
+      "builder",
+      "designing",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "chrome-extension-builder-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `chrome-extension-builder` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
   }
 ]

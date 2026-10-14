@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "dotnet-patcher",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_dotnet_patcher.py"
+    ],
+    "expected_evidence_terms": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "dotnet-patcher-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `dotnet-patcher` to a Relay-kit lane: Use when a lane needs dotnet patcher: Patch . Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "dotnet-patcher",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_dotnet_patcher.py"
+    ],
+    "expected_evidence_terms": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "dotnet-patcher-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `dotnet-patcher` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "dotnet-patcher",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs"
+    ],
+    "expected_tests": [
+      "tests/test_dotnet_patcher.py"
+    ],
+    "expected_evidence_terms": [
+      "dotnet",
+      "patcher",
+      "lane",
+      "needs",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "dotnet-patcher-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `dotnet-patcher` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

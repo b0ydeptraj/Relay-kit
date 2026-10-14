@@ -4,6 +4,9 @@ description: "Use when MMO operations need anti-detection browser management: Go
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when MMO operations need anti-detection browser management: GoLogin, Multilogin, AdsPower, Dolphin Anty, or custom Chrome profile isolation with fingerprint spoofing for multi-account automation without detection.
+
 # Anti-Detection Browser Fleet Management
 
 > Manage multi-profile anti-detection browsers for MMO operations with full fingerprint isolation.
@@ -35,25 +38,30 @@ Operate browser profiles with complete fingerprint isolation per account: unique
 | DIY Chromium | No API | Unlimited | Manual via JS injection |
 
 ## Role
-- antidetect-browser-operator
+- mmo-automation-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- platform account credentials
-- proxy list (residential preferred)
-- target platform (TikTok/Facebook/Shopee/etc.)
-- number of profiles needed
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
 
 ## Outputs
-- profile_inventory.json (id, proxy, fingerprint_hash, last_run, status)
-- launch scripts per platform
-- fingerprint test report
+- .relay-kit/contracts/investigation-notes.md with mmo-anti-detection-browser findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside mmo-anti-detection-browser's scope back through `mmo-authorization-gate` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/mmo-anti-detection-browser-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/mmo-anti-detection-browser-good-output.md` and `examples/mmo-anti-detection-browser-bad-output.md` to calibrate output quality.
+- Use `evals/mmo-anti-detection-browser-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/mmo-anti-detection-browser-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-proxy-network-ops
-- mmo-identity-infrastructure
-- browser-fingerprint-engineering
-- antibot-challenge-solving
-- mmo-nick-warmup-engine
+- mmo-anti-detection-browser
+- mmo-authorization-gate
+- workflow-router

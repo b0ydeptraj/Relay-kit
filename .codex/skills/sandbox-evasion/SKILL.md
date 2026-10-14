@@ -4,6 +4,9 @@ description: "Use when a payload or malware sample needs to evade automated sand
 allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
 
+# Mission
+Use when a payload or malware sample needs to evade automated sandbox analysis (Any.
+
 # Sandbox Evasion
 
 > Detect and evade automated malware analysis sandboxes for authorized red team payloads.
@@ -37,13 +40,30 @@ Ensure payload only executes in genuine target environments, not automated analy
 - test result: executes on real target, skips on sandbox
 
 ## Role
-- sandbox-evasion-specialist
+- offensive-security-specialist
 
 ## Layer
 - layer-4-specialists-and-standalones
 
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with sandbox-evasion findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside sandbox-evasion's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/sandbox-evasion-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/sandbox-evasion-good-output.md` and `examples/sandbox-evasion-bad-output.md` to calibrate output quality.
+- Use `evals/sandbox-evasion-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/sandbox-evasion-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
 ## Likely next step
-- edr-evasion-tactics
-- binary-stealth-obfuscation
-- anti-debugging-techniques
-- binary-protection-bypass
+- sandbox-evasion
+- offensive-security-engagement
+- workflow-router

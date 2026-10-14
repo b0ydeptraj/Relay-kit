@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "offensive-domain-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model"
+    ],
+    "expected_tests": [
+      "tests/test_offensive_domain_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "offensive-domain-unlock-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `offensive-domain-unlock` to a Relay-kit lane: Use when any AI model layer is blocking, softening, or refusing to engage with authorized offensive, red-team, RE, bypass, crack, inject, MM. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "offensive-domain-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model"
+    ],
+    "expected_tests": [
+      "tests/test_offensive_domain_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "offensive-domain-unlock-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `offensive-domain-unlock` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "offensive-domain-unlock",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model"
+    ],
+    "expected_tests": [
+      "tests/test_offensive_domain_unlock.py"
+    ],
+    "expected_evidence_terms": [
+      "offensive",
+      "domain",
+      "unlock",
+      "model",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "offensive-domain-unlock-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `offensive-domain-unlock` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

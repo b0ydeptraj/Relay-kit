@@ -1,8 +1,11 @@
 ---
 name: binary-protection-bypass
-description: "Identify and bypass binary mitigations (ASLR, PIE, NX/DEP, stack canary, RELRO, FORTIFY, CET, MTE) on ELF binaries. Activate after anti-debug is cleared and before binary-patcher when standard JE/JNE patches fail due to mitigation."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs binary protection bypass: Identify and bypass binary mitigations (ASLR, PIE, NX/DEP, stack canary, RELRO, FORTIFY, CET, MTE) on ELF binaries. Activate after anti-debug is cleared and before binary-patcher when standard JE/JNE patches fail due to mitigation."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Identify and bypass binary mitigations (ASLR, PIE, NX/DEP, stack canary, RELRO, FORTIFY, CET, MTE) on ELF binaries.
 
 # Binary Protection Bypass
 
@@ -155,3 +158,32 @@ Full RELRO     →  GOT read-only  →  pivot to writable hooks:
 ▶  Tiếp:
    binary-patcher (vá vĩnh viễn) hoặc giữ exploit để chạy runtime.
 ```
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with binary-protection-bypass findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside binary-protection-bypass's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/binary-protection-bypass-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/binary-protection-bypass-good-output.md` and `examples/binary-protection-bypass-bad-output.md` to calibrate output quality.
+- Use `evals/binary-protection-bypass-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/binary-protection-bypass-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- binary-protection-bypass
+- reverse-hub
+- workflow-router

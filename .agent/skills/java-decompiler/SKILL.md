@@ -1,8 +1,11 @@
 ---
 name: java-decompiler
-description: "Decompile Java applications (JAR/WAR/APK/class) — extract archives, detect obfuscators, decompile bytecode to source, analyse license logic and secrets."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs java decompiler: Decompile Java applications (JAR/WAR/APK/class) — extract archives, detect obfuscators, decompile bytecode to source, analyse license logic and secrets."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Decompile Java applications (JAR/WAR/APK/class) — extract archives, detect obfuscators, decompile bytecode to source, analyse license logic and secrets.
 
 # Java Decompiler
 
@@ -53,27 +56,31 @@ python java-decompiler/scripts/analyze_java.py output/java-decompiled --out outp
 | **JADX** | Android APK (dex → java directly) | `pip install jadx` or download |
 | **javap** | Fallback bytecode listing | Included with JDK |
 
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
 ## Outputs
+- .relay-kit/contracts/investigation-notes.md with java-decompiler findings
+- answered/partial/unresolved verdict with evidence
 
-| File | Content |
-|------|---------|
-| `src/` | Decompiled .java source files |
-| `manifest.json` | Parsed MANIFEST.MF + entry points |
-| `obfuscation.json` | Detected obfuscator + evidence |
-| `java_analysis.json` | License logic, secrets, endpoints, dependencies |
+## Reference skills and rules
+- Route anything outside java-decompiler's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/java-decompiler-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/java-decompiler-good-output.md` and `examples/java-decompiler-bad-output.md` to calibrate output quality.
+- Use `evals/java-decompiler-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/java-decompiler-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
-## When to use
-
-- `binary-identifier` reports **Java** language
-- Target is a `.jar`, `.war`, `.ear`, `.apk`, or `.class` file
-- Target contains `META-INF/MANIFEST.MF` or `classes.dex`
-
-## Anti-patterns
-
-| Mistake | Fix |
-|---------|-----|
-| Using only one decompiler | CFR fails on some patterns → fallback to Procyon/FernFlower |
-| Ignoring MANIFEST.MF | Contains Main-Class, classpath, version — always parse |
-| Skipping obfuscator detection | Deobfuscate first (string decryption) for readable output |
-| Treating APK as JAR | APK uses DEX bytecode — needs dex2jar or JADX, not cfr directly |
-| Missing inner classes | Inner classes are separate .class files — decompile the whole JAR |
+## Likely next step
+- java-decompiler
+- reverse-hub
+- workflow-router

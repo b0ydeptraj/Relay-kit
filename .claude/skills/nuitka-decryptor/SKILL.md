@@ -1,8 +1,11 @@
 ---
 name: nuitka-decryptor
-description: Reverse engineer and decrypt Nuitka-compiled Python applications. Extracts encryption keys from PE binaries (.pyd), analyzes binary constants, and bulk-decrypts XOR+Base64 encrypted source files. Use when given a compiled Python app with .encrypted source files, .pyd Nuitka modules, or asked to reverse engineer / decrypt app source code.
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs nuitka decryptor: Reverse engineer and decrypt Nuitka-compiled Python applications. Extracts encryption keys from PE binaries (.pyd), analyzes binary constants, and bulk-decrypts XOR+Base64 encrypted source files. Use when given a compiled Python app with .encrypted source files, .pyd Nuitka modules, or asked to reverse engineer / decrypt app source code."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Reverse engineer and decrypt Nuitka-compiled Python applications.
 
 # Nuitka Decryptor Skill
 
@@ -262,3 +265,32 @@ print("Key confirmed:", key)
 | Decrypt without checking MANIFEST | Some files may be absent — track success/fail counts |
 | Use only one section (.rsrc) | Check both `.rsrc` and `.rdata` for marshal blobs |
 | Present findings in English | Always deliver final summary in Vietnamese |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with nuitka-decryptor findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside nuitka-decryptor's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/nuitka-decryptor-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/nuitka-decryptor-good-output.md` and `examples/nuitka-decryptor-bad-output.md` to calibrate output quality.
+- Use `evals/nuitka-decryptor-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/nuitka-decryptor-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- nuitka-decryptor
+- reverse-hub
+- workflow-router

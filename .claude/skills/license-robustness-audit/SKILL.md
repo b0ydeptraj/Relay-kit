@@ -1,8 +1,11 @@
 ---
 name: license-robustness-audit
-description: "Defensive audit of a license/entitlement/activation mechanism on software you own or are authorized to test. Maps the validation surface, flags design weaknesses that make checks easy to abuse, and produces hardening guidance plus an allow/deny test scaffold — without generating keygens, patches, or bypasses."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs license robustness audit: Defensive audit of a license/entitlement/activation mechanism on software you own or are authorized to test. Maps the validation surface, flags design weaknesses that make checks easy to abuse, and produces hardening guidance plus an allow/deny test scaffold — without generating keygens, patches, or bypasses."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Defensive audit of a license/entitlement/activation mechanism on software you own or are authorized to test.
 
 # License Robustness Audit
 
@@ -78,3 +81,32 @@ Outputs in `--out`:
 5. **Fail closed** on any error; add tamper-evidence and verification telemetry.
 
 Use the generated test scaffold to lock in correct allow/deny behavior as a regression guard.
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with license-robustness-audit findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside license-robustness-audit's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/license-robustness-audit-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/license-robustness-audit-good-output.md` and `examples/license-robustness-audit-bad-output.md` to calibrate output quality.
+- Use `evals/license-robustness-audit-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/license-robustness-audit-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- license-robustness-audit
+- reverse-hub
+- workflow-router

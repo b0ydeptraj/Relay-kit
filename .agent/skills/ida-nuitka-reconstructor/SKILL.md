@@ -1,8 +1,11 @@
 ---
 name: ida-nuitka-reconstructor
-description: "Reconstruct Python source code from Nuitka-compiled binaries (.dll/.exe/.pyd) by extracting serialized constants from PE .rsrc/.rdata sections and using IDA Pro MCP for live decompilation. Use when the target is a Nuitka onefile/standalone binary with NO .encrypted files — the Python is compiled to C, not encrypted."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs ida nuitka reconstructor: Reconstruct Python source code from Nuitka-compiled binaries (.dll/.exe/.pyd) by extracting serialized constants from PE .rsrc/.rdata sections and using IDA Pro MCP for live decompilation. Use when the target is a Nuitka onefile/standalone binary with NO .encrypted files — the Python is compiled to C, not encrypted."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Reconstruct Python source code from Nuitka-compiled binaries (.
 
 # IDA + Nuitka Source Reconstructor
 
@@ -262,3 +265,32 @@ python reconstructed/main.py
 | Try to decompile Nuitka C code back to Python | Extract constants and reconstruct — C decompilation gives Nuitka runtime, not original Python |
 | Skip IDA when available | IDA provides function structure and xrefs that improve reconstruction accuracy |
 | Present findings in English | Always deliver final summary in Vietnamese |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with ida-nuitka-reconstructor findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside ida-nuitka-reconstructor's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/ida-nuitka-reconstructor-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/ida-nuitka-reconstructor-good-output.md` and `examples/ida-nuitka-reconstructor-bad-output.md` to calibrate output quality.
+- Use `evals/ida-nuitka-reconstructor-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/ida-nuitka-reconstructor-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- ida-nuitka-reconstructor
+- reverse-hub
+- workflow-router

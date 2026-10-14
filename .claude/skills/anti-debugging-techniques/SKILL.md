@@ -1,8 +1,11 @@
 ---
 name: anti-debugging-techniques
-description: "Anti-debug detection and bypass for protected binaries. Activate before patching commercial apps that use ptrace/PEB/timing/exception checks on Linux or Windows."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs anti debugging techniques: Anti-debug detection and bypass for protected binaries. Activate before patching commercial apps that use ptrace/PEB/timing/exception checks on Linux or Windows."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Anti-debug detection and bypass for protected binaries.
 
 # Anti-Debugging Techniques
 
@@ -146,3 +149,32 @@ Interceptor.replace(
    binary-protection-bypass (nếu ASLR/PIE chặn patch)
    → binary-patcher (vá license check)
 ```
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with anti-debugging-techniques findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside anti-debugging-techniques's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/anti-debugging-techniques-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/anti-debugging-techniques-good-output.md` and `examples/anti-debugging-techniques-bad-output.md` to calibrate output quality.
+- Use `evals/anti-debugging-techniques-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/anti-debugging-techniques-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- anti-debugging-techniques
+- reverse-hub
+- workflow-router

@@ -1,8 +1,11 @@
 ---
 name: dotnet-decompiler
-description: "Automated .NET/C# decompilation and security analysis. Uses ilspycmd for batch decompilation with manual IL fallback. Detects obfuscators (ConfuserEx, .NET Reactor, Babel) and scans for license logic, API keys, and protection patterns."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs dotnet decompiler: Automated .NET/C# decompilation and security analysis. Uses ilspycmd for batch decompilation with manual IL fallback. Detects obfuscators (ConfuserEx, .NET Reactor, Babel) and scans for license logic, API keys, and protection patterns."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Automated.
 
 # .NET Decompiler & Analyzer
 
@@ -126,3 +129,32 @@ Scans for:
 | Use only GUI tools (dnSpy) | ilspycmd automates batch decompilation |
 | Ignore string encryption | ConfuserEx encrypts strings — look for decryptor methods |
 | Present findings in English | Final summary in Vietnamese |
+
+## Role
+- reverse-engineering-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with dotnet-decompiler findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside dotnet-decompiler's scope back through `reverse-hub` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/dotnet-decompiler-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/dotnet-decompiler-good-output.md` and `examples/dotnet-decompiler-bad-output.md` to calibrate output quality.
+- Use `evals/dotnet-decompiler-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/dotnet-decompiler-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- dotnet-decompiler
+- reverse-hub
+- workflow-router

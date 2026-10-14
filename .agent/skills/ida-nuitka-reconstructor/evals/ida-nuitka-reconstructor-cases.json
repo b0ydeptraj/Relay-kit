@@ -1,0 +1,92 @@
+[
+  {
+    "skill": "ida-nuitka-reconstructor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_ida_nuitka_reconstructor.py"
+    ],
+    "expected_evidence_terms": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ida-nuitka-reconstructor-battle-read-first",
+    "repo_profile": "Relay-kit extension pack where the skill body ships in the registry module",
+    "task": "Apply `ida-nuitka-reconstructor` to a Relay-kit lane: Use when a lane needs ida nuitka reconstructor: Reconstruct Python source code from Nuitka-compiled binaries (. Cite the registry entry first and separate evidence from inference."
+  },
+  {
+    "skill": "ida-nuitka-reconstructor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_ida_nuitka_reconstructor.py"
+    ],
+    "expected_evidence_terms": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ida-nuitka-reconstructor-battle-evidence-anchor",
+    "repo_profile": "read-only Relay-kit benchmark clone; no install, no build, no execution",
+    "task": "Run `ida-nuitka-reconstructor` as a read-only review, name the files and symbols first, and state what evidence is still missing."
+  },
+  {
+    "skill": "ida-nuitka-reconstructor",
+    "expected_files": [
+      "relay_kit_v3/registry/extension_pack_skills.py"
+    ],
+    "expected_symbols": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane"
+    ],
+    "expected_tests": [
+      "tests/test_ida_nuitka_reconstructor.py"
+    ],
+    "expected_evidence_terms": [
+      "ida",
+      "nuitka",
+      "reconstructor",
+      "lane",
+      "evidence"
+    ],
+    "bad_answer_traps": [
+      "guessing without evidence",
+      "advice without the artifact",
+      "claiming done without proof"
+    ],
+    "id": "ida-nuitka-reconstructor-battle-weakness-trap",
+    "repo_profile": "deep Relay-kit fixture with an explicit overclaim trap",
+    "task": "Score `ida-nuitka-reconstructor` against a deep case, avoid guessing from names, and mark each claim validated or unresolved."
+  }
+]

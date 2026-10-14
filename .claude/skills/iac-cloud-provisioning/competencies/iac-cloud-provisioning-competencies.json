@@ -2,84 +2,82 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "iac-cloud-provisioning",
   "role": "infrastructure-engineer",
-  "category": "infrastructure",
+  "category": "routing-orchestration",
   "core_competencies": [
     {
-      "id": "iac.plan-before-apply",
-      "label": "Read the plan diff and state create/update/replace/destroy counts before apply.",
+      "id": "routing-orchestration.intent-routing",
+      "label": "Choose the right next skill from a compact or ambiguous request.",
       "evidence_terms": [
-        "plan diff",
-        "replace",
-        "destroy"
+        "route",
+        "intent",
+        "skill"
       ],
       "archetypes": [
-        "infrastructure"
+        "orchestrator",
+        "unknown-domain"
       ]
     },
     {
-      "id": "iac.state-discipline",
-      "label": "Name the state backend and locking; keep state honest against drift.",
+      "id": "routing-orchestration.ask-act-scout",
+      "label": "Decide whether to act, ask one question, or scout first.",
       "evidence_terms": [
-        "state backend",
-        "lock",
-        "drift"
+        "ask",
+        "act",
+        "scout"
       ],
       "archetypes": [
-        "infrastructure"
+        "orchestrator",
+        "repo-analysis"
       ]
     },
     {
-      "id": "iac.blast-radius",
-      "label": "Flag any stateful replace or destroy as high blast-radius.",
+      "id": "routing-orchestration.state-handoff",
+      "label": "Use workflow state and handoff evidence before changing direction.",
       "evidence_terms": [
-        "blast radius",
-        "stateful",
-        "replace"
-      ],
-      "archetypes": [
-        "infrastructure"
-      ]
-    },
-    {
-      "id": "iac.rollback-path",
-      "label": "Define the rollback path before apply.",
-      "evidence_terms": [
-        "rollback",
-        "previous state",
-        "reverse change"
-      ],
-      "archetypes": [
-        "infrastructure"
-      ]
-    },
-    {
-      "id": "iac.no-secret-in-state",
-      "label": "Keep secrets out of state and variables.",
-      "evidence_terms": [
-        "secret",
         "state",
-        "variable"
+        "handoff",
+        "evidence"
       ],
       "archetypes": [
-        "infrastructure"
+        "long-running-lane"
+      ]
+    },
+    {
+      "id": "routing-orchestration.coordination-boundary",
+      "label": "Keep lane ownership and parallel work boundaries explicit.",
+      "evidence_terms": [
+        "ownership",
+        "parallel",
+        "boundary"
+      ],
+      "archetypes": [
+        "multi-agent"
+      ]
+    },
+    {
+      "id": "routing-orchestration.claim-discipline",
+      "label": "Separate proven facts from residual risk and missing evidence.",
+      "evidence_terms": [
+        "verified",
+        "residual risk",
+        "missing evidence"
+      ],
+      "archetypes": [
+        "all"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "iac.blind-apply",
-      "description": "Applying without reading the plan."
+      "id": "routing-orchestration.route-from-name-only",
+      "description": "Routes from skill name or popularity instead of request evidence."
     },
     {
-      "id": "iac.silent-destroy",
-      "description": "A destroy or replace on a stateful resource slipping through unflagged."
-    },
-    {
-      "id": "iac.secret-in-state",
-      "description": "Secrets committed into state or variables."
+      "id": "routing-orchestration.multi-step-overclaim",
+      "description": "Claims a lane is ready without state, tests, or handoff proof."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-26T00:00:00+00:00"
+  "generated_at": "2026-10-14T16:30:29.300879+00:00"
 }

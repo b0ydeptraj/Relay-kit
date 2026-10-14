@@ -2,84 +2,80 @@
   "schema_version": "relay-kit.skill-competency.v1",
   "skill": "mmo-llm-automation",
   "role": "llm-automation-specialist",
-  "category": "automation",
+  "category": "mmo-safe-ops",
   "core_competencies": [
     {
-      "id": "automation.prompt-diversity",
-      "label": "Generate diverse prompts to avoid pattern detection.",
+      "id": "mmo-safe-ops.profile-inventory",
+      "label": "Maintain profile, account, device, and session inventory.",
       "evidence_terms": [
-        "prompt",
-        "diversity",
-        "template"
+        "profile",
+        "account",
+        "session"
       ],
       "archetypes": [
-        "automation"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "automation.rate-discipline",
-      "label": "Respect API rate limits and implement backoff.",
+      "id": "mmo-safe-ops.quota-dedupe",
+      "label": "Use quotas, dedupe keys, and pacing controls.",
       "evidence_terms": [
-        "rate",
-        "limit",
-        "backoff"
+        "quota",
+        "dedupe",
+        "pacing"
       ],
       "archetypes": [
-        "automation"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "automation.output-variance",
-      "label": "Ensure output variance across generated content.",
+      "id": "mmo-safe-ops.policy-safe-api",
+      "label": "Prefer official APIs and policy-safe execution boundaries.",
       "evidence_terms": [
-        "variance",
-        "unique",
-        "fingerprint"
+        "official api",
+        "policy",
+        "scope"
       ],
       "archetypes": [
-        "automation"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "automation.quality-filter",
-      "label": "Filter low-quality outputs before publishing.",
+      "id": "mmo-safe-ops.operator-ledger",
+      "label": "Record redacted logs, run queues, and operator decisions.",
       "evidence_terms": [
-        "quality",
-        "filter",
-        "threshold"
+        "ledger",
+        "queue",
+        "redacted"
       ],
       "archetypes": [
-        "automation"
+        "mmo-safe-ops"
       ]
     },
     {
-      "id": "automation.cost-tracking",
-      "label": "Track LLM API costs per operation.",
+      "id": "mmo-safe-ops.manual-review-gate",
+      "label": "Escalate risky or ambiguous actions to manual review.",
       "evidence_terms": [
-        "cost",
-        "tokens",
-        "budget"
+        "manual review",
+        "risk",
+        "approval"
       ],
       "archetypes": [
-        "automation"
+        "mmo-safe-ops"
       ]
     }
   ],
   "failure_traps": [
     {
-      "id": "automation.identical-output",
-      "description": "Producing identical content across multiple accounts."
+      "id": "mmo-safe-ops.platform-risk-blindness",
+      "description": "Ignores platform policy, consent, or quota boundaries."
     },
     {
-      "id": "automation.no-rate-limit",
-      "description": "Ignoring API rate limits."
-    },
-    {
-      "id": "automation.no-quality-filter",
-      "description": "Publishing LLM output without quality check."
+      "id": "mmo-safe-ops.bulk-action-without-ledger",
+      "description": "Designs bulk operations without audit or rollback evidence."
     }
   ],
   "unknown_domain_policy": "scout_first_without_expert_claim",
   "claim_policy": "competency-covered only when every core competency is present and battle evidence passes.",
-  "generated_at": "2026-07-22T10:23:55.984460+00:00"
+  "generated_at": "2026-10-14T16:30:29.304072+00:00"
 }

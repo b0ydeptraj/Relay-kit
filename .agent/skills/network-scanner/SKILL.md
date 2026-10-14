@@ -1,8 +1,11 @@
 ---
 name: network-scanner
-description: "Run authorized network reconnaissance with Nmap on Windows (or Linux). Host discovery, port/service/version scanning, OS detection, and safe NSE scripts, parsed into a severity-ranked defensive findings report (exposed services, CVEs from vuln/vulners NSE, weak TLS/SSH, anonymous/default credentials, EOL versions)."
-allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
+description: "Use when a lane needs network scanner: Run authorized network reconnaissance with Nmap on Windows (or Linux). Host discovery, port/service/version scanning, OS detection, and safe NSE scripts, parsed into a severity-ranked defensive findings report (exposed services, CVEs from vuln/vulners NSE, weak TLS/SSH, anonymous/default credentials, EOL versions)."
+allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
 ---
+
+# Mission
+Run authorized network reconnaissance with Nmap on Windows (or Linux).
 
 # Network Scanner (Nmap)
 
@@ -118,3 +121,32 @@ The parser derives findings from the scan (best results with `--profile vuln` or
 - Timing: `service`/`full` on a `/24` can take minutes to hours. Start narrow (single host or `quick`), widen as needed.
 - The wrapper refuses `dos`, `exploit`, and `brute` NSE categories by default; passing them requires `--allow-intrusive` and explicit user authorization.
 - All findings are reported for **defensive** purposes: attack-surface reduction, patching EOL services, closing unnecessary ports, hardening exposed management interfaces (RDP/SSH/SMB).
+
+## Role
+- offensive-security-specialist
+
+## Layer
+- layer-4-specialists-and-standalones
+
+## Inputs
+- the authorized target or artifact
+- the exact question or objective
+- .relay-kit/state/workflow-state.md
+
+## Outputs
+- .relay-kit/contracts/investigation-notes.md with network-scanner findings
+- answered/partial/unresolved verdict with evidence
+
+## Reference skills and rules
+- Route anything outside network-scanner's scope back through `offensive-security-engagement` or `workflow-router`.
+- Anchor every conclusion to a file, command, or captured output; never guess from names.
+- Report a bounded negative search as bounded, not as proof of absence.
+- Open `references/network-scanner-operator-contract.md` when scope, evidence, or operator safety is unclear.
+- Use `examples/network-scanner-good-output.md` and `examples/network-scanner-bad-output.md` to calibrate output quality.
+- Use `evals/network-scanner-cases.json` as the minimum scenario set for behavior regression checks.
+- Use `competencies/network-scanner-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
+
+## Likely next step
+- network-scanner
+- offensive-security-engagement
+- workflow-router

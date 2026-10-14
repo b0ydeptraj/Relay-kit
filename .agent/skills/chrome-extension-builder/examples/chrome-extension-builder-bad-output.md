@@ -1,22 +1,15 @@
-# chrome-extension-builder Bad Output Example
+# chrome-extension-builder - weak example (what to avoid)
 
-## Common Anti-Patterns and Traps
+**Request:** the same scoped task for `chrome-extension-builder`.
 
-1. **Deprecated Manifest V2 Syntax**:
-   - Declaring `"manifest_version": 2` or `"background": { "scripts": ["bg.js"] }`.
-   - Manifest V2 is rejected by modern Chromium Web Stores and runtime engines.
+**Weak response that fails the contract:**
 
-2. **CPU-Thrashing Busy Polling**:
-   - Using `setInterval(() => { document.querySelector(...) }, 200)` across content scripts.
-   - Causes severe CPU spikes when running multi-tab fleets.
+> It's a chrome extension builder task, so the usual approach applies. Based on the names involved it looks fine, nothing suspicious, and there's nothing else to worry about. Done.
 
-3. **Leaked Global Scope & Detectable Artifacts**:
-   - Attaching variables like `window.myAutomationRunner = ...` directly to the page window object.
-   - Injecting un-sanitized `<script>` tags that trigger page Content Security Policy (CSP) violations.
+**Why it fails:**
+- Guesses the result from names instead of reading the actual artifact or running the check.
+- Cites no file, offset, command, or captured output - no evidence id behind any claim.
+- States a negative ("nothing suspicious") as certainty after looking at nothing - a zero-coverage search sold as proof of absence.
+- Declares "Done" while every real question is still unresolved, and never routes back through `workflow-router` or names residual risk.
 
-4. **Blind Sleeps Without Cancellation**:
-   - Calling `await new Promise(r => setTimeout(r, 10000))` without listening to `signal.aborted`.
-   - Results in ghost executions and memory leaks when the user presses Stop or closes the tab.
-
-5. **No Verification Evidence**:
-   - Claiming "The extension is ready and works perfectly" without running unit tests or headless test suites.
+The corrective: anchor each claim to concrete evidence, separate observation from inference, bound the negatives, and end with an explicit answered/partial/unresolved verdict.
