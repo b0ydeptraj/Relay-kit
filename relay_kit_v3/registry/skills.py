@@ -1118,37 +1118,63 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "frontend-design": SkillSpec(
         name="frontend-design",
-        description="Use when the user asks to build web components, pages, or applications and visual quality matters. Create distinctive, production-grade frontend interfaces that avoid generic AI aesthetics.",
+        description="Use when a frontend surface must be IMPLEMENTED in code (component, page, or app). Writes/edits source files, wires state, and captures rendered evidence. Does not review screenshots as its primary verdict — hand finished output to `aesthetic` for that.",
         role="frontend-design",
         layer="layer-4-specialists-and-standalones",
-        inputs=["frontend request", "product context", "existing design system or reference screenshots"],
-        outputs=["implemented or reviewed frontend surface with visual direction, state coverage, and screenshot evidence"],
+        inputs=[
+            "concrete build request with target surface (component, page, or app)",
+            "existing design system, tokens, or component library in the repo",
+            "at least one real reference (screenshot, URL, or named product pattern)",
+        ],
+        outputs=[
+            "edited/new source files at the stated paths",
+            "rendered-state evidence (dev-server screenshot, Storybook capture, or test output)",
+            "list of states covered (default / loading / empty / error / focus / disabled / mobile)",
+            "explicit handoff note to `aesthetic` when visual verdict is still pending",
+        ],
         references=[
-            "Anchor visual direction in real references, existing product patterns, or component sources before styling.",
-            "Use aesthetic for critique, ui-styling for component system details, and accessibility-review for merge gates.",
-            "Prefer deliberate hierarchy, density, and state coverage over generic card-heavy layouts.",
+            "This skill WRITES code. Before any edit, confirm repo-native component library, token source, and routing/state conventions — do not introduce a parallel stack.",
+            "Every claim 'UI looks good' must come from `aesthetic`, not from this skill. This skill ships the artifact; `aesthetic` judges it.",
+            "Reuse before invent: search for an existing component matching the need before creating a new one.",
+            "Do not ship card-grid filler, oversized safe heroes, default icons, or gradient padding unless they serve a named hierarchy decision.",
             *domain_resource_references("frontend-design"),
         ],
-        next_steps=["next-product-frontend", "ui-styling", "aesthetic", "accessibility-review", "review-hub"],
+        next_steps=["aesthetic", "ui-styling", "accessibility-review", "test-hub", "review-hub"],
         body=dedent(
             """\
             # Mission
-            Ship frontend work that feels designed for the product instead of assembled from generic AI patterns.
+            IMPLEMENT a frontend surface — write and edit the source files, run it, capture evidence. Stop before deciding whether the result is visually good; that verdict belongs to `aesthetic`.
 
-            ## Mandatory scope checks
-            - define purpose, audience, and primary task before choosing layout
-            - choose design variance, motion intensity, and visual density explicitly
-            - anchor layout in a real reference, existing screen, or trusted component source
-            - define loading, empty, error, and mobile states for real product surfaces
-            - reject oversized safe heroes, equal-card filler, default icons, and purple gradient padding when they do not serve hierarchy
+            ## Scope boundary (do not violate)
+            - IN scope: route/component/page scaffolding, state wiring, repo-native styling, responsive breakpoints, loading/empty/error/mobile states, dev-server verification.
+            - OUT of scope: visual quality verdict ("this is AI-generated looking", "feels bland"), screenshot critique, taste calls → `aesthetic`.
+            - OUT of scope: component-system/token design decisions → `ui-styling`. Architecture of a Next.js product → `next-product-frontend`. Final accessibility gate → `accessibility-review`.
+
+            ## Pre-flight checklist (block the edit if any is missing)
+            1. Target file paths named.
+            2. Repo-native component library + token source identified (grep for `button`, `card`, `theme`, `tailwind.config`, `styled` etc.).
+            3. At least one reference anchor (URL, screenshot, or an existing in-repo screen the new work extends).
+            4. Primary task of the surface stated in one sentence.
+            5. Required states enumerated (default + any of loading/empty/error/mobile that apply).
+
+            ## Build loop
+            1. Reuse hunt: for each piece of UI, find an existing component in the repo; only create new if none fits.
+            2. Implement in small vertical slices (one state at a time).
+            3. After each slice, run the dev server / Storybook / test harness and capture evidence.
+            4. Record exact files changed with `file_path:line` citations.
+            5. When done, hand off to `aesthetic` with the rendered evidence attached — do not self-approve.
 
             ## Evidence contract
-            - include reference or screenshot notes before claiming visual quality
-            - include before/after or rendered-state evidence when implementation changed
-            - include accessibility and performance risk notes for user-facing changes
+            - diff or new files with precise paths
+            - rendered screenshots for every claimed state
+            - list of states NOT covered with reason
+            - note explicit handoff: `aesthetic` for visual verdict, `accessibility-review` before merge
+            - if you had to invent a new component, state why reuse was impossible
 
-            ## Handoff rules
-            Hand component-level styling to `ui-styling`, product UI architecture to `next-product-frontend`, and final visual critique to `aesthetic` or `review-hub`.
+            ## Failure modes to self-check
+            - You wrote "looks great" / "distinctive" / "production-grade" without a screenshot ⇒ delete the claim, let `aesthetic` judge.
+            - You added a new Button/Card/Modal when the repo already has one ⇒ revert, use the existing one.
+            - You skipped loading/empty/error states on a surface that fetches data ⇒ not done.
             """
         ).strip(),
         allowed_tools=EDIT_AND_TEST_TOOLS,
@@ -1192,37 +1218,65 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "aesthetic": SkillSpec(
         name="aesthetic",
-        description="Use when UI quality matters and the first-pass output risks looking obviously AI-generated. Create aesthetically strong interfaces through reference-driven design, screenshot analysis, component sourcing, and iterative review.",
+        description="Use when a frontend surface is ALREADY RENDERED (screenshot, dev-server, Storybook) and needs a visual-quality verdict + concrete revision direction. Read-only: never edits source. Inputs REQUIRE an actual image or URL — if none exists, send the lane to `frontend-design` first.",
         role="aesthetic-review",
         layer="layer-4-specialists-and-standalones",
-        inputs=["rendered UI, screenshot, or design direction", "reference examples", "product tone constraints"],
-        outputs=["aesthetic critique, revision direction, and evidence-backed visual quality verdict"],
+        inputs=[
+            "rendered artifact (screenshot path, dev-server URL, or Storybook link) — mandatory",
+            "at least one reference anchor (benchmark URL, named product pattern, or in-repo screen)",
+            "product tone / target user constraints",
+        ],
+        outputs=[
+            "verdict: ship / revise-once / rebuild-structure",
+            "ranked revision list (structure first, polish last) with exact UI regions cited",
+            "generic-AI-smell flags with evidence coordinates (which card, which hero, which gradient)",
+            "handoff note naming which build skill applies the fix",
+        ],
         references=[
-            "Reference-driven structure beats invented average structure.",
-            "Beauty without hierarchy is decoration; critique structure first and polish second.",
-            "Use multimodal-evidence for screenshot interpretation and browser-inspector for live browser facts.",
+            "This skill DOES NOT WRITE CODE. If a revision is accepted, hand off to `frontend-design` / `ui-styling` — do not edit files here.",
+            "Every verdict must cite a visible region of the rendered artifact; taste without a coordinate is rejected.",
+            "Structure (hierarchy, density, focal point, proof-near-claim) is critiqued BEFORE color/radius/motion polish.",
+            "If no rendered artifact exists, stop and route to `frontend-design` — never judge from code alone.",
             *domain_resource_references("aesthetic"),
         ],
-        next_steps=["frontend-design", "ui-styling", "multimodal-evidence", "review-hub"],
+        next_steps=["frontend-design", "ui-styling", "multimodal-evidence", "accessibility-review", "review-hub"],
         body=dedent(
             """\
             # Mission
-            Prevent obviously AI-generated UI by forcing reference analysis, visual hierarchy critique, and a revision loop.
+            Judge a rendered UI with a verdict and a ranked revision list. Read-only. Structural issues come before polish.
 
-            ## Mandatory scope checks
-            - identify the first focal point and whether proof sits close enough to the main claim
-            - set design variance, motion intensity, and visual density before recommending changes
-            - compare the screen against real references or project-native patterns
-            - flag over-rounded panels, decorative gradient filler, safe hero blocks, equal-weight cards, and default icon or chart choices
-            - require loading, empty, and error states for real product surfaces
+            ## Scope boundary (do not violate)
+            - IN scope: reading screenshots/URLs, naming visible problems, ranking fixes, giving one structural revision + a short polish list, writing the handoff.
+            - OUT of scope: editing source files (even "one small CSS tweak") → hand to `frontend-design` or `ui-styling`.
+            - OUT of scope: building something new because the current screen looks bad — critique what exists; the build skill owns the next version.
+            - OUT of scope: accessibility verdict → `accessibility-review`. Pure image-OCR / multimodal reading → `multimodal-evidence`.
 
-            ## Evidence contract
-            - include screenshot, reference, or rendered-state evidence for every visual verdict
-            - separate visible facts from taste judgments
-            - name one structural revision before minor polish when the UI still feels generic
+            ## Pre-flight (refuse the review if any missing)
+            1. A real rendered artifact (path to PNG, URL, Storybook link). **No screenshot → no verdict.**
+            2. A reference anchor (not "what looks good in general" — a specific comparator).
+            3. A one-sentence statement of the surface's primary task.
 
-            ## Handoff rules
-            Send implementation details to `frontend-design` or `ui-styling`; send static screenshot interpretation to `multimodal-evidence`.
+            ## Critique order (do them in this order; do not shuffle)
+            1. **Focal point** — can you name it in <2s? Is the proof close to the main claim?
+            2. **Hierarchy & density** — are weights/sizes/spacings telling the right story, or is everything the same weight?
+            3. **Generic-AI smell** — equal-weight card grid, oversized safe hero, default icon set, decorative gradient filler, every corner the same radius, chart that uses default library colors. Flag each with the exact region.
+            4. **State coverage** — does the surface handle loading / empty / error / mobile? If data-backed and it doesn't, demand it.
+            5. **Polish** — color, radius, motion, type details. Only after 1-4 pass.
+
+            ## Verdict format
+            ```
+            VERDICT: ship | revise-once | rebuild-structure
+            STRUCTURAL ISSUE (max 1): <one sentence, with region>
+            POLISH LIST (ranked): <3-5 items, each with a region>
+            NOT COVERED: <states the surface fails to show>
+            HANDOFF: <frontend-design | ui-styling | accessibility-review> — <exact next action>
+            ```
+
+            ## Failure modes to self-check
+            - You gave a verdict without citing a visible region ⇒ invalid, revise.
+            - You listed 10 polish items but no structural issue ⇒ you did not critique in the right order.
+            - You started editing a file ⇒ wrong skill, revert and hand off.
+            - You accepted "ship" on a data-backed surface with no empty/error state ⇒ invalid.
             """
         ).strip(),
         allowed_tools=READ_ANALYZE_TOOLS,
@@ -1458,37 +1512,71 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "mmo-browser-fleet-automation": SkillSpec(
         name="mmo-browser-fleet-automation",
-        description="Use when MMO browser-based operations need profile inventory, session orchestration, deterministic waits, live debug evidence, and anti-flake reliability controls.",
+        description="LAYER 4 (ORCHESTRATION). Use when browser MMO work needs to run many sessions reliably: queue, lease, retry, selector drift, live operator screen. Depends on identities produced by `mmo-identity-infrastructure`. Does NOT design fingerprints (L1), configure vendors (L2), or bind identities (L3).",
         role="mmo-browser-automation",
         layer="layer-4-specialists-and-standalones",
-        inputs=["browser workflow map", "profile/session constraints", "target platform policy and limits"],
-        outputs=["browser fleet operator design with profile/session lease table, stable selectors, run queue, and debug evidence"],
+        inputs=[
+            "identity pool contract from `mmo-identity-infrastructure` — mandatory, names session ids this fleet can lease",
+            "workflow map: ordered UI actions per session with selector contract",
+            "platform policy + rate limits (per-platform, per-identity)",
+            "stop conditions and emergency-kill signal source",
+        ],
+        outputs=[
+            "fleet runner with lease table (session id → owner → platform → state → next-allowed-at)",
+            "selector contract file with wait strategy per critical action",
+            "retry/backoff policy and run queue states (queued, leased, running, retry, failed, done)",
+            "operator screen spec: live session list, screenshot trace, console/network tab, kill button",
+        ],
         references=[
-            "Prefer official API paths when available; use browser automation for allowed UI workflows only.",
-            "Use explicit waits, resilient locators, and deterministic retry policy instead of blind sleeps.",
-            "Keep profile-to-proxy affinity explicit; validate proxy health before launch and preserve profile folders/tags for operator filtering.",
-            "Design dense operator screens: live session list, lease owner, selector drift, screenshot trace, console/network tabs, retry button, and stop button.",
-            "Forbid automation patterns that rely on stealth evasion or non-API scraping prohibited by policy.",
+            "This skill is LAYER 4. Do NOT define per-browser fingerprint spoofing (that is `browser-fingerprint-engineering` — L1), vendor API wiring (`mmo-anti-detection-browser` — L2), or identity binding (`mmo-identity-infrastructure` — L3). Depend on their outputs; do not duplicate them.",
+            "Prefer official platform API over UI automation; use UI automation only for flows the API does not expose and the platform allows.",
+            "Explicit waits, resilient locators, deterministic retry — forbid blind sleeps.",
+            "Every run must consume an identity leased from the L3 pool; a session without a lease record is refused.",
             *domain_resource_references("mmo-browser-fleet-automation"),
         ],
-        next_steps=["automation-ops", "browser-inspector", "policy-guard", "qa-governor"],
+        next_steps=["mmo-identity-infrastructure", "browser-inspector", "automation-ops", "policy-guard", "qa-governor"],
         body=dedent(
             """\
             # Mission
-            Run browser MMO operations with high reliability, clear limits, and policy-safe automation behavior.
+            Orchestrate many browser sessions reliably against a leased identity pool. One queue, one lease table, one operator screen. No fingerprint spoofing, no vendor wiring, no identity design here.
 
-            ## Mandatory scope checks
-            - define profile isolation, profile-to-proxy affinity, and session lease strategy
-            - define operator inventory fields: profile id, folder, tags, proxy status, lease owner, browser state, last run, next allowed run
-            - define selector contract and wait strategy per critical action
-            - define retry and backoff rules for transient UI/network failures
-            - define live debug evidence: screenshots, console logs, network errors, DOM snapshot, and human takeover marker
-            - define runbook for stuck session, timeout, and rate-limit events
+            ## Scope boundary (do not violate)
+            - IN scope: queue + lease table, selector contract, retry/backoff, operator screen, kill switch, run evidence.
+            - OUT of scope: canvas/WebGL/Audio spoofing → `browser-fingerprint-engineering` (L1).
+            - OUT of scope: GoLogin/Multilogin/AdsPower API wiring → `mmo-anti-detection-browser` (L2).
+            - OUT of scope: identity composition (proxy+fingerprint+UA+tz+storage) → `mmo-identity-infrastructure` (L3).
+            - OUT of scope: platform-rule-breaking stealth — refuse flows that depend on circumventing documented platform automation policy.
 
-            ## Evidence contract
-            - include run traces for one success path and one controlled failure path
-            - include selector drift and timeout diagnostics
-            - include policy and rate-limit guard decisions per run with raw trace pointers
+            ## Pre-flight (refuse the fleet run if any missing)
+            1. Identity pool contract from L3 exists and names session ids the fleet may lease. No pool → stop, route to L3.
+            2. Selector contract for every critical UI action (locator + wait strategy + timeout).
+            3. Per-platform rate limit explicitly stated.
+            4. Kill-switch signal source named (file flag, env var, or operator button).
+            5. Evidence sink configured (screenshot dir, console log dir, network HAR dir).
+
+            ## Run loop contract
+            ```
+            1. LEASE: acquire identity from L3 pool; if none available → queue backlog, return.
+            2. LAUNCH: open browser with the leased identity; verify fingerprint sanity-check URL passes.
+            3. EXECUTE: run workflow steps with explicit waits; on each step, log evidence id.
+            4. RETRY: transient failure (network, selector timeout) → backoff + retry up to policy.
+            5. RELEASE: return identity to L3 pool with state (success, soft-fail, hard-fail, quarantine).
+            6. NEXT-ALLOWED-AT: set per-identity cooldown from platform rate rule.
+            ```
+
+            ## Operator screen (required fields)
+            - live session list with: identity_id, platform, state, step, elapsed, lease_owner
+            - selector drift alerts (last successful selector hash vs current)
+            - screenshot trace, console log, network HAR per session
+            - manual "pause" / "kill" / "handoff to human" per session
+            - queue depth and backlog by platform
+
+            ## Failure modes to self-check
+            - You created identities inside this skill ⇒ wrong layer, use L3 output.
+            - You wrote canvas-spoofing code ⇒ wrong layer, use L1.
+            - You used `time.sleep(5)` instead of an explicit wait ⇒ delete, use selector wait.
+            - You ran without a lease record ⇒ invalid run, refuse.
+            - Kill switch not wired ⇒ do not start the fleet.
             """
         ).strip(),
         allowed_tools=EDIT_AND_TEST_TOOLS,
@@ -1685,44 +1773,97 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "mmo-identity-infrastructure": SkillSpec(
         name="mmo-identity-infrastructure",
-        description="Use when MMO multi-account operations need fingerprint isolation, proxy-to-profile binding, anti-detect browser setup, and consistent digital identity management per account.",
+        description="LAYER 3 (IDENTITY BINDING). Use when multi-account browser work needs a durable binding of {proxy + fingerprint + UA + timezone + language + storage} per identity, plus a lease API. Consumes fingerprint techniques from `browser-fingerprint-engineering` (L1) and vendor setup from `mmo-anti-detection-browser` (L2). Produces the identity pool that `mmo-browser-fleet-automation` (L4) leases from. Does NOT run sessions itself.",
         role="mmo-identity-infrastructure",
         layer="layer-4-specialists-and-standalones",
         inputs=[
-            "account inventory and risk tier classification",
-            "proxy pool inventory (type, geo, ASN, provider)",
-            "target platform fingerprint detection signals",
+            "account inventory with risk tier (new / warming / established / cooldown)",
+            "proxy pool inventory from `mmo-proxy-network-ops` (type, geo, ASN, sticky support, health)",
+            "fingerprint technique catalog from `browser-fingerprint-engineering` (L1) — WHICH signals to spoof",
+            "vendor setup from `mmo-anti-detection-browser` (L2) — HOW to apply those signals in the chosen vendor",
+            "platform-specific locale + trust rules (which fields must match proxy geo)",
         ],
-        outputs=["identity infrastructure plan: per-account profile specs, proxy assignments, consistency rules, rotation policy, and binding registry"],
+        outputs=[
+            ".relay-kit/state/identity-pool.md — identity registry: id, proxy ref, fingerprint ref, UA, tz, lang, storage dir, platform cleared list, state, next_allowed_at",
+            "lease API contract: lease(identity_id) / release(identity_id, result) / quarantine(identity_id, reason)",
+            "consistency audit result (per identity: tz ↔ proxy geo ↔ lang ↔ platform locale)",
+            "rotation / retirement policy: when an identity is rotated, warmed-again, or retired",
+        ],
         references=[
-            "Never reuse a proxy or fingerprint profile across multiple accounts — IP clustering causes linked-account bans.",
-            "Align timezone, language, and locale with proxy geolocation; mismatches are the #1 platform detection trigger.",
-            "Use sticky sessions for established accounts; reserve proxy rotation for new profiles only.",
-            "Treat fingerprint profiles as versioned infrastructure: changes must be logged with reason and timestamp.",
-            "Anti-detect browsers (AdsPower, Multilogin, GoLogin, Hidemyacc) are the required execution environment.",
+            "This skill is LAYER 3 — BINDING ONLY. Do NOT write the fingerprint spoofing code (that is L1) or configure the vendor API (that is L2). Reference L1 and L2 outputs and compose them into a durable identity record.",
+            "1:1:1 rule: one proxy ⇄ one fingerprint profile ⇄ one account. A violation of this rule is refused.",
+            "Consistency rule: timezone must match proxy geo ±1 tz; language must match platform locale rules; UA family must match vendor-reported platform. Audit before adding to pool.",
+            "Stability rule: for established accounts (post-warmup), identity is STABLE. Rotation is a trust-reset event and must go through `mmo-nick-warmup-engine` again.",
+            "A lane without `.relay-kit/state/offensive-authorization.md` for MMO scope → refuse to open a pool.",
             *domain_resource_references("mmo-identity-infrastructure"),
         ],
-        next_steps=["mmo-browser-fleet-automation", "mmo-account-operations", "mmo-nick-warmup-engine", "mmo-proxy-network-ops", "policy-guard"],
+        next_steps=["browser-fingerprint-engineering", "mmo-anti-detection-browser", "mmo-proxy-network-ops", "mmo-nick-warmup-engine", "mmo-browser-fleet-automation"],
         body=dedent(
             """\
             # Mission
-            Build airtight per-account digital identities that survive platform behavioral analysis and hardware fingerprinting.
+            Produce a durable identity pool with a lease API. Each identity is one immutable binding of proxy + fingerprint + UA + timezone + language + storage. Downstream fleets lease from this pool; they do not compose identities on their own.
 
-            ## Mandatory scope checks
-            - define fingerprint profile strategy per account: UA, WebGL, Canvas, fonts, timezone, language, screen resolution
-            - enforce 1:1 rule: one proxy → one browser profile → one account; document each binding explicitly
-            - define proxy type selection per risk tier: residential for high-trust, mobile for highest stealth, ISP static for stable long sessions
-            - define consistency validation: timezone ↔ proxy geolocation ↔ language ↔ platform locale
-            - define fingerprint stability policy: when to keep stable (established accounts) vs when to rotate (new profiles only)
-            - define profile version control: fingerprint specs stored, tracked, and reproducible
+            ## Scope boundary (do not violate)
+            - IN scope: identity registry, binding record, lease API, consistency audit, rotation policy.
+            - OUT of scope: implementing canvas/WebGL spoofing → L1 (`browser-fingerprint-engineering`).
+            - OUT of scope: calling vendor APIs (GoLogin/Multilogin/AdsPower/Dolphin) → L2 (`mmo-anti-detection-browser`).
+            - OUT of scope: running sessions, orchestrating queues → L4 (`mmo-browser-fleet-automation`).
+            - OUT of scope: proxy pool management → `mmo-proxy-network-ops`.
 
-            ## Evidence contract
-            - include profile × proxy binding registry with consistency audit output
-            - include fingerprint consistency check: timezone, locale, UA, hardware coherence all validated
-            - include one controlled test: new profile passes target platform basic trust gate
+            ## Pre-flight (refuse to open the pool if any missing)
+            1. Authorization record names the platforms the pool will serve.
+            2. Proxy pool exists with sticky support flagged per provider.
+            3. L1 catalog chosen: which fingerprint signals this pool spoofs (canvas, WebGL, Audio, fonts, tz, lang, screen).
+            4. L2 vendor chosen and reachable (one vendor per pool unless explicitly multi-vendor).
+            5. Platform locale rules named (which fields must match proxy geo).
+
+            ## Identity record format (one entry in identity-pool.md)
+            ```
+            - id: <stable id>
+              proxy_ref: <pool id from mmo-proxy-network-ops>
+              fingerprint_ref: <catalog entry from L1>
+              vendor_profile_id: <id in L2 vendor>
+              ua: <string>
+              tz: <IANA>
+              lang: <BCP47>
+              storage_dir: <path, isolated per identity>
+              platforms_cleared: [<platform names>]
+              state: new | warming | established | cooldown | quarantined | retired
+              next_allowed_at: <ISO timestamp>
+              consistency_audit: pass | fail:<reason>
+            ```
+
+            ## Lease API (contract downstream must honor)
+            ```
+            lease(platform) -> identity_id | None
+              - picks identity where platform in platforms_cleared AND state=established AND now >= next_allowed_at
+              - marks state=leased with lease_owner and lease_expires_at
+
+            release(identity_id, result)
+              - result: success | soft-fail | hard-fail | challenge
+              - sets next_allowed_at from platform rate rule
+              - hard-fail or 3x soft-fail => state=quarantined, reason recorded
+
+            quarantine(identity_id, reason)
+              - immediate; requires warmup cycle to return to established
+            ```
+
+            ## Consistency audit (run before any identity enters `established` state)
+            - tz(identity) within ±1h of tz(proxy.geo)
+            - lang(identity) ∈ allowed set for platform
+            - ua.platform == vendor.reported.platform
+            - storage_dir unique across all identities
+            - proxy_ref unused by any other identity in pool
+
+            ## Failure modes to self-check
+            - You wrote canvas-spoofing code here ⇒ wrong layer, use L1.
+            - You called GoLogin API here ⇒ wrong layer, use L2.
+            - You reused a proxy across two identities ⇒ 1:1:1 violation, refuse.
+            - You moved an identity to `established` without warmup trace ⇒ invalid; route to `mmo-nick-warmup-engine`.
+            - Downstream fleet is composing identities on its own because your pool is empty ⇒ fix the pool, do not let the fleet skip the lease.
             """
         ).strip(),
-        allowed_tools=EDIT_AND_TEST_TOOLS,
+        allowed_tools=['Read', 'Write', 'Edit', 'Grep', 'Glob'],
     ),
     "mmo-proxy-network-ops": SkillSpec(
         name="mmo-proxy-network-ops",
@@ -1847,43 +1988,72 @@ ROLE_SKILLS: Dict[str, SkillSpec] = {
     ),
     "mmo-content-factory": SkillSpec(
         name="mmo-content-factory",
-        description="Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale.",
-        role="mmo-content-ops",
+        description="PIPELINE LAYER. Use when a multi-step content run needs to be orchestrated: brief -> N variants (via `mmo-llm-automation`) -> media/repurpose -> per-platform format -> schedule -> distribution. Does NOT generate text itself (that is `mmo-llm-automation`), post to platforms (that is `mmo-social-marketing-automation`), or run media transforms (that is `media-tooling`).",
+        role="mmo-content-pipeline",
         layer="layer-4-specialists-and-standalones",
         inputs=[
-            "content briefs or raw assets (long-form video, images, article text, product info)",
-            "platform account inventory and per-account quota budgets",
-            "brand voice guidelines, prohibited content rules, platform-specific formatting requirements",
+            "campaign brief with target platforms and schedule windows",
+            "asset inventory: source videos, images, templates",
+            "per-platform policy and quota from mmo-social-marketing-automation",
+            "quality gate rubric and reject reasons taxonomy",
         ],
-        outputs=["content production pipeline: generation config, variant specs, diversity rules, scheduling plan, review gates, and performance feedback schema"],
+        outputs=[
+            "pipeline plan: step graph with owning skill per step",
+            "variant batch: N generations with variance scores (from mmo-llm-automation)",
+            "repurposed media batch (from media-tooling)",
+            "per-platform formatted payload queue, each tied to a schedule window",
+            "handoff to mmo-social-marketing-automation for publishing",
+        ],
         references=[
-            "Identical or near-identical content across accounts triggers spam detection — enforce minimum diversity scores between all variants.",
-            "AI-generated content variants must pass a human-review gate before deployment to high-risk accounts.",
-            "Platform-specific formatting is not optional: wrong aspect ratio or duration causes algorithmic reach penalty.",
-            "Publishing windows must be staggered across accounts — never schedule identical content to multiple accounts simultaneously.",
+            "This skill ORCHESTRATES. It does not generate text (mmo-llm-automation), transform media (media-tooling), or post (mmo-social-marketing-automation).",
+            "Every text variant must carry its mmo-llm-automation variance_score. Reject the batch if variance is below threshold.",
+            "Every published item has an audit row: brief_id, variant_id, platform, schedule_window, publish_status, reject_reason.",
+            "Platform rate limits are honored via mmo-social-marketing-automation quota; this pipeline must not schedule beyond quota.",
             *domain_resource_references("mmo-content-factory"),
         ],
-        next_steps=["mmo-reup-automation", "mmo-social-marketing-automation", "mmo-data-harvesting", "mmo-llm-automation", "growth-marketing", "qa-governor"],
-        body=dedent(
-            """\
+        next_steps=["mmo-llm-automation", "media-tooling", "mmo-social-marketing-automation", "mmo-reup-automation", "policy-guard"],
+        body=dedent("""\
             # Mission
-            Run a content production pipeline that converts raw assets into platform-optimized variants and schedules them without detectable spam patterns.
+            Orchestrate the multi-step content run and hand each step to the right downstream skill. Keep variance, media, formatting, and schedule as separate traceable stages.
 
-            ## Mandatory scope checks
-            - define content brief → variant generation pipeline: text, image, short video cuts from long-form source
-            - define platform-specific output specs: TikTok (9:16, 15-60s), Facebook Reel (9:16), YouTube Shorts (<60s)
-            - define variant diversity threshold: minimum edit-distance or visual-diff score between variants
-            - define publishing schedule: posting windows, frequency caps per account, platform quota alignment
-            - define human-review gate: content types and risk tiers requiring operator approval
-            - define performance feedback loop: track per-variant reach and feed signal back into generation config
+            ## Scope boundary (do not violate)
+            - IN scope: pipeline plan, batch bookkeeping, reject bookkeeping, schedule, handoff to publisher.
+            - OUT of scope: LLM generation -> `mmo-llm-automation`.
+            - OUT of scope: media repurposing (video/image transforms) -> `media-tooling`.
+            - OUT of scope: API posting to TikTok/FB/IG -> `mmo-social-marketing-automation`.
+            - OUT of scope: dedupe + rights check for reposts -> `mmo-reup-automation`.
 
-            ## Evidence contract
-            - include sample batch: 1 brief → N variants with diversity diff scores
-            - include publishing schedule proof: no platform quota breach across all active accounts
-            - include human-review decision log for flagged content
-            """
-        ).strip(),
-        allowed_tools=EDIT_AND_TEST_TOOLS,
+            ## Stage graph (reference)
+            ```
+            brief
+              -> [mmo-llm-automation] variants batch (N, scored)
+              -> [media-tooling] media per variant
+              -> [per-platform format] payload per platform
+              -> [schedule] windows per platform (quota-aware)
+              -> [mmo-social-marketing-automation] publish
+              -> audit row per item
+            ```
+
+            ## Audit row format (one per published item)
+            ```
+            - brief_id: <id>
+              variant_id: <id>
+              platform: <name>
+              schedule_window: <ISO>
+              publish_status: queued | published | rejected
+              reject_reason: <code or empty>
+              variance_score: <float>
+              cost_text: <usd>
+              cost_media: <usd>
+            ```
+
+            ## Failure modes to self-check
+            - You generated text inline -> wrong layer, delegate to mmo-llm-automation.
+            - You called the TikTok API -> wrong layer, delegate to mmo-social-marketing-automation.
+            - You scheduled beyond platform quota -> quota breach, reduce schedule.
+            - You published variants with variance_score below threshold -> Sybil risk, re-batch.
+            """).strip(),
+        allowed_tools=['Read', 'Write', 'Edit'],
     ),
     "mmo-crypto-wallet-farming": SkillSpec(
         name="mmo-crypto-wallet-farming",
@@ -3035,60 +3205,82 @@ OFFENSIVE_TOOL_PACK_SKILLS: Dict[str, SkillSpec] = {
     ),
     "antibot-challenge-solving": SkillSpec(
         name="antibot-challenge-solving",
-        description="Use when automation hits bot detection challenges: Cloudflare Turnstile/Bot Fight Mode, Datadome, PerimeterX, reCAPTCHA v2/v3/Enterprise, hCaptcha, or custom JS challenges.",
-        role="antibot-specialist",
+        description="Use when automation is blocked by a bot-detection challenge (Cloudflare Turnstile / Bot Fight Mode, Datadome, PerimeterX, reCAPTCHA v2/v3/Enterprise, hCaptcha, Arkose, or custom JS). CLASSIFIES the challenge type and CHOOSES a strategy (solver-API vs reverse-JS vs browser-based vs route-around). Does NOT solve the challenge itself; routes to `mmo-captcha-farm` (solver), `frontend-crypto-reverse` (reverse JS), or `browser-fingerprint-engineering` + `mmo-browser-fleet-automation` (clean browser path).",
+        role="antibot-strategist",
         layer="layer-4-specialists-and-standalones",
         inputs=[
-            "challenge URL / challenge type",
-            "automation context",
-            "fingerprint profile if available",
+            "symptom: raw block response (HTTP status + body snippet), or screenshot of challenge UI, or JS error",
+            "automation context: HTTP-only client vs real browser vs headless",
+            "budget tolerance: paid solver allowed? latency ceiling?",
         ],
         outputs=[
-            "challenge bypass implementation",
-            "clearance cookies or tokens",
-            "verification result",
+            "classification record: challenge_type, detector_vendor, observed_signals",
+            "strategy decision: solver-api | reverse-js | browser-clean | route-around",
+            "handoff: names the next skill and the fields it needs (service preference order, token name, etc.)",
         ],
         references=[
-            "Never call this skill from inside mmo-browser-fleet-automation — layer separation is mandatory.",
-            "Document solve-rate throttle to protect API keys from bans.",
-            "Verify bypass with actual HTTP response, not assumption.",
-            "If challenge is unsolvable, escalate to protocol-fingerprint-spoofing or browser-fingerprint-engineering first.",
-            "Open `references/antibot-challenge-solving-operator-contract.md` when scope, evidence, or operator safety is unclear.",
-            "Use `examples/antibot-challenge-solving-good-output.md` and `examples/antibot-challenge-solving-bad-output.md` to calibrate output quality.",
-            "Use `evals/antibot-challenge-solving-cases.json` as the minimum scenario set for behavior regression checks.",
-            "Use `competencies/antibot-challenge-solving-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.",
+            "This skill decides the STRATEGY. It does not solve. Downstream skills solve.",
+            "Classification is anchored to observable signals in the response or page - not to guesses from the URL.",
+            "Prefer `route-around` (switch to official API path) when available before paying a solver.",
+            "Record the decision; downstream skills refuse to run if no decision record exists (prevents burning solver budget on the wrong challenge).",
+            *domain_resource_references("antibot-challenge-solving"),
         ],
-        next_steps=[
-            "protocol-fingerprint-spoofing",
-            "browser-fingerprint-engineering",
-            "mmo-http-api-automation",
-            "test-hub",
-            "field-journal-evolution",
-        ],
-        body=dedent(
-            """\
+        next_steps=["mmo-captcha-farm", "frontend-crypto-reverse", "browser-fingerprint-engineering", "mmo-browser-fleet-automation", "api-integration"],
+        body=dedent("""\
             # Mission
-            Bypass or solve bot detection challenges while preserving automation flow integrity.
-            
-            ## Mandatory scope
-            1. Identify challenge type: CAPTCHA (reCAPTCHA/hCaptcha/Turnstile), JS challenge (Cloudflare 5-second), behavioral score, or bot fingerprint gate.
-            2. Choose solving approach:
-               - CAPTCHA: 2captcha/CapMonster API (paid solver) or in-process ML model
-               - JS challenge: Cloudflare clearance cookie via headless with correct fingerprint
-               - Behavioral score: humanized interaction sequence
-               - Fingerprint gate: protocol-fingerprint-spoofing + browser-fingerprint-engineering
-            3. Rate limit: implement solve-rate throttle to avoid solver API bans.
-            4. Layer separation: this skill is called from OUTSIDE mmo-browser-fleet-automation, not from inside (fleet has evasion prohibition rule).
-            5. Verify bypass: HTTP 200 with expected content, no redirect to challenge page.
-            
-            ## Evidence contract
-            - challenge type identified
-            - solving approach documented
-            - bypass verified (HTTP 200 or cookie extracted)
-            - solve-rate throttle configured
-            - layer separation from fleet maintained
-            """
-        ).strip(),
+            Identify which anti-bot system is blocking the lane and pick the right response strategy. Write one decision record. Hand off to the solver skill.
+
+            ## Scope boundary (do not violate)
+            - IN scope: reading block symptoms, classifying detector, choosing strategy, writing the decision record, routing.
+            - OUT of scope: calling 2captcha/CapMonster -> `mmo-captcha-farm`.
+            - OUT of scope: reversing the JS challenge code -> `frontend-crypto-reverse`.
+            - OUT of scope: running the clean-browser path -> `browser-fingerprint-engineering` + `mmo-browser-fleet-automation`.
+
+            ## Classification signals (anchor every verdict to at least one)
+            | Detector | Signal in response/page |
+            |---|---|
+            | Cloudflare Turnstile | `cf-chl-*` cookies, `__cf_bm`, `challenges.cloudflare.com` iframe |
+            | Cloudflare Bot Fight | 403 + `cf-mitigated: challenge` header, managed-challenge HTML |
+            | Datadome | `datadome` cookie, `ct.captcha-delivery.com` iframe |
+            | PerimeterX / HUMAN | `_px*` cookies, `captcha.px-cdn.net` |
+            | reCAPTCHA v2 | `www.google.com/recaptcha/api2` iframe |
+            | reCAPTCHA v3 | `grecaptcha.execute(...).then(token=>...)` scoring, no iframe |
+            | reCAPTCHA Enterprise | `www.google.com/recaptcha/enterprise.js` |
+            | hCaptcha | `hcaptcha.com/captcha` iframe, `h-captcha-response` field |
+            | Arkose FunCaptcha | `funcaptcha.com`, interactive puzzle UI |
+            | Custom JS | obfuscated JS returning a signed token in a header |
+
+            ## Strategy matrix
+            | Challenge x client | HTTP-only client | Real browser |
+            |---|---|---|
+            | reCAPTCHA v2 / hCaptcha | solver-api -> mmo-captcha-farm | solver-api |
+            | reCAPTCHA v3 (low score) | reverse-js -> frontend-crypto-reverse (grecaptcha stub) | browser-clean -> warmed identity |
+            | Cloudflare Turnstile | solver-api (supports) or reverse-js | browser-clean |
+            | Cloudflare Bot Fight | browser-clean mandatory | browser-clean |
+            | Datadome / PX | browser-clean + behavioral humanization | browser-clean |
+            | Arkose FunCaptcha | solver-api (expensive) | solver-api |
+            | Custom signed-header JS | reverse-js -> frontend-crypto-reverse | reverse-js |
+
+            Prefer `route-around` first: if the platform has an official public API or a mobile API that does not front this detector, switch to it (-> `api-integration`).
+
+            ## Decision record format (write to the lane's state dir)
+            ```
+            - challenge_type: <detector>
+            - observed_signals: [<headers / cookies / iframe URLs>]
+            - client_context: http-only | browser
+            - strategy: solver-api | reverse-js | browser-clean | route-around
+            - handoff_to: <skill name>
+            - handoff_fields: {service_preference_order: [...], token_name: "...", ...}
+            - decided_at: <ISO>
+            ```
+
+            ## Failure modes to self-check
+            - You picked solver-api without naming the token name downstream must inject -> record is incomplete.
+            - You picked reverse-js without checking whether the JS is actually reversible in budget -> add a timebox fallback to browser-clean.
+            - You started solving/reversing/running the browser here -> wrong skill, hand off.
+            - You classified from the URL alone -> re-classify from response bytes.
+            """).strip(),
+        allowed_tools=['Read', 'Write', 'Grep', 'Glob'],
     ),
     "attack-chain-orchestration": SkillSpec(
         name="attack-chain-orchestration",
@@ -3257,56 +3449,74 @@ OFFENSIVE_TOOL_PACK_SKILLS: Dict[str, SkillSpec] = {
     ),
     "browser-fingerprint-engineering": SkillSpec(
         name="browser-fingerprint-engineering",
-        description="Use when browser-based automation needs to defeat canvas fingerprinting, WebGL fingerprinting, AudioContext fingerprinting, font detection, or behavioral biometrics.",
+        description="LAYER 1 (TECHNIQUE). Use when a specific fingerprint vector needs a working spoof implementation — Canvas / WebGL / AudioContext / fonts / navigator / screen / timezone / battery / device memory / behavioral biometrics. Returns technique recipes (code snippets + consistency rules + test URL), not identities. Called by L2 (`mmo-anti-detection-browser`) when a vendor cannot spoof a vector, or by L3 (`mmo-identity-infrastructure`) when designing a new fingerprint profile.",
         role="browser-fingerprint-specialist",
         layer="layer-4-specialists-and-standalones",
         inputs=[
-            "target platform fingerprint detection signals",
-            "browser automation framework",
-            "mmo-identity-infrastructure profile",
+            "target platform fingerprint vectors (which signals to spoof, in order of importance)",
+            "browser engine (Chromium/Firefox/WebKit) and automation framework (Playwright/Puppeteer/CDP/anti-detect vendor)",
+            "consistency anchors from L3 (timezone, locale, platform family) that this technique must honor",
         ],
         outputs=[
-            "fingerprint spoofing implementation",
-            "consistency audit",
-            "test site results",
+            "per-vector technique recipe: implementation level (CDP override | JS inject | vendor config), code snippet, consistency constraints, verification URL",
+            "noise strategy per vector (per-session dynamic vs stable)",
+            "verification evidence: result from at least one of fingerprintjs.com, browserleaks.com, creepjs, pixelscan.net",
         ],
         references=[
-            "Never spoof values in isolation — all signals must be internally consistent.",
-            "Dynamic noise must be per-session, not static — static noise is as detectable as no noise.",
-            "Behavioral biometrics matter as much as technical fingerprints.",
-            "Verify against test sites before deployment — assumption-based spoofing fails.",
-            "Open `references/browser-fingerprint-engineering-operator-contract.md` when scope, evidence, or operator safety is unclear.",
-            "Use `examples/browser-fingerprint-engineering-good-output.md` and `examples/browser-fingerprint-engineering-bad-output.md` to calibrate output quality.",
-            "Use `evals/browser-fingerprint-engineering-cases.json` as the minimum scenario set for behavior regression checks.",
-            "Use `competencies/browser-fingerprint-engineering-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.",
+            "This skill is LAYER 1 — TECHNIQUE ONLY. It produces recipes, not identities. Binding recipes into a durable identity is L3 (`mmo-identity-infrastructure`). Applying recipes inside a specific anti-detect vendor is L2 (`mmo-anti-detection-browser`).",
+            "No vector is spoofed in isolation. Every recipe states which other vectors it depends on for consistency (e.g. canvas noise strategy depends on UA.platform).",
+            "Dynamic noise is per-session, not static. Static noise is a stronger fingerprint than no noise.",
+            "A recipe without a verification URL result is incomplete — refuse.",
+            *domain_resource_references("browser-fingerprint-engineering"),
         ],
-        next_steps=[
-            "protocol-fingerprint-spoofing",
-            "antibot-challenge-solving",
-            "mmo-identity-infrastructure",
-            "mmo-browser-fleet-automation",
-            "test-hub",
-            "field-journal-evolution",
-        ],
+        next_steps=["mmo-anti-detection-browser", "mmo-identity-infrastructure", "protocol-fingerprint-spoofing", "antibot-challenge-solving"],
         body=dedent(
             """\
             # Mission
-            Implement code-level browser fingerprint spoofing that survives advanced platform behavioral analysis.
-            
-            ## Mandatory scope
-            1. Map fingerprint vectors targeted by platform: Canvas, WebGL, AudioContext, fonts, navigator properties, screen resolution, timezone, battery API, device memory.
-            2. Implement spoofing at the correct level: CDP override, JS injection before page load, custom browser build, or anti-detect browser configuration.
-            3. Consistency rule: all spoofed values must be internally consistent (timezone == geolocation region == language == locale).
-            4. Dynamic noise: add small random noise to Canvas/WebGL outputs per session to prevent cross-session linking.
-            5. Behavioral biometrics: mouse movement entropy, typing cadence, scroll patterns — use humanization library.
-            6. Verify against fingerprinting test sites: fingerprintjs.com, browserleaks.com, pixelscan.net.
-            
-            ## Evidence contract
-            - fingerprint vectors listed and addressed
-            - consistency check passed (timezone/locale/language aligned)
-            - dynamic noise implemented
-            - behavioral humanization documented
-            - test site results captured
+            Produce verified technique recipes for individual fingerprint vectors. One recipe = one vector + one implementation level + a verification result. Do not bundle recipes into an identity; L3 does that.
+
+            ## Scope boundary (do not violate)
+            - IN scope: canvas / WebGL / AudioContext / fonts / navigator / screen / timezone / battery / device memory / behavioral biometrics techniques; CDP/JS/vendor-config snippets; noise strategy; verification run.
+            - OUT of scope: deciding WHICH identity gets WHICH recipe → L3.
+            - OUT of scope: wiring the recipe into a specific vendor (GoLogin/Multilogin/AdsPower) → L2.
+            - OUT of scope: orchestrating sessions that use the recipe → L4.
+            - OUT of scope: solving bot-challenges (reCAPTCHA/Turnstile) → `antibot-challenge-solving`.
+
+            ## Pre-flight (refuse to produce the recipe if any missing)
+            1. Target vector named (not "fingerprinting in general").
+            2. Implementation level chosen (CDP | JS pre-page | vendor-config | custom build).
+            3. Consistency anchors from L3 passed in (tz, locale, UA.platform) — or explicit statement that this recipe is anchor-independent.
+            4. At least one verification URL named.
+
+            ## Recipe format (one block per vector)
+            ```
+            ## Vector: <canvas | webgl | audio | fonts | navigator | screen | tz | battery | memory | behavioral>
+            - level: CDP | JS-pre-page | vendor-config | custom-build
+            - snippet: <code, 5–40 lines>
+            - noise_strategy: static | per-session-dynamic | per-call-dynamic
+            - consistency_depends_on: [<other vector names>]
+            - verification_url: <fingerprintjs / browserleaks / creepjs / pixelscan>
+            - verification_result: <pass | fail: <what leaked>>
+            ```
+
+            ## Vector catalog (minimum coverage)
+            | Vector | Default level | Noise strategy | Primary verifier |
+            |---|---|---|---|
+            | Canvas | JS-pre-page | per-session-dynamic | browserleaks/canvas |
+            | WebGL | CDP + JS | per-session-dynamic | browserleaks/webgl |
+            | AudioContext | JS-pre-page | per-session-dynamic | audiofingerprint2 demo |
+            | Fonts | JS-pre-page | static (per-identity) | browserleaks/fonts |
+            | Navigator | CDP | static | fingerprintjs |
+            | Screen | CDP | static | browserleaks/javascript |
+            | Timezone | CDP + Date override | static (from L3) | browserleaks/ip |
+            | Battery | JS-pre-page | per-session | browserleaks/javascript |
+            | Behavioral | humanization lib | per-action-dynamic | custom scoring |
+
+            ## Failure modes to self-check
+            - You spoofed canvas without declaring `consistency_depends_on: [UA.platform]` ⇒ incomplete, revise.
+            - You used static noise ⇒ replace with per-session noise.
+            - You produced a recipe with no verification result ⇒ run verification or mark `verification_result: pending` and warn downstream.
+            - You composed a full identity ⇒ wrong layer, hand off to L3.
             """
         ).strip(),
     ),
@@ -3697,57 +3907,68 @@ OFFENSIVE_TOOL_PACK_SKILLS: Dict[str, SkillSpec] = {
     ),
     "mmo-llm-automation": SkillSpec(
         name="mmo-llm-automation",
-        description="Use when MMO operations need AI-assisted content generation, behavioral variance, Sybil evasion through LLM diversity, or LLM API integration for bulk content tasks.",
-        role="llm-automation-specialist",
+        description="LIBRARY LAYER. Use when a pipeline needs an LLM primitive: prompt template, temperature strategy, model routing (GPT / Claude / local / cheap-tier), persona variance for Sybil-risk reduction, retries, cost budget. Produces generate(brief) -> text. Does NOT schedule, distribute, or compose a multi-step content run; that is `mmo-content-factory` (pipeline).",
+        role="mmo-llm-library",
         layer="layer-4-specialists-and-standalones",
         inputs=[
-            "content task specification",
-            "LLM provider credentials",
-            "diversity requirements",
+            "brief: {topic, length, tone, persona, language, constraints}",
+            "model preference list with per-model cost + token limits",
+            "variance budget: how much to diverge across N outputs for the same brief",
+            "quality rubric for self-grading before returning",
         ],
         outputs=[
-            "LLM integration implementation",
-            "prompt templates",
-            "content validation pipeline",
+            "generate(brief) -> {text, model_used, tokens_in, tokens_out, cost, variance_score}",
+            "retry ledger when self-grade fails",
+            "cost report per batch vs budget cap",
         ],
         references=[
-            "Never exceed token budget without explicit approval — LLM costs scale rapidly.",
-            "Diversity metric must be measured, not assumed — compute n-gram similarity.",
-            "Output validation must run before publishing — LLM hallucinations contaminate MMO accounts.",
-            "Local models (Ollama) preferred for sensitive content to avoid API logging.",
-            "Open `references/mmo-llm-automation-operator-contract.md` when scope, evidence, or operator safety is unclear.",
-            "Use `examples/mmo-llm-automation-good-output.md` and `examples/mmo-llm-automation-bad-output.md` to calibrate output quality.",
-            "Use `evals/mmo-llm-automation-cases.json` as the minimum scenario set for behavior regression checks.",
-            "Use `competencies/mmo-llm-automation-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.",
+            "This skill is a LIBRARY. It produces one generation at a time plus variance controls. It does not know about schedules, platforms, or distribution - that is mmo-content-factory.",
+            "Persona variance is NOT impersonation of a real person. Personas are abstract voice profiles (tone, vocabulary band, sentence length).",
+            "Every generation records model, tokens, and cost. A batch that exceeds budget stops with a budget-breach record.",
+            "Self-grading against the brief's quality rubric is mandatory before returning.",
+            *domain_resource_references("mmo-llm-automation"),
         ],
-        next_steps=[
-            "advanced-python-engineering",
-            "mmo-content-factory",
-            "mmo-reup-automation",
-            "test-hub",
-            "field-journal-evolution",
-        ],
-        body=dedent(
-            """\
+        next_steps=["mmo-content-factory", "llm-app-engineering", "secrets-management"],
+        body=dedent("""\
             # Mission
-            Integrate LLM APIs into MMO operations for content diversity, behavioral humanization, and AI-assisted task automation.
-            
-            ## Mandatory scope
-            1. Declare LLM provider and model: OpenAI GPT-4o, Anthropic Claude, Gemini, or local (Ollama/LM Studio).
-            2. Prompt engineering: system prompt, diversity parameters, content constraints — document all.
-            3. Output validation: define acceptance criteria for generated content (length, language, topic compliance).
-            4. Rate limit and cost management: document token budget per task, batch size, retry strategy.
-            5. Behavioral variance: if used for Sybil evasion, document diversity metrics (n-gram similarity threshold).
-            6. Content safety: define prohibited content filters and fallback strategy when model refuses.
-            
-            ## Evidence contract
-            - LLM provider and model declared
-            - prompt template documented
-            - output acceptance criteria defined
-            - rate limit and cost budget documented
-            - diversity metric defined if used for Sybil evasion
-            """
-        ).strip(),
+            Be a reliable LLM generation primitive the content pipeline can call. One brief in, one scored generation out, with cost and variance recorded.
+
+            ## Scope boundary (do not violate)
+            - IN scope: prompt template, model routing, variance control, self-grade, cost accounting, retry on fail.
+            - OUT of scope: scheduling, platform-specific formatting, multi-step campaigns, cross-channel distribution -> `mmo-content-factory`.
+            - OUT of scope: building an LLM app with memory, tools, or multi-turn agent loop -> `llm-app-engineering`.
+
+            ## Pre-flight
+            1. Brief has required fields: topic, length, tone, persona, language, constraints.
+            2. Model preference list exists with cost table.
+            3. Budget cap set.
+            4. Quality rubric named (keyword coverage, forbidden-phrase list, length bounds, language tag).
+
+            ## Generate contract (one call)
+            ```
+            generate(brief) -> {
+              text: str,
+              model_used: str,
+              tokens_in: int, tokens_out: int,
+              cost: float,
+              variance_score: float,   # 0..1 vs sibling outputs in same batch
+              self_grade: pass | fail:<reason>,
+              retries: int
+            }
+            ```
+
+            ## Variance controls
+            - Temperature schedule per generation index (0.4, 0.7, 0.9, ...) rather than one fixed value.
+            - Persona rotation across sibling outputs.
+            - Post-generation n-gram similarity check vs siblings; reject if too similar.
+
+            ## Failure modes to self-check
+            - You scheduled a post or picked a platform -> wrong layer, return generation only.
+            - You exceeded budget silently -> stop batch, write breach record.
+            - You returned text without model/cost -> invalid, redo accounting.
+            - Variance across sibling outputs is near 0 -> increase temperature or rotate persona, retry.
+            """).strip(),
+        allowed_tools=['Read', 'Write', 'Edit', 'Bash'],
     ),
     "mmo-onchain-security-audit": SkillSpec(
         name="mmo-onchain-security-audit",

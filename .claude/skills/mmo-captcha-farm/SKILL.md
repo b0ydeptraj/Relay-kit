@@ -1,66 +1,73 @@
 ---
 name: mmo-captcha-farm
-description: "Use when MMO automation hits CAPTCHA at scale: manage CAPTCHA solving farm with multiple API keys, rate optimization, cost tracking, and failover between services (2captcha, CapMonster, AntiCaptcha, DeathByCaptcha). Use when automation needs sustained CAPTCHA solving throughput without API key bans."
-allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+description: "Use ONLY after antibot-challenge-solving has classified the challenge as solver-API addressable and chosen to route to a paid solver. Operates the solver pool: multi-service keys, balance + ban health, cost tracking, failover between 2captcha / CapMonster / AntiCaptcha / DeathByCaptcha. Does NOT classify challenges or decide the strategy."
+allowed-tools: ["Read", "Write", "Edit", "Bash"]
 ---
 
 # Mission
-Use when MMO automation hits CAPTCHA at scale: manage CAPTCHA solving farm with multiple API keys, rate optimization, cost tracking, and failover between services (2captcha, CapMonster, AntiCaptcha, DeathByCaptcha).
+Keep solver throughput high and cost bounded across a key pool with failover. Downstream automation submits challenge payloads and gets tokens back.
 
-# CAPTCHA Farm Management
+## Scope boundary (do not violate)
+- IN scope: key health check, submit, poll result, failover, balance watch, cost ledger.
+- OUT of scope: deciding WHAT challenge needs solving and HOW -> antibot-challenge-solving.
+- OUT of scope: browser-side injection of the solved token into the page -> caller (fleet / automation).
 
-> Manage a pool of CAPTCHA solving API keys with rate limits, cost tracking, and failover.
+## Pre-flight (refuse the run if any missing)
+1. Upstream decision record from antibot-challenge-solving naming solver-API as chosen strategy.
+2. At least one API key per preferred service, each with positive balance.
+3. Hourly budget cap set (numeric).
+4. Expected rate (solves/hour) set.
 
-## Mission
-Maximize CAPTCHA solving throughput while minimizing cost and API key ban risk across multiple services.
+## Solve loop (per request)
+1. CHECK budget guard: hourly_spent + estimated_cost <= budget -> else refuse and signal upstream.
+2. SELECT key: head of preferred list with (balance > 2x avg cost) AND (ban_state == clean) AND (rate_limit_free).
+3. SUBMIT payload to service with timeout.
+4. POLL until result or max_wait.
+5. ON failure codes (ban, rate_limit, insufficient_balance): mark key, drop to next service, retry.
+6. LOG cost, latency, service, verdict to ledger.
+7. RETURN token or failure reason to caller.
 
-## Mandatory scope checks
-1. Inventory available API keys per service (2captcha, CapMonster, AntiCaptcha)
-2. Define CAPTCHA type mix: reCAPTCHA v2/v3, hCaptcha, Turnstile, image
-3. Define solve rate targets (solves/hour per task)
-4. Define cost budget ($/1000 solves)
-5. Define failover order: primary → secondary → tertiary
-6. Define key rotation policy: rotate on ban, low balance, or rate limit
+## Key health states
+- clean: usable
+- low_balance: below threshold, warn, still usable
+- rate_limited: temporary skip for N seconds
+- banned: removed from rotation until operator confirms
 
-## Cost comparison (typical rates)
-| Service | reCAPTCHA v2 | hCaptcha | Image |
-|---|---|---|---|
-| 2captcha | $2.99/1000 | $2.00/1000 | $0.50/1000 |
-| CapMonster | $1.20/1000 | $1.00/1000 | $0.40/1000 |
-| AntiCaptcha | $2.00/1000 | $1.50/1000 | $0.50/1000 |
-| DeathByCaptcha | $1.39/1000 | N/A | $1.39/1000 |
-
-## Evidence contract
-- solves/hour tracked per key per service
-- cost per solve logged
-- API key health (balance + ban status) checked before each batch
-- failover events logged with reason
+## Failure modes to self-check
+- You ran without an upstream classify record -> wrong order, route to antibot-challenge-solving.
+- You kept solving after budget cap -> budget violation, stop.
+- You hardcoded an API key -> delete, use secrets-management.
+- You tried to solve a challenge the service does not support -> fail-fast, do not burn balance.
 
 ## Role
-- mmo-automation-specialist
+- captcha-solver-ops
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- the authorized target or artifact
-- the exact question or objective
-- .relay-kit/state/workflow-state.md
+- strategy decision from antibot-challenge-solving: {challenge_type, chosen_strategy: solver-api, service_preference_order}
+- API keys per service in secrets-management
+- budget: max cost per hour, max cost per 1000 solves
+- rate target: solves/hour expected
 
 ## Outputs
-- .relay-kit/contracts/investigation-notes.md with mmo-captcha-farm findings
-- answered/partial/unresolved verdict with evidence
+- solver pool status: per-key balance, ban state, solves/hour, cost/solve
+- failover log with reason codes
+- cost report vs budget
+- solver output stream to caller (consumer is the automation that needed the token)
 
 ## Reference skills and rules
-- Route anything outside mmo-captcha-farm's scope back through `mmo-authorization-gate` or `workflow-router`.
-- Anchor every conclusion to a file, command, or captured output; never guess from names.
-- Report a bounded negative search as bounded, not as proof of absence.
+- This skill is a SOLVER FARM. It does not decide IF solver-API is the right strategy; antibot-challenge-solving decides that first. If the upstream decision is reverse-JS or browser-based, STOP and do not run.
+- Every solve must log cost and latency; budget guard refuses submission once hourly budget is spent.
+- Key rotation triggers: ban detected, balance below threshold, 3 consecutive rate-limit errors.
+- Service rates are market data and drift; keep the matrix in references, not hardcoded in the body.
 - Open `references/mmo-captcha-farm-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/mmo-captcha-farm-good-output.md` and `examples/mmo-captcha-farm-bad-output.md` to calibrate output quality.
 - Use `evals/mmo-captcha-farm-cases.json` as the minimum scenario set for behavior regression checks.
 - Use `competencies/mmo-captcha-farm-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-captcha-farm
-- mmo-authorization-gate
-- workflow-router
+- antibot-challenge-solving
+- mmo-browser-fleet-automation
+- policy-guard

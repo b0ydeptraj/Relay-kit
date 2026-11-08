@@ -1,25 +1,53 @@
 ---
 name: browser-fingerprint-engineering
-description: "Use when browser-based automation needs to defeat canvas fingerprinting, WebGL fingerprinting, AudioContext fingerprinting, font detection, or behavioral biometrics."
+description: "LAYER 1 (TECHNIQUE). Use when a specific fingerprint vector needs a working spoof implementation — Canvas / WebGL / AudioContext / fonts / navigator / screen / timezone / battery / device memory / behavioral biometrics. Returns technique recipes (code snippets + consistency rules + test URL), not identities. Called by L2 (`mmo-anti-detection-browser`) when a vendor cannot spoof a vector, or by L3 (`mmo-identity-infrastructure`) when designing a new fingerprint profile."
 ---
 
 # Mission
-Implement code-level browser fingerprint spoofing that survives advanced platform behavioral analysis.
+Produce verified technique recipes for individual fingerprint vectors. One recipe = one vector + one implementation level + a verification result. Do not bundle recipes into an identity; L3 does that.
 
-## Mandatory scope
-1. Map fingerprint vectors targeted by platform: Canvas, WebGL, AudioContext, fonts, navigator properties, screen resolution, timezone, battery API, device memory.
-2. Implement spoofing at the correct level: CDP override, JS injection before page load, custom browser build, or anti-detect browser configuration.
-3. Consistency rule: all spoofed values must be internally consistent (timezone == geolocation region == language == locale).
-4. Dynamic noise: add small random noise to Canvas/WebGL outputs per session to prevent cross-session linking.
-5. Behavioral biometrics: mouse movement entropy, typing cadence, scroll patterns — use humanization library.
-6. Verify against fingerprinting test sites: fingerprintjs.com, browserleaks.com, pixelscan.net.
+## Scope boundary (do not violate)
+- IN scope: canvas / WebGL / AudioContext / fonts / navigator / screen / timezone / battery / device memory / behavioral biometrics techniques; CDP/JS/vendor-config snippets; noise strategy; verification run.
+- OUT of scope: deciding WHICH identity gets WHICH recipe → L3.
+- OUT of scope: wiring the recipe into a specific vendor (GoLogin/Multilogin/AdsPower) → L2.
+- OUT of scope: orchestrating sessions that use the recipe → L4.
+- OUT of scope: solving bot-challenges (reCAPTCHA/Turnstile) → `antibot-challenge-solving`.
 
-## Evidence contract
-- fingerprint vectors listed and addressed
-- consistency check passed (timezone/locale/language aligned)
-- dynamic noise implemented
-- behavioral humanization documented
-- test site results captured
+## Pre-flight (refuse to produce the recipe if any missing)
+1. Target vector named (not "fingerprinting in general").
+2. Implementation level chosen (CDP | JS pre-page | vendor-config | custom build).
+3. Consistency anchors from L3 passed in (tz, locale, UA.platform) — or explicit statement that this recipe is anchor-independent.
+4. At least one verification URL named.
+
+## Recipe format (one block per vector)
+```
+## Vector: <canvas | webgl | audio | fonts | navigator | screen | tz | battery | memory | behavioral>
+- level: CDP | JS-pre-page | vendor-config | custom-build
+- snippet: <code, 5–40 lines>
+- noise_strategy: static | per-session-dynamic | per-call-dynamic
+- consistency_depends_on: [<other vector names>]
+- verification_url: <fingerprintjs / browserleaks / creepjs / pixelscan>
+- verification_result: <pass | fail: <what leaked>>
+```
+
+## Vector catalog (minimum coverage)
+| Vector | Default level | Noise strategy | Primary verifier |
+|---|---|---|---|
+| Canvas | JS-pre-page | per-session-dynamic | browserleaks/canvas |
+| WebGL | CDP + JS | per-session-dynamic | browserleaks/webgl |
+| AudioContext | JS-pre-page | per-session-dynamic | audiofingerprint2 demo |
+| Fonts | JS-pre-page | static (per-identity) | browserleaks/fonts |
+| Navigator | CDP | static | fingerprintjs |
+| Screen | CDP | static | browserleaks/javascript |
+| Timezone | CDP + Date override | static (from L3) | browserleaks/ip |
+| Battery | JS-pre-page | per-session | browserleaks/javascript |
+| Behavioral | humanization lib | per-action-dynamic | custom scoring |
+
+## Failure modes to self-check
+- You spoofed canvas without declaring `consistency_depends_on: [UA.platform]` ⇒ incomplete, revise.
+- You used static noise ⇒ replace with per-session noise.
+- You produced a recipe with no verification result ⇒ run verification or mark `verification_result: pending` and warn downstream.
+- You composed a full identity ⇒ wrong layer, hand off to L3.
 
 ## Role
 - browser-fingerprint-specialist
@@ -28,29 +56,27 @@ Implement code-level browser fingerprint spoofing that survives advanced platfor
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- target platform fingerprint detection signals
-- browser automation framework
-- mmo-identity-infrastructure profile
+- target platform fingerprint vectors (which signals to spoof, in order of importance)
+- browser engine (Chromium/Firefox/WebKit) and automation framework (Playwright/Puppeteer/CDP/anti-detect vendor)
+- consistency anchors from L3 (timezone, locale, platform family) that this technique must honor
 
 ## Outputs
-- fingerprint spoofing implementation
-- consistency audit
-- test site results
+- per-vector technique recipe: implementation level (CDP override | JS inject | vendor config), code snippet, consistency constraints, verification URL
+- noise strategy per vector (per-session dynamic vs stable)
+- verification evidence: result from at least one of fingerprintjs.com, browserleaks.com, creepjs, pixelscan.net
 
 ## Reference skills and rules
-- Never spoof values in isolation — all signals must be internally consistent.
-- Dynamic noise must be per-session, not static — static noise is as detectable as no noise.
-- Behavioral biometrics matter as much as technical fingerprints.
-- Verify against test sites before deployment — assumption-based spoofing fails.
+- This skill is LAYER 1 — TECHNIQUE ONLY. It produces recipes, not identities. Binding recipes into a durable identity is L3 (`mmo-identity-infrastructure`). Applying recipes inside a specific anti-detect vendor is L2 (`mmo-anti-detection-browser`).
+- No vector is spoofed in isolation. Every recipe states which other vectors it depends on for consistency (e.g. canvas noise strategy depends on UA.platform).
+- Dynamic noise is per-session, not static. Static noise is a stronger fingerprint than no noise.
+- A recipe without a verification URL result is incomplete — refuse.
 - Open `references/browser-fingerprint-engineering-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/browser-fingerprint-engineering-good-output.md` and `examples/browser-fingerprint-engineering-bad-output.md` to calibrate output quality.
 - Use `evals/browser-fingerprint-engineering-cases.json` as the minimum scenario set for behavior regression checks.
 - Use `competencies/browser-fingerprint-engineering-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
+- mmo-anti-detection-browser
+- mmo-identity-infrastructure
 - protocol-fingerprint-spoofing
 - antibot-challenge-solving
-- mmo-identity-infrastructure
-- mmo-browser-fleet-automation
-- test-hub
-- field-journal-evolution

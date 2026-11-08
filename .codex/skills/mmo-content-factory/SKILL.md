@@ -1,53 +1,81 @@
 ---
 name: mmo-content-factory
-description: "Use when MMO operations need AI-assisted bulk content generation, multi-platform scheduling, video repurposing, variant creation, and cross-channel content distribution at scale."
-allowed-tools: ["Read", "Write", "Edit", "Grep", "Glob", "Bash"]
+description: "PIPELINE LAYER. Use when a multi-step content run needs to be orchestrated: brief -> N variants (via `mmo-llm-automation`) -> media/repurpose -> per-platform format -> schedule -> distribution. Does NOT generate text itself (that is `mmo-llm-automation`), post to platforms (that is `mmo-social-marketing-automation`), or run media transforms (that is `media-tooling`)."
+allowed-tools: ["Read", "Write", "Edit"]
 ---
 
 # Mission
-Run a content production pipeline that converts raw assets into platform-optimized variants and schedules them without detectable spam patterns.
+Orchestrate the multi-step content run and hand each step to the right downstream skill. Keep variance, media, formatting, and schedule as separate traceable stages.
 
-## Mandatory scope checks
-- define content brief → variant generation pipeline: text, image, short video cuts from long-form source
-- define platform-specific output specs: TikTok (9:16, 15-60s), Facebook Reel (9:16), YouTube Shorts (<60s)
-- define variant diversity threshold: minimum edit-distance or visual-diff score between variants
-- define publishing schedule: posting windows, frequency caps per account, platform quota alignment
-- define human-review gate: content types and risk tiers requiring operator approval
-- define performance feedback loop: track per-variant reach and feed signal back into generation config
+## Scope boundary (do not violate)
+- IN scope: pipeline plan, batch bookkeeping, reject bookkeeping, schedule, handoff to publisher.
+- OUT of scope: LLM generation -> `mmo-llm-automation`.
+- OUT of scope: media repurposing (video/image transforms) -> `media-tooling`.
+- OUT of scope: API posting to TikTok/FB/IG -> `mmo-social-marketing-automation`.
+- OUT of scope: dedupe + rights check for reposts -> `mmo-reup-automation`.
 
-## Evidence contract
-- include sample batch: 1 brief → N variants with diversity diff scores
-- include publishing schedule proof: no platform quota breach across all active accounts
-- include human-review decision log for flagged content
+## Stage graph (reference)
+```
+brief
+  -> [mmo-llm-automation] variants batch (N, scored)
+  -> [media-tooling] media per variant
+  -> [per-platform format] payload per platform
+  -> [schedule] windows per platform (quota-aware)
+  -> [mmo-social-marketing-automation] publish
+  -> audit row per item
+```
+
+## Audit row format (one per published item)
+```
+- brief_id: <id>
+  variant_id: <id>
+  platform: <name>
+  schedule_window: <ISO>
+  publish_status: queued | published | rejected
+  reject_reason: <code or empty>
+  variance_score: <float>
+  cost_text: <usd>
+  cost_media: <usd>
+```
+
+## Failure modes to self-check
+- You generated text inline -> wrong layer, delegate to mmo-llm-automation.
+- You called the TikTok API -> wrong layer, delegate to mmo-social-marketing-automation.
+- You scheduled beyond platform quota -> quota breach, reduce schedule.
+- You published variants with variance_score below threshold -> Sybil risk, re-batch.
 
 ## Role
-- mmo-content-ops
+- mmo-content-pipeline
 
 ## Layer
 - layer-4-specialists-and-standalones
 
 ## Inputs
-- content briefs or raw assets (long-form video, images, article text, product info)
-- platform account inventory and per-account quota budgets
-- brand voice guidelines, prohibited content rules, platform-specific formatting requirements
+- campaign brief with target platforms and schedule windows
+- asset inventory: source videos, images, templates
+- per-platform policy and quota from mmo-social-marketing-automation
+- quality gate rubric and reject reasons taxonomy
 
 ## Outputs
-- content production pipeline: generation config, variant specs, diversity rules, scheduling plan, review gates, and performance feedback schema
+- pipeline plan: step graph with owning skill per step
+- variant batch: N generations with variance scores (from mmo-llm-automation)
+- repurposed media batch (from media-tooling)
+- per-platform formatted payload queue, each tied to a schedule window
+- handoff to mmo-social-marketing-automation for publishing
 
 ## Reference skills and rules
-- Identical or near-identical content across accounts triggers spam detection — enforce minimum diversity scores between all variants.
-- AI-generated content variants must pass a human-review gate before deployment to high-risk accounts.
-- Platform-specific formatting is not optional: wrong aspect ratio or duration causes algorithmic reach penalty.
-- Publishing windows must be staggered across accounts — never schedule identical content to multiple accounts simultaneously.
+- This skill ORCHESTRATES. It does not generate text (mmo-llm-automation), transform media (media-tooling), or post (mmo-social-marketing-automation).
+- Every text variant must carry its mmo-llm-automation variance_score. Reject the batch if variance is below threshold.
+- Every published item has an audit row: brief_id, variant_id, platform, schedule_window, publish_status, reject_reason.
+- Platform rate limits are honored via mmo-social-marketing-automation quota; this pipeline must not schedule beyond quota.
 - Open `references/mmo-content-factory-operator-contract.md` when scope, evidence, or operator safety is unclear.
 - Use `examples/mmo-content-factory-good-output.md` and `examples/mmo-content-factory-bad-output.md` to calibrate output quality.
 - Use `evals/mmo-content-factory-cases.json` as the minimum scenario set for behavior regression checks.
 - Use `competencies/mmo-content-factory-competencies.json` to check covered competencies, failure traps, and unknown-domain policy.
 
 ## Likely next step
-- mmo-reup-automation
-- mmo-social-marketing-automation
-- mmo-data-harvesting
 - mmo-llm-automation
-- growth-marketing
-- qa-governor
+- media-tooling
+- mmo-social-marketing-automation
+- mmo-reup-automation
+- policy-guard
